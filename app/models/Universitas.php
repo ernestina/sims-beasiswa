@@ -33,7 +33,7 @@ class Universitas {
      * return array objek universitas
      */
     public function get_univ($limit=null,$batas=null){
-        $sql = "SELECT * FROM '".$this->_table."' ";
+        $sql = "SELECT * FROM ".$this->_table." ";
         if(!is_null($limit) AND !is_null($batas)){
             $sql .= " LIMIT ".$limit.",".$batas;
         }
@@ -41,14 +41,14 @@ class Universitas {
         $data=array();
         foreach ($result as $val){
             $univ = new $this($this->registry);
-            $univ->set_kode_in($val['kd_univ']);
-            $univ->set_kode($val['kode_univ']);
-            $univ->set_pic($val['kd_pic']);
-            $univ->set_nama($val['nama_univ']);
-            $univ->set_alamat($val['alamat_univ']);
-            $univ->set_telepon($val['telp_univ']);
-            $univ->set_status($val['status_univ']);
-            $univ->set_lokasi($val['lokasi_univ']);
+            $univ->set_kode_in($val['KD_UNIV']);
+            $univ->set_kode($val['KODE_UNIV']);
+            $univ->set_pic($val['KD_PIC']);
+            $univ->set_nama($val['NAMA_UNIV']);
+            $univ->set_alamat($val['ALAMAT_UNIV']);
+            $univ->set_telepon($val['TELP_UNIV']);
+            $univ->set_status($val['STATUS_UNIV']);
+            $univ->set_lokasi($val['LOKASI_UNIV']);
             $data[] = $univ;
         }
         
@@ -64,17 +64,18 @@ class Universitas {
         if(is_null($univ->get_kode_in())){
             return false;
         }
-        $sql = "SELECT * FROM '".$univ->_table."' WHERE kode_univ=".$univ->get_kode_in();
+        $sql = "SELECT * FROM ".$univ->_table." WHERE KD_UNIV=".$univ->get_kode_in();
+//        var_dump($sql);
         $result = $this->db->select($sql);
         foreach ($result as $val){
-            $this->set_kode_in($val['kd_univ']);
-            $this->set_kode($val['kode_univ']);
-            $this->set_pic($val['kd_pic']);
-            $this->set_nama($val['nama_univ']);
-            $this->set_alamat($val['alamat_univ']);
-            $this->set_telepon($val['telp_univ']);
-            $this->set_status($val['status_univ']);
-            $this->set_lokasi($val['lokasi_univ']);
+            $this->set_kode_in($val['KD_UNIV']);
+            $this->set_kode($val['KODE_UNIV']);
+            $this->set_pic($val['KD_PIC']);
+            $this->set_nama($val['NAMA_UNIV']);
+            $this->set_alamat($val['ALAMAT_UNIV']);
+            $this->set_telepon($val['TELP_UNIV']);
+            $this->set_status($val['STATUS_UNIV']);
+            $this->set_lokasi($val['LOKASI_UNIV']);
         }
         return $this;
     }
@@ -94,7 +95,7 @@ class Universitas {
      */
     public function update_univ($data=array()){
         if(!is_array($data)) return false;
-        $where = ' kd_univ='.$this->get_kode_in();
+        $where = ' KD_UNIV='.$this->get_kode_in();
         $this->db->update($this->_table,$data, $where);
     }
     
@@ -102,7 +103,7 @@ class Universitas {
      * hapus universitas, id harus di set terlebih dahulu
      */
     public function delete_univ(){
-        $where = ' kd_univ='.$this->get_kode_in();
+        $where = ' KD_UNIV='.$this->get_kode_in();
         $this->db->delete($this->_table,$where);
     }
     
@@ -150,10 +151,10 @@ class Universitas {
      */
     public function get_kode_in($where=null){
         if(!is_null($where)){
-            $sql = "SELECT kd_univ FROM '".$this->_table."' WHERE '".$where."'";
+            $sql = "SELECT KD_UNIV FROM '".$this->_table."' WHERE '".$where."'";
             $result = $this->db->select($sql);
             foreach ($result as $val){
-                $this->set_kode_in($val['kd_univ']);
+                $this->set_kode_in($val['KD_UNIV']);
             }
         }
         return $this->_kd_univ;

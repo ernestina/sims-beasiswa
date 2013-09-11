@@ -7,8 +7,11 @@
 
 class AdminController extends BaseController{
     
+    public $registry;
+    
     public function __construct($registry) {
         parent::__construct($registry);
+        $this->registry = $registry;
     }
     
     public function index(){
@@ -18,20 +21,35 @@ class AdminController extends BaseController{
     /*
      * tambah referensi universitas
      */
-    public function addUniversitas(){
+    public function addUniversitas($id=null){
+        $univ = new Universitas($this->registry);
         if(isset($_POST['add_univ'])){
             $kode = $_POST['kode'];
             $nama = $_POST['nama'];
             $alamat = $_POST['alamat'];
             $telepon = $_POST['telepon'];
             $lokasi = $_POST['lokasi'];
-            $status = $_POST['status'];
+            $pic = $_POST['pic'];
             
-            $data = $kode.'</br>'.$nama.'</br>'.$alamat.'</br>'.$telepon.'</br>'.$lokasi.'</br>'.$status;
+            $data = array(
+                'KD_PIC'=>$pic,
+                'KODE_UNIV'=>$kode,
+                'NAMA_UNIV'=>$nama,
+                'ALAMAT_UNIV'=>$alamat,
+                'TELP_UNIV'=>$telepon,
+                'LOKASI_UNIV'=>$lokasi
+            );
+            $univ->add_univ($data);
             
-            echo $data;
         }
         
+        if(!is_null($id)){
+            $univ->set_kode_in($id);
+            $this->view->d_ubah = $univ->get_univ_by_id($univ);
+        }
+        
+        $this->view->data = $univ->get_univ();
+//        var_dump($this->view->d_ubah);
         $this->view->render('admin/universitas');
     }
     
@@ -48,8 +66,9 @@ class AdminController extends BaseController{
             $data = $univ.'</br>'.$nama.'</br>'.$alamat.'</br>'.$telepon;
             
             echo $data;
-            $this->view->data = $data;
         }
+        
+        
         
         $this->view->load('admin/fakultas');
     }
@@ -327,11 +346,15 @@ class AdminController extends BaseController{
      * @param id_univ
      */
     public function delUniversitas($id){
+        $univ = new Universitas($this->registry);
         if(is_null($id)){
             throw new Exception;
             echo "id belum dimasukkan!";
             return;
         }
+        $univ->set_kode_in($id);
+        $univ->delete_univ();
+        $this->addUniversitas(); //refresh ke halaman utama
     }
     
     /*
