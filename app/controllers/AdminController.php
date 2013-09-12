@@ -7,15 +7,26 @@
 
 class AdminController extends BaseController{
     
-    public $registry;
+    //public $registry;
     
     public function __construct($registry) {
         parent::__construct($registry);
-        $this->registry = $registry;
+        //$this->registry = $registry;
     }
     
     public function index(){
         echo "method tidak ada";
+    }
+    
+    /*
+     * menampilkan daftar strata
+     */
+    public function strata(){
+        $strata = new Strata();
+        $data = $strata->get();
+        //var_dump($data);
+        $this->view->data = $data;
+        $this->view->render('admin/strata');
     }
     
     /*
