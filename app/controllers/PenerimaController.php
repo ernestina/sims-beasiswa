@@ -5,18 +5,16 @@
  * and open the template in the editor.
  */
 
-class PenerimaController {
+class PenerimaController extends BaseController{
     
     private $registry;
     private $View;
     
     public function __construct($registry){
-        $this->registry = $registry;
-        $this->View = new View();
+        parent::__construct($registry);
     }
     
-    public function halo($name){
-        echo "halo ".$name."!";
+    public function profil($id){
         
     }
     

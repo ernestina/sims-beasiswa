@@ -9,6 +9,9 @@ class Jurusan{
     private $db;
     public $registry;
     private $_table='r_jur';
+    private $_tb_fakul = 'r_fakul';
+    private $_tb_strata = 'r_strata';
+    private $_tb_pic= 'r_pic';
     private $_kd_jur;
     private $_kd_fakul;
     private $_kd_strata;
@@ -33,7 +36,17 @@ class Jurusan{
      * return array objek Jurusan
      */
     public function get_jurusan($limit=null,$batas=null){
-        $sql = "SELECT * FROM '".$this->_table."' ";
+        $sql = "SELECT a.KD_JUR as KD_JUR,
+                b.NAMA_FAKUL as KD_FAKUL,
+                a.KD_STRATA as KD_STRATA,
+                a.NAMA_JUR as NAMA_JUR,
+                a.ALAMAT_JUR as ALAMAT_JUR,
+                a.TELP_JUR as TELP_JUR,
+                a.PIC_JUR as PIC_JUR,
+                a.TELP_PIC_JUR as TELP_PIC_JUR,
+                a.STATUS_JUR as STATUS_JUR
+                FROM ".$this->_table." a
+                LEFT JOIN ".$this->_tb_fakul." b ON a.KD_FAKUL=b.KD_FAKUL";
         if(!is_null($limit) AND !is_null($batas)) {
             $sql .= " LIMIT ".$limit.",".$batas;
         }
@@ -41,15 +54,15 @@ class Jurusan{
         $data = array();
         foreach ($result as $val){
             $jur = new $this($this->registry);
-            $jur->set_kode_jur($val['kd_jur']);
-            $jur->set_kode_fakul($val['kd_fakul']);
-            $jur->set_kode_strata($val['kd_strata']);
-            $jur->set_nama($val['nama_jur']);
-            $jur->set_alamat($val['alamat_jur']);
-            $jur->set_telepon($val['telp_jur']);
-            $jur->set_pic($val['pic_jur']);
-            $jur->set_telp_pic($val['telp_pic_jur']);
-            $jur->set_status($val['status_jur']);
+            $jur->set_kode_jur($val['KD_JUR']);
+            $jur->set_kode_fakul($val['KD_FAKUL']);
+            $jur->set_kode_strata($val['KD_STRATA']);
+            $jur->set_nama($val['NAMA_JUR']);
+            $jur->set_alamat($val['ALAMAT_JUR']);
+            $jur->set_telepon($val['TELP_JUR']);
+            $jur->set_pic($val['PIC_JUR']);
+            $jur->set_telp_pic($val['TELP_PIC_JUR']);
+            $jur->set_status($val['STATUS_JUR']);
             $data[]=$jur;
         }
         
@@ -62,18 +75,18 @@ class Jurusan{
      * return objek Jurusan
      */
     public function get_jur_by_id($jur = Jurusan){
-        $sql = "SELECT * FROM '".$this->_table."' WHERE kd_jur=".$jur->get_kode_jur();
+        $sql = "SELECT * FROM ".$this->_table." WHERE KD_JUR=".$jur->get_kode_jur();
         $result = $this->db->select($sql);
         foreach ($result as $val){
-            $this->set_kode_jur($val['kd_jur']);
-            $this->set_kode_fakul($val['kd_fakul']);
-            $this->set_kode_strata($val['kd_strata']);
-            $this->set_nama($val['nama_jur']);
-            $this->set_alamat($val['alamat_jur']);
-            $this->set_telepon($val['telp_jur']);
-            $this->set_pic($val['pic_jur']);
-            $this->set_telp_pic($val['telp_pic_jur']);
-            $this->set_status($val['status_jur']);
+            $this->set_kode_jur($val['KD_JUR']);
+            $this->set_kode_fakul($val['KD_FAKUL']);
+            $this->set_kode_strata($val['KD_STRATA']);
+            $this->set_nama($val['NAMA_JUR']);
+            $this->set_alamat($val['ALAMAT_JUR']);
+            $this->set_telepon($val['TELP_JUR']);
+            $this->set_pic($val['PIC_JUR']);
+            $this->set_telp_pic($val['TELP_PIC_JUR']);
+            $this->set_status($val['STATUS_JUR']);
         }
         
         return $this;

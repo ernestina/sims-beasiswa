@@ -99,6 +99,11 @@ class Database extends PDO{
         return $return;
     }
     
+    public function get_column_table($table){
+        $sql = "SHOW COLUMNS FROM ".$table;
+        $data = $this->select($sql);
+        return $data;
+    }
     
 }
 ?>
