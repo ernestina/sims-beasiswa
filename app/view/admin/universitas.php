@@ -6,7 +6,19 @@
 <div id="form">
     <div id="form-title">DATA UNIVERSITAS</div>
     <div id="form-input">
-        <form method="POST" action="<?php $_SERVER['PHP_SELF']; //echo URL.'admin/addUniversitas'?>">
+        <form method="POST" action="<?php 
+            if(isset($this->d_ubah)){
+                echo URL.'admin/updUniversitas';
+            }else{
+                $_SERVER['PHP_SELF']; //echo URL.'admin/addUniversitas'
+            }
+            
+            ?>">
+        <?php 
+            if(isset($this->d_ubah)){
+                echo "<input type=hidden name='kd_univ' value=".$this->d_ubah->get_kode_in().">";
+            }
+        ?>
         <label>PIC</label><select id="status" name="pic">
             <option value="0">afies</option>
             <option value="1">imron</option>
@@ -20,7 +32,7 @@
             <option value="aktif">aktif</option>
             <option value="non_aktif">non aktif</option>
         </select></br>-->
-        <label></label><input type="button" onclick="" value="BATAL"><input type="submit" name="add_univ" value="SIMPAN">
+        <label></label><input type="button" onclick="" value="BATAL"><input type="submit" name="<?php echo isset($this->d_ubah)?'upd_univ':'add_univ';?>" value="SIMPAN">
         </form>
     </div>
 </div>

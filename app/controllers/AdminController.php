@@ -198,17 +198,34 @@ class AdminController extends BaseController{
      * ubah referensi universitas
      * @param id_univ
      */
-    public function updUniversitas($id){
+    public function updUniversitas(){
         
-        if(!is_null($id)){
-            $univ = new Universitas();
-            $data = $univ->get($id);
+        $univ = new Universitas($this->registry);
+        if(isset($_POST['upd_univ'])){
+            $kd_univ = $_POST['kd_univ'];
+            $kode = $_POST['kode'];
+            $nama = $_POST['nama'];
+            $alamat = $_POST['alamat'];
+            $telepon = $_POST['telepon'];
+            $lokasi = $_POST['lokasi'];
+            $pic = $_POST['pic'];
             
-        }else{
-            throw new Exception;
-            return;
+            $data = array(
+                'KD_UNIV'=>$kd_univ,
+                'KD_PIC'=>$pic,
+                'KODE_UNIV'=>$kode,
+                'NAMA_UNIV'=>$nama,
+                'ALAMAT_UNIV'=>$alamat,
+                'TELP_UNIV'=>$telepon,
+                'LOKASI_UNIV'=>$lokasi
+            );
+            
+            $univ->set_kode_in($kd_univ);
+            $univ->update_univ($data);
+            
         }
-        $this->view->load('admin/universitas');
+        
+        header('location:'.URL.'admin/addUniversitas');
     }
     
     /*
@@ -354,7 +371,7 @@ class AdminController extends BaseController{
         }
         $univ->set_kode_in($id);
         $univ->delete_univ();
-        $this->addUniversitas(); //refresh ke halaman utama
+        header('location:'.URL.'admin/addUniversitas');
     }
     
     /*
