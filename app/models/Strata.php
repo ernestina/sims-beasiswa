@@ -86,9 +86,11 @@ class StrataModel extends BaseModel {
         $this->db->insert($table, $data);
     }
 
-    public function remove($id = null) {
-        $where = 'id = ' . $id;
-        $this->delete($table, $where);
+    public function delete($id = null) {
+        $table = "r_strata";
+        $where = ' KD_STRATA='.$id;
+        echo $id;
+        $this->db->delete($table,$where);
     }
 
     public function ubah($data) {

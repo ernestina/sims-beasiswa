@@ -27,10 +27,13 @@
             </thead>
             <?php $i=1; foreach($this->data as $strata){ ?>
             <tr>
-                <td><?php echo $i; ?></td>
+                <td><?php echo $i;?></td>
                 <td><?php echo $strata->get_kode_strata(); ?></td>
                 <td><?php echo $strata->get_nama_strata(); ?></td>
-                <td> &nbsp; </td>
+                <td>
+                    <?php echo "<a href=".URL."admin/delStrata/".$strata->get_kd_strata().">X</a> | 
+                    <a href=".URL."admin/addUniversitas/".$strata->get_kd_strata().">...</a>" ?>
+                </td>
             </tr>
             <?php $i++; } ?>
         </table>

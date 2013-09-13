@@ -497,11 +497,10 @@ class AdminController extends BaseController{
      * @param id_strata
      */
     public function delStrata($id){
-        if(is_null($id)){
-            throw new Exception;
-            echo "id belum dimasukkan!";
-            return;
-        }
+        $strata = new Strata();
+        $Mstrata = new StrataModel();
+        $Mstrata->delete($id);
+        header('location:'.URL.'admin/addStrata');
     }
     
     /*
