@@ -21,7 +21,7 @@ class Upload{
     const DOCX2 = 'application/octet-stream';
     
     public function __construct() {
-        
+        ;
     }
     
     public function init($fupload){
@@ -41,18 +41,22 @@ class Upload{
         }
     }
     
-    public function cekEkstensi($fileExt){
+    /*
+     * cek eksetensi file sesuai dengan halaman/jenis upload. misal foto harus jpg, surat tugas harus pdf
+     * param ekstensi file dan tipe dokumen [img,pdf]
+     */
+    public function cekEkstensi($fileExt, $doctype=NULL){
         //$this->setFileExt($fileExt);
-        
+        switch($doctype){
+            case '':
+                break;
+            
+        }
         if($fileExt == __EXT_FILE__ OR $fileExt == 'application/msword' OR $fileExt == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' OR $fileExt == 'application/octet-stream'){
             return true;
         }else{
             return false;
         }
-    }
-    
-    public function getFile(){
-        
     }
     
     /*
@@ -76,28 +80,22 @@ class Upload{
     }
     
     /*
-     * param => dirTo, dan nama input file
+     * param tipe dokumen, misal foto harus jpg, surat tugas harus pdf
+     * 
      */
-    public function uploadFile(){           
+    public function uploadFile($doctype=NULL){           
         if($this->cekFileExist()){
-            if($this->cekEkstensi($this->getFileExt())){
+//            if($this->cekEkstensi($this->getFileExt())){
                 move_uploaded_file($this->getDirFrom(), $this->getDirTo().$this->getFileTo());
                 return true;
-            }else{
+//            }else{
 //                throw new Exception();
                 return false;
 //                exit();
-            }
+//            }
         }else{
-//            throw new Exception();
             return false;
-//            exit();
         }
-        
-        //memindah file
-        //echo $this->getDirFrom().'</br>';
-        //echo $this->getDirTo().$this->getFileTo();
-        //move_uploaded_file($this->getDirFrom(), $this->getDirTo().$this->getFileTo());
     }
     
     public static function renameFile($old,$new){

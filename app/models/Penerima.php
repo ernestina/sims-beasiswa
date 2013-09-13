@@ -100,7 +100,7 @@ class Penerima {
     
     public function add_penerima($data=array()){
         if(!is_array($data)) return false;
-        $this->db->insert($this->_tb_penerima,$data);
+        return $this->db->insert($this->_tb_penerima,$data);
     }
 
 

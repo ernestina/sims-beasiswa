@@ -12,5 +12,10 @@
     <link href="<?php echo URL; ?>public/css/jquery-ui.css" rel="stylesheet">
     <link href="<?php echo URL; ?>public/css/ui.theme.css" rel="stylesheet">
     <hr>
+    <script type="text/javascript">
+    $(function(){
+       $('#datepicker').datepicker(); 
+    });
+    </script>
     </head>
     <body>

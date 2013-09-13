@@ -5,7 +5,7 @@
 	<h1>Profil Penerima Beasiswa</h1>
 	<h3>Profil Penerima Beasiswa</h3>
 
-	<img src="..." width="150" height="150"><br><br>
+	<img src="<?php echo URL.'files/'.$this->d_pb->get_foto();?>" width="150" height="150"><br><br>
 <table>
   <!--form method="POST" action="<?php //$_SERVER['PHP_SELF']; echo URL.'admin/addUniversitas'?>"-->
 	<tr>
@@ -38,7 +38,7 @@
 	</tr>
 	<tr>
 		<td>Bank Penerima</td><td>:</td>
-		<td><input type="text" name="bank" id="bank" size="10"> 
+		<td><input type="text" name="bank" id="bank" size="10" value="<?php echo isset($this->d_pb)?$this->d_pb->get_bank():'';?>"> 
 		Cabang:<input type="text" name="cabang" id="cabang" size="25"></td>
 	</tr>
 	<tr>
