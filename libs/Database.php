@@ -23,7 +23,7 @@ class Database extends PDO{
         $sth->execute();
         return $sth->fetchAll($this->_fetchMode);
     }
-    
+        
     public function update($table, $data, $where){
         
         ksort($data);

@@ -8,9 +8,9 @@
     <br/>
 <div id="form">
     <div id="form-input" >
-        <form method="POST" name="add_strata" action="<?php /*$_SERVER['PHP_SELF'];*/ echo URL.'app/admin/addStrata'?>">
-        <label>Kode</label><input type="text" name="kode" id="kode" size="8"></br>
-        <label>Nama</label><input type="text" name="nama" id="nama" size="50"></br>
+        <form method="POST" action="<?php /*$_SERVER['PHP_SELF'];*/ echo URL.'admin/addStrata'?>">
+        <label>Kode</label><input type="text" name="kode_strata" id="kode" size="8"></br>
+        <label>Nama</label><input type="text" name="nama_strata" id="nama" size="50"></br>
         <label></label><input type="button" onclick="" value="BATAL"><input type="submit" name="add_strata" value="SIMPAN">
         </form>
     </div>

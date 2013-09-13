@@ -133,16 +133,17 @@ class AdminController extends BaseController{
      * tambah referensi strata
      */
     public function addStrata(){
-        if(isset($_POST['add_strata'])){
-            $kode = $_POST['kode'];
-            $nama = $_POST['nama'];
-            
-            $data = $kode.'</br>'.$nama;
-            
-            echo $data;
-        }
         $strata = new Strata();
-        $data = $strata->get_strata();
+        $Mstrata = new StrataModel();
+        if(isset($_POST['add_strata'])){
+            $strata->set_kode_strata($_POST["kode_strata"]);
+            $strata->set_nama_strata($_POST["nama_strata"]);
+            
+            //var_dump($strata);
+            $Mstrata->add_strata($strata);
+        }
+                
+        $data = $Mstrata->get_strata();
         //var_dump($data);
         $this->view->data = $data;
         $this->view->render('admin/strata');
