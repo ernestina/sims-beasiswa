@@ -43,7 +43,7 @@ class AdminController extends BaseController{
             
             $data = array(
                 'KD_PIC'=>$pic,
-                'KODE_UNIV'=>$kode,
+                'SINGKAT_UNIV'=>$kode,
                 'NAMA_UNIV'=>$nama,
                 'ALAMAT_UNIV'=>$alamat,
                 'TELP_UNIV'=>$telepon,

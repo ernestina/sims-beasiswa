@@ -10,31 +10,31 @@
   <!--form method="POST" action="<?php //$_SERVER['PHP_SELF']; echo URL.'admin/addUniversitas'?>"-->
 	<tr>
 		<td>NIP</td><td>:</td>
-		<td><input type="text" name="NIP" id="NIP" size="50"></td>
+		<td><input type="text" name="NIP" id="NIP" size="50" value="<?php echo isset($this->d_pb)?$this->d_pb->get_nip():'';?>"></td>
 	</tr>
 	<tr>
 		<td>Nama</td><td>:</td>
-		<td><input type="text" name="nama" id="nama" size="50"></td>
+		<td><input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_pb)?$this->d_pb->get_nama():'';?>"></td>
 	</tr>
 	<tr>
 		<td>Jenis Kelamin</td><td>:</td>
-		<td><input type="text" name="jeniskelamin" id="jeniskelamin" size="50"></td>
+		<td><input type="text" name="jeniskelamin" id="jeniskelamin" size="50" value="<?php echo isset($this->d_pb)?$this->d_pb->get_jkel():'';?>"></td>
 	</tr>
 	<tr>
 		<td>Pangkat/Gol</td><td>:</td>
-		<td><input type="text" name="pangkat" id="pangkat" size="50"></td>
+		<td><input type="text" name="pangkat" id="pangkat" size="50" value="<?php echo isset($this->d_pb)?$this->d_pb->get_gol():'';?>"></td>
 	</tr>
 	<tr>
 		<td>Unit asal</td><td>:</td>
-		<td><input type="text" name="asal" id="asal" size="50"></td>
+		<td><input type="text" name="asal" id="asal" size="50" value="<?php echo isset($this->d_pb)?$this->d_pb->get_unit_asal():'';?>"></td>
 	</tr>
 	<tr>
 		<td>Email</td><td>:</td>
-		<td><input type="text" name="email" id="email" size="50"></td>
+		<td><input type="text" name="email" id="email" size="50" value="<?php echo isset($this->d_pb)?$this->d_pb->get_email():'';?>"></td>
 	</tr>
 	<tr>
 		<td>No. HP</td><td>:</td>
-		<td><input type="text" name="hp" id="hp" size="50"></td>
+		<td><input type="text" name="hp" id="hp" size="50" value="<?php echo isset($this->d_pb)?$this->d_pb->get_telp():'';?>"></td>
 	</tr>
 	<tr>
 		<td>Bank Penerima</td><td>:</td>
@@ -43,7 +43,7 @@
 	</tr>
 	<tr>
 		<td>No. Rekening</td><td>:</td>
-		<td><input type="text" name="rekening" id="rekening" size="50"></td>
+		<td><input type="text" name="rekening" id="rekening" size="50" value="<?php echo isset($this->d_pb)?$this->d_pb->get_no_rek():'';?>"></td>
 	</tr>
   <!--/form-->
 </table><br>

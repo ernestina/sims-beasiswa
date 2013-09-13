@@ -22,7 +22,7 @@ class Universitas {
     /*
      * konstruktor
      */
-    public function __construct($registry) {
+    public function __construct($registry = Registry) {
         $this->db = $registry->db;
         $this->registry = $registry;
     }
@@ -42,7 +42,7 @@ class Universitas {
         foreach ($result as $val){
             $univ = new $this($this->registry);
             $univ->set_kode_in($val['KD_UNIV']);
-            $univ->set_kode($val['KODE_UNIV']);
+            $univ->set_kode($val['SINGKAT_UNIV']);
             $univ->set_pic($val['KD_PIC']);
             $univ->set_nama($val['NAMA_UNIV']);
             $univ->set_alamat($val['ALAMAT_UNIV']);
@@ -69,7 +69,7 @@ class Universitas {
         $result = $this->db->select($sql);
         foreach ($result as $val){
             $this->set_kode_in($val['KD_UNIV']);
-            $this->set_kode($val['KODE_UNIV']);
+            $this->set_kode($val['SINGKAT_UNIV']);
             $this->set_pic($val['KD_PIC']);
             $this->set_nama($val['NAMA_UNIV']);
             $this->set_alamat($val['ALAMAT_UNIV']);
