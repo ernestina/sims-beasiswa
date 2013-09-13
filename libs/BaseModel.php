@@ -6,13 +6,10 @@
  */
 
 class BaseModel{
-    public $registry;
-    public $db;
-    public $table;
+    
                 
-    public function __construct($registry) {
-        $this->registry = $registry;
-        $this->db = $registry->db;
+    public function __construct() {
+         $this->db = new Database(DB_TYPE, DB_HOST, DB_NAME, DB_USER, DB_PASS);
     }
     
        

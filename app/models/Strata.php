@@ -6,68 +6,84 @@
  */
 
 class Strata extends BaseModel{
-    
     private $kd_strata;
     private $kode_strata;
     private $nama_strata;
     
     public function __construct() {
-        parent::__construct();
+        parent::__construct();  
     }
     
     public function set_kd_strata($kd_strata){
         $this->kd_strata = $kd_strata;
     }
     
-    public function get_kode_univ(){
-        return $this->_kd_univ;
+    public function set_kode_strata($kode_strata){
+        $this->kode_strata = $kode_strata;
+    }
+    
+    public function set_nama_strata($nama_strata){
+        $this->nama_strata = $nama_strata;
+    }
+    
+    public function get_kd_strata(){
+        return $this->kd_strata;
+    }
+    
+    public function get_kode_strata(){
+        return $this->kode_strata;
+    }
+    
+     public function get_nama_strata(){
+        return $this->nama_strata;
     }
     
     /*
-     * mendapatkan data strata dari database dalam bentuk array
-     * param posisi, batas default null
+     * mendapatkan seluruh data strata dari database dalam bentuk array
      * mengubah masing-masing array ke dalam objek stata
      * return array objek 
      */
-    public function get_strata($limit=null, $batas=null){
-        $sql = "SELECT * FROM '".$this->_table."' ";
-        if(!is_null($limit) AND !is_null($batas)) {
-            $sql .= " LIMIT ".$limit.",".$batas;
-        }
+    public function get_strata(){
+        $table = "r_strata";
+        $sql = "SELECT * FROM $table";
         $result = $this->db->select($sql);
+        //var_dump($result);
         $data = array();
         foreach($result as $val){
-            $fakul = new $this($this->registry);
-            $fakul->set_kode_fakul($val['kd_fakul']);
-            $fakul->set_kode_univ($val['kd_univ']);
-            $fakul->set_nama($val['nama_fakul']);
-            $fakul->set_alamat($val['alamat_fakul']);
-            $fakul->set_telepon($val['telp_fakul']);
-            $data[] = $fakul;
+            $strata = new $this();
+            $strata->set_kd_strata($val["KD_STRATA"]);
+            $strata->set_kode_strata($val["KODE_STRATA"]);
+            $strata->set_nama_strata($val["NAMA_STRATA"]);
+            $data[] = $strata;
         }
+        //var_dump($data);
+        return $data;
+    }
+    
+    /*
+     * menambahkan data strata ke dalam database
+     * param objek strata
+     * return void 
+     */
+    public function add_strata(Strata $strata){
+        $table = "r_strata";
+        $sql = "SELECT * FROM $table";
+        $result = $this->db->select($sql);
+        //var_dump($result);
+        $data = array();
+        foreach($result as $val){
+            $strata = new $this();
+            $strata->set_kd_strata($val["KD_STRATA"]);
+            $strata->set_kode_strata($val["KODE_STRATA"]);
+            $strata->set_nama_strata($val["NAMA_STRATA"]);
+            $data[] = $strata;
+        }
+        //var_dump($data);
         return $data;
     }
     
     
-    /*
-    * mencari seluruh data strata
-    * 
-    */
-    public function get(){
-        $sql = "SELECT * FROM r_strata";
-        $data = $this->select($sql);
-        //var_dump($data);
-        $list_strata = array();
-        foreach($data as $key => $value){
-            $strata = new Strata();
-            $strata->kd_strata = $value["KD_STRATA"];
-            $strata->kode_strata = $value["KODE_STRATA"];
-            $strata->nama_strata = $value["NAMA_STRATA"];
-            $list_strata[] = $strata;
-        }
-        var_dump($list_strata);
-        return $list_strata;
-    }
+   
     
     public function remove($id=null){
         $where = 'id = '.$id;

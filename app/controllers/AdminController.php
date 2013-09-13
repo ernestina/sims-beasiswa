@@ -17,17 +17,7 @@ class AdminController extends BaseController{
         echo "method tidak ada";
     }
     
-    /*
-     * menampilkan daftar strata
-     */
-    public function strata(){
-        $strata = new Strata();
-        $data = $strata->get();
-        //var_dump($data);
-        $this->view->data = $data;
-        $this->view->render('admin/strata');
-    }
-    
+        
     /*
      * tambah referensi universitas
      */
@@ -151,8 +141,11 @@ class AdminController extends BaseController{
             
             echo $data;
         }
-        
-        $this->view->load('admin/strata');
+        $strata = new Strata();
+        $data = $strata->get_strata();
+        //var_dump($data);
+        $this->view->data = $data;
+        $this->view->render('admin/strata');
     }
     
     /*
