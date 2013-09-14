@@ -19,3 +19,11 @@
     </script>
     </head>
     <body>
+        <div id="menu">
+            <ul>
+                <li><a href="<?php echo URL.'surattugas/datast'?>">Data Surat Tugas</a></li>
+                <li>Data Cuti</li>
+                <li><a href="<?php echo URL.'penerima/datapb';?>">Data Penerima Beasiswa</a></li>
+                <li>Data Master</li>
+            </ul>
+        </div>

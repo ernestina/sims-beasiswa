@@ -21,6 +21,12 @@ class PenerimaController extends BaseController{
         $this->view->render('profil/data_profil');
     }
     
+    public function datapb(){
+        $pb = new Penerima($this->registry);
+        $this->view->d_pb = $pb->get_penerima();
+        $this->view->render('riwayat_tb/data_pb');
+    }
+    
     /*
      * menampilkan form rekam, ubah, daftar data penerima tb
      */
@@ -151,7 +157,10 @@ class PenerimaController extends BaseController{
     public function delpb($id){
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($id);
+        $pb->get_penerima_by_id($pb);
+        $file = 'files/'.$pb->get_foto();
         $pb->delete_penerima();
+        if(file_exists($file)) unlink($file);
         header('location:'.URL.'penerima/penerima');
     }
     

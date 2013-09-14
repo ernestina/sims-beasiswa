@@ -50,7 +50,7 @@
         <label>Alamat</label><textarea name="alamat" id="alamat"><?php echo isset($this->d_ubah)?$this->d_ubah->get_alamat():'';?></textarea></br>
         <label>No Rekening</label><input type="text" name="no_rek" id="no_rek" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_no_rek():'';?>" size="30"></br>
         <label>Foto</label><input type="file" name="fupload" id="fupload"></br>
-        <label>Tanggal Lapor</label><input type="text" name="tgl_lap" id="datepicker" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_tgl_lapor():'';?>" size="10"></br>
+        <label>Tanggal Lapor</label><input type="date" name="tgl_lap" id="tgl_lap" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_tgl_lapor():'';?>" size="10"></br>
         <label>Nomor SKL</label><input type="text" name="skl" id="skl" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_skl():'';?>" size="20"></br>
         <label>SPMT</label><input type="text" name="spmt" id="spmt" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_spmt():'';?>" size="20"></br>
         <label>Judul Skripsi</label><textarea name="skripsi" id="skripsi"><?php echo isset($this->d_ubah)?$this->d_ubah->get_skripsi():'';?></textarea></br>
