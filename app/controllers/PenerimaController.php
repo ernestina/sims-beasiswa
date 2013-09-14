@@ -123,8 +123,7 @@ class PenerimaController extends BaseController{
         $skl = $_POST['skl'];
         $spmt = $_POST['spmt'];
         $skripsi = $_POST['skripsi'];
-
-        $file = $_FILES['fupload'];
+        
         $data = array(
             'KD_ST'=>$st,
             'KD_JUR'=>$jur,
@@ -139,12 +138,22 @@ class PenerimaController extends BaseController{
             'TELP_PB'=>$telp,
             'ALAMAT_PB'=>$alamat,
             'NO_REKENING_PB'=>$no_rek,
-            'FOTO_PB'=>$file['name'],
             'TANGGAL_LAPOR_PB'=>$tgl_lapor,
             'NOMOR_SKL_PB'=>$skl,
             'NO_SPMT_PB'=>$spmt,
             'JUDUL_SKRIPSI_PB'=>$skripsi
         );
+        
+        if(!is_null($_FILES['fupload'])){
+            $upload = $this->registry->upload;
+            $upload->init('fupload'); //awali dengan fungsi ini
+            $upload->setDirTo('files/'); //set direktori tujuan
+            $ubahNama = array('KAKA','KIKI','KEKE'); //pola nama baru dalam array
+            $upload->changeFileName($upload->getFileName(), $ubahNama); //ubah nama
+            $data['FOTO_PB'] = $upload->getFileTo();
+            $upload->uploadFile();
+        }
+        
         
         $pb->set_kd_pb($kd);
         $pb->update_penerima($data);
