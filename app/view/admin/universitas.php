@@ -1,10 +1,8 @@
-<div id="menu">
-    <select id="menu-admin">
-        <option>-pilih menu-</option>
-    </select>
-</div>
+<?php
+    $this->load('admin/menu_admin');
+?>
 <div id="form">
-    <div id="form-title">DATA UNIVERSITAS</div>
+    <div id="form-title"><h1>DATA UNIVERSITAS</h1></div>
     <div id="form-input">
         <form method="POST" action="<?php 
             if(isset($this->d_ubah)){

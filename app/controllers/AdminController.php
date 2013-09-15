@@ -84,7 +84,7 @@ class AdminController extends BaseController{
         }
         
         $this->view->data = $fakul->get_fakul();
-        $this->view->load('admin/fakultas');
+        $this->view->render('admin/fakultas');
     }
     
     /*
@@ -126,7 +126,7 @@ class AdminController extends BaseController{
         }
         
         $this->view->data = $jur->get_jurusan();
-        $this->view->load('admin/jurusan');
+        $this->view->render('admin/jurusan');
     }
     
     /*
