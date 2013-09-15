@@ -26,7 +26,7 @@
                 <li><a href="<?php echo URL.'surattugas/datast'?>">Surat Tugas</a></li>
                 <li><a href="">Cuti</a></li>
                 <li><a href="<?php echo URL.'penerima/datapb';?>">Penerima Beasiswa</a></li>
-                <li><a href="">Admin</a></li>
+                <li><a href="<?php echo URL;?>admin/addUniversitas">Admin</a></li>
             </ul>
             </div>
         </div>
