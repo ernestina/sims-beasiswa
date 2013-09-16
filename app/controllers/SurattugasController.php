@@ -13,6 +13,9 @@ class SurattugasController extends BaseController{
     
     public function datast($id=null){
         $st = new SuratTugas($this->registry);
+        $univ = new Universitas($this->registry);
+        $jur = new Jurusan($this->registry);
+        $pemb = new Pemberi();
         if(isset($_POST['sb_add'])){
             $jur = $_POST['jur'];
             $jenis = $_POST['jns_st'];
@@ -50,6 +53,13 @@ class SurattugasController extends BaseController{
             $st->set_kd_st($id);
             $this->view->d_ubah = $st->get_surat_tugas_by_id($st);
         }
+        
+        $this->view->d_pemb = $pemb->get_All();
+        $this->view->d_st_lama = $st->get_surat_tugas();
+        $this->view->d_jst = $st->get_st_class();
+        $this->view->d_univ = $univ->get_univ();
+        $this->view->d_jur = $jur->get_jurusan();
+        $this->view->d_th_masuk = $st->get_list_th_masuk();
         $this->view->d_st = $st->get_surat_tugas();
         
         $this->view->render('riwayat_tb/data_st');

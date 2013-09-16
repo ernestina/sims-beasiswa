@@ -92,6 +92,11 @@ class Jurusan{
         return $this;
     }
     
+    public function get_jur_fakul($univ=null){
+        $sql = "SELECT ";
+    }
+
+
     /*
      * menambah data jurusan
      * param data array
