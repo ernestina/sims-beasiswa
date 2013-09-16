@@ -2,8 +2,11 @@
     $this->load('admin/menu_admin');
 ?>
 <div id="form">
-    <div id="form-title"><h1>DATA FAKULTAS</h1></div>
-    <div id="form-input">
+    <!--div id="form-title"-->
+	<h2>DATA FAKULTAS</h2></div>
+    <div class="kolom3">
+	  <fieldset><legend>Tambah Fakultas</legend>
+		<div id="form-input">
         <form method="POST" action="<?php 
             if(isset($this->d_ubah)){
                 echo URL.'admin/updFakultas';
@@ -16,7 +19,9 @@
                 echo "<input type=hidden name='kd_fakul' value=".$this->d_ubah->get_kode_fakul().">";
             }
         ?>
-        <label>Universitas</label><select id="status" name="universitas">
+        <div class="kiri">
+			<label>Universitas</label><select type="text" id="status" name="universitas">
+			
             <?php 
                     foreach ($this->univ as $val){
                         if(isset($this->d_ubah)){
@@ -30,26 +35,41 @@
                         }
                     }
             ?>
-        </select></br>
-        <label>Nama</label><input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():'';?>"></br>
-        <label>Alamat</label><textarea name="alamat" id="alamat" cols="50" rows="10" ><?php echo isset($this->d_ubah)?$this->d_ubah->get_alamat():'';?></textarea></br>
-        <label>Telepon</label><input type="text" name="telepon" id="telepon" size="15" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telepon():'';?>"></br>
-        <label></label><input type="button" onclick="" value="BATAL"><input type="submit" name="<?php echo isset($this->d_ubah)?'upd_fak':'add_fak';?>" value="SIMPAN">
-        </form>
+			</select>
+				<label>Nama</label>
+				<input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():'';?>">
+			
+			
+				<label>Alamat</label><textarea type="text" name="alamat" id="alamat" rows="8" ><?php echo isset($this->d_ubah)?$this->d_ubah->get_alamat():'';?></textarea>
+        
+				<label>Telepon</label><input type="text" name="telepon" id="telepon" size="15" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telepon():'';?>">
+        
+			<ul class="inline tengah">
+				<li><input class="normal" type="submit" onclick="" value="BATAL"></li>
+				<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'upd_fak':'add_fak';?>" value="SIMPAN"></li>
+			</ul>
+        </div>
+		</form>
     </div>
+   </fieldset>
 </div>
-<div id="table">
+
+
+<div class="kolom4" id="table">
+	<fieldset><legend>Daftar Fakultas</legend>
     <div id="table-title"></div>
     <div id="table-content">
-        <table>
+        <table class="table-bordered zebra scroll">
             <thead>
                 <th>No</th>
-                <th>Universitas</th>
-                <th>Nama</th>
-                <th>Alamat</th>
-                <th>Telepon</th>
+                <th width="100">Universitas</th>
+                <th width="150">Fakultas</th>
+                <th width="150">Alamat</th>
+                <th width="50">Telepon</th>
                 <th>Aksi</th>
             </thead>
+			<tbody>
+
             <?php
                 $no=1;
                 foreach($this->data as $val){
@@ -65,6 +85,8 @@
                     $no++;
                 }
             ?>
+			</tbody>
         </table>
     </div>
+</div>
 </div>
