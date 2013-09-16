@@ -159,7 +159,9 @@ class AdminController extends BaseController {
             $pemberi->telp_pemberi = $_POST['telp_pemberi'];
             $pemberi->pic_pemberi = $_POST['pic_pemberi'];
             $pemberi->telp_pic_pemberi = $_POST['telp_pic_pemberi'];
-            $pemberi->add($pemberi);
+            if ($pemberi->isEmpty($pemberi) == FALSE) {
+                $pemberi->add($pemberi);
+            }
         }
         $data = $pemberi->get_All();
         //var_dump($data);
@@ -351,12 +353,11 @@ class AdminController extends BaseController {
                     $strata->update($strata);
                     header('location:' . URL . 'admin/addStrata/');
                 } else {
-                    header('location:' . URL . 'admin/updStrata/'.$strata->kd_strata);
+                    header('location:' . URL . 'admin/updStrata/' . $strata->kd_strata);
                 }
             } else {  // jika tidak ada id pada url dan tidak ada data strata di POST dialirhkan ke halaman strata
                 header('location:' . URL . 'admin/addStrata/');
             }
-            
         }
     }
 
@@ -414,10 +415,14 @@ class AdminController extends BaseController {
                 $pemberi->pic_pemberi = $_POST['pic_pemberi'];
                 $pemberi->telp_pic_pemberi = $_POST['telp_pic_pemberi'];
                 //var_dump($pemberi);
-                $pemberi->update($pemberi);
-                $this->addPemberi();
+                if ($pemberi->isEmpty($pemberi) == false) {
+                    $pemberi->update($pemberi);
+                    header('location:' . URL . 'admin/addPemberi/');
+                }else {
+                    header('location:' . URL . 'admin/updPemberi/' . $pemberi->kd_pemberi);
+                }
             } else {  // jika tidak ada id pada url dan tidak ada data pemberi di POST dialirhkan ke halaman pemberi
-                $this->addPemberi();
+                header('location:' . URL . 'admin/addPemberi/');
             }
         }
     }

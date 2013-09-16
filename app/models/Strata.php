@@ -7,9 +7,9 @@
 
 class Strata extends BaseModel {
 
-    var $kd_strata;
-    var $kode_strata;
-    var $nama_strata;
+    public $kd_strata;
+    public $kode_strata;
+    public $nama_strata;
 
     public function __construct() {
         parent::__construct();

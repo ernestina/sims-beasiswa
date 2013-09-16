@@ -5,18 +5,17 @@
  * and open the template in the editor.
  */
 
-
 class Pemberi extends BaseModel {
-    var $kd_pemberi;
-    var $nama_pemberi;
-    var $alamat_pemberi;
-    var $telp_pemberi;
-    var $pic_pemberi;
-    var $telp_pic_pemberi;
-    
+
+    public $kd_pemberi;
+    public $nama_pemberi;
+    public $alamat_pemberi;
+    public $telp_pemberi;
+    public $pic_pemberi;
+    public $telp_pic_pemberi;
+
     public function __construct() {
         parent::__construct();
-        
     }
 
     /*
@@ -44,7 +43,8 @@ class Pemberi extends BaseModel {
         //var_dump($data);
         return $data;
     }
-     /*
+
+    /*
      * mendapatkan seluruh data strata dari database dalam bentuk array
      * mengubah masing-masing array ke dalam objek stata
      * return array objek 
@@ -52,11 +52,11 @@ class Pemberi extends BaseModel {
 
     public function get_by_id($id) {
         $table = "r_pemb";
-        $where = "KD_PEMB='".$id."'";
+        $where = "KD_PEMB='" . $id . "'";
         $sql = "SELECT * FROM $table where $where";
         $result = $this->db->select($sql);
         //var_dump($result);
-        
+
         foreach ($result as $val) {
             $pemberi = new $this();
             $pemberi->kd_pemberi = $val['KD_PEMB'];
@@ -65,12 +65,10 @@ class Pemberi extends BaseModel {
             $pemberi->telp_pemberi = $val['TELP_PEMB'];
             $pemberi->pic_pemberi = $val['PIC_PEMB'];
             $pemberi->telp_pic_pemberi = $val['TELP_PIC_PEMB'];
-            
         }
         //var_dump($data);
         return $pemberi;
     }
-    
 
     /*
      * menambahkan data strata ke dalam database
@@ -81,12 +79,12 @@ class Pemberi extends BaseModel {
     public function add(Pemberi $pemberi) {
         $table = "r_pemb";
         $data = array(
-                'NAMA_PEMB'=>$pemberi->nama_pemberi,
-                'ALAMAT_PEMB'=>$pemberi->alamat_pemberi,
-                'TELP_PEMB'=>$pemberi->telp_pemberi,
-                'PIC_PEMB'=>$pemberi->pic_pemberi,
-                'TELP_PIC_PEMB'=>$pemberi->telp_pic_pemberi
-            );
+            'NAMA_PEMB' => $pemberi->nama_pemberi,
+            'ALAMAT_PEMB' => $pemberi->alamat_pemberi,
+            'TELP_PEMB' => $pemberi->telp_pemberi,
+            'PIC_PEMB' => $pemberi->pic_pemberi,
+            'TELP_PIC_PEMB' => $pemberi->telp_pic_pemberi
+        );
         //var_dump($data);
         $this->db->insert($table, $data);
     }
@@ -96,27 +94,41 @@ class Pemberi extends BaseModel {
      * param id = kd_strata
      * return void 
      */
+
     public function delete($id = null) {
         $table = "r_PEMB";
-        $where = 'KD_PEMB='.$id;
+        $where = 'KD_PEMB=' . $id;
         //echo $id;
-        $this->db->delete($table,$where);
+        $this->db->delete($table, $where);
     }
 
     public function update(Pemberi $pemberi) {
-        $table= "r_pemb";
+        $table = "r_pemb";
         $data = array(
-                'NAMA_PEMB'=>$pemberi->nama_pemberi,
-                'ALAMAT_PEMB'=>$pemberi->alamat_pemberi,
-                'TELP_PEMB'=>$pemberi->telp_pemberi,
-                'PIC_PEMB'=>$pemberi->pic_pemberi,
-                'TELP_PIC_PEMB'=>$pemberi->telp_pic_pemberi
-            );
-        $where = "KD_PEMB='".$pemberi->kd_pemberi."'";
+            'NAMA_PEMB' => $pemberi->nama_pemberi,
+            'ALAMAT_PEMB' => $pemberi->alamat_pemberi,
+            'TELP_PEMB' => $pemberi->telp_pemberi,
+            'PIC_PEMB' => $pemberi->pic_pemberi,
+            'TELP_PIC_PEMB' => $pemberi->telp_pic_pemberi
+        );
+        $where = "KD_PEMB='" . $pemberi->kd_pemberi . "'";
         $this->db->update($table, $data, $where);
     }
-    
-    
+
+    /*
+     * mengecek apakah nilai objek terisi/tidak kosong
+     * param objek pemberi
+     * return boolean
+     */
+
+    public function isEmpty(Pemberi $pemberi) {
+        $cek = true;
+        if ($pemberi->nama_pemberi != "" && $pemberi->telp_pemberi != "" && $pemberi->alamat_pemberi != ""
+                && $pemberi->pic_pemberi != "" && $pemberi->telp_pic_pemberi != "") {
+            $cek = false;
+        }
+        return $cek;
+    }
 
 }
 
