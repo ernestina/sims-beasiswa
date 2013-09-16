@@ -25,7 +25,7 @@ class PemberiBeasiswa extends BaseModel {
      */
 
     public function get_All() {
-        $table = "r_pemb";
+        $table = "d_pemb";
         $sql = "SELECT * FROM $table";
         $result = $this->db->select($sql);
         //var_dump($result);
@@ -33,8 +33,8 @@ class PemberiBeasiswa extends BaseModel {
         foreach ($result as $val) {
             $pemberi = new $this();
             $pemberi->kd_pemberi = $val['KD_PEMB'];
-            $pemberi->nama_pemberi = $val['NAMA_PEMB'];
-            $pemberi->alamat_pemberi = $val['ALAMAT_PEMB'];
+            $pemberi->nama_pemberi = $val['NM_PEMB'];
+            $pemberi->alamat_pemberi = $val['ALMT_PEMB'];
             $pemberi->telp_pemberi = $val['TELP_PEMB'];
             $pemberi->pic_pemberi = $val['PIC_PEMB'];
             $pemberi->telp_pic_pemberi = $val['TELP_PIC_PEMB'];
@@ -51,7 +51,7 @@ class PemberiBeasiswa extends BaseModel {
      */
 
     public function get_by_id($id) {
-        $table = "r_pemb";
+        $table = "d_pemb";
         $where = "KD_PEMB='" . $id . "'";
         $sql = "SELECT * FROM $table where $where";
         $result = $this->db->select($sql);
@@ -60,8 +60,8 @@ class PemberiBeasiswa extends BaseModel {
         foreach ($result as $val) {
             $pemberi = new $this();
             $pemberi->kd_pemberi = $val['KD_PEMB'];
-            $pemberi->nama_pemberi = $val['NAMA_PEMB'];
-            $pemberi->alamat_pemberi = $val['ALAMAT_PEMB'];
+            $pemberi->nama_pemberi = $val['NM_PEMB'];
+            $pemberi->alamat_pemberi = $val['ALMT_PEMB'];
             $pemberi->telp_pemberi = $val['TELP_PEMB'];
             $pemberi->pic_pemberi = $val['PIC_PEMB'];
             $pemberi->telp_pic_pemberi = $val['TELP_PIC_PEMB'];
@@ -77,10 +77,10 @@ class PemberiBeasiswa extends BaseModel {
      */
 
     public function add(PemberiBeasiswa $pemberi) {
-        $table = "r_pemb";
+        $table = "d_pemb";
         $data = array(
-            'NAMA_PEMB' => $pemberi->nama_pemberi,
-            'ALAMAT_PEMB' => $pemberi->alamat_pemberi,
+            'NM_PEMB' => $pemberi->nama_pemberi,
+            'ALMT_PEMB' => $pemberi->alamat_pemberi,
             'TELP_PEMB' => $pemberi->telp_pemberi,
             'PIC_PEMB' => $pemberi->pic_pemberi,
             'TELP_PIC_PEMB' => $pemberi->telp_pic_pemberi
@@ -96,17 +96,17 @@ class PemberiBeasiswa extends BaseModel {
      */
 
     public function delete($id = null) {
-        $table = "r_PEMB";
+        $table = "d_PEMB";
         $where = 'KD_PEMB=' . $id;
         //echo $id;
         $this->db->delete($table, $where);
     }
 
     public function update(PemberiBeasiswa $pemberi) {
-        $table = "r_pemb";
+        $table = "d_pemb";
         $data = array(
-            'NAMA_PEMB' => $pemberi->nama_pemberi,
-            'ALAMAT_PEMB' => $pemberi->alamat_pemberi,
+            'NM_PEMB' => $pemberi->nama_pemberi,
+            'ALMT_PEMB' => $pemberi->alamat_pemberi,
             'TELP_PEMB' => $pemberi->telp_pemberi,
             'PIC_PEMB' => $pemberi->pic_pemberi,
             'TELP_PIC_PEMB' => $pemberi->telp_pic_pemberi

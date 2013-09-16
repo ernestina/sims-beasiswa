@@ -426,6 +426,20 @@ class AdminController extends BaseController {
             }
         }
     }
+    
+    /*
+     * ubah referensi pejabat
+     * @param id_bank
+     */
+
+    public function updPejabat() {
+        if(!isset($_POST['upd_pejabat'])){
+            $pejabat = new Pejabat();
+            $data = $pejabat->get();
+            $this->view->data = $data;
+            $this->view->render('admin/pejabat');
+        }
+    }
 
     /*
      * ubah referensi bank

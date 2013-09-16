@@ -30,8 +30,8 @@ class Strata extends BaseModel {
         foreach ($result as $val) {
             $strata = new $this();
             $strata->kd_strata = $val["KD_STRATA"];
-            $strata->kode_strata = $val["KODE_STRATA"];
-            $strata->nama_strata = $val["NAMA_STRATA"];
+            $strata->kode_strata = $val["STRATA"];
+            $strata->nama_strata = $val["NM_STRATA"];
             $data[] = $strata;
         }
         //var_dump($data);
@@ -54,8 +54,8 @@ class Strata extends BaseModel {
         foreach ($result as $val) {
             $strata = new $this();
             $strata->kd_strata = $val["KD_STRATA"];
-            $strata->kode_strata = $val["KODE_STRATA"];
-            $strata->nama_strata = $val["NAMA_STRATA"];
+            $strata->kode_strata = $val["STRATA"];
+            $strata->nama_strata = $val["NM_STRATA"];
         }
         //var_dump($data);
         return $strata;
@@ -70,8 +70,8 @@ class Strata extends BaseModel {
     public function add(Strata $strata) {
         $table = "r_strata";
         $data = array(
-            'KODE_STRATA' => $strata->kode_strata,
-            'NAMA_STRATA' => $strata->nama_strata
+            'STRATA' => $strata->kode_strata,
+            'NM_STRATA' => $strata->nama_strata
         );
         //var_dump($data);
         $this->db->insert($table, $data);
@@ -99,8 +99,8 @@ class Strata extends BaseModel {
     public function update(Strata $strata) {
         $table = "r_strata";
         $data = array(
-            'KODE_STRATA' => $strata->kode_strata,
-            'NAMA_STRATA' => $strata->nama_strata
+            'STRATA' => $strata->kode_strata,
+            'NM_STRATA' => $strata->nama_strata
         );
         $where = "KD_STRATA='" . $strata->kd_strata . "'";
         $this->db->update($table, $data, $where);
