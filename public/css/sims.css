@@ -48,7 +48,11 @@ form label{
     color: #00f;
 }
 
+<<<<<<< .mine
+form input,textarea,select{
+=======
 form input,textarea{
+>>>>>>> .r19
     background-color: khaki;
 }
 
