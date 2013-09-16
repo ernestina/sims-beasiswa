@@ -1,11 +1,9 @@
-<div id="menu">
-    <select id="menu-admin">
-        <option>-pilih menu-</option>
-    </select>
-</div>
-<?php echo $_GET['url']; ?>
+<?php
+    $this->load('admin/menu_admin');
+?>
+
 <div id="form">
-    <div id="form-title">UBAH DATA PEMBERI BEASISWA</div>
+    <div id="form-title"><h1>EDIT DATA STRATA</h1></div>
     <div id="form-input">
         <form method="POST" action="<?php /*$_SERVER['PHP_SELF']; */ echo URL.'admin/updPemberi'?>">
         <label>Nama</label><input type="text" name="nama_pemberi" id="nama" size="50" value="<?php echo $this->pemberi->nama_pemberi;?>"></br>

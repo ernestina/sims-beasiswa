@@ -390,7 +390,7 @@ class AdminController extends BaseController {
      * @param id_pemberi_beasiswa
      */
 
-    public function updPemberi($id=null) {
+    public function updPemberi($id = null) {
         $pemberi = new Pemberi();
         if (!is_null($id)) { //menampilkan data pemberi berdasarkan id pada url pada halaman edit_pemberi
             $data = $pemberi->get_by_id($id);
@@ -527,11 +527,14 @@ class AdminController extends BaseController {
      * @param id_strata
      */
 
-    public function delStrata($id) {
-        $strata = new Strata();
-        $Mstrata = new StrataModel();
-        $Mstrata->delete($id);
-        header('location:' . URL . 'admin/addStrata');
+    public function delStrata($id = null) {
+        if ($id != null) {
+            $strata = new Strata();
+            $strata->delete($id);
+            $this->addStrata();
+        } else {
+            $this->addStrata();
+        }
     }
 
     /*
@@ -539,11 +542,13 @@ class AdminController extends BaseController {
      * @param id_pemberi
      */
 
-    public function delPemberi($id) {
-        if (is_null($id)) {
-            throw new Exception;
-            echo "id belum dimasukkan!";
-            return;
+    public function delPemberi($id=null) {
+        if ($id != null) {
+            $pemberi = new Pemberi();
+            $pemberi->delete($id);
+            $this->addPemberi();
+        } else {
+            $this->addPemberi();
         }
     }
 

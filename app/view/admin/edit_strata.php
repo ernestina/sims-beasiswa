@@ -1,12 +1,11 @@
+<?php
+    $this->load('admin/menu_admin');
+?>
 
-<div id="menu">
-    <select id="menu-admin">
-        <option>-pilih menu-</option>
-    </select>
-</div>
 <div>
     <br/>
 <div id="form">
+    <div id="form-title"><h1>EDIT DATA STRATA</h1></div>
     <div id="form-input" >
         <form method="POST" action="<?php /*$_SERVER['PHP_SELF'];*/ echo URL.'admin/updStrata'?>">
             <input type="hidden" name="kd_strata" id="kd" value="<?php echo $this->strata->kd_strata;?>">

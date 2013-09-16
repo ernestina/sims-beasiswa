@@ -1,10 +1,9 @@
-<div id="menu">
-    <select id="menu-admin">
-        <option>-pilih menu-</option>
-    </select>
-</div>
+<?php
+    $this->load('admin/menu_admin');
+?>
+
 <div id="form">
-    <div id="form-title">TAMBAH DATA PEMBERI BEASISWA</div>
+    <div id="form-title"><h1>DATA PEMBERI BEASISWA</h1></div>
     <div id="form-input">
         <form method="POST" action="<?php /*$_SERVER['PHP_SELF']; */ echo URL.'admin/addPemberi'?>">
         <label>Nama</label><input type="text" name="nama_pemberi" id="nama" size="50"></br>

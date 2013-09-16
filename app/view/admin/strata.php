@@ -1,14 +1,11 @@
+<?php
+    $this->load('admin/menu_admin');
+?>
 
-<div id="menu">
-    <select id="menu-admin">
-        <option>-pilih menu-</option>
-    </select>
-</div>
 <div>
-    
-    <?php //if($this->err != "") { echo $this->err ; }?>
-    <br/>
+ 
 <div id="form">
+    <div id="form-title"><h1>DATA STRATA</h1></div>
     <div id="form-input" >
         <form method="POST" action="<?php /*$_SERVER['PHP_SELF'];*/ echo URL.'admin/addStrata'?>">
         <label>Kode</label><input type="text" name="kode_strata" id="kode" size="8"></br>
