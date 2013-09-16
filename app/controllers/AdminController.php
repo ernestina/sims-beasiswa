@@ -152,7 +152,7 @@ class AdminController extends BaseController {
      */
 
     public function addPemberi() {
-        $pemberi = new Pemberi();
+        $pemberi = new PemberiBeasiswa;
         if (isset($_POST['add_pemberi'])) {
             $pemberi->nama_pemberi = $_POST['nama_pemberi'];
             $pemberi->alamat_pemberi = $_POST['alamat_pemberi'];
@@ -399,7 +399,7 @@ class AdminController extends BaseController {
      */
 
     public function updPemberi($id = null) {
-        $pemberi = new Pemberi();
+        $pemberi = new PemberiBeasiswa();
         if (!is_null($id)) { //menampilkan data pemberi berdasarkan id pada url pada halaman edit_pemberi
             $data = $pemberi->get_by_id($id);
             //var_dump($data);
@@ -558,7 +558,7 @@ class AdminController extends BaseController {
 
     public function delPemberi($id = null) {
         if ($id != null) {
-            $pemberi = new Pemberi();
+            $pemberi = new PemberiBeasiswa();
             $pemberi->delete($id);
             $this->addPemberi();
         } else {
