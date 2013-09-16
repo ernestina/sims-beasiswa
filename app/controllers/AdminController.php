@@ -400,11 +400,13 @@ class AdminController extends BaseController {
             $this->view->render('admin/edit_pemberi');
         } else {
             if (isset($_POST['upd_pemberi'])) { // memproses update pemberi jika data pemberi di POST pada halaman edit_pemberi dan dialihkan ke halaman pemberi
+                $pemberi->kd_pemberi = $_POST['kd_pemberi'];
                 $pemberi->nama_pemberi = $_POST['nama_pemberi'];
                 $pemberi->alamat_pemberi = $_POST['alamat_pemberi'];
                 $pemberi->telp_pemberi = $_POST['telp_pemberi'];
                 $pemberi->pic_pemberi = $_POST['pic_pemberi'];
                 $pemberi->telp_pic_pemberi = $_POST['telp_pic_pemberi'];
+                //var_dump($pemberi);
                 $pemberi->update($pemberi);
                 $this->addPemberi();
             } else {  // jika tidak ada id pada url dan tidak ada data pemberi di POST dialirhkan ke halaman pemberi

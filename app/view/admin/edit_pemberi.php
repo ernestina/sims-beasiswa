@@ -6,6 +6,7 @@
     <div id="form-title"><h1>EDIT DATA STRATA</h1></div>
     <div id="form-input">
         <form method="POST" action="<?php /*$_SERVER['PHP_SELF']; */ echo URL.'admin/updPemberi'?>">
+        <input type="hidden" name="kd_pemberi" id="kd" size="50" value="<?php echo $this->pemberi->kd_pemberi;?>">
         <label>Nama</label><input type="text" name="nama_pemberi" id="nama" size="50" value="<?php echo $this->pemberi->nama_pemberi;?>"></br>
         <label>Alamat</label><textarea name="alamat_pemberi" id="alamat" cols="50" rows="1"><?php echo $this->pemberi->alamat_pemberi;?></textarea></br>
         <label>Telepon</label><input type="text" name="telp_pemberi" id="telepon" size="15" value="<?php echo $this->pemberi->telp_pemberi;?>"></br>
