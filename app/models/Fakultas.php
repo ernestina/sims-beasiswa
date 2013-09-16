@@ -32,9 +32,9 @@ class Fakultas{
      */
     public function get_fakul($limit=null, $batas=null){
         $sql = "SELECT a.KD_FAKUL as KD_FAKUL,
-                b.NAMA_UNIV as KD_UNIV,
-                a.NAMA_FAKUL as NAMA_FAKUL,
-                a.ALAMAT_FAKUL as ALAMAT_FAKUL,
+                b.NM_UNIV as KD_UNIV,
+                a.NM_FAKUL as NM_FAKUL,
+                a.ALMT_FAKUL as ALMT_FAKUL,
                 a.TELP_FAKUL as TELP_FAKUL
                 FROM ".$this->_table." a
                 LEFT JOIN ".$this->_tb_univ." b ON a.KD_UNIV=b.KD_UNIV";
@@ -47,8 +47,8 @@ class Fakultas{
             $fakul = new $this($this->registry);
             $fakul->set_kode_fakul($val['KD_FAKUL']);
             $fakul->set_kode_univ($val['KD_UNIV']);
-            $fakul->set_nama($val['NAMA_FAKUL']);
-            $fakul->set_alamat($val['ALAMAT_FAKUL']);
+            $fakul->set_nama($val['NM_FAKUL']);
+            $fakul->set_alamat($val['ALMT_FAKUL']);
             $fakul->set_telepon($val['TELP_FAKUL']);
             $data[] = $fakul;
         }
@@ -69,8 +69,8 @@ class Fakultas{
         foreach($result as $val){
             $this->set_kode_fakul($val['KD_FAKUL']);
             $this->set_kode_univ($val['KD_UNIV']);
-            $this->set_nama($val['NAMA_FAKUL']);
-            $this->set_alamat($val['ALAMAT_FAKUL']);
+            $this->set_nama($val['NM_FAKUL']);
+            $this->set_alamat($val['ALMT_FAKUL']);
             $this->set_telepon($val['TELP_FAKUL']);
         }
         

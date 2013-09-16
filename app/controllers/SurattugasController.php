@@ -101,11 +101,12 @@ class SurattugasController extends BaseController{
             $data['FILE_ST']=$upload->getFileTo();
             
         }
-        var_dump($data);
         
+        $st->set_kd_st($kd_st);
+        $st->update_st($data);
+        header('location:'.URL.'surattugas/datast');
         
     }
-
 
     public function del_st($kd_st){
         $st = new SuratTugas($this->registry);
@@ -115,6 +116,21 @@ class SurattugasController extends BaseController{
         $st->del_st();
         if(file_exists($file)) unlink($file);
         header('location:'.URL.'surattugas/datast');
+    }
+    
+    public function get_data_st(){
+        $st = new SuratTugas($this->registry);
+        $param = $_POST['param'];
+        $param = explode(",", $param);
+        $univ = $param[0];
+        $thn = $param[1];
+        $this->view->d_st=array();
+        if($univ==0 AND $thn==0){
+            $this->view->d_st = $st->get_surat_tugas();
+        }else{
+            $this->view->d_st = $st->get_surat_tugas_by_univ_thn_masuk($univ, $thn);
+        }
+        $this->view->load('riwayat_tb/tabel_st');
     }
 }
 ?>

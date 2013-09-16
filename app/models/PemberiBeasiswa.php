@@ -5,131 +5,74 @@
  * and open the template in the editor.
  */
 
-class PemberiBeasiswa extends BaseModel {
-
-    public $kd_pemberi;
-    public $nama_pemberi;
-    public $alamat_pemberi;
-    public $telp_pemberi;
-    public $pic_pemberi;
-    public $telp_pic_pemberi;
-
+class PemberiBeasiswa{
+    
+    private $_kode;
+    private $_nama;
+    private $_alamat;
+    private $_telp;
+    private $_pic;
+    private $_telp_pic;
+    private $_table = 'r_pemb';
+    
     public function __construct() {
-        parent::__construct();
+        ;
+    }
+    
+    public function get_pemb_beasiswa(){
+        
     }
 
-    /*
-     * mendapatkan seluruh data strata dari database dalam bentuk array
-     * mengubah masing-masing array ke dalam objek stata
-     * return array objek 
-     */
-
-    public function get_All() {
-        $table = "d_pemb";
-        $sql = "SELECT * FROM $table";
-        $result = $this->db->select($sql);
-        //var_dump($result);
-        $data = array();
-        foreach ($result as $val) {
-            $pemberi = new $this();
-            $pemberi->kd_pemberi = $val['KD_PEMB'];
-            $pemberi->nama_pemberi = $val['NM_PEMB'];
-            $pemberi->alamat_pemberi = $val['ALMT_PEMB'];
-            $pemberi->telp_pemberi = $val['TELP_PEMB'];
-            $pemberi->pic_pemberi = $val['PIC_PEMB'];
-            $pemberi->telp_pic_pemberi = $val['TELP_PIC_PEMB'];
-            $data[] = $pemberi;
-        }
-        //var_dump($data);
-        return $data;
+    public function set_kode($kode){
+        $this->_kode = $kode;
+    }
+    
+    public function set_nama($nama){
+        $this->_nama = $nama;
+    }
+    
+    public function set_alamat($alamat){
+        $this->_alamat = $alamat;
+    }
+    
+    public function set_telp($telp){
+        $this->_telp = $telp;
+    }
+    
+    public function set_pic($pic){
+        $this->_pic = $pic;
+    }
+    
+    public function set_telp_pic($telp){
+        $this->_telp_pic = $telp;
+    }
+    
+    public function get_kode(){
+        return $this->_kode;
+    }
+    
+    public function get_nama(){
+        return $this->_nama ;
+    }
+    
+    public function get_alamat(){
+        return $this->_alamat ;
+    }
+    
+    public function get_telp(){
+        return $this->_telp ;
+    }
+    
+    public function get_pic(){
+        return $this->_pic ;
+    }
+    
+    public function get_telp_pic(){
+        return $this->_telp_pic ;
     }
 
-    /*
-     * mendapatkan seluruh data strata dari database dalam bentuk array
-     * mengubah masing-masing array ke dalam objek stata
-     * return array objek 
-     */
-
-    public function get_by_id($id) {
-        $table = "d_pemb";
-        $where = "KD_PEMB='" . $id . "'";
-        $sql = "SELECT * FROM $table where $where";
-        $result = $this->db->select($sql);
-        //var_dump($result);
-
-        foreach ($result as $val) {
-            $pemberi = new $this();
-            $pemberi->kd_pemberi = $val['KD_PEMB'];
-            $pemberi->nama_pemberi = $val['NM_PEMB'];
-            $pemberi->alamat_pemberi = $val['ALMT_PEMB'];
-            $pemberi->telp_pemberi = $val['TELP_PEMB'];
-            $pemberi->pic_pemberi = $val['PIC_PEMB'];
-            $pemberi->telp_pic_pemberi = $val['TELP_PIC_PEMB'];
-        }
-        //var_dump($data);
-        return $pemberi;
+    public function __destruct() {
+        ;
     }
-
-    /*
-     * menambahkan data strata ke dalam database
-     * param objek strata diubah ke bentuk array
-     * return void 
-     */
-
-    public function add(PemberiBeasiswa $pemberi) {
-        $table = "d_pemb";
-        $data = array(
-            'NM_PEMB' => $pemberi->nama_pemberi,
-            'ALMT_PEMB' => $pemberi->alamat_pemberi,
-            'TELP_PEMB' => $pemberi->telp_pemberi,
-            'PIC_PEMB' => $pemberi->pic_pemberi,
-            'TELP_PIC_PEMB' => $pemberi->telp_pic_pemberi
-        );
-        //var_dump($data);
-        $this->db->insert($table, $data);
-    }
-
-    /*
-     * menghapus data strata dari database
-     * param id = kd_strata
-     * return void 
-     */
-
-    public function delete($id = null) {
-        $table = "d_PEMB";
-        $where = 'KD_PEMB=' . $id;
-        //echo $id;
-        $this->db->delete($table, $where);
-    }
-
-    public function update(PemberiBeasiswa $pemberi) {
-        $table = "d_pemb";
-        $data = array(
-            'NM_PEMB' => $pemberi->nama_pemberi,
-            'ALMT_PEMB' => $pemberi->alamat_pemberi,
-            'TELP_PEMB' => $pemberi->telp_pemberi,
-            'PIC_PEMB' => $pemberi->pic_pemberi,
-            'TELP_PIC_PEMB' => $pemberi->telp_pic_pemberi
-        );
-        $where = "KD_PEMB='" . $pemberi->kd_pemberi . "'";
-        $this->db->update($table, $data, $where);
-    }
-
-    /*
-     * mengecek apakah nilai objek terisi/tidak kosong
-     * param objek pemberi
-     * return boolean
-     */
-
-    public function isEmpty(PemberiBeasiswa $pemberi) {
-        $cek = true;
-        if ($pemberi->nama_pemberi != "" && $pemberi->telp_pemberi != "" && $pemberi->alamat_pemberi != ""
-                && $pemberi->pic_pemberi != "" && $pemberi->telp_pic_pemberi != "") {
-            $cek = false;
-        }
-        return $cek;
-    }
-
 }
-
 ?>

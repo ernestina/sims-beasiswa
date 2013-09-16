@@ -19,7 +19,7 @@ class SuratTugas {
     private $_tgl_selesai;
     private $_th_masuk;
     private $_file;
-    private $_tb_st = 'surat_tugas';
+    private $_tb_st = 'd_srt_tugas';
 
     public function __construct($registry) {
         $this->registry = $registry;
@@ -69,6 +69,54 @@ class SuratTugas {
         }
 
         return $this;
+    }
+    
+    public function get_surat_tugas_by_univ_thn_masuk($univ,$thn){
+        $sql = "SELECT 
+            a.KD_ST as KD_ST,
+            a.KD_JUR as KD_JUR,
+            a.KD_PEMB as KD_PEMB,
+            a.KD_JENIS_ST as KD_JENIS_ST,
+            a.KD_ST_LAMA as KD_ST_LAMA,
+            a.NOMOR_ST as NOMOR_ST,
+            a.TANGGAL_ST as TANGGAL_ST,
+            a.TANGGAL_MULAI_ST as TANGGAL_MULAI_ST,
+            a.TANGGAL_SELESAI_ST as TANGGAL_SELESAI_ST,
+            a.TAHUN_MASUK as TAHUN_MASUK,
+            a.FILE_ST as FILE_ST
+            FROM ".$this->_tb_st." a";
+        if($univ==0 AND $thn!=0){
+            $sql .=" WHERE a.TAHUN_MASUK=".$thn;
+        }else if($univ!=0 AND $thn==0){
+            $sql .=" JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+                LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
+                LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV
+                WHERE d.KD_UNIV=".$univ;
+        }else{
+            $sql .=" JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+                LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
+                LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV
+                WHERE a.TAHUN_MASUK=".$thn." AND d.KD_UNIV=".$univ;
+        }
+        
+        $result = $this->db->select($sql);
+        $data = array();
+        foreach ($result as $val) {
+            $st = new $this($this->registry);
+            $st->set_kd_st($val['KD_ST']);
+            $st->set_jur($val['KD_JUR']);
+            $st->set_nomor($val['NOMOR_ST']);
+            $st->set_st_lama($val['KD_ST_LAMA']);
+            $st->set_jenis_st($val['KD_JENIS_ST']);
+            $st->set_tgl_st($val['TANGGAL_ST']);
+            $st->set_tgl_mulai($val['TANGGAL_MULAI_ST']);
+            $st->set_tgl_selesai($val['TANGGAL_SELESAI_ST']);
+            $st->set_th_masuk($val['TAHUN_MASUK']);
+            $st->set_file($val['FILE_ST']);
+            $data[] = $st;
+        }
+
+        return $data;
     }
 
     /*
@@ -121,8 +169,8 @@ class SuratTugas {
         foreach ($result as $val) {
             $jst = new JenisSuratTugas();
             $jst->set_kode($val['KD_JENIS_ST']);
-            $jst->set_nama($val['NAMA_JENIS_ST']);
-            $jst->set_keterangan($val['KETERANGAN_JENIS_ST']);
+            $jst->set_nama($val['NM_JNS_ST']);
+            $jst->set_keterangan($val['KET_JNS_ST']);
             $data[] = $jst;
         }
 

@@ -20,12 +20,12 @@
                     foreach ($this->fakul as $val){
                         if(isset($this->d_ubah)){
                             if($val->get_kode_fakul()==$this->d_ubah->get_kode_fakul()){
-                                echo "<option value=".$val->get_kode_fakul()." selected>".$val->get_nama()."</option>";
+                                echo "<option value=".$val->get_kode_fakul()." selected>[".$val->get_kode_univ()."] ".$val->get_nama()."</option>";
                             }else{
-                                echo "<option value=".$val->get_kode_fakul()." >".$val->get_nama()."</option>";
+                                echo "<option value=".$val->get_kode_fakul()." >[".$val->get_kode_univ()."] ".$val->get_nama()."</option>";
                             }
                         }else{
-                            echo "<option value=".$val->get_kode_fakul()." >".$val->get_nama()."</option>";
+                            echo "<option value=".$val->get_kode_fakul()." >[".$val->get_kode_univ()."] ".$val->get_nama()."</option>";
                         }
                     }
             ?>

@@ -17,24 +17,24 @@ class KontrakController extends BaseController{
     
     public function display(){
         
-        $this->view->load('kontrak/data_kontrak');
+        $this->view->render('kontrak/data_kontrak');
     }
     
     public function rekam(){
         
-        $this->view->load('kontrak/rekam_kontrak');
+        $this->view->render('kontrak/rekam_kontrak');
     }
     
     public function biaya(){
-        $this->view->load('kontrak/data_biaya');
+        $this->view->render('kontrak/data_biaya');
     }
     
     public function rekambiaya(){
-        $this->view->load('kontrak/rekam_biaya');
+        $this->view->render('kontrak/rekam_biaya');
     }
     
     public function monitoring(){
-        $this->view->load('kontrak/mon_pembayaran');
+        $this->view->render('kontrak/mon_pembayaran');
     }
 }
 ?>

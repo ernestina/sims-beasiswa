@@ -37,14 +37,14 @@ class Jurusan{
      */
     public function get_jurusan($limit=null,$batas=null){
         $sql = "SELECT a.KD_JUR as KD_JUR,
-                b.NAMA_FAKUL as KD_FAKUL,
+                b.NM_FAKUL as KD_FAKUL,
                 a.KD_STRATA as KD_STRATA,
-                a.NAMA_JUR as NAMA_JUR,
-                a.ALAMAT_JUR as ALAMAT_JUR,
+                a.NM_JUR as NM_JUR,
+                a.ALMT_JUR as ALMT_JUR,
                 a.TELP_JUR as TELP_JUR,
                 a.PIC_JUR as PIC_JUR,
                 a.TELP_PIC_JUR as TELP_PIC_JUR,
-                a.STATUS_JUR as STATUS_JUR
+                a.STS_JUR as STS_JUR
                 FROM ".$this->_table." a
                 LEFT JOIN ".$this->_tb_fakul." b ON a.KD_FAKUL=b.KD_FAKUL";
         if(!is_null($limit) AND !is_null($batas)) {
@@ -57,12 +57,12 @@ class Jurusan{
             $jur->set_kode_jur($val['KD_JUR']);
             $jur->set_kode_fakul($val['KD_FAKUL']);
             $jur->set_kode_strata($val['KD_STRATA']);
-            $jur->set_nama($val['NAMA_JUR']);
-            $jur->set_alamat($val['ALAMAT_JUR']);
+            $jur->set_nama($val['NM_JUR']);
+            $jur->set_alamat($val['ALMT_JUR']);
             $jur->set_telepon($val['TELP_JUR']);
             $jur->set_pic($val['PIC_JUR']);
             $jur->set_telp_pic($val['TELP_PIC_JUR']);
-            $jur->set_status($val['STATUS_JUR']);
+            $jur->set_status($val['STS_JUR']);
             $data[]=$jur;
         }
         
@@ -81,12 +81,12 @@ class Jurusan{
             $this->set_kode_jur($val['KD_JUR']);
             $this->set_kode_fakul($val['KD_FAKUL']);
             $this->set_kode_strata($val['KD_STRATA']);
-            $this->set_nama($val['NAMA_JUR']);
-            $this->set_alamat($val['ALAMAT_JUR']);
+            $this->set_nama($val['NM_JUR']);
+            $this->set_alamat($val['ALMT_JUR']);
             $this->set_telepon($val['TELP_JUR']);
             $this->set_pic($val['PIC_JUR']);
             $this->set_telp_pic($val['TELP_PIC_JUR']);
-            $this->set_status($val['STATUS_JUR']);
+            $this->set_status($val['STS_JUR']);
         }
         
         return $this;

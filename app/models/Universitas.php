@@ -44,11 +44,11 @@ class Universitas {
             $univ->set_kode_in($val['KD_UNIV']);
             $univ->set_kode($val['SINGKAT_UNIV']);
             $univ->set_pic($val['KD_PIC']);
-            $univ->set_nama($val['NAMA_UNIV']);
-            $univ->set_alamat($val['ALAMAT_UNIV']);
+            $univ->set_nama($val['NM_UNIV']);
+            $univ->set_alamat($val['ALMT_UNIV']);
             $univ->set_telepon($val['TELP_UNIV']);
             $univ->set_status($val['STATUS_UNIV']);
-            $univ->set_lokasi($val['LOKASI_UNIV']);
+            $univ->set_lokasi($val['LOK_UNIV']);
             $data[] = $univ;
         }
         
@@ -71,11 +71,11 @@ class Universitas {
             $this->set_kode_in($val['KD_UNIV']);
             $this->set_kode($val['SINGKAT_UNIV']);
             $this->set_pic($val['KD_PIC']);
-            $this->set_nama($val['NAMA_UNIV']);
-            $this->set_alamat($val['ALAMAT_UNIV']);
+            $this->set_nama($val['NM_UNIV']);
+            $this->set_alamat($val['ALMT_UNIV']);
             $this->set_telepon($val['TELP_UNIV']);
             $this->set_status($val['STATUS_UNIV']);
-            $this->set_lokasi($val['LOKASI_UNIV']);
+            $this->set_lokasi($val['LOK_UNIV']);
         }
         return $this;
     }
