@@ -5,15 +5,14 @@
     </select>
 </div>
 <div>
-    
-    <?php //if($this->err != "") { echo $this->err ; }?>
     <br/>
 <div id="form">
     <div id="form-input" >
-        <form method="POST" action="<?php /*$_SERVER['PHP_SELF'];*/ echo URL.'admin/addStrata'?>">
-        <label>Kode</label><input type="text" name="kode_strata" id="kode" size="8"></br>
-        <label>Nama</label><input type="text" name="nama_strata" id="nama" size="50"></br>
-        <label></label><input type="reset" value="BATAL"><input type="submit" name="add_strata" value="SIMPAN">
+        <form method="POST" action="<?php /*$_SERVER['PHP_SELF'];*/ echo URL.'admin/updStrata'?>">
+            <input type="hidden" name="kd_strata" id="kd" value="<?php echo $this->strata->kd_strata;?>">
+        <label>Kode</label><input type="text" name="kode_strata" id="kode" size="8" value="<?php echo $this->strata->kode_strata;?>"></br>
+        <label>Nama</label><input type="text" name="nama_strata" id="nama" size="50" value="<?php echo $this->strata->nama_strata;?>"></br>
+        <label></label><input type="button" onclick="" value="BATAL"><input type="submit" name="upd_strata" value="SIMPAN">
         </form>
     </div>
 </div>
