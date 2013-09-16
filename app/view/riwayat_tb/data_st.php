@@ -12,7 +12,7 @@
             <label>jenis ST</label><select name="jns_st"></select></br>
             <label>Tanggal ST</label><input type="date" name="tgl_st" id="tgl_st"></br>
             <label>Tanggal Mulai ST</label><input type="date" name="tgl_mulai" id="tgl_mulai"></br>
-            <label>Tanggal Akhir ST</label><input type="date" name="tgl_akhir" id="tgl_akhir"></br>
+            <label>Tanggal Akhir ST</label><input type="date" name="tgl_selesai" id="tgl_akhir"></br>
             <label>Pemberi Beasiswa</label><select name="pemb"></select></br>
             <label>Universitas</label><select name="univ" id="univ"></select></br>
             <label>Jurusan/Prodi</label><select name="jur" id="jur"></select></br>

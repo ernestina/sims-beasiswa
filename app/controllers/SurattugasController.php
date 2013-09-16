@@ -49,7 +49,6 @@ class SurattugasController extends BaseController{
         if(!is_null($id)){
             $st->set_kd_st($id);
             $this->view->d_ubah = $st->get_surat_tugas_by_id($st);
-            var_dump($this->view->d_ubah);
         }
         $this->view->d_st = $st->get_surat_tugas();
         
