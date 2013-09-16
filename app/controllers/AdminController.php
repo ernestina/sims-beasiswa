@@ -137,7 +137,9 @@ class AdminController extends BaseController {
         if (isset($_POST['add_strata'])) {
             $strata->kode_strata = $_POST["kode_strata"];
             $strata->nama_strata = $_POST["nama_strata"];
-            $strata->add($strata);
+            if ($strata->isEmpty($strata) == FALSE) {
+                $strata->add($strata);
+            }
         }
         $data = $strata->get_All();
         //var_dump($data);
@@ -345,11 +347,16 @@ class AdminController extends BaseController {
                 $strata->kode_strata = $_POST["kode_strata"];
                 $strata->nama_strata = $_POST["nama_strata"];
                 //var_dump($strata);
-                $strata->update($strata);
-                $this->addStrata();
+                if ($strata->isEmpty($strata) == FALSE) {
+                    $strata->update($strata);
+                    header('location:' . URL . 'admin/addStrata/');
+                } else {
+                    header('location:' . URL . 'admin/updStrata/'.$strata->kd_strata);
+                }
             } else {  // jika tidak ada id pada url dan tidak ada data strata di POST dialirhkan ke halaman strata
-                $this->addStrata();
+                header('location:' . URL . 'admin/addStrata/');
             }
+            
         }
     }
 
@@ -544,7 +551,7 @@ class AdminController extends BaseController {
      * @param id_pemberi
      */
 
-    public function delPemberi($id=null) {
+    public function delPemberi($id = null) {
         if ($id != null) {
             $pemberi = new Pemberi();
             $pemberi->delete($id);

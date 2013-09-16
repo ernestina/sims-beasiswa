@@ -29,7 +29,7 @@ class Strata extends BaseModel {
         $data = array();
         foreach ($result as $val) {
             $strata = new $this();
-            $strata->kd_strata= $val["KD_STRATA"];
+            $strata->kd_strata = $val["KD_STRATA"];
             $strata->kode_strata = $val["KODE_STRATA"];
             $strata->nama_strata = $val["NAMA_STRATA"];
             $data[] = $strata;
@@ -90,14 +90,34 @@ class Strata extends BaseModel {
         $this->db->delete($table, $where);
     }
 
+    /*
+     * mengupdate data strata
+     * param objek strata
+     * return void 
+     */
+
     public function update(Strata $strata) {
         $table = "r_strata";
         $data = array(
             'KODE_STRATA' => $strata->kode_strata,
             'NAMA_STRATA' => $strata->nama_strata
         );
-        $where = "KD_STRATA='" . $strata->kd_strata. "'";
+        $where = "KD_STRATA='" . $strata->kd_strata . "'";
         $this->db->update($table, $data, $where);
+    }
+
+    /*
+     * mengecek apakah nilai objek terisi/tidak kosong
+     * param objek strata
+     * return boolean
+     */
+
+    public function isEmpty(Strata $strata) {
+        $cek = true;
+        if ($strata->kode_strata != "" && $strata->nama_strata != "") {
+            $cek = false;
+        }
+        return $cek;
     }
 
 }
