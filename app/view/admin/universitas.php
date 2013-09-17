@@ -20,15 +20,16 @@
             }
         ?>
         <div id="wkode"></div>
-        <label>Kode</label><input type="text" name="kode" id="kode" size="8" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_kode():'';?>"></br>
+		<div class="kiri">
+        <label>Kode</label><input type="text" name="kode" id="kode" size="8" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_kode():'';?>">
         <div id="wnama" class="warning_field"></div>
-        <label>Nama</label><input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():'';?>"></br>
+        <label>Nama</label><input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():'';?>">
         <div id="walamat"></div>
-        <label>Alamat</label><textarea name="alamat" id="alamat" cols="50" rows="10"><?php echo isset($this->d_ubah)?$this->d_ubah->get_alamat():'';?></textarea></br>
+        <label>Alamat</label><textarea name="alamat" id="alamat" rows="8" type="text"><?php echo isset($this->d_ubah)?$this->d_ubah->get_alamat():'';?></textarea>
         <div id="wtelepon"></div>
-        <label>Telepon</label><input type="text" name="telepon" id="telepon" size="15" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telepon():'';?>"></br>
+        <label>Telepon</label><input type="text" name="telepon" id="telepon" size="15" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telepon():'';?>">
         <div id="wlokasi"></div>
-        <label>Lokasi</label><input type="text" name="lokasi" id="lokasi" size="30" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_lokasi():'';?>"></br>
+        <label>Lokasi</label><input type="text" name="lokasi" id="lokasi" size="30" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_lokasi():'';?>">
 <!--        <label>Status</label><select id="status" name="status">
             <option value="aktif">aktif</option>
             <option value="non_aktif">non aktif</option>
@@ -37,10 +38,14 @@
         <label>PIC</label><select id="pic" name="pic">
             <option value="0">afies</option>
             <option value="1">imron</option>
-        </select></br>
-        <label></label><input type="button" onclick="" value="BATAL"><input type="submit" name="<?php echo isset($this->d_ubah)?'upd_univ':'add_univ';?>" value="SIMPAN" onClick="return cek();">
+        </select>
+        <ul class="inline tengah">
+			<li><input class="normal" type="submit" onclick="" value="BATAL"></li>
+			<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'upd_univ':'add_univ';?>" value="SIMPAN" onClick="return cek();"></li>
+		</ul>
         </form>
     </div>
+	</div>
    </fieldset>
 </div>
 <div class="kolom4" id="table">
