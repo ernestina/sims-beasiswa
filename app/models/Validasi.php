@@ -13,7 +13,7 @@ class Validasi{
     const STRING_PATTERN = '/^[_a-zA-Z- ]*$/';
     const NIP1_PATTERN = '/^060[0-9]{6}$/';
     const NIP2_PATTERN = '/^19([0-9]{14})([1-2]{1})([0]{1})([0-9]{2})$/';
-    const SP2S_PATTERN = '/^([0-9]{6})([A-Z]{1})/';
+    const SP2D_PATTERN = '/^([0-9]{6})([A-Z]{1})/';
     
     
     public function __construct() {
@@ -26,7 +26,7 @@ class Validasi{
      * return boolean
      */
     public static function validate_telephone($number){
-        if(!preg_match(TELP_PATTERN, $number)) return FALSE;
+        if(!preg_match('/^0([1-9]{2,3})[-. ]([0-9]{5,7})$/', $number)) return FALSE;
         return TRUE;
     }
     
@@ -36,7 +36,7 @@ class Validasi{
      * return boolean
      */
     public static function validate_email($email){
-        if(!preg_match(EMAIL_PATTERN, $email)) return FALSE;
+        if(!preg_match('/^[a-zA-Z0-9]*(|[-._][a-zA-Z0-9]*)\@([a-z]*)[.]([a-z]{3,4})/', $email)) return FALSE;
         return TRUE;
     }
     
@@ -67,7 +67,7 @@ class Validasi{
      * return boolean
      */
     public static function validate_string($text){
-        if(!preg_match(STRING_PATTERN, $text)) return FALSE;
+        if(!preg_match('/^[_a-zA-Z- ]*$/', $text)) return FALSE;
         return TRUE;
         
     }
@@ -78,7 +78,7 @@ class Validasi{
      * return boolean
      */
     public static function validate_number($number){
-        if(!preg_match(NUM_PATTERN, $number)) return FALSE;
+        if(!preg_match('/^[0-9]*$/', $number)) return FALSE;
         return TRUE;
     }
     
@@ -87,7 +87,7 @@ class Validasi{
      * return boolean
      */
     public static function validate_sp2d($sp2d){
-        if(!preg_match(SP2D_PATTERN, $sp2d)) return FALSE;
+        if(!preg_match('/^([0-9]{6})([A-Z]{1})/', $sp2d)) return FALSE;
         return TRUE;
     }
     
@@ -103,7 +103,7 @@ class Validasi{
         
         if($nip_9 OR $nip_18){
             if(strlen($nip)==9){
-                return preg_match(NIP1_PATTERN,$nip);
+                return preg_match('/^060[0-9]{6}$/',$nip);
             }else if(strlen($nip)==18){
                 $th_lhr = (int) substr($nip, 0,4);
                 $bl_lhr = (int) substr($nip, 4,2);
@@ -112,7 +112,7 @@ class Validasi{
                 $resign = $year-50;
                 if($resign<$th_lhr AND $th_lhr<($year-18)){
                     if(0<$bl_lhr AND $bl_lhr<13 AND 0<$bl_angkat AND $bl_angkat<13){
-                        if(preg_match(NIP2_PATTERN, $nip)) return TRUE;
+                        if(preg_match('/^19([0-9]{12})([1-2]{1})([0]{1})([0-9]{2})$/', $nip)) return TRUE;
                         return FALSE;
                     }
                 }

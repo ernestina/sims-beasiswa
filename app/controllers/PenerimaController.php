@@ -59,6 +59,7 @@ class PenerimaController extends BaseController{
                 'FOTO_PB'=>$upload->getFileTo(),
             );
             
+            if(!Validasi::validate_nip($nip)) echo 'nip salah....!';
             if($pb->add_penerima($data)){
                 /*
                  * upload file
