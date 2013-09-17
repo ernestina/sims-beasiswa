@@ -38,13 +38,13 @@ class SuratTugas {
             $st = new $this($this->registry);
             $st->set_kd_st($val['KD_ST']);
             $st->set_jur($val['KD_JUR']);
-            $st->set_nomor($val['NOMOR_ST']);
+            $st->set_nomor($val['NO_ST']);
             $st->set_st_lama($val['KD_ST_LAMA']);
             $st->set_jenis_st($val['KD_JENIS_ST']);
-            $st->set_tgl_st($val['TANGGAL_ST']);
-            $st->set_tgl_mulai($val['TANGGAL_MULAI_ST']);
-            $st->set_tgl_selesai($val['TANGGAL_SELESAI_ST']);
-            $st->set_th_masuk($val['TAHUN_MASUK']);
+            $st->set_tgl_st($val['TGL_ST']);
+            $st->set_tgl_mulai($val['TGL_MUL_ST']);
+            $st->set_tgl_selesai($val['TGL_SEL_ST']);
+            $st->set_th_masuk($val['THN_MASUK']);
             $st->set_file($val['FILE_ST']);
             $data[] = $st;
         }
@@ -58,13 +58,13 @@ class SuratTugas {
         foreach ($result as $val) {
             $this->set_kd_st($val['KD_ST']);
             $this->set_jur($val['KD_JUR']);
-            $this->set_nomor($val['NOMOR_ST']);
+            $this->set_nomor($val['NO_ST']);
             $this->set_st_lama($val['KD_ST_LAMA']);
             $this->set_jenis_st($val['KD_JENIS_ST']);
-            $this->set_tgl_st($val['TANGGAL_ST']);
-            $this->set_tgl_mulai($val['TANGGAL_MULAI_ST']);
-            $this->set_tgl_selesai($val['TANGGAL_SELESAI_ST']);
-            $this->set_th_masuk($val['TAHUN_MASUK']);
+            $this->set_tgl_st($val['TGL_ST']);
+            $this->set_tgl_mulai($val['TGL_MUL_ST']);
+            $this->set_tgl_selesai($val['TGL_SEL_ST']);
+            $this->set_th_masuk($val['THN_MASUK']);
             $this->set_file($val['FILE_ST']);
         }
 

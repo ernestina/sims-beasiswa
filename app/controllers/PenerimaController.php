@@ -42,41 +42,21 @@ class PenerimaController extends BaseController{
         if(isset($_POST['sb_add'])){
             $st = $_POST['st'];
             $bank = $_POST['bank'];
-            $jur = $_POST['jur'];
-            $status = $_POST['status'];
-            $nama = $_POST['nama'];
             $nip = $_POST['nip'];
-            $gol = $_POST['gol'];
-            $unit_asal = $_POST['unit_asal'];
             $telp = $_POST['telp'];
             $alamat = $_POST['alamat'];
             $email = $_POST['email'];
             $no_rek = $_POST['no_rek'];
-            $jkel = $_POST['jk'];
-            $tgl_lapor = Tanggal::ubahFormatTanggal($_POST['tgl_lap']);
-            $skl = $_POST['skl'];
-            $spmt = $_POST['spmt'];
-            $skripsi = $_POST['skripsi'];
             
             $data = array(
                 'KD_ST'=>$st,
-                'KD_JUR'=>$jur,
                 'KD_BANK'=>$bank,
-                'KD_STATUS_TB'=>$status,
                 'NIP_PB'=>$nip,
-                'NAMA_PB'=>$nama,
-                'JK_PB'=>$jkel,
-                'GOLONGAN_PB'=>$gol,
-                'UNIT_ASAL_PB'=>$unit_asal,
                 'EMAIL_PB'=>$email,
                 'TELP_PB'=>$telp,
                 'ALAMAT_PB'=>$alamat,
                 'NO_REKENING_PB'=>$no_rek,
                 'FOTO_PB'=>$upload->getFileTo(),
-                'TANGGAL_LAPOR_PB'=>$tgl_lapor,
-                'NOMOR_SKL_PB'=>$skl,
-                'NO_SPMT_PB'=>$spmt,
-                'JUDUL_SKRIPSI_PB'=>$skripsi
             );
             
             if($pb->add_penerima($data)){
@@ -93,7 +73,8 @@ class PenerimaController extends BaseController{
             $pb->set_kd_pb($id);
             $this->view->d_ubah = $pb->get_penerima_by_id($pb);
         }
-        
+        $st = new SuratTugas($this->registry);
+        $this->view->d_st = $st->get_surat_tugas();
         $this->view->d_pb = $pb->get_penerima();
         $this->view->render('riwayat_tb/penerima_beasiswa');
         

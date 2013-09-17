@@ -13,9 +13,6 @@ class SurattugasController extends BaseController{
     
     public function datast($id=null){
         $st = new SuratTugas($this->registry);
-        $univ = new Universitas($this->registry);
-        $jur = new Jurusan($this->registry);
-        $pemb = new PemberiBeasiswa();
         if(isset($_POST['sb_add'])){
             $jur = $_POST['jur'];
             $jenis = $_POST['jns_st'];
@@ -37,11 +34,11 @@ class SurattugasController extends BaseController{
                 'KD_PEMB'=>$pemb,
                 'KD_JENIS_ST'=>$jenis,
                 'KD_ST_LAMA'=>$st_lama,
-                'NOMOR_ST'=>$nomor,
-                'TANGGAL_ST'=>  Tanggal::ubahFormatTanggal($tgl_st),
-                'TANGGAL_MULAI_ST'=>  Tanggal::ubahFormatTanggal($tgl_mulai),
-                'TANGGAL_SELESAI_ST'=>  Tanggal::ubahFormatTanggal($tgl_selesai),
-                'TAHUN_MASUK'=>$th_masuk,
+                'NO_ST'=>$nomor,
+                'TGL_ST'=>  Tanggal::ubahFormatTanggal($tgl_st),
+                'TGL_MUL_ST'=>  Tanggal::ubahFormatTanggal($tgl_mulai),
+                'TGL_SEL_ST'=>  Tanggal::ubahFormatTanggal($tgl_selesai),
+                'THN_MASUK'=>$th_masuk,
                 'FILE_ST'=>$upload->getFileTo()
             );
             
@@ -54,6 +51,9 @@ class SurattugasController extends BaseController{
             $this->view->d_ubah = $st->get_surat_tugas_by_id($st);
         }
         
+        $univ = new Universitas($this->registry);
+        $jur = new Jurusan($this->registry);
+        $pemb = new PemberiBeasiswa();
         $this->view->d_pemb = $pemb->get_All();
         $this->view->d_st_lama = $st->get_surat_tugas();
         $this->view->d_jst = $st->get_st_class();
