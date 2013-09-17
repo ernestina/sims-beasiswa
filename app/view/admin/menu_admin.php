@@ -1,5 +1,5 @@
 <div class="menu_admin">
-    <ul>
+    <ul class="upline">
         <li><a href="<?php echo URL;?>admin/addUniversitas">UNIVERSITAS</a></li>
         <li><a href="<?php echo URL;?>admin/addFakultas">FAKULTAS</a></li>
         <li><a href="<?php echo URL;?>admin/addJurusan">JURUSAN</a></li>
