@@ -204,23 +204,6 @@ class AdminController extends BaseController {
     }
 
     /*
-     * tambah referensi bank
-     */
-
-    public function addBank() {
-        if (isset($_POST['add_bank'])) {
-            $nama = $_POST['nama'];
-            $keterangan = $_POST['keterangan'];
-
-            $data = $keterangan . '</br>' . $nama;
-
-            echo $data;
-        }
-
-        $this->view->load('admin/bank');
-    }
-
-    /*
      * tambah referensi PIC
      */
 
