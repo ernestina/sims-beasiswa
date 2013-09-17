@@ -30,12 +30,12 @@ class AdminController extends BaseController {
             $pic = $_POST['pic'];
 
             $data = array(
-                'KD_PIC' => $pic,
+                'KD_USER' => $pic,
                 'SINGKAT_UNIV' => $kode,
-                'NAMA_UNIV' => $nama,
-                'ALAMAT_UNIV' => $alamat,
+                'NM_UNIV' => $nama,
+                'ALMT_UNIV' => $alamat,
                 'TELP_UNIV' => $telepon,
-                'LOKASI_UNIV' => $lokasi
+                'LOK_UNIV' => $lokasi
             );
             $univ->add_univ($data);
         }
@@ -66,8 +66,8 @@ class AdminController extends BaseController {
 
             $data = array(
                 'KD_UNIV' => $univ,
-                'NAMA_FAKUL' => $nama,
-                'ALAMAT_FAKUL' => $alamat,
+                'NM_FAKUL' => $nama,
+                'ALMT_FAKUL' => $alamat,
                 'TELP_FAKUL' => $telepon
             );
 
@@ -106,12 +106,12 @@ class AdminController extends BaseController {
             $data = array(
                 'KD_FAKUL' => $fak,
                 'KD_STRATA' => $strata,
-                'NAMA_JUR' => $nama,
-                'ALAMAT_JUR' => $alamat,
+                'NM_JUR' => $nama,
+                'ALMT_JUR' => $alamat,
                 'TELP_JUR' => $telepon,
                 'PIC_JUR' => $pic_jur,
                 'TELP_PIC_JUR' => $telp_pic_jur,
-                'STATUS_JUR' => $status,
+                'STS_JUR' => $status,
             );
 
             $jur->add_jurusan($data);
@@ -256,12 +256,12 @@ class AdminController extends BaseController {
 
             $data = array(
                 'KD_UNIV' => $kd_univ,
-                'KD_PIC' => $pic,
-                'KODE_UNIV' => $kode,
-                'NAMA_UNIV' => $nama,
-                'ALAMAT_UNIV' => $alamat,
+                'KD_USER' => $pic,
+                'SINGKAT_UNIV' => $kode,
+                'NM_UNIV' => $nama,
+                'ALMT_UNIV' => $alamat,
                 'TELP_UNIV' => $telepon,
-                'LOKASI_UNIV' => $lokasi
+                'LOK_UNIV' => $lokasi
             );
 
             $univ->set_kode_in($kd_univ);
@@ -286,8 +286,8 @@ class AdminController extends BaseController {
 
         $data = array(
             'KD_UNIV' => $univ,
-            'NAMA_FAKUL' => $nama,
-            'ALAMAT_FAKUL' => $alamat,
+            'NM_FAKUL' => $nama,
+            'ALMT_FAKUL' => $alamat,
             'TELP_FAKUL' => $telepon
         );
 
@@ -317,12 +317,12 @@ class AdminController extends BaseController {
         $data = array(
             'KD_FAKUL' => $fak,
             'KD_STRATA' => $strata,
-            'NAMA_JUR' => $nama,
-            'ALAMAT_JUR' => $alamat,
+            'NM_JUR' => $nama,
+            'ALMT_JUR' => $alamat,
             'TELP_JUR' => $telepon,
             'PIC_JUR' => $pic_jur,
             'TELP_PIC_JUR' => $telp_pic_jur,
-            'STATUS_JUR' => $status,
+            'STS_JUR' => $status,
         );
 
         $jur->set_kode_jur($kd_jur);
