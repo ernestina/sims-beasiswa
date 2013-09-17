@@ -29,7 +29,7 @@ class Bank extends BaseModel {
         foreach ($result as $value) {
             $bank = new Bank($registry);
             $bank->set_id($value['KD_BANK']);
-            $bank->set_nama($value['NAMA_BANK']);
+            $bank->set_nama($value['NM_BANK']);
             $bank->set_keterangan($value['KET_BANK']);
             $data [] = $bank;
         }
@@ -47,7 +47,7 @@ class Bank extends BaseModel {
         foreach ($result as $value) {
             $bank = new Bank($registry);
             $bank->set_id($value['KD_BANK']);
-            $bank->set_nama($value['NAMA_BANK']);
+            $bank->set_nama($value['NM_BANK']);
             $bank->set_keterangan($value['KET_BANK']);
             $data = $bank;
         }
