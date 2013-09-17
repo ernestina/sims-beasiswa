@@ -3,6 +3,7 @@
 <link href="../../../public/css/style.css" rel="stylesheet" media="screen">
 <body>
   <div id="wrapper">
+  
   <!--level1: Profil Penerima Beasiswa-->
 	<h1>PROFIL PENERIMA BEASISWA</h1>
 	<fieldset><legend>Profil Penerima Beasiswa</legend>
@@ -46,10 +47,10 @@
 			<label class="isian">No Rekening</label>
 			<input class="utama" type="text" id="rekening" name="rekening" />
 	</fieldset>
-<!--level2: Profil Beasiswa & Riwayat Pembayaran-->
-<div class="kolom1">
-	<fieldset><legend>Profil Beasiswa</legend>
-
+	
+	<!--level2: Profil Beasiswa & Riwayat Pembayaran-->
+	<div class="kolom1">
+		<fieldset><legend>Profil Beasiswa</legend>
 			<label class="isian">No. Surat Tugas (ST) :</label>
 			<input type="text" id="st" name="st" disabled />
 			
@@ -137,11 +138,22 @@
 				</tbody>
 			</table>
 	
-	</fieldset>
-</div>
-<!--level3: Riwayat Perkembangan Studi-->
-<div id="fitur">
+		</fieldset>
+	</div>
+	
+	<!--level3: Riwayat Perkembangan Studi-->
+	<div id="fitur">
+  
 	<fieldset><legend>Riwayat Perkembangan Studi</legend>
+		<div class="kolom5">
+		
+			<label class="isian2">Judul Skripsi :</label>
+			<textarea class="midi" type="text"></textarea>
+			<label class="isian2">Permasalahan Tugas Belajar :</label>
+			<textarea class="midi" type="text" rows="8"></textarea>
+			
+		</div>
+		
 			<label class="isian">IPK :</label>
 			<input type="text" id="IPK" name="IPK" />
 			
@@ -175,8 +187,65 @@
 					</tr>
 				</tbody>
 			</table>
+		
+		</fieldset>
+	</div>
+<!--level4 Riwayat Cuti-->
+<div id="fitur">
+	<fieldset><legend>Riwayat Cuti</legend>
+		
+		<table class="table-bordered zebra" style="display: block">
+				<thead>
+					<th>No</th>
+					<th width="100">No. Surat Cuti</th>
+					<th width="150">Tanggal Surat Cuti</th>
+					<th width="150">Periode Awal Cuti</th>
+					<th width="150">Periode Akhir Cuti</th>
+					<th width="200">Jenis Cuti</th>
+					<th width="100">File</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>1</td>
+					</tr>
+				</tbody>
+		</table>
+		
 	</fieldset>
-</div>
+</div> <!--div level 4-->
+
+<!--level5 Riwayat Penerimaan Beasiswa-->
+<div id="fitur">
+	<fieldset><legend>Riwayat Penerimaan Beasiswa</legend>
+		
+		<table class="table-bordered zebra" style="display: block">
+				<thead>
+					<th>No</th>
+					<th width="100">No. Surat Tugas</th>
+					<th width="100">Strata</th>
+					<th width="200">Universitas</th>
+					<th width="100">Jurusan</th>
+					<th width="100">Tahun Masuk</th>
+					<th width="200">Status TB</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>1</td>
+						<td>1</td>
+						<td>1</td>
+						<td>1</td>
+						<td>1</td>
+						<td>Lulus dengan perpanjangan 2</td>
+					</tr>
+				</tbody>
+		</table>
+		
+	</fieldset>
+</div> <!--div level 4-->
+<input class="sukses" type="submit" value="SUBMIT" style="font-size: 130%"/>
+
 </div> <!--wrapper-->
 
 </body>
