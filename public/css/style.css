@@ -80,12 +80,27 @@ body {
 .kolom3 {
 	width: 30%;
 	float: left;
-	margin: 20px 0px 0px 0px;
+	margin: 2px 0px 0px 0px;
 }
 .kolom4 {
 	width: 70%;
 	float: left;
-	margin: 20px 0px 0px 0px;
+	margin: 2px 0px 0px 0px;
+}
+
+.sukses {
+	border: 1px solid #5bb75b;
+	background-color: #5bb75b;
+}
+
+.warning {
+	border: 1px solid #faa732;
+	background-color: #faa732;
+}
+
+.normal {
+	border: 1px solid #da4f49;
+	background-color: #da4f49;
 }
 
 fieldset{
@@ -146,28 +161,12 @@ input[type="email"] :focus, input[type="email"]:hover {
 select[type="text"] :focus, select[type="text"]:hover {
 	border: 1px solid #2f96b4;}
 
-
 input[type="submit"]{
 	color: #ffffff;
 	width: 100px;
 	cursor: pointer;
 	float: right;
 	margin-top: 10px;
-}
-
-.sukses {
-	border: 1px solid #5bb75b;
-	background-color: #5bb75b;
-}
-
-.warning {
-	border: 1px solid #faa732;
-	background-color: #faa732;
-}
-
-.normal {
-	border: 1px solid #da4f49;
-	background-color: #da4f49;
 }
 
 input[type="button"]{
@@ -177,7 +176,6 @@ input[type="button"]{
 	width: 60px;
 	cursor: pointer;
 	float: right;
-	
 }
 
 input.sukses[type="submit"] :focus, input.sukses[type="submit"]:hover {
@@ -216,7 +214,6 @@ ol.inline > li {
 ul.upline > li{
 	display: inline-block;
 	margin: 0px 0px 0px 10px;
-
 }
 
 table {
@@ -291,4 +288,3 @@ th, td {
 .zebra tbody > tr:nth-child(odd) > th {
   background-color: #f9f9f9;
 }
-
