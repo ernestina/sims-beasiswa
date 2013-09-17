@@ -105,6 +105,7 @@
                     echo "<td><a href=".URL."admin/delJurusan/".$val->get_kode_jur().">X</a> | 
                         <a href=".URL."admin/addJurusan/".$val->get_kode_jur().">...</a></td>";
                     echo "</tr>";
+                    $no++;
                 }
             ?>
         </tbody>

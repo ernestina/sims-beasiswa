@@ -23,6 +23,7 @@
                     echo "<td><a href=".URL."surattugas/del_st/".$val->get_kd_st().">X</a> | 
                         <a href=".URL."surattugas/datast/".$val->get_kd_st().">...</a></td>";
                     echo "</tr>";
+                    $no++;
                 }
             ?>
         </table>
