@@ -138,7 +138,7 @@ class AdminController extends BaseController {
             $strata->kode_strata = $_POST["kode_strata"];
             $strata->nama_strata = $_POST["nama_strata"];
             if ($strata->isEmpty($strata) == FALSE) {
-                $strata->add($strata);
+                header('location:' . URL . 'admin/addStrata');
             }
         }
         $data = $strata->get_All();
@@ -160,13 +160,46 @@ class AdminController extends BaseController {
             $pemberi->pic_pemberi = $_POST['pic_pemberi'];
             $pemberi->telp_pic_pemberi = $_POST['telp_pic_pemberi'];
             if ($pemberi->isEmpty($pemberi) == FALSE) {
-                $pemberi->add($pemberi);
+                header('location:' . URL . 'admin/addPemberi');
             }
         }
         $data = $pemberi->get_All();
         //var_dump($data);
         $this->view->data = $data;
         $this->view->render('admin/pemberi');
+    }
+
+    /*
+     * tambah referensi pejabat
+     */
+
+    public function addPejabat() {
+        $pejabat = new Pejabat();
+        if (isset($_POST['add_pejabat'])) {
+            $pejabat->kd_pejabat = $_POST['kd_pejabat'];
+            $pejabat->nip_pejabat = $_POST['nip_pejabat'];
+            $pejabat->nama_pejabat = $_POST['nama_pejabat'];
+            $pejabat->nama_jabatan = $_POST['nama_jabatan'];
+            $pejabat->jenis_jabatan = $_POST['jenis_jabatan'];
+            if ($pejabat->isEmpty($pejabat) == FALSE) { //mengecek apakah data pejabat kosong
+                if (Validasi::cekNip($pejabat->nip_pejabat) == true) { //mengecek apakah format nip benar
+                    if ($pejabat->cekJenisJabatan($pejabat->jenis_jabatan == False)) { //mengecek apakah sudah ada pejabat dengan jenis jabatan yang sama
+                        $pejabat->add($pejabat);
+                        header('location:' . URL . 'admin/addPejabat/');
+                    } else {
+                        echo "Pejabat dengan jenis jabatan tersebut sudah ada....";
+                    }
+                } else {
+                    echo "Format NIP salah...";
+                }
+            } else {
+                echo "Isian form belum lengkap...";
+            }
+        }
+        $data = $pejabat->get_All();
+        //var_dump($data);
+        $this->view->data = $data;
+        $this->view->render('admin/pejabat');
     }
 
     /*
@@ -401,7 +434,7 @@ class AdminController extends BaseController {
                 if ($pemberi->isEmpty($pemberi) == false) {
                     $pemberi->update($pemberi);
                     header('location:' . URL . 'admin/addPemberi/');
-                }else {
+                } else {
                     header('location:' . URL . 'admin/updPemberi/' . $pemberi->kd_pemberi);
                 }
             } else {  // jika tidak ada id pada url dan tidak ada data pemberi di POST dialirhkan ke halaman pemberi
@@ -409,18 +442,58 @@ class AdminController extends BaseController {
             }
         }
     }
-    
+
+    /*
+     * menampilkan referensi pejabat yang akan diedit
+     * @param id_pejabat
+     */
+
+    public function editPejabat($id = null) {
+        $pejabat = new Pejabat();
+        if (!is_null($id)) { //menampilkan data pejabat berdasarkan id pada url pada halaman edit_pejabat
+            $data = $pejabat->get_by_id($id);
+            //var_dump($data);
+            $this->view->pejabat = $data;
+            $this->view->data = $pejabat->get_All();
+            $this->view->render('admin/edit_pejabat');
+        } else {
+            header('location:' . URL . 'admin/addPejabat/');
+        }
+    }
+
     /*
      * ubah referensi pejabat
      * @param id_bank
      */
 
     public function updPejabat() {
-        if(!isset($_POST['upd_pejabat'])){
-            $pejabat = new Pejabat();
-            $data = $pejabat->get();
-            $this->view->data = $data;
-            $this->view->render('admin/pejabat');
+        $pejabat = new Pejabat();
+        if (isset($_POST['upd_pejabat'])) { // memproses update pemberi jika data pemberi di POST pada halaman edit_pemberi dan dialihkan ke halaman pemberi
+            $pejabat->kd_pejabat = $_POST['kd_pejabat'];
+            $pejabat->nip_pejabat = $_POST['nip_pejabat'];
+            $pejabat->nama_pejabat = $_POST['nama_pejabat'];
+            $pejabat->nama_jabatan = $_POST['nama_jabatan'];
+            $pejabat->jenis_jabatan = $_POST['jenis_jabatan'];
+            //var_dump($pejabat);
+            if ($pejabat->isEmpty($pejabat) == false) {
+                if (Validasi::cekNip($pejabat->nip_pejabat) == true) {
+                    $pejabat->update($pejabat);
+                    header('location:' . URL . 'admin/addPejabat/');
+                } else {
+                    $url = URL . 'admin/editPejabat/' . $pejabat->kd_pejabat;
+                    header("refresh:1;url=" . $url);
+                    echo "Format NIP salah...";
+                    //header('location:' . URL . 'admin/editPejabat/'.$pejabat->kd_pejabat);
+                }
+            } else {
+                $url = URL . 'admin/editPejabat/' . $pejabat->kd_pejabat;
+                header("refresh:1;url=" . $url);
+                echo "Isian form belum lengkap...";
+                //header('location:' . URL . 'admin/editPejabat/'.$pejabat->kd_pejabat);
+            }
+        } else {
+            //echo "3";
+            header('location:' . URL . 'admin/addPejabat/');
         }
     }
 
@@ -542,9 +615,9 @@ class AdminController extends BaseController {
         if ($id != null) {
             $strata = new Strata();
             $strata->delete($id);
-            $this->addStrata();
+            header('location:' . URL . 'admin/addStrata');
         } else {
-            $this->addStrata();
+            header('location:' . URL . 'admin/addStrata');
         }
     }
 
@@ -557,9 +630,24 @@ class AdminController extends BaseController {
         if ($id != null) {
             $pemberi = new PemberiBeasiswa();
             $pemberi->delete($id);
-            $this->addPemberi();
+            header('location:' . URL . 'admin/addPemberi');
         } else {
-            $this->addPemberi();
+            header('location:' . URL . 'admin/addPemberi');
+        }
+    }
+
+    /*
+     * hapus referensi pejabat
+     * @param id_pemberi
+     */
+
+    public function delPejabat($id = null) {
+        if ($id != null) {
+            $pejabat = new Pejabat();
+            $pejabat->delete($id);
+            header('location:' . URL . 'admin/addPejabat');
+        } else {
+            header('location:' . URL . 'admin/addPejabat');
         }
     }
 

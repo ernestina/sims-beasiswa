@@ -126,5 +126,14 @@ class Validasi{
     public function __destruct() {
         ;
     }
+	
+	public static function cekNip($nip) {
+        
+        if (preg_match("/^[0-9]{18}$/", $nip)== true || preg_match("/^[0-9]{9}$/", $nip)== true ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 ?>
