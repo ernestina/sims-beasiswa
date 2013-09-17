@@ -50,7 +50,7 @@ class Strata extends BaseModel {
         $sql = "SELECT * FROM $table where $where";
         $result = $this->db->select($sql);
         //var_dump($result);
-
+        $strata=false;
         foreach ($result as $val) {
             $strata = new $this();
             $strata->kd_strata = $val["KD_STRATA"];

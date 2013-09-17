@@ -15,7 +15,7 @@ class SurattugasController extends BaseController{
         $st = new SuratTugas($this->registry);
         $univ = new Universitas($this->registry);
         $jur = new Jurusan($this->registry);
-        $pemb = new Pemberi();
+        $pemb = new PemberiBeasiswa();
         if(isset($_POST['sb_add'])){
             $jur = $_POST['jur'];
             $jenis = $_POST['jns_st'];

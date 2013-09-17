@@ -18,7 +18,7 @@
     <br />
 <div id="table">
     <div id="table-content">
-        <table border="1">
+        <table>
             <thead>
                 <th>No</th>
                 <th>Kode</th>
