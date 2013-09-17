@@ -586,7 +586,20 @@ class AdminController extends BaseController {
 //        var_dump($data);
         $this->view->render('admin/list_bank');
     }
-
+	
+	public function addBank (){
+        
+        if (isset($_POST['submit'])){
+            $bank = new Bank($registry);
+            
+            $bank->set_nama($_POST['nama']);
+            $bank->set_keterangan($_POST['keterangan']);
+            
+            $bank->addBank($bank);
+        } 
+        header('location:'.URL.'Admin/list_bank');
+    }
+	
     public function editBank($id) {
 
         $bank = new Bank($this->registry);
