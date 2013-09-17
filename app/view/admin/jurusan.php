@@ -111,8 +111,6 @@
 		</table>
     </div>
 </div>
-<<<<<<< .mine
-=======
 </div>
 
 <script type="text/javascript">
@@ -189,4 +187,4 @@ function cek(){
     }
     
 }
-</script>>>>>>>> .r41
+</script>

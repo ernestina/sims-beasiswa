@@ -37,12 +37,10 @@
                     }
             ?>
 			</select>
-<<<<<<< .mine
-				<label>Fakultas</label>
-=======
+
                         <div id="wnama"></div>
 				<label>Nama</label>
->>>>>>> .r41
+
 				<input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():'';?>">
 			
 			<div id="walamat"></div>
