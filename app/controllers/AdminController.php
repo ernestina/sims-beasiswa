@@ -596,6 +596,37 @@ class AdminController extends BaseController {
     public function __destruct() {
         ;
     }
+	 public function list_bank() {
+        $bank = new Bank($this->registry);
+
+        $this->view->data = $bank->get_bank();
+//        var_dump($data);
+        $this->view->render('admin/list_bank');
+    }
+
+    public function editBank($id) {
+
+        $bank = new Bank($this->registry);
+
+        $this->view->data = $bank->get_bank_id($id);
+        $this->view->data2 = $bank->get_bank();
+
+        $this->view->render('admin/edit_bank');
+    }
+
+    public function updateBank() {
+//        $bank = new Bank($this->registry);
+
+        $data['KD_BANK'] = $_POST['id'];
+        $data['NAMA_BANK'] = $_POST['nama'];
+        $data['KET_BANK'] = $_POST['keterangan'];
+
+//        var_dump($data);
+        $bank = new Bank($this->registry);
+        $bank->updateBank($data);
+//
+        header('location:' . URL . 'Admin/list_bank');
+    }
 
 }
 
