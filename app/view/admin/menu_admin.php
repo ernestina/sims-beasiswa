@@ -5,7 +5,7 @@
         <li><a href="<?php echo URL;?>admin/addJurusan">JURUSAN</a></li>
         <li><a href="<?php echo URL;?>admin/addStrata">STRATA</a></li>
 		<li><a href="<?php echo URL;?>admin/addPemberi">PEMBERI BEASISWA</a></li>
-		<li><a href="<?php echo URL;?>admin/addPejabat"><h3>PEJABAT</a></li>
+		<li><a href="<?php echo URL;?>admin/addPejabat">PEJABAT</a></li>
         <li><a href="">BANK</a></li>
     </ul>
 </div>
