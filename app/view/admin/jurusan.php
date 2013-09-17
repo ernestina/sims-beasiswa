@@ -78,15 +78,15 @@
         <table class="table-bordered zebra scroll">
             <thead>
                 <th>No</th>
-                <th>Fakultas</th>
-                <th>Strata</th>
-                <th>Nama</th>
-                <th>Alamat</th>
-                <th>Telepon</th>
+                <th width="70">Fakultas</th>
+                <th width="30">Strata</th>
+                <th width="70">Jurusan</th>
+                <th width="150">Alamat</th>
+                <th width="70">Telepon</th>
                 <th>PIC Jurusan</th>
-                <th>Telp PIC Jurusan</th>
+                <th width="50">Telp PIC Jurusan</th>
                 <th>Status</th>
-                <th>Aksi</th>
+                <th width="100">Aksi</th>
             </thead>
 			<tbody>
             <?php
@@ -111,6 +111,8 @@
 		</table>
     </div>
 </div>
+<<<<<<< .mine
+=======
 </div>
 
 <script type="text/javascript">
@@ -187,4 +189,4 @@ function cek(){
     }
     
 }
-</script>
+</script>>>>>>>> .r41

@@ -37,8 +37,12 @@
                     }
             ?>
 			</select>
+<<<<<<< .mine
+				<label>Fakultas</label>
+=======
                         <div id="wnama"></div>
 				<label>Nama</label>
+>>>>>>> .r41
 				<input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():'';?>">
 			
 			<div id="walamat"></div>
@@ -68,7 +72,7 @@
                 <th width="150">Fakultas</th>
                 <th width="150">Alamat</th>
                 <th width="50">Telepon</th>
-                <th>Aksi</th>
+                <th width="70">Aksi</th>
             </thead>
 			<tbody>
 
@@ -90,7 +94,6 @@
 			</tbody>
         </table>
     </div>
-</div>
 
 <script type="text/javascript">
 
