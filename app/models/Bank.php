@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 
-class Bank extends BaseModel {
+class Bank {
 
     private $_id;
     private $_nama;
@@ -54,14 +54,33 @@ class Bank extends BaseModel {
         return $data;
     }
 
+    public function addBank(Bank $bank) {
+//        var_dump($bank);
+        $data = array(
+            'NM_BANK' => $bank->get_nama(),
+            'KET_BANK' => $bank->get_keterangan()
+        );
+//       var_dump($data);
+        $database = new Database();
+        $database->insert($this->_table, $data);
+    }
+
     public function updateBank($data) {
 
 //        print_r($bank);
 //        var_dump($data);
 
-        $where = 'KD_BANK ='. $data['KD_BANK'] ;
+        $where = 'KD_BANK =' . $data['KD_BANK'];
 //        print_r($data['id']);
         $this->_db->update($this->_table, $data, $where);
+    }
+
+    public function deleteBank() {
+
+        $where = 'KD_BANK=' . $this->get_id();
+
+//        print_r($where);
+        $this->_db->delete($this->_table, $where);
     }
 
     public function get_id() {
