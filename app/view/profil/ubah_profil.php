@@ -1,143 +1,111 @@
 <?php //include ('../Header.php');?>
 <!--link href="../../../public/css/bootstrap.css" rel="stylesheet" media="screen"-->
-<div class="container">
-<div class="span11">
-    
-	<h1>Profil Penerima Beasiswa</h1>
-	<h3>Profil Penerima Beasiswa</h3><button>Kembali</button>
-	
-	<div class="row">
-		<div class="span 6">
-		
-<table>
-  <!--form method="POST" action="<?php //$_SERVER['PHP_SELF']; echo URL.'admin/addUniversitas'?>"-->
-	<tr>
-		<td>NIP</td><td>:</td>
-		<td><input class="span6" type="text" name="NIP" id="NIP" size="50"></td>
-	</tr>
-	<tr>
-		<td>Nama</td><td>:</td>
-		<td><input class="span6" type="text" name="nama" id="nama" size="50" disabled></td>
-	</tr>
-	<tr>
-		<td>Jenis Kelamin</td><td>:</td>
-		<td><input class="span6" type="text" name="jeniskelamin" id="jeniskelamin" size="50" disabled></td>
-	</tr>
-	<tr>
-		<td>Pangkat/Gol</td><td>:</td>
-		<td><input class="span6" type="text" name="pangkat" id="pangkat" size="50" disabled></td>
-	</tr>
-	<tr>
-		<td>Unit asal</td><td>:</td>
-		<td><input class="span6" type="text" name="asal" id="asal" size="50" disabled></td>
-	</tr>
-	<tr>
-		<td>Email</td><td>:</td>
-		<td><input class="span6" type="text" name="email" id="email" size="50"></td>
-	</tr>
-	<tr>
-		<td>No. HP</td><td>:</td>
-		<td><input class="span6" type="text" name="hp" id="hp" size="50"></td>
-	</tr>
-	<tr>
-		<td>Bank Penerima</td><td>:</td>
-		<td>
-			<select class="span3" name="cabang" id="cabang">
-				<option>Mandiri</option>
-				<option>BNI</option>
-				<option>BRI</option>
-			</select>
-			 Cabang : <input type="text" name="bank" id="bank" size="27">
-		</td>
-	</tr>
-	<tr>
-		<td>No. Rekening</td><td>:</td>
-		<td><input type="text" name="rekening" id="rekening" size="50"></td>
-	</tr>
-  <!--/form-->
-</table><br>
-</div>
-<div class="span3">
+<link href="../../../public/css/style.css" rel="stylesheet" media="screen">
+<body>
+  <div class="wrapper">
+  <button>Kembali</button>
+	<h1>PROFIL PENERIMA BEASISWA</h1>
+	<fieldset><legend>Profil Penerima Beasiswa</legend>
+		<div class="foto">
+			<img class="frame" src="..." width="180" height="220">
+			<button>Unggah</button>
+			</div>
+		<form action="#" method="post">
+			<label class="isian">NIP :</label>
+			<input type="text" id="NIP" name="NIP" disabled />
+			
+			<label class="isian">Nama :</label>
+			<input type="text" id="nama" name="nama" disabled />
 
-<img src="..." width="150" height="150"><br>
-	<button>Unggah...</button>
-	<br><br>
-	</div>
-	</div>
-	</div>
-	</div>
+			<label class="isian">Jenis Kelamin :</label>
+			<input type="text" id="jenis_kelamin" name="jenis_kelamin" disabled />
+			
+			<label class="isian">Pangkat/Gol :</label>
+			<input type="text" id="pangkat" name="pangkat" disabled />
+			
+			<label class="isian">Unit Asal :</label>
+			<input type="text" id="asal" name="asal" disabled />
+			
+			<label class="isian">Alamat :</label>
+			<textarea type="text" id="alamat" name="alamat" /></textarea>
+			
+			<label class="isian">Email :</label>
+			<input type="email" id="email" name="email" />
+			
+			<label class="isian">No. HP :</label>
+			<input type="text" id="hp" name="hp" />
+			
+			<label class="isian">Bank Penerima</label>
+			<input type="text" id="bank" name="bank" />
+			
+			<label class="isian">No Rekening</label>
+			<input type="text" id="rekening" name="rekening" />
+			
+		</form>
+	</fieldset><br>
+<div class="kolom1">
+	<fieldset><legend>Profil Beasiswa</legend>
+		<form>
+			<label class="isian">No. Surat Tugas (ST) :</label>
+			<input type="text" id="st" name="st" disabled />
+			
+			<label class="isian">Tanggal ST :</label>
+			<input type="text" id="tgl_st" name="tanggal_st" disabled />
 
-	<h3>Profil Beasiswa</h3>
-
-<table>
-  <!--form method="POST" action="<?php //$_SERVER['PHP_SELF']; echo URL.'admin/addUniversitas'?>"-->
-	<tr>
-		<td>No. Surat Tugas (ST)</td><td>:</td>
-		<td>
-			<input type="text" name="tgl_st" id="tgl_st" size="50" disabled>
-		</td>
-	</tr>
-	<tr>
-		<td>Tanggal ST</td><td>:</td>
-		<td><input type="text" name="tgl_st" id="tgl_st" size="50" disabled></td>
-	</tr>
-	<tr>
-		<td>Tanggal Mulai ST</td><td>:</td>
-		<td><input type="text" name="tgl_mulai_st" id="tgl_mulai_st" size="50" disabled></td>
-	</tr>
-	<tr>
-		<td>Tanggal Akhir ST</td><td>:</td>
-		<td><input type="text" name="pangkat" id="pangkat" size="50" disabled></td>
-	</tr>
-	<tr>
-		<td>Jenis Beasiswa</td><td>:</td>
-		<td><input type="text" name="jenis_beasiswa" id="jenis_beasiswa" size="50" disabled></td>
-	</tr>
-	<tr>
-		<td>Universitas</td><td>:</td>
-		<td><input type="text" name="universitas" id="universitas" size="50" disabled></td>
-	</tr>
-	<tr>
-		<td>Jurusan/Prodi</td><td>:</td>
-		<td><input type="text" name="jurusan" id="jurusan" size="50" disabled></td>
-	</tr>
-	<tr>
-		<td>Tahun Masuk</td><td>:</td>
-		<td><input type="text" name="th_masuk" id="th_masuk" size="50" disabled></td>
-	</tr>
-	<tr>
-		<td>Status Tugas Belajar</td><td>:</td>
-		<td>
-			<select id="status_tb">
+			<label class="isian">Tanggal Mulai ST :</label>
+			<input type="text" id="tgl_mulai_st" name="tgl_mulai_st" disabled />
+			
+			<label class="isian">Tanggal Akhir ST :</label>
+			<input type="text" id="tgl_akhir_st" name="tgl_akhir_st" disabled />
+			
+			<label class="isian">Jenis Beasiswa :</label>
+			<input type="text" id="jenis_beasiswa" name="jenis_beasiswa" disabled />
+			
+			<label class="isian">Universitas :</label>
+			<input type="text" id="universitas" name="universitas" />
+			
+			<label class="isian">Jurusan :</label>
+			<input type="text" id="jurusan" name="jurusan" />
+			
+			<label class="isian">Tahun Masuk :</label>
+			<input type="text" id="th_masuk" name="th_masuk" />
+			
+			<label class="isian">Status Tugas Belajar (TB) :</label>
+			<select type="text">
 				<option>belum lulus</option>
-				<option>belum lulus (cuti)</option>
-				<option>belum lulus (perpanjangan 1)</option>
-				<option>belum lulus (perpanjangan 2)</option>
 				<option>lulus</option>
 				<option>lulus awal waktu</option>
 				<option>lulus dengan perpanjangan 1</option>
 				<option>lulus dengan perpanjangan 2</option>
 				<option>tidak lulus</option>
-			<select>
-		</td>
-	</tr>
-	<!--row berikut hanya muncul jika status TB: lulus dan/atau tidak lulus -->
-	<tr>
-		<td>Tanggal Akhir TB</td><td>:</td>
-		<td><input type="text" name="status_tb" id="status_tb" size="10">
-		No. SKL: <input type="text" name="status_tb" id="status_tb" size="20">
-		<button>Unggah...</button>
-		</td>
-	</tr>
-	<tr>
-		<td>No. SPMT</td><td>:</td>
-		<td><input type="text" name="status_tb" id="status_tb" size="39">
-		<button>Unggah...</i></button>
-		</td>
-	</tr>
-  <!--/form-->
-</table>
+			</select>
+			<!--row berikut hanya muncul jika status TB: lulus dan/atau tidak lulus -->
+			
+			<label class="isian">Tanggal Akhir TB :</label>
+			<input type="text" id="tgl_akhir_TB" name="tgl_akhir_TB" />
+			
+			<label class="isian">Unggah SKL :</label>
+			<input type="text" id="skl" name="skl" />
+			
+			<label class="isian">Tanggal Lapor Selesai TB :</label>
+			<input type="text" id="tgl_lapor" name="tgl_lapor" />
+			
+			<label class="isian">Unggah SPMT :</label>
+			<input type="text" id="spmt" name="spmt" />
+			
+		</form>
+	</fieldset>
+</div>
+<div class="kolom2">
+	<fieldset><legend>Riwayat Pembayaran</legend>
+			<label class="isian">Unggah SPMT :</label>
+			<input type="text" id="spmt" name="spmt" />
+	</fieldset>
+</div>
+	<input type="submit" value="Submit"/><br>
 
+  
+</div>
 <h3>Riwayat Pembayaran</h3>
 <table border="1px">
 	<th>No</th>
@@ -175,3 +143,4 @@
 	<button>Reset</button><button>Simpan</button>
     </div>
 </div>
+</body>
