@@ -618,7 +618,7 @@ class AdminController extends BaseController {
 //        $bank = new Bank($this->registry);
 
         $data['KD_BANK'] = $_POST['id'];
-        $data['NAMA_BANK'] = $_POST['nama'];
+        $data['NM_BANK'] = $_POST['name'];
         $data['KET_BANK'] = $_POST['keterangan'];
 
 //        var_dump($data);
