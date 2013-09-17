@@ -19,7 +19,8 @@
             }
         ?>
 	  <div class="kiri">
-        <label>Fakultas</label><select type="text" id="status" name="fakultas">
+              <div id="wfakul"></div>
+        <label>Fakultas</label><select type="text" id="fakultas" name="fakultas">
             <?php 
                     foreach ($this->fakul as $val){
                         if(isset($this->d_ubah)){
@@ -34,7 +35,8 @@
                     }
             ?>
         </select>
-        <label>Strata</label><select type="text" id="status" name="strata">
+        <div id="wstrata"></div>
+        <label>Strata</label><select type="text" id="strata" name="strata">
             <option value="1">Sarjana</option>
             <option value="2">Magister</option>
         </select>
@@ -42,16 +44,17 @@
             <option value="1">Firman</option>
             <option value="2">Afis</option>
         </select></br-->
+        <div id="wnama"></div>
         <label>Jurusan</label><input type="text" name="nama" id="nama" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():'';?>">
-        
+        <div id="walamat"></div>
 		<label>Alamat</label><textarea type="text" name="alamat" id="alamat" rows="8"><?php echo isset($this->d_ubah)?$this->d_ubah->get_alamat():'';?></textarea>
-        
+        <div id="wtelepon"></div>
 		<label>Telepon</label><input type="text" name="telepon" id="telepon" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telepon():'';?>">
-		
+		<div id="wpic_jur"></div>
         <label>PIC Jurusan</label><input type="text" name="pic_jur" id="pic_jur" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_pic():'';?>">
-		
+	<div id="wtelp_pic_jur"></div>	
         <label>Telp PIC Jurusan</label><input type="text" name="telp_pic_jur" id="telp_pic_jur" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telp_pic():'';?>">
-		
+	<div id="wstatus"></div>	
         <label>Status</label>
 			<select type="text" name="status" id="status" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_status():'';?>">
 				<option>Aktif</option>
@@ -60,7 +63,7 @@
         
 		<ul class="inline tengah">
 			<li><input class="normal" type="submit" onclick="" value="BATAL"></li>
-			<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'upd_jur':'add_jur';?>" value="SIMPAN"></li>
+			<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'upd_jur':'add_jur';?>" value="SIMPAN" onClick="return cek();"></li>
 		</ul>
         </form>
 		</div>
@@ -109,3 +112,79 @@
     </div>
 </div>
 </div>
+
+<script type="text/javascript">
+function cek(){
+    var fakul = document.getElementById('fakultas').value;
+    var strata = document.getElementById('strata').value;
+    var nama = document.getElementById('nama').value;
+    var alamat = document.getElementById('alamat').value;
+    var telepon = document.getElementById('telepon').value;
+    var pic_jur = document.getElementById('pic_jur').value;
+    var telp_pic_jur = document.getElementById('telp_pic_jur').value;
+    var status = document.getElementById('status').value;
+    var jml=0;
+    if(fakul=''){
+        var wfakul= 'Fakultas harus dipilih!';
+        $('#wfakul').fadeIn(0);
+        $('#wfakul').html(wfakul);
+        jml++;
+    }
+    
+    if(strata==''){
+        var wstrata= 'Strata harus dipilih!';
+        $('#wstrata').fadeIn(0);
+        $('#wstrata').html(wstrata);
+        jml++;
+    }
+    
+    if(nama==''){
+        var wnama= 'Nama Jurusan harus diisi!';
+        $('#wnama').fadeIn(0);
+        $('#wnama').html(wnama);
+        jml++;
+    }
+    
+    if(alamat==''){
+        var walamat= 'Alamat jurusan harus diisi!';
+        $('#walamat').fadeIn(0);
+        $('#walamat').html(walamat);
+        jml++;
+    }
+    
+    if(telepon==''){
+        var wtelepon= 'Telepon jurusan harus diisi!';
+        $('#wtelepon').fadeIn(0);
+        $('#wtelepon').html(wtelepon);
+        jml++;
+    }
+    
+    if(pic_jur==''){
+        var wpic_jur= 'PIC perguruan tinggi harus diisi!';
+        $('#wpic_jur').fadeIn(0);
+        $('#wpic_jur').html(wpic_jur);
+        jml++;
+    }
+    
+    if(telp_pic_jur==''){
+        var wtelp_pic_jur= 'telepon PIC harus diisi!';
+        $('#wtelp_pic_jur').fadeIn(0);
+        $('#wtelp_pic_jur').html(wtelp_pic_jur);
+        jml++;
+    }
+    
+    if(status==''){
+        var wstatus= 'status harus diisi!';
+        $('#wstatus').fadeIn(0);
+        $('#wstatus').html(wstatus);
+        jml++;
+    }
+    
+    if(jml>0){
+        return false
+    }else{
+        return true;
+    }
+    
+}
+</script>

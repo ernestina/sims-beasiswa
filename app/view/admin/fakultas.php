@@ -20,7 +20,8 @@
             }
         ?>
         <div class="kiri">
-			<label>Universitas</label><select type="text" id="status" name="universitas">
+            <div id="wuniv"></div>
+			<label>Universitas</label><select type="text" id="univ" name="universitas">
 			
             <?php 
                     foreach ($this->univ as $val){
@@ -36,17 +37,18 @@
                     }
             ?>
 			</select>
+                        <div id="wnama"></div>
 				<label>Nama</label>
 				<input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():'';?>">
 			
-			
+			<div id="walamat"></div>
 				<label>Alamat</label><textarea type="text" name="alamat" id="alamat" rows="8" ><?php echo isset($this->d_ubah)?$this->d_ubah->get_alamat():'';?></textarea>
-        
+                                <div id="wtelepon"></div>
 				<label>Telepon</label><input type="text" name="telepon" id="telepon" size="15" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telepon():'';?>">
         
 			<ul class="inline tengah">
 				<li><input class="normal" type="submit" onclick="" value="BATAL"></li>
-				<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'upd_fak':'add_fak';?>" value="SIMPAN"></li>
+				<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'upd_fak':'add_fak';?>" value="SIMPAN" onClick="return cek();"></li>
 			</ul>
         </div>
 		</form>
@@ -89,3 +91,48 @@
         </table>
     </div>
 </div>
+
+<script type="text/javascript">
+
+function cek(){
+    var univ = document.getElementById('univ').value;
+    var nama = document.getElementById('nama').value;
+    var alamat = document.getElementById('alamat').value;
+    var telepon = document.getElementById('telepon').value;
+    var jml=0;
+    if(univ==0){
+        var wuniv= 'Universitas harus dipilih!';
+        $('#wuniv').fadeIn(0);
+        $('#wuniv').html(wuniv);
+        jml++;
+    }
+    
+    if(nama==''){
+        var wnama= 'Nama fakultas harus diisi!';
+        $('#wnama').fadeIn(0);
+        $('#wnama').html(wnama);
+        jml++;
+    }
+    
+    if(alamat==''){
+        var walamat= 'Alamat fakultas harus diisi!';
+        $('#walamat').fadeIn(0);
+        $('#walamat').html(walamat);
+        jml++;
+    }
+    
+    if(telepon==''){
+        var wtelepon= 'Telepon fakultas harus diisi!';
+        $('#wtelepon').fadeIn(0);
+        $('#wtelepon').html(wtelepon);
+        jml++;
+    }
+    
+    if(jml>0){
+        return false
+    }else{
+        return true;
+    }
+    
+}
+</script>
