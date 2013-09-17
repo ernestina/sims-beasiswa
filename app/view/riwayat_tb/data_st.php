@@ -26,11 +26,11 @@
                 ?>
             </select></br>
             <div id="wtglst"></div>
-            <label>Tanggal ST</label><input type="date" name="tgl_st" id="tgl_st"></br>
+            <label>Tanggal ST</label><input type="text" name="tgl_st" id="datepicker" readonly></br>
             <div id="wtglmulai"></div>
-            <label>Tanggal Mulai ST</label><input type="date" name="tgl_mulai" id="tgl_mulai"></br>
+            <label>Tanggal Mulai ST</label><input type="text" name="tgl_mulai" id="datepicker1" readonly></br>
             <div id="wtglselesai"></div>
-            <label>Tanggal Selesai ST</label><input type="date" name="tgl_selesai" id="tgl_selesai"></br>
+            <label>Tanggal Selesai ST</label><input type="text" name="tgl_selesai" id="datepicker2" readonly></br>
             <div id="wpemberi"></div>
             <label>Pemberi Beasiswa</label><select name="pemb" id="pemberi">
                 <?php 
@@ -118,9 +118,9 @@
         var no_st = document.getElementById('no_st').value;
         var st_lama = document.getElementById('st_lama').value;
         var jenis = document.getElementById('jenis').value;
-        var tgl_st = document.getElementById('tgl_st').value;
-        var tgl_mulai = document.getElementById('tgl_mulai').value;
-        var tgl_selesai = document.getElementById('tgl_selesai').value;
+        var tgl_st = document.getElementById('datepicker').value;
+        var tgl_mulai = document.getElementById('datepicker1').value;
+        var tgl_selesai = document.getElementById('datepicker2').value;
         var pemberi = document.getElementById('pemberi').value;
         var jurusan = document.getElementById('jur').value;
         var thn_masuk = document.getElementById('th_masuk').value;

@@ -2,8 +2,10 @@
     $this->load('admin/menu_admin');
 ?>
 <div id="form">
-    <div id="form-title"><h1>DATA UNIVERSITAS</h1></div>
-    <div id="form-input">
+    <h2>DATA UNIVERSITAS</h2></div>
+    <div class="kolom3">
+	  <fieldset><legend>Tambah Universitas</legend>
+		<div id="form-input">
         <form method="POST" action="<?php 
             if(isset($this->d_ubah)){
                 echo URL.'admin/updUniversitas';
@@ -33,11 +35,13 @@
         <label></label><input type="button" onclick="" value="BATAL"><input type="submit" name="<?php echo isset($this->d_ubah)?'upd_univ':'add_univ';?>" value="SIMPAN">
         </form>
     </div>
+   </fieldset>
 </div>
-<div id="table">
+<div class="kolom4" id="table">
+	<fieldset><legend>Daftar Fakultas</legend>
     <div id="table-title"></div>
     <div id="table-content">
-        <table>
+        <table class="table-bordered zebra scroll">
             <thead>
                 <th>No</th>
                 <th>Kode</th>
@@ -47,6 +51,7 @@
                 <th>lokasi</th>
                 <th>Aksi</th>
             </thead>
+            <tbody>
             <?php
                 $no = 1;
                 foreach ($this->data as $val){
@@ -63,6 +68,7 @@
                     $no++;
                 }
             ?>
+                </tbody>
         </table>
     </div>
 </div>

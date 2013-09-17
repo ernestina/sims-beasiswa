@@ -1,10 +1,10 @@
-<div class="menu_admin" id="nav">
-    <ul class="upline">
-        <li><a href="<?php echo URL;?>admin/addUniversitas"><h3>UNIVERSITAS</h3></a></li>
-        <li><a href="<?php echo URL;?>admin/addFakultas"><h3>FAKULTAS</h3></a></li>
-        <li><a href="<?php echo URL;?>admin/addJurusan"><h3>JURUSAN</h3></a></li>
-        <li><a href="<?php echo URL;?>admin/addStrata"><h3>STRATA</h3></a></li>
-		<li><a href="<?php echo URL;?>admin/addPemberi"><h3>PEMBERI</h3></a></li>
-        <li><a href=""><h3>BANK</h3></a></li>
+<div class="menu_admin">
+    <ul>
+        <li><a href="<?php echo URL;?>admin/addUniversitas">UNIVERSITAS</a></li>
+        <li><a href="<?php echo URL;?>admin/addFakultas">FAKULTAS</a></li>
+        <li><a href="<?php echo URL;?>admin/addJurusan">JURUSAN</a></li>
+        <li><a href="<?php echo URL;?>admin/addStrata">STRATA</a></li>
+		<li><a href="<?php echo URL;?>admin/addPemberi">PEMBERI</a></li>
+        <li><a href="">BANK</a></li>
     </ul>
 </div>
