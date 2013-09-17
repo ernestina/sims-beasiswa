@@ -54,7 +54,7 @@ class PenerimaController extends BaseController{
                 'NIP_PB'=>$nip,
                 'EMAIL_PB'=>$email,
                 'TELP_PB'=>$telp,
-                'ALAMAT_PB'=>$alamat,
+                'ALMT_PB'=>$alamat,
                 'NO_REKENING_PB'=>$no_rek,
                 'FOTO_PB'=>$upload->getFileTo(),
             );
@@ -89,40 +89,40 @@ class PenerimaController extends BaseController{
         $kd = $_POST['kd_pb'];
         $st = $_POST['st'];
         $bank = $_POST['bank'];
-        $jur = $_POST['jur'];
+        /*$jur = $_POST['jur'];
         $status = $_POST['status'];
-        $nama = $_POST['nama'];
+        $nama = $_POST['nama'];*/
         $nip = $_POST['nip'];
-        $gol = $_POST['gol'];
-        $unit_asal = $_POST['unit_asal'];
+        /*$gol = $_POST['gol'];
+        $unit_asal = $_POST['unit_asal'];*/
         $telp = $_POST['telp'];
         $alamat = $_POST['alamat'];
         $email = $_POST['email'];
         $no_rek = $_POST['no_rek'];
-        $jkel = $_POST['jk'];
+        /*$jkel = $_POST['jk'];
         $tgl_lapor = $_POST['tgl_lap'];
         $skl = $_POST['skl'];
         $spmt = $_POST['spmt'];
-        $skripsi = $_POST['skripsi'];
+        $skripsi = $_POST['skripsi'];*/
         
         $data = array(
             'KD_ST'=>$st,
-            'KD_JUR'=>$jur,
+            /*'KD_JUR'=>$jur,*/
             'KD_BANK'=>$bank,
-            'KD_STATUS_TB'=>$status,
+            /*'KD_STATUS_TB'=>$status,*/
             'NIP_PB'=>$nip,
-            'NAMA_PB'=>$nama,
+            /*'NAMA_PB'=>$nama,
             'JK_PB'=>$jkel,
             'GOLONGAN_PB'=>$gol,
-            'UNIT_ASAL_PB'=>$unit_asal,
+            'UNIT_ASAL_PB'=>$unit_asal,*/
             'EMAIL_PB'=>$email,
             'TELP_PB'=>$telp,
-            'ALAMAT_PB'=>$alamat,
+            'ALMT_PB'=>$alamat,
             'NO_REKENING_PB'=>$no_rek,
-            'TANGGAL_LAPOR_PB'=>$tgl_lapor,
+            /*'TANGGAL_LAPOR_PB'=>$tgl_lapor,
             'NOMOR_SKL_PB'=>$skl,
             'NO_SPMT_PB'=>$spmt,
-            'JUDUL_SKRIPSI_PB'=>$skripsi
+            'JUDUL_SKRIPSI_PB'=>$skripsi*/
         );
         
         if(!is_null($_FILES['fupload'])){

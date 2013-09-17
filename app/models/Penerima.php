@@ -28,7 +28,7 @@ class Penerima {
     private $_no_skl;
     private $_spmt;
     private $_skripsi;
-    private $_tb_penerima = 'penerima_beasiswa';
+    private $_tb_penerima = 'd_pb';
     
     /*
      * konstruktor
@@ -51,19 +51,19 @@ class Penerima {
             $penerima->set_st($val['KD_ST']);
             $penerima->set_jur($val['KD_JUR']);
             $penerima->set_bank($val['KD_BANK']);
-            $penerima->set_status($val['KD_STATUS_TB']);
+            $penerima->set_status($val['KD_STS_TB']);
             $penerima->set_nip($val['NIP_PB']);
-            $penerima->set_nama($val['NAMA_PB']);
+            $penerima->set_nama($val['NM_PB']);
             $penerima->set_jkel($val['JK_PB']);
-            $penerima->set_gol($val['GOLONGAN_PB']);
+            $penerima->set_gol($val['KD_GOL']);
             $penerima->set_unit_asal($val['UNIT_ASAL_PB']);
             $penerima->set_email($val['EMAIL_PB']);
             $penerima->set_telp($val['TELP_PB']);
-            $penerima->set_alamat($val['ALAMAT_PB']);
+            $penerima->set_alamat($val['ALMT_PB']);
             $penerima->set_no_rek($val['NO_REKENING_PB']);
             $penerima->set_foto($val['FOTO_PB']);
-            $penerima->set_tgl_lapor($val['TANGGAL_LAPOR_PB']);
-            $penerima->set_skl($val['NOMOR_SKL_PB']);
+            $penerima->set_tgl_lapor($val['TGL_LAPOR_PB']);
+            $penerima->set_skl($val['NO_SKL_PB']);
             $penerima->set_spmt($val['NO_SPMT_PB']);
             $penerima->set_skripsi($val['JUDUL_SKRIPSI_PB']);
             $data[] = $penerima;
@@ -79,19 +79,19 @@ class Penerima {
             $this->set_st($val['KD_ST']);
             $this->set_jur($val['KD_JUR']);
             $this->set_bank($val['KD_BANK']);
-            $this->set_status($val['KD_STATUS_TB']);
+            $this->set_status($val['KD_STS_TB']);
             $this->set_nip($val['NIP_PB']);
-            $this->set_nama($val['NAMA_PB']);
+            $this->set_nama($val['NM_PB']);
             $this->set_jkel($val['JK_PB']);
-            $this->set_gol($val['GOLONGAN_PB']);
+            $this->set_gol($val['KD_GOL']);
             $this->set_unit_asal($val['UNIT_ASAL_PB']);
             $this->set_email($val['EMAIL_PB']);
             $this->set_telp($val['TELP_PB']);
-            $this->set_alamat($val['ALAMAT_PB']);
+            $this->set_alamat($val['ALMT_PB']);
             $this->set_no_rek($val['NO_REKENING_PB']);
             $this->set_foto($val['FOTO_PB']);
-            $this->set_tgl_lapor($val['TANGGAL_LAPOR_PB']);
-            $this->set_skl($val['NOMOR_SKL_PB']);
+            $this->set_tgl_lapor($val['TGL_LAPOR_PB']);
+            $this->set_skl($val['NO_SKL_PB']);
             $this->set_spmt($val['NO_SPMT_PB']);
             $this->set_skripsi($val['JUDUL_SKRIPSI_PB']);
         }

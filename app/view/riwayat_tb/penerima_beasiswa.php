@@ -26,6 +26,7 @@
         <label>Bank</label><select name="bank" id="bank">
             <option value="1">Bank Mandiri</option>
         </select></br>
+        <label>NIP</label><input type="text" name="nip" id="nip" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nip():'';?>" size="18"></br>
         <label>Email</label><input type="text" name="email" id="email" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_email():'';?>" size="30"></br>
         <label>Telepon</label><input type="text" name="telp" id="telp" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telp():'';?>" size="15"></br>
         <label>Alamat</label><textarea name="alamat" id="alamat"><?php echo isset($this->d_ubah)?$this->d_ubah->get_alamat():'';?></textarea></br>
