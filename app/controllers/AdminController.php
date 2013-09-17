@@ -674,8 +674,8 @@ class AdminController extends BaseController {
 //        var_dump($data);
         $this->view->render('admin/list_bank');
     }
-	
-	public function addBank (){
+    
+    public function addBank (){
         
         if (isset($_POST['submit'])){
             $bank = new Bank($registry);
@@ -687,7 +687,7 @@ class AdminController extends BaseController {
         } 
         header('location:'.URL.'Admin/list_bank');
     }
-	
+
     public function editBank($id) {
 
         $bank = new Bank($this->registry);
@@ -700,16 +700,23 @@ class AdminController extends BaseController {
 
     public function updateBank() {
 //        $bank = new Bank($this->registry);
-
-        $data['KD_BANK'] = $_POST['id'];
-        $data['NM_BANK'] = $_POST['name'];
-        $data['KET_BANK'] = $_POST['keterangan'];
-
+        if (isset($_POST['submit'])) {
+            $data['KD_BANK'] = $_POST['id'];
+            $data['NM_BANK'] = $_POST['nama'];
+            $data['KET_BANK'] = $_POST['keterangan'];
+        }
 //        var_dump($data);
         $bank = new Bank($this->registry);
         $bank->updateBank($data);
-//
         header('location:' . URL . 'Admin/list_bank');
+    }
+    public function deleteBank ($id){
+        
+        $bank = new Bank($this->registry);
+        $bank->set_id($id);
+        $bank->deleteBank();
+        
+        header('location:'.URL.'Admin/list_bank');
     }
 
 }
