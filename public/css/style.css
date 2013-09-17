@@ -13,14 +13,15 @@ body {
   margin: 0 auto;
   font-family: "Nexa";
   font-size: 12px;
-  
+  background-image:url('../img/bg.png');
 }
 
 #wrapper {
 	overflow: auto;
-	border: 1px solid #000000;
+	/*border: 1px solid #000000;*/
 	background-color: #ffffff;
 	padding: 20px;
+	box-shadow: #aaa 2px 2px 10px 1px;
 	}
 
 #fitur {
@@ -56,7 +57,14 @@ body {
 	width: 200px;
 	text-align: right;
 	padding-right: 10px;
-	padding-top: 5px;}		
+	padding-top: 5px;}	
+
+.isian2 {
+	float: left;
+	width: 140px;
+	text-align: right;
+	padding-right: 10px;
+	padding-top: 5px;}			
 	
 .kiri {
 	padding-left: 20px;
@@ -71,6 +79,7 @@ body {
 	width: 50%;
 	float: left;
 	margin: 20px 0px 0px 0px;
+	
 }
 
 .kolom2 {
@@ -86,6 +95,12 @@ body {
 	width: 70%;
 	float: left;
 	margin: 2px 0px 0px 0px;
+}
+
+.kolom5 {
+	float:right;
+	width: 50%;
+	margin: 0px 0px 10px 10px;
 }
 
 .sukses {
@@ -134,12 +149,15 @@ textarea.utama {
 input.unggah {
 	width: 140px;}
 	
-input.keterangan {
+input.keterangan{
 	width: 210px;}
 
 input.mini {
 	width: 50px;}
-	
+
+textarea.midi {
+	width: 300px;
+}	
 select {
 	padding: 5px 2px 0px 2px;
 	}	
