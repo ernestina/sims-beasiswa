@@ -138,7 +138,10 @@ class AdminController extends BaseController {
             $strata->kode_strata = $_POST["kode_strata"];
             $strata->nama_strata = $_POST["nama_strata"];
             if ($strata->isEmpty($strata) == FALSE) {
+                $strata->add($strata);
                 header('location:' . URL . 'admin/addStrata');
+            } else {
+                echo "Isian form belum lengkap";
             }
         }
         $data = $strata->get_All();
@@ -160,7 +163,10 @@ class AdminController extends BaseController {
             $pemberi->pic_pemberi = $_POST['pic_pemberi'];
             $pemberi->telp_pic_pemberi = $_POST['telp_pic_pemberi'];
             if ($pemberi->isEmpty($pemberi) == FALSE) {
+                $pemberi->add($pemberi);
                 header('location:' . URL . 'admin/addPemberi');
+            } else {
+                echo "Isian form belum lengkap";
             }
         }
         $data = $pemberi->get_All();
@@ -348,32 +354,45 @@ class AdminController extends BaseController {
     }
 
     /*
-     * ubah referensi strata
+     * menampilkan referensi strata yang akan diubah
      * @param id_strata
      */
 
-    public function updStrata($id = null) {
+    public function editStrata($id = null) {
         $strata = new Strata();
-        if ($id != "") { //menampilkan data strata berdasarkan id pada url pada halaman edit_strata
+        if ($id != "") {
             $data = $strata->get_by_id($id);
             $this->view->strata = $data;
             $this->view->data = $strata->get_All();
             $this->view->render('admin/edit_strata');
         } else {
-            if (isset($_POST['upd_strata'])) {  // memproses update strata jika data strata di POST dan dialihkan ke halaman strata
-                $strata->kd_strata = $_POST["kd_strata"];
-                $strata->kode_strata = $_POST["kode_strata"];
-                $strata->nama_strata = $_POST["nama_strata"];
-                //var_dump($strata);
-                if ($strata->isEmpty($strata) == FALSE) {
-                    $strata->update($strata);
-                    header('location:' . URL . 'admin/addStrata/');
-                } else {
-                    header('location:' . URL . 'admin/updStrata/' . $strata->kd_strata);
-                }
-            } else {  // jika tidak ada id pada url dan tidak ada data strata di POST dialirhkan ke halaman strata
+            header('location:' . URL . 'admin/addStrata/');
+        }
+    }
+
+    /*
+     * melakukan proses update referensi strata
+     * @param id_strata
+     */
+
+    public function updStrata() {
+        $strata = new Strata();
+        if (isset($_POST['upd_strata'])) {
+            $strata->kd_strata = $_POST["kd_strata"];
+            $strata->kode_strata = $_POST["kode_strata"];
+            $strata->nama_strata = $_POST["nama_strata"];
+            //var_dump($strata);
+            if ($strata->isEmpty($strata) == FALSE) {
+                $strata->update($strata);
                 header('location:' . URL . 'admin/addStrata/');
+            } else {
+                $url = URL . 'admin/editStrata/' . $strata->kd_strata;
+                header("refresh:1;url=" . $url);
+                echo "Isian form belum lengkap";
+                //header('location:' . URL . 'admin/updStrata/' . $strata->kd_strata);
             }
+        } else {
+            header('location:' . URL . 'admin/addStrata/');
         }
     }
 
@@ -410,36 +429,49 @@ class AdminController extends BaseController {
     }
 
     /*
-     * ubah referensi pemberi beasiswa
+     * menampilkan referensi pemberi beasiswa yang akan diubah
      * @param id_pemberi_beasiswa
      */
 
-    public function updPemberi($id = null) {
+    public function editPemberi($id = null) {
         $pemberi = new PemberiBeasiswa();
-        if (!is_null($id)) { //menampilkan data pemberi berdasarkan id pada url pada halaman edit_pemberi
+        if (!is_null($id)) {
             $data = $pemberi->get_by_id($id);
             //var_dump($data);
             $this->view->pemberi = $data;
             $this->view->data = $pemberi->get_All();
             $this->view->render('admin/edit_pemberi');
         } else {
-            if (isset($_POST['upd_pemberi'])) { // memproses update pemberi jika data pemberi di POST pada halaman edit_pemberi dan dialihkan ke halaman pemberi
-                $pemberi->kd_pemberi = $_POST['kd_pemberi'];
-                $pemberi->nama_pemberi = $_POST['nama_pemberi'];
-                $pemberi->alamat_pemberi = $_POST['alamat_pemberi'];
-                $pemberi->telp_pemberi = $_POST['telp_pemberi'];
-                $pemberi->pic_pemberi = $_POST['pic_pemberi'];
-                $pemberi->telp_pic_pemberi = $_POST['telp_pic_pemberi'];
-                //var_dump($pemberi);
-                if ($pemberi->isEmpty($pemberi) == false) {
-                    $pemberi->update($pemberi);
-                    header('location:' . URL . 'admin/addPemberi/');
-                } else {
-                    header('location:' . URL . 'admin/updPemberi/' . $pemberi->kd_pemberi);
-                }
-            } else {  // jika tidak ada id pada url dan tidak ada data pemberi di POST dialirhkan ke halaman pemberi
+            header('location:' . URL . 'admin/addPemberi/');
+        }
+    }
+
+    /*
+     * ubah referensi pemberi beasiswa
+     * @param id_pemberi_beasiswa
+     */
+
+    public function updPemberi() {
+        $pemberi = new PemberiBeasiswa();
+        if (isset($_POST['upd_pemberi'])) {
+            $pemberi->kd_pemberi = $_POST['kd_pemberi'];
+            $pemberi->nama_pemberi = $_POST['nama_pemberi'];
+            $pemberi->alamat_pemberi = $_POST['alamat_pemberi'];
+            $pemberi->telp_pemberi = $_POST['telp_pemberi'];
+            $pemberi->pic_pemberi = $_POST['pic_pemberi'];
+            $pemberi->telp_pic_pemberi = $_POST['telp_pic_pemberi'];
+            //var_dump($pemberi);
+            if ($pemberi->isEmpty($pemberi) == false) {
+                $pemberi->update($pemberi);
                 header('location:' . URL . 'admin/addPemberi/');
+            } else {
+                $url = URL . 'admin/editPemberi/' . $pemberi->kd_pemberi;
+                header("refresh:1;url=" . $url);
+                echo "Isian form belum lengkap...";
+                //header('location:' . URL . 'admin/updPemberi/' . $pemberi->kd_pemberi);
             }
+        } else {
+            header('location:' . URL . 'admin/addPemberi/');
         }
     }
 
@@ -450,7 +482,7 @@ class AdminController extends BaseController {
 
     public function editPejabat($id = null) {
         $pejabat = new Pejabat();
-        if (!is_null($id)) { //menampilkan data pejabat berdasarkan id pada url pada halaman edit_pejabat
+        if (!is_null($id)) {
             $data = $pejabat->get_by_id($id);
             //var_dump($data);
             $this->view->pejabat = $data;
@@ -667,25 +699,26 @@ class AdminController extends BaseController {
     public function __destruct() {
         ;
     }
-	 public function list_bank() {
+
+    public function list_bank() {
         $bank = new Bank($this->registry);
 
         $this->view->data = $bank->get_bank();
 //        var_dump($data);
         $this->view->render('admin/list_bank');
     }
-    
-    public function addBank (){
-        
-        if (isset($_POST['submit'])){
+
+    public function addBank() {
+
+        if (isset($_POST['submit'])) {
             $bank = new Bank($registry);
-            
+
             $bank->set_nama($_POST['nama']);
             $bank->set_keterangan($_POST['keterangan']);
-            
+
             $bank->addBank($bank);
-        } 
-        header('location:'.URL.'Admin/list_bank');
+        }
+        header('location:' . URL . 'Admin/list_bank');
     }
 
     public function editBank($id) {
@@ -710,13 +743,14 @@ class AdminController extends BaseController {
         $bank->updateBank($data);
         header('location:' . URL . 'Admin/list_bank');
     }
-    public function deleteBank ($id){
-        
+
+    public function deleteBank($id) {
+
         $bank = new Bank($this->registry);
         $bank->set_id($id);
         $bank->deleteBank();
-        
-        header('location:'.URL.'Admin/list_bank');
+
+        header('location:' . URL . 'Admin/list_bank');
     }
 
 }

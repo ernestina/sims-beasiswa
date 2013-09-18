@@ -32,7 +32,7 @@ $this->load('admin/menu_admin');
                         <td><?php echo $strata->nama_strata; ?></td>
                         <td>
                             <?php echo "<a href=" . URL . "admin/delStrata/" . $strata->kd_strata . ">X</a> | 
-                    <a href=" . URL . "admin/updStrata/" . $strata->kd_strata . ">...</a>" ?>
+                    <a href=" . URL . "admin/editStrata/" . $strata->kd_strata . ">...</a>" ?>
                         </td>
                     </tr>
     <?php $i++;

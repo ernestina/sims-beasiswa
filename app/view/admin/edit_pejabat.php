@@ -28,7 +28,7 @@ $this->load('admin/menu_admin');
                     
                 </select>
                 </br>
-                <label></label><input type="reset" value="BATAL"><input type="submit" name="upd_pejabat" value="SIMPAN">
+                <label></label><input type="button" onclick="window.location.href='<?php echo URL."admin/addPejabat"; ?>'" value="BATAL"><input type="submit" name="upd_pejabat" value="SIMPAN">
             </form>
         </div>
     </div>

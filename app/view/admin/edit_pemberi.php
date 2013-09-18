@@ -12,7 +12,7 @@
         <label>Telepon</label><input type="text" name="telp_pemberi" id="telepon" size="15" value="<?php echo $this->pemberi->telp_pemberi;?>"></br>
         <label>PIC</label><input type="text" name="pic_pemberi" id="PIC" size="30" value="<?php echo $this->pemberi->pic_pemberi;?>"></br>
         <label>Telepon PIC</label><input type="text" name="telp_pic_pemberi" id="telp_pic" size="8" value="<?php echo $this->pemberi->telp_pic_pemberi;?>"></br>
-        <label></label><input type="button" onclick="" value="BATAL"><input type="submit" name="upd_pemberi" value="SIMPAN">
+        <label></label><input type="button" onclick="window.location.href='<?php echo URL."admin/addPemberi"; ?>'" value="BATAL"><input type="submit" name="upd_pemberi" value="SIMPAN">
         </form>
     </div>
 </div>
@@ -40,7 +40,7 @@
                 <td><?php echo $pemberi->telp_pic_pemberi;?></td>
                 <td>
                     <?php echo "<a href=".URL."admin/delPemberi/".$pemberi->kd_pemberi.">X</a> | 
-                    <a href=".URL."admin/updPemberi/".$pemberi->kd_pemberi.">...</a>" ?>                    
+                    <a href=".URL."admin/editPemberi/".$pemberi->kd_pemberi.">...</a>" ?>                    
                 </td>
             </tr>
             <?php $i++; } ?>

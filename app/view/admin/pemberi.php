@@ -39,7 +39,7 @@
                 <td><?php echo $pemberi->telp_pic_pemberi;?></td>
                 <td>
                     <?php echo "<a href=".URL."admin/delPemberi/".$pemberi->kd_pemberi.">X</a> | 
-                    <a href=".URL."admin/updPemberi/".$pemberi->kd_pemberi.">...</a>" ?>                    
+                    <a href=".URL."admin/editPemberi/".$pemberi->kd_pemberi.">...</a>" ?>                    
                 </td>
             </tr>
             <?php $i++; } ?>
