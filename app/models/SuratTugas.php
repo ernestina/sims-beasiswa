@@ -78,15 +78,15 @@ class SuratTugas {
             a.KD_PEMB as KD_PEMB,
             a.KD_JENIS_ST as KD_JENIS_ST,
             a.KD_ST_LAMA as KD_ST_LAMA,
-            a.NOMOR_ST as NOMOR_ST,
-            a.TANGGAL_ST as TANGGAL_ST,
-            a.TANGGAL_MULAI_ST as TANGGAL_MULAI_ST,
-            a.TANGGAL_SELESAI_ST as TANGGAL_SELESAI_ST,
-            a.TAHUN_MASUK as TAHUN_MASUK,
+            a.NO_ST as NOMOR_ST,
+            a.TGL_ST as TANGGAL_ST,
+            a.TGL_MUL_ST as TANGGAL_MULAI_ST,
+            a.TGL_SEL_ST as TANGGAL_SELESAI_ST,
+            a.THN_MASUK as TAHUN_MASUK,
             a.FILE_ST as FILE_ST
             FROM ".$this->_tb_st." a";
         if($univ==0 AND $thn!=0){
-            $sql .=" WHERE a.TAHUN_MASUK=".$thn;
+            $sql .=" WHERE a.THN_MASUK=".$thn;
         }else if($univ!=0 AND $thn==0){
             $sql .=" JOIN r_jur b ON a.KD_JUR=b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
@@ -96,9 +96,8 @@ class SuratTugas {
             $sql .=" JOIN r_jur b ON a.KD_JUR=b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV
-                WHERE a.TAHUN_MASUK=".$thn." AND d.KD_UNIV=".$univ;
+                WHERE a.THN_MASUK=".$thn." AND d.KD_UNIV=".$univ;
         }
-        
         $result = $this->db->select($sql);
         $data = array();
         foreach ($result as $val) {

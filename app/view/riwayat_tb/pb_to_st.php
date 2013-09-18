@@ -2,13 +2,13 @@
     <div><h2>TAMBAH SURAT TUGAS</h2></div>
     <div>
         <form method="POST" action="<?php 
-                if(isset($this->d_ubah)){
+                if(isset($this->d_st)){
                     echo URL.'surattugas/updst';
                 }else{
                     $_SERVER['PHP_SELF'];
                 }?>" enctype="multipart/form-data">
             <div id="wnost"></div>
-            <label>no. Surat Tugas(ST)</label><input type="text" name="no_st" id="no_st" size="30" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nomor():'';?>"></br>
+            <label>no. Surat Tugas(ST)</label><input type="text" name="no_st" id="no_st" size="30" value="<?php echo isset($this->d_st)?$this->d_st->get_nomor():'';?>"></br>
             <div id="wstlama"></div>
             <label>No. ST Lama</label><select name="st_lama" id="st_lama">
                 <?php 
@@ -26,11 +26,11 @@
                 ?>
             </select></br>
             <div id="wtglst"></div>
-            <label>Tanggal ST</label><input type="text" name="tgl_st" id="datepicker" readonly></br>
+            <label>Tanggal ST</label><input type="text" name="tgl_st" id="datepicker" value="<?php echo isset($this->d_st)?  Tanggal::ubahFormatToDatePicker($this->d_st->get_tgl_st()):'';?>" readonly></br>
             <div id="wtglmulai"></div>
-            <label>Tanggal Mulai ST</label><input type="text" name="tgl_mulai" id="datepicker1" readonly></br>
+            <label>Tanggal Mulai ST</label><input type="text" name="tgl_mulai" id="datepicker1" value="<?php echo isset($this->d_st)?  Tanggal::ubahFormatToDatePicker($this->d_st->get_tgl_mulai()):'';?>" readonly></br>
             <div id="wtglselesai"></div>
-            <label>Tanggal Selesai ST</label><input type="text" name="tgl_selesai" id="datepicker2" readonly></br>
+            <label>Tanggal Selesai ST</label><input type="text" name="tgl_selesai" id="datepicker2" value="<?php echo isset($this->d_st)?  Tanggal::ubahFormatToDatePicker($this->d_st->get_tgl_selesai()):'';?>" readonly></br>
             <div id="wpemberi"></div>
             <label>Pemberi Beasiswa</label><select name="pemb" id="pemberi">
                 <?php 
@@ -65,7 +65,7 @@
             </select></br>
             <div id="wfile"></div>
             <label>Unggah ST</label><input type="file" name="fupload" id="file"></br>
-            <label></label><input type="reset" value="RESET"><input type="submit" name="<?php echo isset($this->d_ubah)?'sb_upd':'sb_add';?>" value="SIMPAN" onClick="return cek();">
+            <label></label><input type="reset" value="RESET"><input type="submit" name="<?php echo isset($this->d_st)?'sb_upd':'sb_add';?>" value="SIMPAN" onClick="return cek();">
         </form>
     </div>
 </div>
@@ -96,9 +96,9 @@
             </tr>
         </table>
     </div>
-    <div id="tb_pb">
+    <div id="tb_st">
         <?php 
-            $this->load('riwayat_tb/tabel_st');
+            $this->load('riwayat_tb/tabel_pb');
         ?>
     </div>
 </div>

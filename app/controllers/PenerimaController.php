@@ -81,6 +81,44 @@ class PenerimaController extends BaseController{
         
     }
     
+    public function pb_by_st(){
+        $kd_st = $_POST['param'];
+        
+    }
+
+
+    /*
+     * tambah penerima pada surat tugas
+     */
+    public function add_from_dialog_to_st(){
+        $pb = new Penerima($this->registry);
+        $st = $_POST['st'];
+        $bank = $_POST['bank'];
+        $nip = $_POST['nip'];
+        $nama = $_POST['nama'];
+        $telp = $_POST['telp'];
+        $email = $_POST['email'];
+        $no_rek = $_POST['no_rek'];
+        $jkel = $_POST['jkel'];
+        $gol = $_POST['gol'];
+        $unit = $_POST['unit'];
+        
+        $data = array(
+            'KD_ST'=>$st,
+            'KD_BANK'=>$bank,
+            'NIP_PB'=>$nip,
+            'NM_PB'=>$nama,
+            'TELP_PB'=>$telp,
+            'EMAIL_PB'=>$email,
+            'NO_REKENING_PB'=>$no_rek,
+            'JK_PB'=>$jkel,
+            'KD_GOL'=>$gol,
+            'UNIT_ASAL_PB'=>$unit
+        );
+        
+        $pb->add_penerima($data);
+    }
+    
     /*
      * update penerima tb
      */
@@ -155,6 +193,16 @@ class PenerimaController extends BaseController{
         header('location:'.URL.'penerima/penerima');
     }
     
+    public function get_nama_peg(){
+        $nip = $_POST['param'];
+        $peg = new Pegawai($this->registry);
+        $peg->set_nip($nip);
+        $data = $peg->get_peg_by_nip($peg);
+        echo $data->get_nama();
+        
+    }
+
+
     public function __destruct() {
         parent::__destruct();
     }

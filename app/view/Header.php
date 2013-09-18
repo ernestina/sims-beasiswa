@@ -16,6 +16,7 @@
     <link href="<?php echo URL; ?>public/css/ui.theme.css" rel="stylesheet">
     <link href="<?php echo URL; ?>public/css/sims.css" rel="stylesheet"-->
         <link href="<?php echo URL; ?>public/css/style.css" rel="stylesheet">
+        <link href="<?php echo URL; ?>public/css/dialog.css" rel="stylesheet">
     <hr>
     <script type="text/javascript">
     $(function(){

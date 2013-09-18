@@ -132,5 +132,23 @@ class SurattugasController extends BaseController{
         }
         $this->view->load('riwayat_tb/tabel_st');
     }
+    
+    public function dialog_add_pb($id){
+        $bank = new Bank($this->registry);
+        $this->view->d_bank = $bank->get_bank();
+        $this->view->id=$id;
+        $this->view->load('riwayat_tb/dialog_pb');
+    }
+    
+    public function addpb($id){
+        $st = new SuratTugas($this->registry);
+        $pb = new Penerima($this->registry);
+        $st->set_kd_st($id);
+        $pb->set_st($id);
+        $this->view->kd_st=$id;
+        $this->view->d_st = $st->get_surat_tugas_by_id($st);
+        $this->view->d_pb = $pb->get_penerima_by_st($pb);
+        $this->view->render('riwayat_tb/pb_to_st');
+    }
 }
 ?>

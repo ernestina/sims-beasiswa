@@ -27,7 +27,7 @@ class Bank {
 //        print_r($result);
 
         foreach ($result as $value) {
-            $bank = new Bank($registry);
+            $bank = new Bank($this->_registry);
             $bank->set_id($value['KD_BANK']);
             $bank->set_nama($value['NM_BANK']);
             $bank->set_keterangan($value['KET_BANK']);

@@ -11,7 +11,7 @@
             </thead>
             <?php 
                 $no=1;
-                foreach($this->d_st as $val){
+                foreach($this->d_pb as $val){
                     echo "<tr>";
                     echo "<td>".$no."</td>";
                     echo "<td>".$val->get_nomor()."</td>";

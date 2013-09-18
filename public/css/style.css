@@ -1,10 +1,10 @@
 @font-face {
     font-family: Nexa;
-    src: url("../font/Casper.ttf");
+    src: url("public/font/Casper.ttf");
 }
 @font-face {
     font-family: "Nexa";
-    src: url("../font/Nexa-Bold.otf");
+    src: url("public/font/Nexa-Bold.otf");
     font-weight: bold;
 }
 
