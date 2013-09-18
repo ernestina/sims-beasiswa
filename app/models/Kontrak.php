@@ -15,6 +15,8 @@ class Kontrak extends BaseModel {
     public $jml_pegawai_kontrak;
     public $lama_semester_kontrak;
     public $nilai_kontrak;
+    public $file_kontrak;
+    public $kontrak_lama;
 
     public function __construct() {
         parent::__construct();
@@ -42,6 +44,8 @@ class Kontrak extends BaseModel {
             $kontrak->jml_pegawai_kontrak = $val['JML_PGW_KON'];
             $kontrak->lama_semester_kontrak = $val['LAMA_SEM_KON'];
             $kontrak->nilai_kontrak = $val['NILAI_KON'];
+            $kontrak->file_kontrak = $val['FILE_KON'];
+            $kontrak->kontrak_lama = $val['KONTRAK_LAMA'];
             $data[] = $kontrak;
         }
         //var_dump($data);
@@ -52,7 +56,7 @@ class Kontrak extends BaseModel {
      * mendapatkan seluruh data konrak dari database dalam bentuk array berdasarkan kd_univ
      * mengubah masing-masing array ke dalam objek kontrak
      * return array objek 
-     */ //date('d-M-Y',strtotime($sm->getTgl()))
+     */ 
 
     public function get_by_univ($kd_univ) {
         $table = "d_kontrak a, r_jur b, r_fakul c";
@@ -71,6 +75,8 @@ class Kontrak extends BaseModel {
             $kontrak->jml_pegawai_kontrak = $val['JML_PGW_KON'];
             $kontrak->lama_semester_kontrak = $val['LAMA_SEM_KON'];
             $kontrak->nilai_kontrak = $val['NILAI_KON'];
+            $kontrak->file_kontrak = $val['FILE_KON'];
+            $kontrak->kontrak_lama = $val['KONTRAK_LAMA'];
             $data[] = $kontrak;
         }
         //var_dump($data);
@@ -100,6 +106,8 @@ class Kontrak extends BaseModel {
             $kontrak->jml_pegawai_kontrak = $val['JML_PEGAWAI_KONTRAK'];
             $kontrak->lama_semester_kontrak = $val['LAMA_SEMESTER_KONTRAK'];
             $kontrak->nilai_kontrak = $val['NILAI_KONTRAK'];
+            $kontrak->file_kontrak = $val['FILE_KON'];
+            $kontrak->kontrak_lama = $val['KONTRAK_LAMA'];
         }
         //var_dump($data);
         return $kontrak;
@@ -112,19 +120,22 @@ class Kontrak extends BaseModel {
      */
 
     public function add(Kontrak $kontrak) {
-        $table = "r_kontrak";
+        $table = "d_kontrak";
+        var_dump($kontrak);
         $data = array(
-            'KD_KONTRAK' => $kontrak->kd_kontrak,
             'NO_KONTRAK' => $kontrak->no_kontrak,
             'TGL_KONTRAK' => $kontrak->tgl_kontrak,
             'KD_JURUSAN' => $kontrak->kd_jurusan,
             'THN_MASUK_KONTRAK' => $kontrak->thn_masuk_kontrak,
             'JML_PEGAWAI_KONTRAK' => $kontrak->jml_pegawai_kontrak,
             'LAMA_SEMESTER_KONTRAK' => $kontrak->lama_semester_kontrak,
-            'NILAI_KONTRAK' => $kontrak->nilai_kontrak
+            'NILAI_KONTRAK' => $kontrak->nilai_kontrak,
+            'FILE_KONTRAK' => $kontrak->file_kontrak,
+            'KONTRAK_LAMA' => $kontrak->kontrak_lama
         );
         //var_dump($data);
         $this->db->insert($table, $data);
+        $this->db->errorInfo();
     }
 
     /*
@@ -156,7 +167,9 @@ class Kontrak extends BaseModel {
             'THN_MASUK_KONTRAK' => $kontrak->thn_masuk_kontrak,
             'JML_PEGAWAI_KONTRAK' => $kontrak->jml_pegawai_kontrak,
             'LAMA_SEMESTER_KONTRAK' => $kontrak->lama_semester_kontrak,
-            'NILAI_KONTRAK' => $kontrak->nilai_kontrak
+            'NILAI_KONTRAK' => $kontrak->nilai_kontrak,
+            'FILE_KONTRAK' => $kontrak->file_kontrak,
+            'KONTRAK_LAMA' => $kontrak->kontrak_lama
         );
         $where = "KD_KONTRAK='" . $kontrak->kd_kontrak . "'";
         $this->db->update($table, $data, $where);
@@ -177,7 +190,8 @@ class Kontrak extends BaseModel {
                 $kontrak->thn_masuk_kontrak != "" &&
                 $kontrak->jml_pegawai_kontrak != "" &&
                 $kontrak->lama_semester_kontrak != "" &&
-                $kontrak->nilai_kontrak !=""
+                $kontrak->nilai_kontrak !="" &&
+                $kontrak->file_kontrak !==""
             ) {
             $cek = false;
         }

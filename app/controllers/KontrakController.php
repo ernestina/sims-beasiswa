@@ -42,8 +42,48 @@ class KontrakController extends BaseController {
     }
 
     public function rekam() {
+        if (!isset($_POST['rekam_kontrak'])) {
+            $universitas = new Universitas($this->registry);
+            $univ = $universitas->get_univ();
+            $kontrak = new Kontrak();
+            $kon = $kontrak->get_All();
+            $this->view->univ = $univ;
+            $this->view->kon = $kon;
+            $this->view->render('kontrak/rekam_kontrak');
+        }else{
+            $kontrak = new Kontrak();
+            //$kontrak->kd_kontrak =$_POST[''];
+            $kontrak->no_kontrak=$_POST['nomor'];
+            $kontrak->kd_jurusan=$_POST['jur'];
+            $kontrak->tgl_kontrak = date('Y-d-m', strtotime($_POST['tanggal']));
+            $kontrak->thn_masuk_kontrak=$_POST['tahun_masuk'];
+            $kontrak->jml_pegawai_kontrak=$_POST['jml_peg'];
+            $kontrak->lama_semester_kontrak=$_POST['lama_semester'];
+                        
+            $upload = new Upload();
+            $upload->init('fupload');
+            $upload->setDirTo('files/');
+            $nama = array($kontrak->no_kontrak,$kontrak->tgl_kontrak);
+            $upload->changeFileName($upload->getFileName(),$nama);
+            
+            $kontrak->file_kontrak=$upload->getFileTo();
+            //var_dump($kontrak);
+            $kontrak->add($kontrak);
+            $upload->uploadFile();
+            header('location:'.URL.'kontrak/display');
+        }
+    }
 
-        $this->view->render('kontrak/rekam_kontrak');
+    public function univ($univ = null) {
+        if ($univ != "") {
+            $jurusan = new Jurusan($this->registry);
+            $data = $jurusan->get_jur_by_univ($univ);
+            foreach ($data as $jur) {
+                echo "<option value=" . $jur->get_kode_jur() . ">" . $jur->get_nama() . "</option>\n";
+            }
+        } else {
+           echo "<option value=''>Pilih Jurusan</option>"; 
+        }
     }
 
     public function biaya() {
@@ -59,5 +99,4 @@ class KontrakController extends BaseController {
     }
 
 }
-
 ?>

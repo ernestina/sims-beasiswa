@@ -217,5 +217,35 @@ class Jurusan{
     public function __destruct() {
         ;
     }
+    
+     /*
+     * mendapatkan seluruh data jurusan berdasarkan kd_univ
+     * 
+     * return array objek 
+     */ 
+
+    public function get_jur_by_univ($kd_univ) {
+        $table = "r_jur a, r_fakul b";
+        $where = "a.KD_FAKUL = b.KD_FAKUL and b.KD_UNIV = '".$kd_univ."'";
+        $sql = "SELECT * FROM $table where $where";
+        $result = $this->db->select($sql);
+        //var_dump($result);
+        $data = array();
+        foreach ($result as $val){
+            $jur = new $this($this->registry);
+            $jur->set_kode_jur($val['KD_JUR']);
+            $jur->set_kode_fakul($val['KD_FAKUL']);
+            $jur->set_kode_strata($val['KD_STRATA']);
+            $jur->set_nama($val['NM_JUR']);
+            $jur->set_alamat($val['ALMT_JUR']);
+            $jur->set_telepon($val['TELP_JUR']);
+            $jur->set_pic($val['PIC_JUR']);
+            $jur->set_telp_pic($val['TELP_PIC_JUR']);
+            $jur->set_status($val['STS_JUR']);
+            $data[]=$jur;
+        }
+        
+        return $data;
+    }
 }
 ?>
