@@ -19,10 +19,10 @@ $this->load('admin/menu_admin');
                     <option value="1" >Pejabat Pembuat Komitmen</option>
                     <?php } ?>
                      <?php if($this->pejabat->jenis_jabatan == '2'){ ?>
-                    <option value="1" >Pejabat Pembuat Komitmen</option>
+                    <option value="2" >Pejabat Pembuat Komitmen</option>
                     <?php } ?>
                      <?php if($this->pejabat->jenis_jabatan == '3'){ ?>
-                    <option value="1" >Pejabat Pembuat Komitmen</option>
+                    <option value="3" >Pejabat Pembuat Komitmen</option>
                     <?php } ?>
                     
                     
