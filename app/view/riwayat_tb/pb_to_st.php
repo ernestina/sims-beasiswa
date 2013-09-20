@@ -1,101 +1,29 @@
-<div> <!-- FORM -->
-    <div><h2>TAMBAH SURAT TUGAS</h2></div>
-    <div>
-        <form method="POST" action="<?php 
-                if(isset($this->d_st)){
-                    echo URL.'surattugas/updst';
-                }else{
-                    $_SERVER['PHP_SELF'];
-                }?>" enctype="multipart/form-data">
-            <div id="wnost"></div>
+<div><h2>TAMBAH SURAT TUGAS</h2></div>
+    <div class="kolom3">
+        <input type="hidden" name="kd_st" id="kd_st" value="<?php echo $this->d_st->get_kd_st();?>">
             <label>no. Surat Tugas(ST)</label><input type="text" name="no_st" id="no_st" size="30" value="<?php echo isset($this->d_st)?$this->d_st->get_nomor():'';?>"></br>
-            <div id="wstlama"></div>
-            <label>No. ST Lama</label><select name="st_lama" id="st_lama">
-                <?php 
-                    foreach($this->d_st_lama as $val){
-                        echo "<option value=".$val->get_kd_st().">".$val->get_nomor()."-".$val->get_jur()."</option>";
-                    }
-                ?>
-            </select></br>
-            <div id="wjenis"></div>
-            <label>jenis ST</label><select name="jns_st" id="jenis">
-                <?php 
-                    foreach($this->d_jst as $val){
-                        echo "<option value=".$val->get_kode().">".$val->get_nama()."</option>";
-                    }
-                ?>
-            </select></br>
-            <div id="wtglst"></div>
+           
+            <label>No. ST Lama</label><input type="text" value="<?php echo $this->d_st->get_nomor(); ?>">
+            
             <label>Tanggal ST</label><input type="text" name="tgl_st" id="datepicker" value="<?php echo isset($this->d_st)?  Tanggal::ubahFormatToDatePicker($this->d_st->get_tgl_st()):'';?>" readonly></br>
-            <div id="wtglmulai"></div>
+            
             <label>Tanggal Mulai ST</label><input type="text" name="tgl_mulai" id="datepicker1" value="<?php echo isset($this->d_st)?  Tanggal::ubahFormatToDatePicker($this->d_st->get_tgl_mulai()):'';?>" readonly></br>
-            <div id="wtglselesai"></div>
+            
             <label>Tanggal Selesai ST</label><input type="text" name="tgl_selesai" id="datepicker2" value="<?php echo isset($this->d_st)?  Tanggal::ubahFormatToDatePicker($this->d_st->get_tgl_selesai()):'';?>" readonly></br>
-            <div id="wpemberi"></div>
-            <label>Pemberi Beasiswa</label><select name="pemb" id="pemberi">
-                <?php 
-                    foreach($this->d_pemb as $val){
-                        echo "<option value=".$val->kd_pemberi.">".$val->nama_pemberi."</option>";
-                    }
-                ?>
-            </select></br>
-            <div id="wnost"></div>
-            <label>Universitas</label><select name="univ" id="univ">
-                <?php 
-                    foreach($this->d_univ as $val){
-                        echo "<option value=".$val->get_kode_in().">".$val->get_nama()."</option>";
-                    }
-                ?>
-            </select></br>
-            <div id="wjurusan"></div>
-            <label>Jurusan/Prodi</label><select name="jur" id="jur">
-                <?php 
-                    foreach($this->d_jur as $val){
-                        echo "<option value=".$val->get_kode_jur().">".$val->get_nama()." [".$val->get_kode_fakul()."]</option>";
-                    }
-                ?>
-            </select></br>
-            <div id="wthnmasuk"></div>
-            <label>Tahun Masuk</label><select name="th_masuk" id="th_masuk">
-                <?php
-                    foreach ($this->d_th_masuk as $key=>$val){
-                        echo "<option value=".$key.">".$val."</option>";
-                    }
-                ?>
-            </select></br>
-            <div id="wfile"></div>
-            <label>Unggah ST</label><input type="file" name="fupload" id="file"></br>
-            <label></label><input type="reset" value="RESET"><input type="submit" name="<?php echo isset($this->d_st)?'sb_upd':'sb_add';?>" value="SIMPAN" onClick="return cek();">
-        </form>
-    </div>
+            
 </div>
-<div> <!-- TABEL DATA -->
+<div class="kolom4"> <!-- TABEL DATA -->
     <div>
         <h2>DATA SURAT TUGAS</h2>
     </div>
     <div>
         <table>
             <tr align="left">
-                <td><label>Universitas</label><select id="univ" onchange="get_surat_tugas(this.value,document.getElementById('thn').value)">
-                        <option value=0>semua</option>
-                    <?php 
-                        foreach($this->d_univ as $val){
-                            echo "<option value=".$val->get_kode_in().">".$val->get_nama()."</option>";
-                        }
-                    ?>
-                    </select></td>
-                <td><label>Tahun Masuk</label><select id="thn" onchange="get_surat_tugas(document.getElementById('univ').value,this.value)">
-                        <option value=0>semua</option>
-                        <?php
-                            foreach ($this->d_th_masuk as $key=>$val){
-                                echo "<option value=".$key.">".$val."</option>";
-                            }
-                        ?>
-                    </select></td>
-                <td><input type="search" id="cari" size="30"></td>
+                <td><input type="search" id="cari" size="30" placeholde="cari penerima beasiswa"></td>
             </tr>
         </table>
     </div>
+    <input type="button" id="bt_dialog" value="buka dialog" onClick="choose(document.getElementById('kd_st').value);">
     <div id="tb_st">
         <?php 
             $this->load('riwayat_tb/tabel_pb');
@@ -103,24 +31,28 @@
     </div>
 </div>
 <div id="result"></div>
-<input type="button" id="bt_dialog" value="buka dialog" onClick="choose('result');">
 
 
 <script type="text/javascript">
     
-    function callFromDialog(){ //for callback from the dialog
-        var id_st = document.getElementById('kd_st').value;
-        $.post("<?php echo URL; ?>penerima/pb_by_st", {param:""+id_st+""}),
+    function callFromDialog(data){ //for callback from the dialog
+//        var id_st = document.getElementById('kd_st').value;
+//        var i = data.toString();
+//        $('#result').html(data);
+        
+        $.post("<?php echo URL; ?>penerima/pb_by_st", {param:""+data+""},
         function(data){
-            $('#result').html(data);
-        }
+            $('#tb_st').fadeOut(0);
+            $('#tb_st').fadeIn(200);
+            $('#tb_st').html(data);
+        })
         //langsung menyimpan ke tabel pb dengan st
         // do some thing other if you want
     }
 
     function choose(id){
         var URL = "<?php echo URL?>surattugas/dialog_add_pb/"+id;
-        window.open(URL,"mywindow","menubar=1,resizable=1,width=350,height=250")
+        window.open(URL,"mywindow","menubar=1,resizable=1,width=350,height=330")
     }
     
     function showdialog(){

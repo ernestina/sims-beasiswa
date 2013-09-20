@@ -107,7 +107,10 @@ class SurattugasController extends BaseController{
         header('location:'.URL.'surattugas/datast');
         
     }
-
+    
+    /*
+     * hapus surat tugas
+     */
     public function del_st($kd_st){
         $st = new SuratTugas($this->registry);
         $st->set_kd_st($kd_st);
@@ -118,6 +121,9 @@ class SurattugasController extends BaseController{
         header('location:'.URL.'surattugas/datast');
     }
     
+    /*
+     * menampilkan data surat tugas
+     */
     public function get_data_st(){
         $st = new SuratTugas($this->registry);
         $param = $_POST['param'];
@@ -133,6 +139,9 @@ class SurattugasController extends BaseController{
         $this->view->load('riwayat_tb/tabel_st');
     }
     
+    /*
+     * menampilkan kotak dialog tambah penerima dari data surat tugas
+     */
     public function dialog_add_pb($id){
         $bank = new Bank($this->registry);
         $this->view->d_bank = $bank->get_bank();
@@ -140,14 +149,20 @@ class SurattugasController extends BaseController{
         $this->view->load('riwayat_tb/dialog_pb');
     }
     
+    /*
+     * menampilkan halaman tambah penerima
+     */
     public function addpb($id){
         $st = new SuratTugas($this->registry);
         $pb = new Penerima($this->registry);
+        $univ = new Universitas($this->registry);
         $st->set_kd_st($id);
         $pb->set_st($id);
         $this->view->kd_st=$id;
+        $this->view->d_univ = $univ->get_univ();
         $this->view->d_st = $st->get_surat_tugas_by_id($st);
         $this->view->d_pb = $pb->get_penerima_by_st($pb);
+        $this->view->d_th_masuk = $st->get_list_th_masuk();
         $this->view->render('riwayat_tb/pb_to_st');
     }
 }

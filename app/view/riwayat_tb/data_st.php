@@ -102,26 +102,9 @@
         ?>
     </div>
 </div>
-<div id="result"></div>
-<input type="button" id="bt_dialog" value="buka dialog" onClick="choose('result');">
 
 
 <script type="text/javascript">
-    
-    function callFromDialog(){ //for callback from the dialog
-        var id_st = document.getElementById('kd_st').value;
-        $.post("<?php echo URL; ?>penerima/pb_by_st", {param:""+id_st+""}),
-        function(data){
-            $('#result').html(data);
-        }
-        //langsung menyimpan ke tabel pb dengan st
-        // do some thing other if you want
-    }
-
-    function choose(id){
-        var URL = "<?php echo URL?>surattugas/dialog_add_pb/"+id;
-        window.open(URL,"mywindow","menubar=1,resizable=1,width=350,height=250")
-    }
     
     function showdialog(){
         $('#dialog_pb').show();

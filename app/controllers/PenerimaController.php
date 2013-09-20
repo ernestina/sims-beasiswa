@@ -83,6 +83,10 @@ class PenerimaController extends BaseController{
     
     public function pb_by_st(){
         $kd_st = $_POST['param'];
+        $pb = new Penerima($this->registry);
+        $pb->set_st($kd_st);
+        $this->view->d_pb = $pb->get_penerima_by_st($pb);
+        $this->view->load('riwayat_tb/tabel_pb');
         
     }
 
@@ -92,7 +96,8 @@ class PenerimaController extends BaseController{
      */
     public function add_from_dialog_to_st(){
         $pb = new Penerima($this->registry);
-        $st = $_POST['st'];
+        $st = new SuratTugas($this->registry);
+        $kd = $_POST['st'];
         $bank = $_POST['bank'];
         $nip = $_POST['nip'];
         $nama = $_POST['nama'];
@@ -103,8 +108,14 @@ class PenerimaController extends BaseController{
         $gol = $_POST['gol'];
         $unit = $_POST['unit'];
         
+        /*
+         * mendapatkan kode jurusan 
+         */
+        $st->set_kd_st($kd);
+        $st->get_surat_tugas_by_id($st);
+        $jur = $st->get_jur();
         $data = array(
-            'KD_ST'=>$st,
+            'KD_ST'=>$kd,
             'KD_BANK'=>$bank,
             'NIP_PB'=>$nip,
             'NM_PB'=>$nama,
@@ -113,7 +124,9 @@ class PenerimaController extends BaseController{
             'NO_REKENING_PB'=>$no_rek,
             'JK_PB'=>$jkel,
             'KD_GOL'=>$gol,
-            'UNIT_ASAL_PB'=>$unit
+            'UNIT_ASAL_PB'=>$unit,
+            'KD_JUR'=>$jur,
+            'KD_STS_TB'=>1
         );
         
         $pb->add_penerima($data);
