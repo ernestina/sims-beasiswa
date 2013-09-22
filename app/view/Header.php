@@ -34,6 +34,7 @@
                 <li><a href="">Cuti</a></li>
                 <li><a href="<?php echo URL.'kontrak/display';?>">Kontrak</a></li>
                 <li><a href="<?php echo URL.'penerima/datapb';?>">Penerima Beasiswa</a></li>
+                <li><a href="<?php echo URL;?>elemenBeasiswa/index">Elemen Beasiswa</a></li>
                 <li><a href="<?php echo URL;?>admin/addUniversitas">Admin</a></li>
             </ul>
                         
