@@ -18,6 +18,9 @@ class ElemenBeasiswa {
     private $_tgl_sp2d;
     private $_file_sp2d;
     private $_table = 'd_elemen_beasiswa';
+    private $_table_univ = 'r_univ';
+    private $_table_fakul = 'r_fakul';
+    private $_table_jur = 'r_jur';
     public $registry;
     
     /*
@@ -33,8 +36,11 @@ class ElemenBeasiswa {
      * @param limit batas default null
      * return array objek universitas
      */
-    public function get_elem($limit=null,$batas=null){
-        $sql = "SELECT * FROM ".$this->_table." ";
+    public function get_elem($r_elem=null,$limit=null,$batas=null){
+        $sql = "SELECT * FROM ".$this->_table;
+        if(!is_null($r_elem)){
+            $sql .= " WHERE KD_R_ELEM_BEASISWA =".$r_elem;
+        }
         if(!is_null($limit) AND !is_null($batas)){
             $sql .= " LIMIT ".$limit.",".$batas;
         }
