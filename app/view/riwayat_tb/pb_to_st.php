@@ -23,7 +23,7 @@
             </tr>
         </table>
     </div>
-    <input type="button" id="bt_dialog" value="buka dialog" onClick="choose(document.getElementById('kd_st').value);">
+    <input type="button" id="bt_dialog" value="+ PB" onClick="choose(document.getElementById('kd_st').value);">
     <div id="tb_st">
         <?php 
             $this->load('riwayat_tb/tabel_pb');
@@ -52,7 +52,13 @@
 
     function choose(id){
         var URL = "<?php echo URL?>surattugas/dialog_add_pb/"+id;
-        window.open(URL,"mywindow","menubar=1,resizable=1,width=350,height=330")
+        var w = 350;
+        var h = 330;
+        var left = (screen.width/2)-(w/2);
+        var top = (screen.height/2)-(h/2);
+        var title = "rekam penerima beasiswa";
+        window.open(URL, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+//        window.open(URL,"mywindow","menubar=1,resizable=1,width=350,height=330")
     }
     
     function showdialog(){

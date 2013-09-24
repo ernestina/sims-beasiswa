@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
+        <title>rekam penerima beasiswa</title>
         <script src="<?php echo URL; ?>public/js/jquery-2.0.3.min.js"></script>
     </head>
     <body>
@@ -36,9 +36,24 @@
 <script>
     
     function getNama(nip){
-        $.post("<?php echo URL; ?>penerima/get_nama_peg", {param:""+nip+""},
-        function(data){
-            $('#t_nm').val(data);
+//        $.post("<?php echo URL; ?>penerima/get_nama_peg", {param:""+nip+""},
+//        function(data){
+//            $('#t_nm').val(data);
+//        });
+        $.ajax({
+           type:"post",
+           url: "<?php echo URL; ?>penerima/get_nama_peg",
+           data:"param="+nip,
+           dataType:"json",
+           success:function(data){
+               $('#t_nm').val(data.nama);
+               $('#t_jk').val(data.jkel);
+               $('#t_gol').val(data.gol);
+               $('#t_unit').val(data.unit);
+           },
+           error:function(){
+               alert("nip tidak ada dalam database!");
+           }
         });
     }
     

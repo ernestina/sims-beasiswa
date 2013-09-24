@@ -28,16 +28,26 @@ class AdminController extends BaseController {
             $telepon = $_POST['telepon'];
             $lokasi = $_POST['lokasi'];
             $pic = $_POST['pic'];
-
-            $data = array(
+            
+            $univ->set_pic($pic);
+            $univ->set_kode($kode);
+            $univ->set_nama($nama);
+            $univ->set_telepon($telepon);
+            $univ->set_alamat($alamat);
+            $univ->set_lokasi($lokasi);
+            /*$data = array(
                 'KD_USER' => $pic,
                 'SINGKAT_UNIV' => $kode,
                 'NM_UNIV' => $nama,
                 'ALMT_UNIV' => $alamat,
                 'TELP_UNIV' => $telepon,
                 'LOK_UNIV' => $lokasi
-            );
-            $univ->add_univ($data);
+            );*/
+            
+            if(!$univ->add_univ()){
+                $this->view->d_rekam = $univ;
+                $this->view->error = $univ->get_error();
+            }
         }
 
         if (!is_null($id)) {
@@ -63,15 +73,22 @@ class AdminController extends BaseController {
             $nama = $_POST['nama'];
             $alamat = $_POST['alamat'];
             $telepon = $_POST['telepon'];
-
-            $data = array(
+            
+            $fakul->set_kode_univ($univ);
+            $fakul->set_nama($nama);
+            $fakul->set_alamat($alamat);
+            $fakul->set_telepon($telepon);
+            /*$data = array(
                 'KD_UNIV' => $univ,
                 'NM_FAKUL' => $nama,
                 'ALMT_FAKUL' => $alamat,
                 'TELP_FAKUL' => $telepon
-            );
+            );*/
 
-            $fakul->add_fakul($data);
+            if(!$fakul->add_fakul()){
+                $this->view->d_rekam = $fakul;
+                $this->view->error = $fakul->get_error();
+            }
         }
 
         if (!is_null($id)) {
@@ -102,19 +119,21 @@ class AdminController extends BaseController {
             $pic_jur = $_POST['pic_jur'];
             $telp_pic_jur = $_POST['telp_pic_jur'];
             $status = $_POST['status'];
+            
+            $jur->set_kode_fakul($fak);
+            $jur->set_kode_strata($strata);
+            $jur->set_nama($nama);
+            $jur->set_alamat($alamat);
+            $jur->set_telepon($telepon);
+            $jur->set_pic($pic_jur);
+            $jur->set_telp_pic($telp_pic_jur);
+            $jur->set_status($status);
+            
 
-            $data = array(
-                'KD_FAKUL' => $fak,
-                'KD_STRATA' => $strata,
-                'NM_JUR' => $nama,
-                'ALMT_JUR' => $alamat,
-                'TELP_JUR' => $telepon,
-                'PIC_JUR' => $pic_jur,
-                'TELP_PIC_JUR' => $telp_pic_jur,
-                'STS_JUR' => $status,
-            );
-
-            $jur->add_jurusan($data);
+            if(!$jur->add_jurusan()){
+                $this->view->d_rekam = $jur;
+                $this->view->error = $jur->get_error();
+            }
         }
 
         if (!is_null($id)) {
@@ -276,7 +295,7 @@ class AdminController extends BaseController {
             $lokasi = $_POST['lokasi'];
             $pic = $_POST['pic'];
 
-            $data = array(
+            /*$data = array(
                 'KD_UNIV' => $kd_univ,
                 'KD_USER' => $pic,
                 'SINGKAT_UNIV' => $kode,
@@ -284,10 +303,20 @@ class AdminController extends BaseController {
                 'ALMT_UNIV' => $alamat,
                 'TELP_UNIV' => $telepon,
                 'LOK_UNIV' => $lokasi
-            );
+            );*/
+            $univ->set_pic($pic);
+            $univ->set_kode($kode);
+            $univ->set_nama($nama);
+            $univ->set_telepon($telepon);
+            $univ->set_alamat($alamat);
+            $univ->set_lokasi($lokasi);
 
             $univ->set_kode_in($kd_univ);
-            $univ->update_univ($data);
+            if(!$univ->update_univ()){
+                $this->view->d_ubah = $univ;
+                $this->view->error = $univ->get_error();
+                $this->view->render();
+            }
         }
 
         header('location:' . URL . 'admin/addUniversitas');
@@ -314,7 +343,11 @@ class AdminController extends BaseController {
         );
 
         $fakul->set_kode_fakul($kd_fakul);
-        $fakul->update_fakul($data);
+        if(!$fakul->update_fakul($data)){
+            $this->view->d_ubah = $fakul;
+            $this->view->error = $fakul->get_error();
+            $this->view->render();
+        }
 
         header('location:' . URL . 'admin/addFakultas');
     }
@@ -336,7 +369,7 @@ class AdminController extends BaseController {
         $telp_pic_jur = $_POST['telp_pic_jur'];
         $status = $_POST['status'];
 
-        $data = array(
+        /*$data = array(
             'KD_FAKUL' => $fak,
             'KD_STRATA' => $strata,
             'NM_JUR' => $nama,
@@ -345,10 +378,23 @@ class AdminController extends BaseController {
             'PIC_JUR' => $pic_jur,
             'TELP_PIC_JUR' => $telp_pic_jur,
             'STS_JUR' => $status,
-        );
+        );*/
+        
+        $jur->set_kode_fakul($fak);
+        $jur->set_kode_strata($strata);
+        $jur->set_nama($nama);
+        $jur->set_alamat($alamat);
+        $jur->set_telepon($telepon);
+        $jur->set_pic($pic_jur);
+        $jur->set_telp_pic($telp_pic_jur);
+        $jur->set_status($status);
 
         $jur->set_kode_jur($kd_jur);
-        $jur->update_jurusan($data);
+        if(!$jur->update_jurusan()){
+            $this->view->d_ubah = $jur;
+            $this->view->error = $jur->get_error();
+            $this->view->render();
+        }
 
         header('location:' . URL . 'admin/addJurusan');
     }

@@ -23,6 +23,10 @@ class PenerimaController extends BaseController{
     
     public function datapb(){
         $pb = new Penerima($this->registry);
+        $univ = new Universitas($this->registry);
+        $st = new SuratTugas($this->registry);
+        $this->view->th_masuk = $st->get_list_th_masuk();
+        $this->view->univ = $univ->get_univ();
         $this->view->d_pb = $pb->get_penerima();
         $this->view->render('riwayat_tb/data_pb');
     }
@@ -211,8 +215,18 @@ class PenerimaController extends BaseController{
         $peg = new Pegawai($this->registry);
         $peg->set_nip($nip);
         $data = $peg->get_peg_by_nip($peg);
-        echo $data->get_nama();
+        $nm = $data->get_nama();
+        $jk = $data->get_jkel();
+        $gol = $data->get_golongan();
+        $unit = $data->get_unit_asal();
+        $return = json_encode(array(
+            'nama'=>$nm,
+            'jkel'=>$jk,
+            'gol'=>$gol,
+            'unit'=>$unit
+        ));
         
+        echo $return;
     }
 
 

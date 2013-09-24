@@ -16,6 +16,8 @@ class Universitas {
     private $_telepon;
     private $_status;
     private $_lokasi;
+    private $_error;
+    private $_valid = TRUE;
     private $_table = 'r_univ';
     public $registry;
     
@@ -84,7 +86,17 @@ class Universitas {
      * tambah data universitas
      * param array data array key=>value, nama kolom=>data
      */
-    public function add_univ($data=array()){
+    public function add_univ(){
+        $data = array(
+                'KD_USER' => $this->get_pic(),
+                'SINGKAT_UNIV' => $this->get_kode(),
+                'NM_UNIV' => $this->get_nama(),
+                'ALMT_UNIV' => $this->get_alamat(),
+                'TELP_UNIV' => $this->get_telepon(),
+                'LOK_UNIV' => $this->get_lokasi()
+            );
+        $this->validate();
+        if(!$this->get_valid()) return false;
         if(!is_array($data)) return false;
         $this->db->insert($this->_table,$data);
     }
@@ -93,7 +105,17 @@ class Universitas {
      * update universitas, id harus di set terlebih dahulu
      * param data array
      */
-    public function update_univ($data=array()){
+    public function update_univ(){
+        $data = array(
+                'KD_USER' => $this->get_pic(),
+                'SINGKAT_UNIV' => $this->get_kode(),
+                'NM_UNIV' => $this->get_nama(),
+                'ALMT_UNIV' => $this->get_alamat(),
+                'TELP_UNIV' => $this->get_telepon(),
+                'LOK_UNIV' => $this->get_lokasi()
+            );
+        $this->validate();
+        if(!$this->get_valid()) return false;
         if(!is_array($data)) return false;
         $where = ' KD_UNIV='.$this->get_kode_in();
         $this->db->update($this->_table,$data, $where);
@@ -105,6 +127,33 @@ class Universitas {
     public function delete_univ(){
         $where = ' KD_UNIV='.$this->get_kode_in();
         $this->db->delete($this->_table,$where);
+    }
+    
+    public function validate(){
+        if($this->get_pic()==0){
+            $this->_error .= "User belum dipilih!</br>";
+            $this->_valid = FALSE;
+        }
+        if($this->get_kode()==""){
+            $this->_error .= "Nama singkat Perguruan Tinggi belum diinput!<?br>";
+            $this->_valid = FALSE;
+        }
+        if($this->get_nama()=="" OR !Validasi::validate_string($this->get_nama())){
+            $this->_error .= "Nama Perguruan Tinggi belum diinput!</br>";
+            $this->_valid = FALSE;
+        }
+        if($this->get_alamat()==""){
+            $this->_error .= "Alamat belum diinput!</br>";
+            $this->_valid = FALSE;
+        }
+        if($this->get_telepon()=="" OR !Validasi::validate_telephone($this->get_telepon())){
+            $this->_error .= "Telepon belum diinput!</br>";
+            $this->_valid = FALSE;
+        }
+        if($this->get_lokasi()=="" OR !Validasi::validate_string($this->get_nama())){
+            $this->_error .= "Lokasi belum diinput!</br>";
+            $this->_valid = FALSE;
+        }
     }
     
     /*
@@ -186,6 +235,14 @@ class Universitas {
     
     public function get_telepon(){
         return $this->_telepon;
+    }
+    
+    public function get_error(){
+        return $this->_error;
+    }
+    
+    public function get_valid(){
+        return $this->_valid;
     }
     
     /*

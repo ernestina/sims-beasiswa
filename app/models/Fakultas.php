@@ -16,6 +16,8 @@ class Fakultas{
     private $_nama_fakul;
     private $_alamat;
     private $_telepon;
+    private $_valid = TRUE;
+    private $_error;
     
     /*
      * konstruktor
@@ -81,7 +83,15 @@ class Fakultas{
      * menambahkan data fakultas
      * param array data
      */
-    public function add_fakul($data=array()){
+    public function add_fakul(){
+        $data = array(
+                'KD_UNIV' => $this->get_kode_univ(),
+                'NM_FAKUL' => $this->get_nama(),
+                'ALMT_FAKUL' => $this->get_alamat(),
+                'TELP_FAKUL' => $this->get_telepon()
+            );
+        $this->validate();
+        if(!$this->get_valid()) return false;
         if(!is_array($data)) return false;
         $this->db->insert($this->_table,$data);
     }
@@ -91,6 +101,14 @@ class Fakultas{
      * param array data
      */
     public function update_fakul($data=array()){
+        $data = array(
+                'KD_UNIV' => $this->get_kode_univ(),
+                'NM_FAKUL' => $this->get_nama(),
+                'ALMT_FAKUL' => $this->get_alamat(),
+                'TELP_FAKUL' => $this->get_telepon()
+            );
+        $this->validate();
+        if(!$this->get_valid()) return false;
         if(!is_array($data)) return false;
         $where = ' KD_FAKUL='.$this->get_kode_fakul();
         $this->db->update($this->_table,$data, $where);
@@ -102,6 +120,25 @@ class Fakultas{
     public function delete_fakul(){
         $where = ' KD_FAKUL='.$this->get_kode_fakul();
         $this->db->delete($this->_table,$where);
+    }
+    
+    public function validate(){
+        if($this->get_kode_univ()==0){
+            $this->_error .= "Universitas belum dipilih!</br>";
+            $this->_valid = FALSE;
+        }
+        if($this->get_nama()=="" OR !Validasi::validate_string($this->get_nama())){
+            $this->_error .= "Nama Fakultas belum diinput!</br>";
+            $this->_valid = FALSE;
+        }
+        if($this->get_alamat()==""){
+            $this->_error .= "Alamat belum diinput!</br>";
+            $this->_valid = FALSE;
+        }
+        if($this->get_telepon()=="" OR !Validasi::validate_telephone($this->get_telepon())){
+            $this->_error .= "Telepon belum diinput!</br>";
+            $this->_valid = FALSE;
+        }
     }
 
     /*
@@ -161,7 +198,13 @@ class Fakultas{
         return $this->_telepon;
     }
 
-
+    public function get_valid(){
+        return $this->_valid;
+    }
+    
+    public function get_error(){
+        return $this->_error;
+    }
     /*
      * destruktor
      */

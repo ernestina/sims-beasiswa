@@ -21,6 +21,8 @@ class Jurusan{
     private $_pic;
     private $_telp_pic;
     private $_status;
+    private $_valid = TRUE;
+    private $_error;
     
     /*
      * konstruktor
@@ -101,7 +103,19 @@ class Jurusan{
      * menambah data jurusan
      * param data array
      */
-    public function add_jurusan($data=array()){
+    public function add_jurusan(){
+        $data = array(
+                'KD_FAKUL' => $this->get_kode_fakul(),
+                'KD_STRATA' => $this->get_kode_strata(),
+                'NM_JUR' => $this->get_nama(),
+                'ALMT_JUR' => $this->get_alamat(),
+                'TELP_JUR' => $this->get_telepon(),
+                'PIC_JUR' => $this->get_pic(),
+                'TELP_PIC_JUR' => $this->get_telp_pic(),
+                'STS_JUR' => $this->get_status(),
+            );
+        $this->validate();
+        if(!$this->get_valid()) return false;
         if(!is_array($data)) return false;
         $this->db->insert($this->_table,$data);
     }
@@ -110,7 +124,19 @@ class Jurusan{
      * ubah data jurusan, kd jurusan harus sudah di set
      * param data array
      */
-    public function update_jurusan($data=array()){
+    public function update_jurusan(){
+        $data = array(
+                'KD_FAKUL' => $this->get_kode_fakul(),
+                'KD_STRATA' => $this->get_kode_strata(),
+                'NM_JUR' => $this->get_nama(),
+                'ALMT_JUR' => $this->get_alamat(),
+                'TELP_JUR' => $this->get_telepon(),
+                'PIC_JUR' => $this->get_pic(),
+                'TELP_PIC_JUR' => $this->get_telp_pic(),
+                'STS_JUR' => $this->get_status(),
+            );
+        $this->validate();
+        if(!$this->get_valid()) return false;
         if(!is_array($data)) return false;
         $where = ' kd_jur='.$this->get_kode_jur();
         $this->db->update($this->_table,$data, $where);
@@ -122,6 +148,38 @@ class Jurusan{
     public function delete_jurusan(){
         $where = ' kd_jur='.$this->get_kode_jur();
         $this->db->delete($this->_table,$where);
+    }
+    
+    public function validate(){
+        if($this->get_kode_fakul()==0){
+            $this->_error .= "Fakultas belum dipilih!</br>";
+            $this->_valid = FALSE;
+        }
+        if($this->get_nama()=="" OR !Validasi::validate_string($this->get_nama())){
+            $this->_error .= "Nama Fakultas belum diinput!</br>";
+            $this->_valid = FALSE;
+        }
+        if($this->get_alamat()==""){
+            $this->_error .= "Alamat belum diinput!</br>";
+            $this->_valid = FALSE;
+        }
+        if($this->get_telepon()=="" OR !Validasi::validate_telephone($this->get_telepon())){
+            $this->_error .= "Telepon belum diinput!</br>";
+            $this->_valid = FALSE;
+        }
+        if($this->get_kode_strata()==0){
+            $this->_error .= "Strata belum dipilih!</br>";
+            $this->_valid = FALSE;
+        }
+        if($this->get_pic()==0){
+            $this->_error .= "PIC belum dipilih!</br>";
+            $this->_valid = FALSE;
+        }
+        if($this->get_telp_pic()==0){
+            $this->_error .= "PIC belum dipilih!</br>";
+            $this->_valid = FALSE;
+        }
+        
     }
 
 
@@ -212,6 +270,14 @@ class Jurusan{
     
     public function get_status(){
         return $this->_status;
+    }
+    
+    public function get_valid(){
+        return $this->_valid;
+    }
+    
+    public function get_error(){
+        return $this->_error;
     }
 
     public function __destruct() {

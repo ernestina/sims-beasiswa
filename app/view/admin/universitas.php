@@ -18,6 +18,10 @@
             if(isset($this->d_ubah)){
                 echo "<input type=hidden name='kd_univ' value=".$this->d_ubah->get_kode_in().">";
             }
+            
+            if(isset($this->error)){
+                echo "<div class=error>".$this->error."</div>";
+            }
         ?>
         <div id="wkode"></div>
 		<div class="kiri">
