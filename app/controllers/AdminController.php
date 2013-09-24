@@ -798,6 +798,59 @@ class AdminController extends BaseController {
 
         header('location:' . URL . 'Admin/list_bank');
     }
+	public function listUser() {
+
+        $user = new User($registry);
+        $this->view->data = $user->get_user();
+//        var_dump($user->get_user());
+        $this->view->render('admin/list_user');
+    }
+
+    public function addUser() {
+
+        if (ISSET($_POST['submit'])) {
+            $user = new User($registry);
+
+            $user->set_nip($_POST['nip']);
+            $user->set_nmUser($_POST['nama']);
+            $user->set_pass($_POST['pass']);
+            $user->set_akses($_POST['akses']);
+            $user->set_foto($_POST['foto']);
+
+//            var_dump($user);
+            $user->addUser($user);
+        }
+        header('location:' . URL . 'admin/listuser');
+    }
+
+    public function editUser($id) {
+        $user = new User($registry);
+
+        $this->view->data = $user->getUser_id($id);
+
+        $this->view->render('admin/edit_user');
+    }
+
+    public function updateUser() {
+        if (ISSET($_POST['submit'])) {
+
+            $data['id'] = $_POST['id'];
+            $data['nip'] = $_POST['nip'];
+            $data['nama'] = $_POST['nama'];
+            $data['pass'] = $_POST['pass'];
+            $data['akses'] = $_POST['akses'];
+            $data['foto'] = $_POST['foto'];
+            $user = new User($registry);
+            $user->updateUser($data);
+        }
+        header('location:' . URL . 'admin/listUser');
+    }
+
+    public function deleteUser($id) {
+        $user = new User($registry);
+        $user->delUser($id);
+        header('location:' . URL . 'admin/listUser');
+    }
 
 }
 
