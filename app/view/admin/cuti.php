@@ -1,8 +1,8 @@
 <?php
     $this->load('admin/menu_admin');
 ?>
-<div id="form">
-    <div><h2>DATA JENIS SURAT CUTI</h2></div>
+<div id="top">
+    <div><h2>DATA JENIS SURAT CUTI</h2>
     <div class="kolom3">
 	  <fieldset><legend>Tambah Jenis Surat Cuti</legend>
 		<div id="form-input">
@@ -24,13 +24,15 @@
             }
         ?>
         <div id="wnama" class="warning_field"></div>
-        <label>Nama</label><input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():'';?>">
+        <div class="kiri">
+		<label>Nama</label><input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():'';?>">
         <div id="wketerangan"></div>
         <label>Keterangan</label><textarea name="keterangan" id="keterangan" rows="8" type="text"><?php echo isset($this->d_ubah)?$this->d_ubah->get_keterangan():'';?></textarea>
         <ul class="inline tengah">
 			<li><input class="normal" type="submit" onclick="" value="BATAL"></li>
 			<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'upd_sc':'add_sc';?>" value="SIMPAN" onClick="return cek();"></li>
 		</ul>
+		</div>
         </form>
     </div>
 	</div>
@@ -43,9 +45,9 @@
         <table class="table-bordered zebra scroll">
             <thead>
                 <th>No</th>
-                <th>Nama</th>
-                <th>Keterangan</th>
-                <th>Aksi</th>
+                <th width="300">Nama</th>
+                <th width="300">Keterangan</th>
+                <th width="30">Aksi</th>
             </thead>
             <tbody>
             <?php
@@ -64,6 +66,7 @@
             </tbody>
         </table>
     </div>
+</div>
 </div>
 <script type="text/javascript">
 function cek(){

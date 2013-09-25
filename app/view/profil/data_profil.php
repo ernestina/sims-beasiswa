@@ -2,13 +2,13 @@
 <!--link href="../../../public/css/bootstrap.css" rel="stylesheet" media="screen"-->
 <link href="../../../public/css/style.css" rel="stylesheet" media="screen">
 <body>
-  <div id="wrapper">
-  
+ 
+  <div id="top">
   <!--level1: Profil Penerima Beasiswa-->
 	<h1>PROFIL PENERIMA BEASISWA</h1>
 	<fieldset><legend>Profil Penerima Beasiswa</legend>
 		<div class="foto">
-			<img class="frame" src="..." width="185" height="220">
+			<img class="frame" src="../../public/img/home.png" width="185" height="220">
 			</div>
 		<form action="#" method="post">
 			<label class="isian">NIP :</label>
@@ -226,8 +226,8 @@
 </div> <!--div level 4-->
 <input class="sukses" type="submit" value="UBAH" style="font-size: 130%; margin-top:20px"/>
 
-</div> <!--wrapper-->
 
+</div> <!--top-->
 </body>
 
 <script language="JavaScript" type="text/javascript">

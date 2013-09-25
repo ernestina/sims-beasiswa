@@ -1,6 +1,7 @@
 <?php
     $this->load('admin/menu_admin');
 ?>
+<div id="top">
 <div id="form">
     <h2>DATA UNIVERSITAS</h2></div>
     <div class="kolom3">
@@ -39,7 +40,7 @@
             <option value="non_aktif">non aktif</option>
         </select></br>-->
         <div id="wpic"></div>
-        <label>PIC</label><select id="pic" name="pic">
+        <label>PIC</label><select type="text" id="pic" name="pic">
             <?php 
                     foreach ($this->pic as $val){
                         if(isset($this->d_ubah)){
@@ -70,7 +71,7 @@
    </fieldset>
 </div>
 <div class="kolom4" id="table">
-	<fieldset><legend>Daftar Fakultas</legend>
+	<fieldset><legend>Daftar Universitas</legend>
     <div id="table-title"></div>
     <div id="table-content">
         <table class="table-bordered zebra scroll">
@@ -81,7 +82,7 @@
                 <th>Alamat</th>
                 <th>Telepon</th>
                 <th>lokasi</th>
-                <th>Aksi</th>
+                <th width="30">Aksi</th>
             </thead>
             <tbody>
             <?php
@@ -103,6 +104,8 @@
                 </tbody>
         </table>
     </div>
+</div>
+</div>
 </div>
 <script type="text/javascript">
 function cek(){

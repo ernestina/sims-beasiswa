@@ -23,11 +23,13 @@
     </script>
     </head>
     <body>
-         <header><h1>SCHOLARSHIP INFORMATION MANAGEMENT SYSTEM</h1>
-        <h3>Bagian Pengembangan Pegawai, Setditjen PBN Jakarta</h3>
-    </header>
+       <div id="wrapper">
+			<header>
+				<h2>SCHOLARSHIP INFORMATION MANAGEMENT SYSTEM<br>
+				Bagian Pengembangan Pegawai, Setditjen PBN Jakarta</h2>
+			</header>
         
-            <div class="container">
+           
             <ul class="upline" rel="sam1">
                 <li><a href="<?php echo URL.'surattugas/datast'?>">Surat Tugas</a></li>
                 <li><a href="">Cuti</a></li>
@@ -36,5 +38,6 @@
                 <li><a href="<?php echo URL;?>elemenBeasiswa/index">Elemen Beasiswa</a></li>
                 <li><a href="<?php echo URL;?>admin/addUniversitas">Admin</a></li>
             </ul>
+			
                         
-                <div id="wrapper">
+                

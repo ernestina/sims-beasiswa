@@ -1,9 +1,9 @@
 <?php
     $this->load('admin/menu_admin');
 ?>
-<div id="form">
+<div id="top">
     <!--div id="form-title"-->
-	<h2>DATA FAKULTAS</h2></div>
+	<h2>DATA FAKULTAS</h2>
     <div class="kolom3">
 	  <fieldset><legend>Tambah Fakultas</legend>
 		<div id="form-input">
@@ -72,11 +72,11 @@
         <table class="table-bordered zebra scroll">
             <thead>
                 <th>No</th>
-                <th width="100">Universitas</th>
+                <th width="200">Universitas</th>
                 <th width="150">Fakultas</th>
-                <th width="150">Alamat</th>
+                <th width="250">Alamat</th>
                 <th width="50">Telepon</th>
-                <th width="70">Aksi</th>
+                <th width="30">Aksi</th>
             </thead>
 			<tbody>
 
@@ -98,6 +98,7 @@
 			</tbody>
         </table>
     </div>
+</div>
 </div>
 <script type="text/javascript">
 

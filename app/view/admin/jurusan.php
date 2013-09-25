@@ -1,9 +1,9 @@
 <?php
     $this->load('admin/menu_admin');
 ?>
-<div id="form">
+<div id="top">
     
-	<!--div id="form-title"--><h2>DATA JURUSAN</h2></div>
+	<!--div id="form-title"--><h2>DATA JURUSAN</h2>
 	<div class="kolom3">
 	  <fieldset><legend>Tambah Jurusan</legend>
 		<div id="form-input">
@@ -90,9 +90,9 @@
 		</ul>
         </form>
 		</div>
-	</div>
+	</div> <!--end form input-->
    </fieldset>
-</div>
+</div> <!--end kolom3-->
 
 <div class="kolom4" id="table">
    <fieldset><legend>Daftar Jurusan</legend>
@@ -104,12 +104,12 @@
                 <th width="70">Fakultas</th>
                 <th width="30">Strata</th>
                 <th width="70">Jurusan</th>
-                <th width="150">Alamat</th>
+                <th width="200">Alamat</th>
                 <th width="70">Telepon</th>
                 <th>PIC Jurusan</th>
                 <th width="50">Telp PIC Jurusan</th>
                 <th>Status</th>
-                <th width="100">Aksi</th>
+                <th width="50">Aksi</th>
             </thead>
 			<tbody>
             <?php
@@ -134,7 +134,7 @@
         </tbody>
 		</table>
     </div>
-</div>
+</div> <!--end kolom4-->
 </div>
 
 <script type="text/javascript">

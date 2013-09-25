@@ -16,7 +16,6 @@
 				<li><a href="<?php echo URL;?>admin/addCuti">JENIS SURAT CUTI</a></li>
 				<li><a href="<?php echo URL;?>admin/addBank">BANK</a></li>
 				<li><a href="<?php echo URL;?>admin/addPIC">USER</a></li>
-				<li><a href="<?php echo URL;?>admin/addPejabat">PEJABAT</a></li>
 			</ul>
 		</li>
     </ul>

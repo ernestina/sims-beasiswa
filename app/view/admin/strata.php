@@ -1,28 +1,35 @@
 <?php
 $this->load('admin/menu_admin');
 ?>
-
-<div>
-
-    <div id="form">
-        <div id="form-title"><h1>DATA STRATA</h1></div>
-        <div id="form-input" >
+    <div id="top">
+        <!--div id="form-title"-->
+	  <h2>DATA STRATA</h2>
+		<div class="kolom3">
+		   <fieldset><legend>Tambah Strata</legend>
+			<div id="form-input" class="kiri" >
             <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'admin/addStrata' ?>">
-                <label>Kode</label><input type="text" name="kode_strata" id="kode" size="8"></br>
-                <label>Nama</label><input type="text" name="nama_strata" id="nama" size="50"></br>
-                <label></label><input type="reset" value="BATAL"><input type="submit" name="add_strata" value="SIMPAN">
+                <label>Kode</label><input type="text" name="kode_strata" id="kode" size="8">
+                <label>Strata</label><input type="text" name="nama_strata" id="nama" size="50">
+              <ul class="inline tengah">  
+				<li><input class="normal" type="reset" value="BATAL"></li>
+				
+				<li><input class="sukses" type="submit" name="add_strata" value="SIMPAN"></li>
+			  </ul>
             </form>
         </div>
+	   </fieldset>
     </div>
-    <br />
-    <div id="table">
+
+	<div class="kolom4">
+	  <fieldset><legend>Daftar Strata</legend>
+		<div id="table">
         <div id="table-content">
-            <table>
+            <table class="table-bordered zebra scroll">
                 <thead>
                 <th>No</th>
-                <th>Kode</th>
-                <th>Nama</th>
-                <th>Aksi</th>
+                <th width="200">Kode</th>
+                <th width="300">Nama</th>
+                <th width="70">Aksi</th>
                 </thead>
                 <?php $i = 1;
                 foreach ($this->data as $strata) { ?>
@@ -40,5 +47,7 @@ $this->load('admin/menu_admin');
             </table>
         </div>
     </div>
+   </fieldset>
+</div>
 </div>
 

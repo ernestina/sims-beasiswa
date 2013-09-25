@@ -2,8 +2,8 @@
 <!--link href="../../../public/css/bootstrap.css" rel="stylesheet" media="screen"-->
 <link href="../../../public/css/style.css" rel="stylesheet" media="screen">
 <body>
-  <div id="wrapper">
   
+  <div id="top">
   <!--level1: Profil Penerima Beasiswa-->
   
 	<h1>PROFIL PENERIMA BEASISWA</h1>
@@ -169,7 +169,7 @@
 	<li><input class="sukses" type="submit" value="SIMPAN" style="font-size: 130%"/></li>
 </form>
 
-</div> <!--wrapper-->
+</div> <!--div top-->
 
 </body>
 
