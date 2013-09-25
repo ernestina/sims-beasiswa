@@ -12,7 +12,7 @@ class Index extends BaseController{
     }
     
     public function index(){
-        echo 'arahin ke home1';
+        $this->view->render('index');
     }
 }
 ?>

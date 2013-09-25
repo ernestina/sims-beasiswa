@@ -12,7 +12,7 @@ class AdminController extends BaseController {
     }
 
     public function index() {
-        echo "method tidak ada";
+        $this->view->render('admin/universitas');
     }
 
     /*

@@ -12,7 +12,7 @@ class KontrakController extends BaseController {
     }
 
     public function index() {
-        
+        $this->view->render('kontrak/mon_pembayaran');
     }
 
     public function display() {
