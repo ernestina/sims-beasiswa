@@ -90,22 +90,22 @@ class Kontrak extends BaseModel {
      */
 
     public function get_by_id($id) {
-        $table = "r_kontrak";
-        $where = "KD_KONTRAK='" . $id . "'";
+        $table = "d_kontrak";
+        $where = "KD_KON='" . $id . "'";
         $sql = "SELECT * FROM $table where $where";
         $result = $this->db->select($sql);
         //var_dump($result);
         $kontrak = false;
         foreach ($result as $val) {
             $kontrak = new $this();
-            $kontrak->kd_kontrak = $val['KD_KONTRAK'];
-            $kontrak->no_kontrak = $val['NO_KONTRAK'];
-            $kontrak->tgl_kontrak = $val['TGL_KONTRAK'];
-            $kontrak->kd_jurusan = $val['KD_JURUSAN'];
-            $kontrak->thn_masuk_kontrak = $val['THN_MASUK_KONTRAK'];
-            $kontrak->jml_pegawai_kontrak = $val['JML_PEGAWAI_KONTRAK'];
-            $kontrak->lama_semester_kontrak = $val['LAMA_SEMESTER_KONTRAK'];
-            $kontrak->nilai_kontrak = $val['NILAI_KONTRAK'];
+            $kontrak->kd_kontrak = $val['KD_KON'];
+            $kontrak->no_kontrak = $val['NO_KON'];
+            $kontrak->tgl_kontrak = date('d-m-Y',strtotime($val['TGL_KON'])); //$val['TGL_KON']; 
+            $kontrak->kd_jurusan = $val['KD_JUR'];
+            $kontrak->thn_masuk_kontrak = $val['THN_MASUK_KON'];
+            $kontrak->jml_pegawai_kontrak = $val['JML_PGW_KON'];
+            $kontrak->lama_semester_kontrak = $val['LAMA_SEM_KON'];
+            $kontrak->nilai_kontrak = $val['NILAI_KON'];
             $kontrak->file_kontrak = $val['FILE_KON'];
             $kontrak->kontrak_lama = $val['KONTRAK_LAMA'];
         }
@@ -121,32 +121,32 @@ class Kontrak extends BaseModel {
 
     public function add(Kontrak $kontrak) {
         $table = "d_kontrak";
-        var_dump($kontrak);
+        //var_dump($kontrak);
         $data = array(
-            'NO_KONTRAK' => $kontrak->no_kontrak,
-            'TGL_KONTRAK' => $kontrak->tgl_kontrak,
-            'KD_JURUSAN' => $kontrak->kd_jurusan,
-            'THN_MASUK_KONTRAK' => $kontrak->thn_masuk_kontrak,
-            'JML_PEGAWAI_KONTRAK' => $kontrak->jml_pegawai_kontrak,
-            'LAMA_SEMESTER_KONTRAK' => $kontrak->lama_semester_kontrak,
-            'NILAI_KONTRAK' => $kontrak->nilai_kontrak,
-            'FILE_KONTRAK' => $kontrak->file_kontrak,
+            'NO_KON' => $kontrak->no_kontrak,
+            'TGL_KON' => $kontrak->tgl_kontrak,
+            'KD_JUR' => $kontrak->kd_jurusan,
+            'THN_MASUK_KON' => $kontrak->thn_masuk_kontrak,
+            'JML_PGW_KON' => $kontrak->jml_pegawai_kontrak,
+            'LAMA_SEM_KON' => $kontrak->lama_semester_kontrak,
+            'NILAI_KON' => $kontrak->nilai_kontrak,
+            'FILE_KON' => $kontrak->file_kontrak,
             'KONTRAK_LAMA' => $kontrak->kontrak_lama
         );
-        //var_dump($data);
+        var_dump($data);
         $this->db->insert($table, $data);
-        $this->db->errorInfo();
+       
     }
 
     /*
-     * menghapus data strata dari database
-     * param id = kd_strata
+     * menghapus data kontrak dari database
+     * param id = kd_kontrak
      * return void 
      */
 
-    public function delete($id = null) {
-        $table = "r_kontrak";
-        $where = 'KD_KONTRAK=' . $id;
+    public function delete($id) {
+        $table = "d_kontrak";
+        $where = 'KD_KON=' . $id;
         //echo $id;
         $this->db->delete($table, $where);
     }
@@ -158,20 +158,19 @@ class Kontrak extends BaseModel {
      */
 
     public function update(kontrak $kontrak) {
-        $table = "r_kontrak";
-        $data = array(
-            'KD_KONTRAK' => $kontrak->kd_kontrak,
-            'NO_KONTRAK' => $kontrak->no_kontrak,
-            'TGL_KONTRAK' => $kontrak->tgl_kontrak,
-            'KD_JURUSAN' => $kontrak->kd_jurusan,
-            'THN_MASUK_KONTRAK' => $kontrak->thn_masuk_kontrak,
-            'JML_PEGAWAI_KONTRAK' => $kontrak->jml_pegawai_kontrak,
-            'LAMA_SEMESTER_KONTRAK' => $kontrak->lama_semester_kontrak,
-            'NILAI_KONTRAK' => $kontrak->nilai_kontrak,
-            'FILE_KONTRAK' => $kontrak->file_kontrak,
+        $table = "d_kontrak";
+         $data = array(
+            'NO_KON' => $kontrak->no_kontrak,
+            'TGL_KON' => $kontrak->tgl_kontrak,
+            'KD_JUR' => $kontrak->kd_jurusan,
+            'THN_MASUK_KON' => $kontrak->thn_masuk_kontrak,
+            'JML_PGW_KON' => $kontrak->jml_pegawai_kontrak,
+            'LAMA_SEM_KON' => $kontrak->lama_semester_kontrak,
+            'NILAI_KON' => $kontrak->nilai_kontrak,
+            'FILE_KON' => $kontrak->file_kontrak,
             'KONTRAK_LAMA' => $kontrak->kontrak_lama
         );
-        $where = "KD_KONTRAK='" . $kontrak->kd_kontrak . "'";
+        $where = "KD_KON='" . $kontrak->kd_kontrak . "'";
         $this->db->update($table, $data, $where);
     }
 
@@ -183,14 +182,12 @@ class Kontrak extends BaseModel {
 
     public function isEmpty(Kontrak $kontrak) {
         $cek = true;
-        if ($kontrak->kd_kontrak != "" && 
-                $kontrak->no_kontrak != "" &&
+        if (    $kontrak->no_kontrak != "" &&
                 $kontrak->tgl_kontrak != "" &&
                 $kontrak->kd_jurusan != "" &&
                 $kontrak->thn_masuk_kontrak != "" &&
                 $kontrak->jml_pegawai_kontrak != "" &&
                 $kontrak->lama_semester_kontrak != "" &&
-                $kontrak->nilai_kontrak !="" &&
                 $kontrak->file_kontrak !==""
             ) {
             $cek = false;

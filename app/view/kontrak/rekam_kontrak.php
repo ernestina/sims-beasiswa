@@ -1,13 +1,13 @@
 <div>
     DATA KONTRAK KERJASAMA > TAMBAH <!-- pake breadcrumb-->
 </div>
-<div>
-    <form method="POST" action="" enctype="multipart/form-data" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/rekam' ?>">
+<div class="kolom3">
+    <form method="POST" enctype="multipart/form-data" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/rekamKontrak' ?>">
         <input type="hidden" name="rekam_kontrak">
         <label>Nomor </label><input type="text" name="nomor" id="nomor" size="30"></br>
         <label>Tanggal </label><input type="text" name="tanggal" id="tanggal" size="30" readonly="readonly"></br>
         <label>Universitas </label><select name="univ" id="univ">
-            <option value="">Pilih Universitas</option>
+            <option value="" select>Pilih Universitas</option>
             <?php
             foreach ($this->univ as $univ) {
                 ?>
@@ -36,7 +36,7 @@
             <?php } ?>
         </select>
         </select></br>
-        <label>Kontrak Lama </label><select>
+        <label>Kontrak Lama </label><select name="kontrak_lama">
             <option value="">Pilih Kontrak Lama</option>
             <?php
             foreach ($this->kon as $kon) {
@@ -45,24 +45,32 @@
             <?php } ?>
         </select>
         <label>File Kontrak </label><input type="file" name="fupload" id="fupload"></br>
-        <input type="hidden" name="url" id="url" value="<?php echo URL . 'kontrak/univ/'; ?>">
-        <label></label><input type="button" value="BATAL" onClick="location.href='<?php echo URL . 'kontrak/display'; ?>'">
-        <input type="submit" name="sb_rekam" id="sb_rekam" value="SIMPAN"></br>
-    </form>
-</div>
-<div>
+        
+        <ul class="inline tengah">
+            <li><input type="button" class="normal" value="BATAL" onClick="location.href='<?php echo URL . 'kontrak/display'; ?>'"></li>
+            <li><input type="submit" class="sukses" name="sb_rekam" id="sb_rekam" value="SIMPAN"></li>
+        </ul>
 
+
+    </form>
 </div>
 
 <script>
-    $(document).ready(function(){
-       
-        //jika ada event onchange ambil data dari database
+    $("#univ").change(function(){
+        univ = $("#univ").val();
+        $.post("<?php echo URL; ?>kontrak/get_jur_by_univ", {univ:univ},
+        function(data){                
+            $('#jur').html(data);
+        });
+            
+    });
+    $(document).ready(function(){ 
         $("#univ").change(function(){
-            //ambil nilai univ dan url dari form
             univ = $("#univ").val();
-            url = $("#url").val();
-            $("#jur").load("<?php echo URL; ?>kontrak/univ/"+univ);
+            $.post("<?php echo URL; ?>kontrak/get_jur_by_univ", {univ:univ},
+            function(data){                
+                $('#jur').html(data);
+            });
             
         });
     })

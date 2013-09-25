@@ -251,6 +251,26 @@ class Universitas {
     public function __destruct() {
         ;
     }
+	
+	public function get_univ_by_jur($kd_jur) {
+        $table = "r_jur a, r_fakul b, r_univ c";
+        $where = "c.KD_UNIV = b.KD_UNIV AND b.KD_FAKUL=a.KD_FAKUL AND a.KD_JUR = '" . $kd_jur . "'";
+        $sql = "SELECT * FROM $table where $where";
+        $result = $this->db->select($sql);
+        //var_dump($result);
+        // $data = array();
+        foreach ($result as $val) {
+            $this->set_kode_in($val['KD_UNIV']);
+            $this->set_kode($val['SINGKAT_UNIV']);
+            $this->set_pic($val['KD_PIC']);
+            $this->set_nama($val['NM_UNIV']);
+            $this->set_alamat($val['ALMT_UNIV']);
+            $this->set_telepon($val['TELP_UNIV']);
+            $this->set_status($val['STATUS_UNIV']);
+            $this->set_lokasi($val['LOK_UNIV']);
+        }
+        return $this;
+    }
     
 }
 ?>
