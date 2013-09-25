@@ -263,17 +263,31 @@ class AdminController extends BaseController {
      * tambah referensi jenis cuti
      */
 
-    public function addCuti() {
-        if (isset($_POST['add_cuti'])) {
+    public function addCuti($id = null) {
+        $sc = new JenisSuratCuti($this->registry);
+        if (isset($_POST['add_sc'])) {
             $nama = $_POST['nama'];
             $keterangan = $_POST['keterangan'];
+            
+            $sc->set_nama($nama);
+            $sc->set_keterangan($keterangan);
+            
+            if(!$sc->add_jsc()){
+                $this->view->d_rekam = $sc;
+                $this->view->error = $sc->get_error();
+            }
+        }
+        
+        
 
-            $data = $keterangan . '</br>' . $nama;
-
-            echo $data;
+        if (!is_null($id)) {
+            $sc->set_kode($id);
+            $this->view->d_ubah = $sc->get_jsc_by_id($sc);
         }
 
-        $this->view->load('admin/cuti');
+        $this->view->data = $sc->get_jsc();
+//        var_dump($this->view->d_ubah);
+        $this->view->render('admin/cuti');
     }
 
     /*
@@ -510,15 +524,26 @@ class AdminController extends BaseController {
      * @param id_cuti
      */
 
-    public function updCuti($id) {
-        if (!is_null($id)) {
-            $cuti = new Cuti();
-            $data = $cuti->get($id);
-        } else {
-            throw new Exception;
-            return;
+    public function updCuti() {
+        $sc = new JenisSuratCuti($this->registry);
+        if (isset($_POST['upd_sc'])) {
+            $kd_jns_srt_cuti = $_POST['kd_jns_srt_cuti'];
+            $nama = $_POST['nama'];
+            $keterangan = $_POST['keterangan'];
+
+            $sc->set_kode($kd_jns_srt_cuti);
+            $sc->set_nama($nama);
+            $sc->set_keterangan($keterangan);
+            
+            if(!$sc->update_jsc()){
+                $this->view->d_ubah = $sc;
+                $this->view->error = $sc->get_error();
+                $this->view->data = $sc->get_jsc();
+                $this->view->render('admin/cuti');
+            }
         }
-        $this->view->load('admin/cuti');
+
+        header('location:' . URL . 'admin/addCuti');
     }
 
     /*
@@ -711,7 +736,15 @@ class AdminController extends BaseController {
      */
 
     public function delCuti($id) {
-        
+        $sc = new JenisSuratCuti($this->registry);
+        if (is_null($id)) {
+            throw new Exception;
+            echo "id belum dimasukkan!";
+            return;
+        }
+        $sc->set_kode($id);
+        $sc->delete_jsc();
+        header('location:' . URL . 'admin/addCuti');
     }
 
     /*

@@ -78,7 +78,7 @@ function cek(){
     }
     
     if(keterangan==''){
-        var wketerangan= 'Alamat Perguruan Tinggi harus diisi!';
+        var wketerangan= 'Keterangan harus diisi!';
         $('#wketerangan').fadeIn(0);
         $('#wketerangan').html(wketerangan);
         jml++;
