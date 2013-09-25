@@ -121,8 +121,8 @@
 	<fieldset><legend>Riwayat Perkembangan Studi</legend>
 		<div class="kolom5">
 		
-			<label class="isian2">Judul Skripsi :</label>
-			<textarea class="midi" type="text"></textarea>
+			<label class="isian2">Judul Tugas Akhir/Skripsi/Thesis/Desertasi :</label>
+			<textarea class="midi" type="text" rows="4"></textarea>
 			<label class="isian2">Permasalahan Tugas Belajar :</label>
 			<textarea class="midi" type="text" rows="8"></textarea>
 			
