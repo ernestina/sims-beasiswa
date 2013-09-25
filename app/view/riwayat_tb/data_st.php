@@ -1,6 +1,7 @@
-<div> <!-- FORM -->
-    <div><h2>TAMBAH SURAT TUGAS</h2></div>
-    <div>
+<div id="form"> <!-- FORM -->
+    <h2>DATA SURAT TUGAS</h2></div>
+    <div class="kolom3">
+        <fieldset><legend>Tambah Surat Tugas</legend>
         <form method="POST" action="<?php 
                 if(isset($this->d_ubah)){
                     echo URL.'surattugas/updst';
@@ -67,12 +68,12 @@
             <label>Unggah ST</label><input type="file" name="fupload" id="file"></br>
             <label></label><input type="reset" value="RESET"><input type="submit" name="<?php echo isset($this->d_ubah)?'sb_upd':'sb_add';?>" value="SIMPAN" onClick="return cek();">
         </form>
+            </fieldset>
     </div>
-</div>
-<div> <!-- TABEL DATA -->
-    <div>
-        <h2>DATA SURAT TUGAS</h2>
-    </div>
+<div class="kolom4"> <!-- TABEL DATA -->
+    
+        <fieldset><legend>Daftar Surat Tugas</legend>
+    
     <div>
         <table>
             <tr align="left">
@@ -101,6 +102,7 @@
             $this->load('riwayat_tb/tabel_st');
         ?>
     </div>
+            </fieldset>
 </div>
 
 

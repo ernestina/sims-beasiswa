@@ -1,5 +1,6 @@
-<div><h2>TAMBAH SURAT TUGAS</h2></div>
+<div><h2>DATA PENERIMA SURAT TUGAS</h2></div>
     <div class="kolom3">
+        <fieldset><legend>Detil Surat Tugas</legend>
         <input type="hidden" name="kd_st" id="kd_st" value="<?php echo $this->d_st->get_kd_st();?>">
             <label>no. Surat Tugas(ST)</label><input type="text" name="no_st" id="no_st" size="30" value="<?php echo isset($this->d_st)?$this->d_st->get_nomor():'';?>"></br>
            
@@ -10,12 +11,10 @@
             <label>Tanggal Mulai ST</label><input type="text" name="tgl_mulai" id="datepicker1" value="<?php echo isset($this->d_st)?  Tanggal::ubahFormatToDatePicker($this->d_st->get_tgl_mulai()):'';?>" readonly></br>
             
             <label>Tanggal Selesai ST</label><input type="text" name="tgl_selesai" id="datepicker2" value="<?php echo isset($this->d_st)?  Tanggal::ubahFormatToDatePicker($this->d_st->get_tgl_selesai()):'';?>" readonly></br>
-            
+        </fieldset>            
 </div>
 <div class="kolom4"> <!-- TABEL DATA -->
-    <div>
-        <h2>DATA SURAT TUGAS</h2>
-    </div>
+    <fieldset><legend>Daftar Penerima Beasiswa</legend>
     <div>
         <table>
             <tr align="left">
@@ -29,6 +28,7 @@
             $this->load('riwayat_tb/tabel_pb');
         ?>
     </div>
+    </fieldset>
 </div>
 <div id="result"></div>
 

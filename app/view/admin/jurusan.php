@@ -29,6 +29,12 @@
                             }else{
                                 echo "<option value=".$val->get_kode_fakul()." >[".$val->get_kode_univ()."] ".$val->get_nama()."</option>";
                             }
+                        }elseif(isset($this->d_rekam)){
+                            if($val->get_kode_fakul()==$this->d_rekam->get_kode_fakul()){
+                                echo "<option value=".$val->get_kode_fakul()." selected>[".$val->get_kode_univ()."] ".$val->get_nama()."</option>";
+                            }else{
+                                echo "<option value=".$val->get_kode_fakul()." >[".$val->get_kode_univ()."] ".$val->get_nama()."</option>";
+                            }
                         }else{
                             echo "<option value=".$val->get_kode_fakul()." >[".$val->get_kode_univ()."] ".$val->get_nama()."</option>";
                         }
@@ -41,6 +47,12 @@
                         foreach ($this->strata as $val){
                             if(isset($this->d_ubah)){
                                 if($val->get_kode_fakul()==$this->d_ubah->get_kode_fakul()){
+                                    echo "<option value=".$val->kd_strata." selected>[".$val->kode_strata."] ".$val->nama_strata."</option>";
+                                }else{
+                                    echo "<option value=".$val->kd_strata." >[".$val->kode_strata."] ".$val->nama_strata."</option>";
+                                }
+                            }elseif(isset($this->d_rekam)){
+                                if($val->get_kode_fakul()==$this->d_rekam->get_kode_fakul()){
                                     echo "<option value=".$val->kd_strata." selected>[".$val->kode_strata."] ".$val->nama_strata."</option>";
                                 }else{
                                     echo "<option value=".$val->kd_strata." >[".$val->kode_strata."] ".$val->nama_strata."</option>";
@@ -68,8 +80,8 @@
 	<div id="wstatus"></div>	
         <label>Status</label>
 			<select type="text" name="status" id="status" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_status():'';?>">
-				<option>Aktif</option>
-				<option>Non-aktif</option>
+				<option value="1">Aktif</option>
+				<option value="2">Non-aktif</option>
 			</select>
         
 		<ul class="inline tengah">

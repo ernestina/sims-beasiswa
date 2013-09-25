@@ -31,11 +31,7 @@
                             }else{
                                 echo "<option value=".$val->get_kode_in()." >".$val->get_nama()."</option>";
                             }
-                        }else{
-                            echo "<option value=".$val->get_kode_in()." >".$val->get_nama()."</option>";
-                        }
-                        
-                        if(isset($this->d_rekam)){
+                        }elseif(isset($this->d_rekam)){
                             if($val->get_kode_in()==$this->d_rekam->get_kode_univ()){
                                 echo "<option value=".$val->get_kode_in()." selected>".$val->get_nama()."</option>";
                             }else{

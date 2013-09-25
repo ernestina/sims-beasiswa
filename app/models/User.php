@@ -22,10 +22,12 @@ class User {
         $this->_db = new Database();
     }
 
-    public function get_user() {
+    public function get_user($level=FALSE) {
 
         $sql = "SELECT * FROM " . $this->_table . "";
-
+        if($level){
+            $sql .=" WHERE AKSES_USER=2";
+        }
         $database = new Database();
         $result = $database->select($sql);
 

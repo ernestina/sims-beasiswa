@@ -40,8 +40,25 @@
         </select></br>-->
         <div id="wpic"></div>
         <label>PIC</label><select id="pic" name="pic">
-            <option value="0">afies</option>
-            <option value="1">imron</option>
+            <?php 
+                    foreach ($this->pic as $val){
+                        if(isset($this->d_ubah)){
+                            if($val->get_id()==$this->d_ubah->get_id()){
+                                echo "<option value=".$val->get_id()." selected>".$val->get_nmUser()."</option>";
+                            }else{
+                                echo "<option value=".$val->get_id()." >".$val->get_nmUser()."</option>";
+                            }
+                        }elseif(isset($this->d_rekam)){
+                            if($val->get_kode_fakul()==$this->d_rekam->get_kode_fakul()){
+                                echo "<option value=".$val->get_id()." selected>".$val->get_nmUser()."</option>";
+                            }else{
+                                echo "<option value=".$val->get_id()." >".$val->get_nmUser()."</option>";
+                            }
+                        }else{
+                            echo "<option value=".$val->get_id()." >".$val->get_nmUser()."</option>";
+                        }
+                    }
+            ?>
         </select>
         <ul class="inline tengah">
 			<li><input class="normal" type="submit" onclick="" value="BATAL"></li>

@@ -1,4 +1,6 @@
-<table>
+<div id="table-title"></div>
+    <div id="table-content">
+<table class="table-bordered zebra scroll">
             <thead>
             <th>No</th>
             <th>No Surat Tugas</th>
@@ -28,3 +30,4 @@
                 }
             ?>
         </table>
+    </div>
