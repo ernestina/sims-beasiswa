@@ -142,7 +142,8 @@ class AdminController extends BaseController {
             $this->view->d_ubah = $jur->get_jur_by_id($jur);
             $this->view->fakul = $fakul->get_fakul();
         }
-
+        $strata = new Strata();
+        $this->view->strata = $strata->get_All();
         $this->view->data = $jur->get_jurusan();
         $this->view->render('admin/jurusan');
     }
@@ -329,11 +330,14 @@ class AdminController extends BaseController {
             if(!$univ->update_univ()){
                 $this->view->d_ubah = $univ;
                 $this->view->error = $univ->get_error();
-                $this->view->render();
+                $this->view->data = $univ->get_univ();
+        //        var_dump($this->view->d_ubah);
+                $this->view->render('admin/universitas');
             }
         }
-
-        header('location:' . URL . 'admin/addUniversitas');
+        
+        
+//        header('location:' . URL . 'admin/addUniversitas');
     }
 
     /*
@@ -349,21 +353,30 @@ class AdminController extends BaseController {
         $alamat = $_POST['alamat'];
         $telepon = $_POST['telepon'];
 
-        $data = array(
+        /*$data = array(
             'KD_UNIV' => $univ,
             'NM_FAKUL' => $nama,
             'ALMT_FAKUL' => $alamat,
             'TELP_FAKUL' => $telepon
-        );
+        );*/
+        $fakul->set_kode_univ($univ);
+        $fakul->set_nama($nama);
+        $fakul->set_alamat($alamat);
+        $fakul->set_telepon($telepon);
 
         $fakul->set_kode_fakul($kd_fakul);
-        if(!$fakul->update_fakul($data)){
+        if(!$fakul->update_fakul()){
             $this->view->d_ubah = $fakul;
             $this->view->error = $fakul->get_error();
-            $this->view->render();
+            
+            
+            $univ = new Universitas($this->registry);
+            $this->view->univ = $univ->get_univ();
+            $this->view->data = $fakul->get_fakul();
+            $this->view->render('admin/fakultas');
         }
 
-        header('location:' . URL . 'admin/addFakultas');
+//        header('location:' . URL . 'admin/addFakultas');
     }
 
     /*
@@ -405,12 +418,21 @@ class AdminController extends BaseController {
 
         $jur->set_kode_jur($kd_jur);
         if(!$jur->update_jurusan()){
+            $fakul = new Fakultas($this->registry);
+            $strata = new Strata();
             $this->view->d_ubah = $jur;
             $this->view->error = $jur->get_error();
-            $this->view->render();
+            $this->view->fakul = $fakul->get_fakul();
+            $this->view->strata = $strata->get_All();
+            var_dump($this->view->strata);
+
+            $this->view->data = $jur->get_jurusan();
+            $this->view->render('admin/jurusan');
+        }else{
+            header('location:' . URL . 'admin/addJurusan');
         }
 
-        header('location:' . URL . 'admin/addJurusan');
+//        header('location:' . URL . 'admin/addJurusan');
     }
 
     /*

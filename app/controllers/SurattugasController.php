@@ -165,5 +165,18 @@ class SurattugasController extends BaseController{
         $this->view->d_th_masuk = $st->get_list_th_masuk();
         $this->view->render('riwayat_tb/pb_to_st');
     }
+    
+    /*
+     * delete pb dari st
+     */
+    public function del_pb_from_st(){
+        $d = $_POST['param'];
+        $d = explode(",",$d);
+        $pb = new Penerima($this->registry);
+        $pb->set_kd_pb($d[1]);
+        $pb->delete_penerima();
+        header('location:'.URL.'surattugas/addpb/'.$d[0]);
+        
+    }
 }
 ?>

@@ -37,23 +37,34 @@
         </select>
         <div id="wstrata"></div>
         <label>Strata</label><select type="text" id="strata" name="strata">
-            <option value="1">Sarjana</option>
-            <option value="2">Magister</option>
+            <?php 
+                        foreach ($this->strata as $val){
+                            if(isset($this->d_ubah)){
+                                if($val->get_kode_fakul()==$this->d_ubah->get_kode_fakul()){
+                                    echo "<option value=".$val->kd_strata." selected>[".$val->kode_strata."] ".$val->nama_strata."</option>";
+                                }else{
+                                    echo "<option value=".$val->kd_strata." >[".$val->kode_strata."] ".$val->nama_strata."</option>";
+                                }
+                            }else{
+                                echo "<option value=".$val->kd_strata." >[".$val->kode_strata."] ".$val->nama_strata."</option>";
+                            }
+                        }
+            ?>
         </select>
 <!--        <label>PIC</label><select id="status" name="PIC">
             <option value="1">Firman</option>
             <option value="2">Afis</option>
         </select></br-->
         <div id="wnama"></div>
-        <label>Jurusan</label><input type="text" name="nama" id="nama" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():'';?>">
+        <label>Jurusan</label><input type="text" name="nama" id="nama" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():(isset($this->d_rekam)?$this->d_rekam->get_nama():'');?>">
         <div id="walamat"></div>
-		<label>Alamat</label><textarea type="text" name="alamat" id="alamat" rows="8"><?php echo isset($this->d_ubah)?$this->d_ubah->get_alamat():'';?></textarea>
+		<label>Alamat</label><textarea type="text" name="alamat" id="alamat" rows="8"><?php echo isset($this->d_ubah)?$this->d_ubah->get_alamat():(isset($this->d_rekam)?$this->d_rekam->get_alamat():'');?></textarea>
         <div id="wtelepon"></div>
-		<label>Telepon</label><input type="text" name="telepon" id="telepon" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telepon():'';?>">
+		<label>Telepon</label><input type="text" name="telepon" id="telepon" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telepon():(isset($this->d_rekam)?$this->d_rekam->get_telepon():'');?>">
 		<div id="wpic_jur"></div>
-        <label>PIC Jurusan</label><input type="text" name="pic_jur" id="pic_jur" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_pic():'';?>">
+        <label>PIC Jurusan</label><input type="text" name="pic_jur" id="pic_jur" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_pic():(isset($this->d_rekam)?$this->d_rekam->get_pic():'');?>">
 	<div id="wtelp_pic_jur"></div>	
-        <label>Telp PIC Jurusan</label><input type="text" name="telp_pic_jur" id="telp_pic_jur" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telp_pic():'';?>">
+        <label>Telp PIC Jurusan</label><input type="text" name="telp_pic_jur" id="telp_pic_jur" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telp_pic():(isset($this->d_rekam)?$this->d_rekam->get_telp_pic():'');?>">
 	<div id="wstatus"></div>	
         <label>Status</label>
 			<select type="text" name="status" id="status" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_status():'';?>">

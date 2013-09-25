@@ -14,7 +14,8 @@
                     echo "<td>".$val->get_nip()."</td>";
                     echo "<td>".$val->get_nama()."</td>";
                     echo "<td>".$val->get_unit_asal()."</td>";
-                    echo "<td><a href=".URL."surattugas/del_pb_from_st/".$val->get_kd_pb().">X</a></td>";
+//                    echo "<td><a href=".URL."surattugas/del_pb_from_st/".$val->get_kd_pb().">X</a></td>";
+                    echo "<td><input type=button onclick='del_pb(".$val->get_kd_PB().");' value=X></td>";
                     echo "</tr>";
                     $no++;
                 }

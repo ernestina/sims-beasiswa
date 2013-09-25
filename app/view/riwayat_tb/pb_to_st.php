@@ -61,6 +61,24 @@
 //        window.open(URL,"mywindow","menubar=1,resizable=1,width=350,height=330")
     }
     
+    function del_pb(kd_pb){
+        var con = "Yakin menghapus data?"
+        if(confirm(con)){
+            var kd_st = $('#kd_st').val();
+            $.post("<?php echo URL; ?>surattugas/del_pb_from_st", {param:""+kd_st+","+kd_pb+""},
+            function(){
+                $.post("<?php echo URL; ?>penerima/pb_by_st", {param:""+kd_st+""},
+                function(data){
+                    $('#tb_st').fadeOut(0);
+                    $('#tb_st').fadeIn(50);
+                    $('#tb_st').html(data);
+                })
+            })
+        }else{
+            return false;
+        }
+    }
+    
     function showdialog(){
         $('#dialog_pb').show();
     }

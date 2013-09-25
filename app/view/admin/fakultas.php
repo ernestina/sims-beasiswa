@@ -34,6 +34,16 @@
                         }else{
                             echo "<option value=".$val->get_kode_in()." >".$val->get_nama()."</option>";
                         }
+                        
+                        if(isset($this->d_rekam)){
+                            if($val->get_kode_in()==$this->d_rekam->get_kode_univ()){
+                                echo "<option value=".$val->get_kode_in()." selected>".$val->get_nama()."</option>";
+                            }else{
+                                echo "<option value=".$val->get_kode_in()." >".$val->get_nama()."</option>";
+                            }
+                        }else{
+                            echo "<option value=".$val->get_kode_in()." >".$val->get_nama()."</option>";
+                        }
                     }
             ?>
 			</select>
@@ -41,12 +51,12 @@
                         <div id="wnama"></div>
 				<label>Nama</label>
 
-				<input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():'';?>">
+				<input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():(isset($this->d_rekam)?$this->d_rekam->get_nama():'');?>">
 			
 			<div id="walamat"></div>
-				<label>Alamat</label><textarea type="text" name="alamat" id="alamat" rows="8" ><?php echo isset($this->d_ubah)?$this->d_ubah->get_alamat():'';?></textarea>
+				<label>Alamat</label><textarea type="text" name="alamat" id="alamat" rows="8" ><?php echo isset($this->d_ubah)?$this->d_ubah->get_alamat():(isset($this->d_rekam)?$this->d_rekam->get_alamat():'');?></textarea>
                                 <div id="wtelepon"></div>
-				<label>Telepon</label><input type="text" name="telepon" id="telepon" size="15" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telepon():'';?>">
+				<label>Telepon</label><input type="text" name="telepon" id="telepon" size="15" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telepon():(isset($this->d_rekam)?$this->d_rekam->get_telepon():'');?>">
         
 			<ul class="inline tengah">
 				<li><input class="normal" type="submit" onclick="" value="BATAL"></li>
