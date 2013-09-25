@@ -231,17 +231,31 @@ class AdminController extends BaseController {
      * tambah referensi jenis surat tugas
      */
 
-    public function addST() {
+    public function addST($id = null) {
+        $st = new JenisSuratTugas($this->registry);
         if (isset($_POST['add_st'])) {
             $nama = $_POST['nama'];
             $keterangan = $_POST['keterangan'];
+            
+            $st->set_nama($nama);
+            $st->set_keterangan($keterangan);
+            
+            if(!$st->add_jst()){
+                $this->view->d_rekam = $st;
+                $this->view->error = $st->get_error();
+            }
+        }
+        
+        
 
-            $data = $keterangan . '</br>' . $nama;
-
-            echo $data;
+        if (!is_null($id)) {
+            $st->set_kode($id);
+            $this->view->d_ubah = $st->get_jst_by_id($st);
         }
 
-        $this->view->load('admin/surat_tugas');
+        $this->view->data = $st->get_jst();
+//        var_dump($this->view->d_ubah);
+        $this->view->render('admin/surat_tugas');
     }
 
     /*
@@ -447,15 +461,26 @@ class AdminController extends BaseController {
      * @param id_st
      */
 
-    public function updST($id) {
-        if (!is_null($id)) {
-            $st = new SuratTugas();
-            $data = $st->get($id);
-        } else {
-            throw new Exception;
-            return;
+    public function updST() {
+        $st = new JenisSuratTugas($this->registry);
+        if (isset($_POST['upd_st'])) {
+            $kd_jenis_st = $_POST['kd_jenis_st'];
+            $nama = $_POST['nama'];
+            $keterangan = $_POST['keterangan'];
+
+            $st->set_kode($kd_jenis_st);
+            $st->set_nama($nama);
+            $st->set_keterangan($keterangan);
+            
+            if(!$st->update_jst()){
+                $this->view->d_ubah = $st;
+                $this->view->error = $st->get_error();
+                $this->view->data = $st->get_jst();
+                $this->view->render('admin/surat_tugas');
+            }
         }
-        $this->view->load('admin/surat_tugas');
+
+        header('location:' . URL . 'admin/addST');
     }
 
     /*
@@ -664,11 +689,7 @@ class AdminController extends BaseController {
      */
 
     public function delCuti($id) {
-        if (is_null($id)) {
-            throw new Exception;
-            echo "id belum dimasukkan!";
-            return;
-        }
+        
     }
 
     /*
@@ -677,11 +698,15 @@ class AdminController extends BaseController {
      */
 
     public function delST($id) {
+        $st = new JenisSuratTugas($this->registry);
         if (is_null($id)) {
             throw new Exception;
             echo "id belum dimasukkan!";
             return;
         }
+        $st->set_kode($id);
+        $st->delete_jst();
+        header('location:' . URL . 'admin/addST');
     }
 
     /*
