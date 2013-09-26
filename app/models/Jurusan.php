@@ -117,7 +117,7 @@ class Jurusan{
         $this->validate();
         if(!$this->get_valid()) return false;
         if(!is_array($data)) return false;
-        $this->db->insert($this->_table,$data);
+        return $this->db->insert($this->_table,$data);
     }
     
     /*
@@ -171,12 +171,12 @@ class Jurusan{
             $this->_error .= "Strata belum dipilih!</br>";
             $this->_valid = FALSE;
         }
-        if($this->get_pic()==0){
-            $this->_error .= "PIC belum dipilih!</br>";
+        if($this->get_pic()==""){
+            $this->_error .= "PIC jurusan belum diinput!</br>";
             $this->_valid = FALSE;
         }
-        if($this->get_telp_pic()==0){
-            $this->_error .= "PIC belum dipilih!</br>";
+        if($this->get_telp_pic()=="" OR !Validasi::validate_telephone($this->get_telepon())){
+            $this->_error .= "telepon PIC belum diinput!</br>";
             $this->_valid = FALSE;
         }
         

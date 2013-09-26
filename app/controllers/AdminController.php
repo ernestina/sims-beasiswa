@@ -44,7 +44,6 @@ class AdminController extends BaseController {
                 'TELP_UNIV' => $telepon,
                 'LOK_UNIV' => $lokasi
             );*/
-            
             if(!$univ->add_univ()){
                 $this->view->d_rekam = $univ;
                 $this->view->error = $univ->get_error();
@@ -130,7 +129,6 @@ class AdminController extends BaseController {
             $jur->set_telp_pic($telp_pic_jur);
             $jur->set_status($status);
             
-
             if(!$jur->add_jurusan()){
                 $this->view->d_rekam = $jur;
                 $this->view->error = $jur->get_error();

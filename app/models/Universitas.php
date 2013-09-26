@@ -98,7 +98,7 @@ class Universitas {
         $this->validate();
         if(!$this->get_valid()) return false;
         if(!is_array($data)) return false;
-        $this->db->insert($this->_table,$data);
+        return $this->db->insert($this->_table,$data);
     }
     
     /*
@@ -150,7 +150,7 @@ class Universitas {
             $this->_error .= "Telepon belum diinput!</br>";
             $this->_valid = FALSE;
         }
-        if($this->get_lokasi()=="" OR !Validasi::validate_string($this->get_nama())){
+        if($this->get_lokasi()=="" OR !Validasi::validate_string($this->get_lokasi())){
             $this->_error .= "Lokasi belum diinput!</br>";
             $this->_valid = FALSE;
         }
