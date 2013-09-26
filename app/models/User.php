@@ -22,14 +22,14 @@ class User {
         $this->_db = new Database();
     }
 
-    public function get_user($level=FALSE) {
+    public function get_user($level = FALSE) {
 
         $sql = "SELECT * FROM " . $this->_table . "";
-        if($level){
+        if ($level) {
             $sql .=" WHERE AKSES_USER=2";
         }
-        $database = new Database();
-        $result = $database->select($sql);
+
+        $result = $this->_db->select($sql);
 
         $data = array();
 
@@ -50,8 +50,7 @@ class User {
 
         $sql = "SELECT * FROM " . $this->_table . " WHERE KD_USER = " . $KD_USER . "";
 
-        $database = new Database();
-        $result = $database->select($sql);
+        $result = $this->_db->select($sql);
 
         $data = array();
 
@@ -70,23 +69,38 @@ class User {
         return $data;
     }
 
+    public function check_user_nip($nip) {
+
+        $sql = "SELECT * FROM " . $this->_table . " WHERE NIP_USER='" . $nip . "'";
+
+        $result = $this->_db->select($sql);
+
+//        var_dump($result);
+        $count = count($result);
+//        var_dump($count);
+        return $count;
+    }
+
     public function addUser(User $user) {
 
-        $data = array(
-            'NIP_USER' => $user->get_nip(),
-            'NM_USER' => $user->get_nmUser(),
-            'PASS_USER' => $user->get_pass(),
-            'AKSES_USER' => $user->get_akses(),
-            'FOTO_USER' => $user->get_foto()
-        );
-        $datauser = new Database();
+        if ($this->check_user_nip($user->get_nip()) == 1) {
+            echo 'data telah ada di dalam database';
+        } else {
+            $data = array(
+                'NIP_USER' => $user->get_nip(),
+                'NM_USER' => $user->get_nmUser(),
+                'PASS_USER' => $user->get_pass(),
+                'AKSES_USER' => $user->get_akses(),
+                'FOTO_USER' => $user->get_foto()
+            );
 
-        $datauser->insert($this->_table, $data);
+            $this->_db->insert($this->_table, $data);
+        }
     }
 
     public function updateUser($user) {
         $where = "KD_USER = " . $user['id'];
-        
+
 //        var_dump($user);
         $data = array(
             'NIP_USER' => $user['nip'],
@@ -99,8 +113,8 @@ class User {
     }
 
     public function delUser($id) {
-        $where = "KD_USER=".$id;
-        
+        $where = "KD_USER=" . $id;
+
         $this->_db->delete($this->_table, $where);
     }
 
