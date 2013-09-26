@@ -55,7 +55,7 @@
         <th>Universitas</th>
         <th>Jurusan/Prodi</th>
         <th>Th. Masuk</th>
-        <th>Jumlah Pegawai</th>
+        <th>Jumlah Pegawai yang Dibayar</th>
         <th>Bulan</th>
         <th>Tahun</th>
         <th>Total Bayar</th>
@@ -68,38 +68,16 @@
                     echo "<tr>";
                     echo "<td>$no</td>";
                     echo "<td>".$val->get_no_sp2d()." ".$val->get_tgl_sp2d()."</td>";
-                    echo "<td>ITS</td>";
-                    echo "<td>Sistem Informasi</td>";
-                    echo "<td>2013</td>";
+                    $jur=$val->get_kd_jur();
+                    $univ=$this->univ->get_univ_by_jur($jur);
+                    echo "<td>".$univ->get_kode()."</td>";
+                    $this->jur2->set_kode_jur($val->get_kd_jur());
+                    $jur=$this->jur2->get_jur_by_id($this->jur2);
+                    echo "<td>".$jur->get_nama()."</td>";
+                    echo "<td>".$val3->thn_masuk_kontrak."</td>";
                     echo "<td>".$val->get_jml_peg()."</td>";
                     $bulan=$val->get_bln();
-                    if ($bulan==1){
-                        echo "<td>Januari</td>";
-                    } else if ($bulan==2) {
-                        echo "<td>Februari</td>";
-                    } else if ($bulan==3) {
-                        echo "<td>Maret</td>";
-                    } else if ($bulan==4) {
-                        echo "<td>April</td>";
-                    } else if ($bulan==5) {
-                        echo "<td>Mei</td>";
-                    } else if ($bulan==6) {
-                        echo "<td>Juni</td>";
-                    } else if ($bulan==7) {
-                        echo "<td>Juli</td>";
-                    } else if ($bulan==8) {
-                        echo "<td>Agustus</td>";
-                    } else if ($bulan==9) {
-                        echo "<td>September</td>";
-                    } else if ($bulan==10) {
-                        echo "<td>Oktober</td>";
-                    } else if ($bulan==11) {
-                        echo "<td>Nopember</td>";
-                    } else if ($bulan==12) {
-                        echo "<td>Desember</td>";
-                    } else {
-                        echo "<td>Bulan tidak diketahui</td>";
-                    }
+                    echo "<td>".Tanggal::bulan_indo($bulan)."</td>";
                     echo "<td>".$val->get_thn()."</td>";
                     echo "<td>".$val->get_total_bayar()."</td>";
                     echo "<td><a href=".URL."elemenBeasiswa/delJadup/".$val->get_kd_d().">X</a> | 

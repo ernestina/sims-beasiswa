@@ -86,7 +86,8 @@
                         echo "<td>Nama biaya tidak terdaftar</td>";
                     }
                     if ($jns_elem==1){
-                        if ($bulan==1){
+                        echo "<td>".Tanggal::bulan_indo($bulan)." ".$val4->get_thn()."</td>";
+                        /*if ($bulan==1){
                             echo "<td>Januari ".$val4->get_thn()."</td>";
                         } else if ($bulan==2) {
                             echo "<td>Februari ".$val4->get_thn()."</td>";
@@ -112,7 +113,7 @@
                             echo "<td>Desember ".$val4->get_thn()."</td>";
                         } else {
                             echo "<td>Bulan dan Tahun tidak diketahui</td>";
-                        }
+                        }*/
                     } else if ($jns_elem==2) {
                         if ($bulan==1){
                             echo "<td>Semester I ".$val4->get_thn()."</td>";

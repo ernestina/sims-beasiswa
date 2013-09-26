@@ -1,4 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+<?xml version="1.0" encoding="UTF-8"?><project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/C:/xampp/htdocs/beasiswa/app/controllers/ElemenBeasiswaController.php</file>
+        <file>file:/C:/xampp/htdocs/beasiswa/app/models/ElemenBeasiswa.php</file>
+        <file>file:/C:/xampp/htdocs/beasiswa/app/view/Header.php</file>
+        <file>file:/C:/xampp/htdocs/beasiswa/app/view/bantuan/jadup.php</file>
+        <file>file:/C:/xampp/htdocs/beasiswa/app/view/bantuan/rekam_jadup.php</file>
+    </open-files>
 </project-private>

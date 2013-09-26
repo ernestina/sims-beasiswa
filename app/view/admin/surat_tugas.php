@@ -77,7 +77,7 @@ function cek(){
     }
     
     if(keterangan==''){
-        var wketerangan= 'Keterangan harus diisi!';
+        var wketerangan= '<font color="red">Keterangan harus diisi!';
         $('#wketerangan').fadeIn(0);
         $('#wketerangan').html(wketerangan);
         jml++;

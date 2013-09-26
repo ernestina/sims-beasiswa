@@ -10,6 +10,7 @@ class ElemenBeasiswa {
     private $db;
     private $_kd_d;
     private $_kd_r;
+    private $_kd_jur;
     private $_jml_peg;
     private $_bln;
     private $_thn;
@@ -21,6 +22,7 @@ class ElemenBeasiswa {
     private $_table_univ = 'r_univ';
     private $_table_fakul = 'r_fakul';
     private $_table_jur = 'r_jur';
+    private $_table_gol = 'r_gol';
     public $registry;
     
     /*
@@ -50,6 +52,7 @@ class ElemenBeasiswa {
             $elem = new $this($this->registry);
             $elem->set_kd_d($val['KD_D_ELEM_BEASISWA']);
             $elem->set_kd_r($val['KD_R_ELEM_BEASISWA']);
+            $elem->set_kd_jur($val['KD_JUR']);
             $elem->set_jml_peg($val['JML_PEG_D_ELEM_BEASISWA']);
             $elem->set_bln($val['BLN_D_ELEM_BEASISWA']);
             $elem->set_thn($val['THN_D_ELEM_BEASISWA']);
@@ -78,6 +81,7 @@ class ElemenBeasiswa {
         foreach ($result as $val){
             $this->set_kd_d($val['KD_D_ELEM_BEASISWA']);
             $this->set_kd_r($val['KD_R_ELEM_BEASISWA']);
+            $elem->set_kd_jur($val['KD_JUR']);
             $this->set_jml_peg($val['JML_PEG_D_ELEM_BEASISWA']);
             $this->set_bln($val['BLN_D_ELEM_BEASISWA']);
             $this->set_thn($val['THN_D_ELEM_BEASISWA']);
@@ -125,6 +129,10 @@ class ElemenBeasiswa {
     
     public function set_kd_r($kd_r){
         $this->_kd_r = $kd_r;
+    }
+    
+    public function set_kd_jur($kd_jur){
+        $this->_kd_jur = $kd_jur;
     }
     
     public function set_jml_peg($jml_peg){
@@ -175,6 +183,10 @@ class ElemenBeasiswa {
 
     public function get_kd_r(){
         return $this->_kd_r;
+    }
+    
+    public function get_kd_jur(){
+        return $this->_kd_jur;
     }
     
     public function get_jml_peg(){

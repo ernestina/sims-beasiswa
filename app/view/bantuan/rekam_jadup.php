@@ -28,7 +28,7 @@
                         ?> 
                         </select>
                         <label>Jurusan/Prodi : </label>
-                        <select>
+                        <select id="kode_jur" name="kode_jur">
                         <?php 
                             foreach ($this->jur as $val2){
                                 echo "<option value=".$val2->get_kode_jur()." >".$val2->get_nama()."</option>";
@@ -98,8 +98,9 @@
             <th>Gol</th>
             <th>Status</th>
             <th>Jumlah Hari Masuk</th>
-            <th>Jumlah Kotor Dibayarkan</th>
+            <th>Jumlah Kotor</th>
             <th>Pajak</th>
+            <th>Jumlah Bersih</th>
             <th>Bank Penerima</th>
             <th>No. Rekening</th>
             <th>Pilih</th>
@@ -108,22 +109,32 @@
             <?php
                 $no = 1;
                 foreach ($this->pb as $val4){
-                    echo "<tr>";
-                    echo "<td>$no</td>";
-                    echo "<td>".$val4->get_nama()." / ".$val4->get_nip()."</td>";
-                    echo "<td>".$val4->get_gol()."</td>";
-                    echo "<td>".$val4->get_status()."</td>";
+                    if ($val4->get_jur()==$this->d_ubah->get_kd_jur()){
+                        echo "<tr>";
+                        echo "<td>$no</td>";
+                        echo "<td>".$val4->get_nama()." / ".$val4->get_nip()."</td>";
+                        echo "<td>".Golongan::golongan_int_string($val4->get_gol())."</td>";
+                        echo "<td>".StatusPB::status_int_string($val4->get_status())."</td>";
+                        $jml_jadup=520000;
+                        $jml_hr_msk=100;
+                        echo "<td size=12>".$jml_hr_msk." %</td>";
+                        $jml_kotor=($jml_hr_msk*$jml_jadup/100);
+                        echo "<td size=12>Rp. ".$jml_kotor."</td>";
+                        $pajak=0;
+                        if ($val4->get_gol()>30){
+                            $pajak=5;
+                        }
+                        $jml_pajak=($pajak*$jml_kotor/100);
+                        echo "<td size=12>Rp. ".$jml_pajak."</td>";
+                        $jml_bersih = ($jml_kotor-$jml_pajak);
+                        echo "<td size=12>Rp. ".$jml_bersih."</td>";
+                        echo "<td>".$val4->get_bank()."</td>";
+                        echo "<td>".$val4->get_no_rek()."</td>";
             ?>
-                    <td><input type="text" id="jml_hr_masuk" name="jml_hr_masuk" size="4" value=""></td>
-                    <td><input type="text" id="jml_bayar" name="jml_bayar" size="4" value=""></td>
-                    <td><input type="text" id="pajak" name="pajak" size="4" value=""></td>
+                        <td><input type="checkbox" id="setuju" name="setuju" size="4" value=""></td>
             <?php
-                    echo "<td>".$val4->get_bank()."</td>";
-                    echo "<td>".$val4->get_no_rek()."</td>";
-            ?>
-                    <td><input type="check-box" id="setuju" name="setuju" size="4" value="harusnya dalam bentuk chckbox"></td>
-            <?php
-                    $no++;
+                        $no++;
+                    }
                 }
             ?>         
         </tbody>

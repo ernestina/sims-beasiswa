@@ -2,7 +2,7 @@
     <div><h2>DATA JENIS SURAT CUTI</h2>
     <div class="kolom3">
 	  <fieldset><legend>Tambah Jenis Surat Cuti</legend>
-		<div id="form-input">
+		<div id="form-input" disable>
         <form method="POST" action="<?php 
             if(isset($this->d_ubah)){
                 echo URL.'admin/updCuti';
@@ -78,7 +78,7 @@ function cek(){
     }
     
     if(keterangan==''){
-        var wketerangan= 'Keterangan harus diisi!';
+        var wketerangan= '<font color="red">Keterangan harus diisi!';
         $('#wketerangan').fadeIn(0);
         $('#wketerangan').html(wketerangan);
         jml++;

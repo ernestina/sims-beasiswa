@@ -26,14 +26,19 @@ class elemenBeasiswaController extends BaseController{
     
     public function viewJadup(){
         $elem = new ElemenBeasiswa($this->registry);
+        $univ = new Universitas($this->registry);
+        $this->view->univ = $univ;
         $fakul = new Fakultas($this->registry);
         $this->view->fakul = $fakul->get_fakul();
         $jur = new Jurusan($this->registry);
         $this->view->jur = $jur->get_jurusan();
+        $jur2 = new Jurusan($this->registry);
+        $this->view->jur2 = $jur2;
         $kon = new Kontrak($this->registry);
         $this->view->kon = $kon->get_All();
         if (isset($_POST['add_elem'])) {
             $kode_r = $_POST['kode_r'];
+            $kode_jur = $_POST['kode_jur'];
             $jml_peg = $_POST['jml_peg'];
             $bln = $_POST['bln'];
             $thn = $_POST['thn'];
@@ -44,6 +49,7 @@ class elemenBeasiswaController extends BaseController{
             
             $data = array(
                 'KD_R_ELEM_BEASISWA' => $kode_r,
+                'KD_JUR' => $kode_jur,
                 'JML_PEG_D_ELEM_BEASISWA' => $jml_peg,
                 'BLN_D_ELEM_BEASISWA' => $bln,
                 'THN_D_ELEM_BEASISWA' => $thn,
@@ -58,6 +64,7 @@ class elemenBeasiswaController extends BaseController{
         if (isset($_POST['update_elem'])) {
             $kode_d = $_POST['kode_d'];
             $kode_r = $_POST['kode_r'];
+            $kode_jur = $_POST['kode_jur'];
             $jml_peg = $_POST['jml_peg'];
             $bln = $_POST['bln'];
             $thn = $_POST['thn'];
@@ -69,6 +76,7 @@ class elemenBeasiswaController extends BaseController{
             $data = array(
                 'KD_D_ELEM_BEASISWA' => $kode_d,
                 'KD_R_ELEM_BEASISWA' => $kode_r,
+                'KD_JUR' => $kode_jur,
                 'JML_PEG_D_ELEM_BEASISWA' => $jml_peg,
                 'BLN_D_ELEM_BEASISWA' => $bln,
                 'THN_D_ELEM_BEASISWA' => $thn,
@@ -126,6 +134,7 @@ class elemenBeasiswaController extends BaseController{
         $this->view->kon = $kon->get_All();
         if (isset($_POST['add_elem'])) {
             $kode_r = $_POST['kode_r'];
+            $kode_jur = $_POST['kode_jur'];
             $jml_peg = $_POST['jml_peg'];
             $bln = $_POST['bln'];
             $thn = $_POST['thn'];
@@ -136,6 +145,7 @@ class elemenBeasiswaController extends BaseController{
             
             $data = array(
                 'KD_R_ELEM_BEASISWA' => $kode_r,
+                'KD_JUR' => $kode_jur,
                 'JML_PEG_D_ELEM_BEASISWA' => $jml_peg,
                 'BLN_D_ELEM_BEASISWA' => $bln,
                 'THN_D_ELEM_BEASISWA' => $thn,
@@ -150,6 +160,7 @@ class elemenBeasiswaController extends BaseController{
         if (isset($_POST['update_elem'])) {
             $kode_d = $_POST['kode_d'];
             $kode_r = $_POST['kode_r'];
+            $kode_jur = $_POST['kode_jur'];
             $jml_peg = $_POST['jml_peg'];
             $bln = $_POST['bln'];
             $thn = $_POST['thn'];
@@ -161,6 +172,7 @@ class elemenBeasiswaController extends BaseController{
             $data = array(
                 'KD_D_ELEM_BEASISWA' => $kode_d,
                 'KD_R_ELEM_BEASISWA' => $kode_r,
+                'KD_JUR' => $kode_jur,
                 'JML_PEG_D_ELEM_BEASISWA' => $jml_peg,
                 'BLN_D_ELEM_BEASISWA' => $bln,
                 'THN_D_ELEM_BEASISWA' => $thn,
@@ -218,6 +230,7 @@ class elemenBeasiswaController extends BaseController{
         $this->view->kon = $kon->get_All();
         if (isset($_POST['add_elem'])) {
             $kode_r = $_POST['kode_r'];
+            $kode_jur = $_POST['kode_jur'];
             $jml_peg = $_POST['jml_peg'];
             $bln = $_POST['bln'];
             $thn = $_POST['thn'];
@@ -228,6 +241,7 @@ class elemenBeasiswaController extends BaseController{
             
             $data = array(
                 'KD_R_ELEM_BEASISWA' => $kode_r,
+                'KD_JUR' => $kode_jur,
                 'JML_PEG_D_ELEM_BEASISWA' => $jml_peg,
                 'BLN_D_ELEM_BEASISWA' => $bln,
                 'THN_D_ELEM_BEASISWA' => $thn,
@@ -242,6 +256,7 @@ class elemenBeasiswaController extends BaseController{
         if (isset($_POST['update_elem'])) {
             $kode_d = $_POST['kode_d'];
             $kode_r = $_POST['kode_r'];
+            $kode_jur = $_POST['kode_jur'];
             $jml_peg = $_POST['jml_peg'];
             $bln = $_POST['bln'];
             $thn = $_POST['thn'];
@@ -253,6 +268,7 @@ class elemenBeasiswaController extends BaseController{
             $data = array(
                 'KD_D_ELEM_BEASISWA' => $kode_d,
                 'KD_R_ELEM_BEASISWA' => $kode_r,
+                'KD_JUR' => $kode_jur,
                 'JML_PEG_D_ELEM_BEASISWA' => $jml_peg,
                 'BLN_D_ELEM_BEASISWA' => $bln,
                 'THN_D_ELEM_BEASISWA' => $thn,

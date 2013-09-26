@@ -75,9 +75,9 @@
             <a href="<?php echo URL.'elemenBeasiswa/mon_pembayaran'?>">ELEMEN BEASISWA</a>
             <ul>
                 <li><a href="<?php echo URL.'elemenBeasiswa/mon_pembayaran'?>">Monitoring Pembayaran</a></li>
-                <li><a href="<?php echo URL.'elemenBeasiswa/addJadup';?>">Tunjangan Hidup</a></li>
-                <li><a href="<?php echo URL.'elemenBeasiswa/addBuku';?>">Tunjangan Buku</a></li>
-                <li><a href="<?php echo URL.'elemenBeasiswa/addSkripsi';?>">Tunjangan Skripsi/TA/Tesis</a></li>
+                <li><a href="<?php echo URL.'elemenBeasiswa/viewJadup';?>">Tunjangan Hidup</a></li>
+                <li><a href="<?php echo URL.'elemenBeasiswa/viewBuku';?>">Tunjangan Buku</a></li>
+                <li><a href="<?php echo URL.'elemenBeasiswa/viewSkripsi';?>">Tunjangan Skripsi/TA/Tesis</a></li>
             </ul>
         </li>
     </ul>
