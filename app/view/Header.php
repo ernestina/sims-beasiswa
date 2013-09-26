@@ -29,15 +29,39 @@
 				Bagian Pengembangan Pegawai, Setditjen PBN Jakarta</h2>
 			</header>
         
-           
-            <ul class="upline" rel="sam1">
-                <li><a href="<?php echo URL.'surattugas/datast'?>">Surat Tugas</a></li>
+           <div id="menu">
+    <ul>
+		<li class="nav">
+			<a href="#">BERANDA</a>
+		</li>
+        <li class="subnav">
+			<a href="#">ADMIN</a>
+			<ul>
+				<li><a href="<?php echo URL;?>admin/addUniversitas">UNIVERSITAS</a></li>
+				<li><a href="<?php echo URL;?>admin/addFakultas">FAKULTAS</a></li>
+				<li><a href="<?php echo URL;?>admin/addJurusan">JURUSAN</a></li>
+				<li><a href="<?php echo URL;?>admin/addStrata">STRATA</a></li>
+				<li><a href="<?php echo URL;?>admin/addPemberi">PEMBERI BEASISWA</a></li>
+				<li><a href="<?php echo URL;?>admin/addPejabat">PEJABAT</a></li>
+				<li><a href="<?php echo URL;?>admin/addST">JENIS SURAT TUGAS</a></li>
+				<li><a href="<?php echo URL;?>admin/addCuti">JENIS SURAT CUTI</a></li>
+				<li><a href="<?php echo URL;?>admin/addBank">BANK</a></li>
+				<li><a href="<?php echo URL;?>admin/addPIC">USER</a></li>
+			</ul>
+		</li>
+		<li class="subnav">
+			<a href="#">PIC</a>
+			<ul>
+				<li><a href="<?php echo URL.'surattugas/datast'?>">Surat Tugas</a></li>
                 <li><a href="">Cuti</a></li>
                 <li><a href="<?php echo URL.'kontrak/display';?>">Kontrak</a></li>
                 <li><a href="<?php echo URL.'penerima/datapb';?>">Penerima Beasiswa</a></li>
                 <li><a href="<?php echo URL;?>elemenBeasiswa/index">Elemen Beasiswa</a></li>
                 <li><a href="<?php echo URL;?>admin/addUniversitas">Admin</a></li>
-            </ul>
+			</ul>
+		</li>
+    </ul>
+</div>
 			
                         
                 
