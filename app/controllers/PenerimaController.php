@@ -93,6 +93,18 @@ class PenerimaController extends BaseController{
         $this->view->load('riwayat_tb/tabel_pb');
         
     }
+    
+    public function find_pb(){
+        $param = explode(",",$_POST['param']);
+        $nama = $param[0];
+        $st = $param[1];
+        $pb = new Penerima($this->registry);
+        $pb->set_nama($nama);
+        $pb->set_st($st);
+        $this->view->d_pb = $pb->get_penerima_by_name($pb);
+        $this->view->load('riwayat_tb/tabel_pb');
+        
+    }
 
 
     /*

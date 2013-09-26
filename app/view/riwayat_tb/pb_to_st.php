@@ -18,12 +18,12 @@
     <div>
         <table>
             <tr align="left">
-                <td><input type="search" id="cari" size="30" placeholde="cari penerima beasiswa"></td>
+                <td><input type="search" id="cari" size="30" placeholder="cari penerima beasiswa" onKeyup="cari(this.value);"></td>
             </tr>
         </table>
     </div>
     <input type="button" id="bt_dialog" value="+ PB" onClick="choose(document.getElementById('kd_st').value);">
-    <div id="tb_st">
+    <div id="tb_pb">
         <?php 
             $this->load('riwayat_tb/tabel_pb');
         ?>
@@ -42,9 +42,9 @@
         
         $.post("<?php echo URL; ?>penerima/pb_by_st", {param:""+data+""},
         function(data){
-            $('#tb_st').fadeOut(0);
-            $('#tb_st').fadeIn(200);
-            $('#tb_st').html(data);
+            $('#tb_pb').fadeOut(0);
+            $('#tb_pb').fadeIn(200);
+            $('#tb_pb').html(data);
         })
         //langsung menyimpan ke tabel pb dengan st
         // do some thing other if you want
@@ -69,9 +69,9 @@
             function(){
                 $.post("<?php echo URL; ?>penerima/pb_by_st", {param:""+kd_st+""},
                 function(data){
-                    $('#tb_st').fadeOut(0);
-                    $('#tb_st').fadeIn(50);
-                    $('#tb_st').html(data);
+                    $('#tb_pb').fadeOut(0);
+                    $('#tb_pb').fadeIn(50);
+                    $('#tb_pb').html(data);
                 })
             })
         }else{
@@ -83,11 +83,19 @@
         $('#dialog_pb').show();
     }
     
+    function cari(key){
+        $.post("<?php echo URL; ?>penerima/find_pb", {param:""+key+","+document.getElementById('kd_st').value+""},
+        function(data){                
+            $('#tb_pb').fadeIn(100);
+            $('#tb_pb').html(data);
+        });
+    }
+    
     function get_surat_tugas(univ,th_masuk){
         $.post("<?php echo URL; ?>surattugas/get_data_st", {param:""+univ+","+th_masuk+""},
         function(data){                
-            $('#tb_st').fadeIn(100);
-            $('#tb_st').html(data);
+            $('#tb_pb').fadeIn(100);
+            $('#tb_pb').html(data);
         });
     }
     
