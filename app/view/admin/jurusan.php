@@ -16,7 +16,7 @@
             }
         ?>
 	  <div class="kiri">
-              <div id="wfakul"></div>
+              <div id="wfakul" class="error"></div>
         <label>Fakultas</label><select type="text" id="fakultas" name="fakultas">
             <?php 
                     foreach ($this->fakul as $val){
@@ -38,7 +38,7 @@
                     }
             ?>
         </select>
-        <div id="wstrata"></div>
+        <div id="wstrata" class="error"></div>
         <label>Strata</label><select type="text" id="strata" name="strata">
             <?php 
                         foreach ($this->strata as $val){
@@ -64,17 +64,17 @@
             <option value="1">Firman</option>
             <option value="2">Afis</option>
         </select></br-->
-        <div id="wnama"></div>
+        <div id="wnama" class="error"></div>
         <label>Jurusan</label><input type="text" name="nama" id="nama" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():(isset($this->d_rekam)?$this->d_rekam->get_nama():'');?>">
-        <div id="walamat"></div>
+        <div id="walamat" class="error"></div>
 		<label>Alamat</label><textarea type="text" name="alamat" id="alamat" rows="8"><?php echo isset($this->d_ubah)?$this->d_ubah->get_alamat():(isset($this->d_rekam)?$this->d_rekam->get_alamat():'');?></textarea>
-        <div id="wtelepon"></div>
+        <div id="wtelepon" class="error"></div>
 		<label>Telepon</label><input type="text" name="telepon" id="telepon" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telepon():(isset($this->d_rekam)?$this->d_rekam->get_telepon():'');?>">
-		<div id="wpic_jur"></div>
+		<div id="wpic_jur" class="error"></div>
         <label>PIC Jurusan</label><input type="text" name="pic_jur" id="pic_jur" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_pic():(isset($this->d_rekam)?$this->d_rekam->get_pic():'');?>">
-	<div id="wtelp_pic_jur"></div>	
+	<div id="wtelp_pic_jur" class="error"></div>	
         <label>Telp PIC Jurusan</label><input type="text" name="telp_pic_jur" id="telp_pic_jur" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telp_pic():(isset($this->d_rekam)?$this->d_rekam->get_telp_pic():'');?>">
-	<div id="wstatus"></div>	
+	<div id="wstatus" class="error"></div>	
         <label>Status</label>
 			<select type="text" name="status" id="status" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_status():'';?>">
 				<option value="1">Aktif</option>
@@ -135,6 +135,50 @@
 </div>
 
 <script type="text/javascript">
+$(function(){
+        hideErrorId();
+        hideWarning();
+        
+    });
+    
+function hideErrorId(){
+    $('.error').fadeOut(0);
+}
+
+function hideWarning(){
+    
+    $('#nama').keyup(function(){
+        if(document.getElementById('nama').value !=''){
+            $('#wnama').fadeOut(200);
+        }
+    })
+    
+    $('#alamat').keyup(function(){
+        if(document.getElementById('alamat').value !=''){
+            $('#walamat').fadeOut(200);
+        }
+    })
+    
+    $('#telepon').keyup(function(){
+        if(document.getElementById('telepon').value !=''){
+            $('#wtelepon').fadeOut(200);
+        }
+    })
+    
+    $('#pic_jur').keyup(function(){
+        if(document.getElementById('pic_jur').value !=''){
+            $('#wpic_jur').fadeOut(200);
+        }
+    })
+    
+    $('#telp_pic_jur').keyup(function(){
+        if(document.getElementById('telp_pic_jur').value !=''){
+            $('#wtelp_pic_jur').fadeOut(200);
+        }
+    })
+
+}
+
 function cek(){
     var fakul = document.getElementById('fakultas').value;
     var strata = document.getElementById('strata').value;

@@ -3,7 +3,7 @@
     <h2>DATA UNIVERSITAS</h2></div>
     <div class="kolom3">
 	  <fieldset><legend>Tambah Universitas</legend>
-		<div id="form-input">
+		<div id="form-input"><div class="kiri">
         <form method="POST" action="<?php 
             if(isset($this->d_ubah)){
                 echo URL.'admin/updUniversitas';
@@ -21,22 +21,23 @@
                 echo "<div class=error>".$this->error."</div>";
             }
         ?>
-        <div id="wkode"></div>
-		<div class="kiri">
+        
+		
+        <div id="wkode" class="error">kjdsjdkwnbdw</div>
         <label>Kode</label><input type="text" name="kode" id="kode" size="8" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_kode():(isset($this->d_rekam)?$this->d_rekam->get_kode():'');?>">
-        <div id="wnama" class="warning_field"></div>
+        <div id="wnama"  class="error"></div>
         <label>Nama</label><input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():(isset($this->d_rekam)?$this->d_rekam->get_nama():'');?>">
-        <div id="walamat"></div>
+        <div id="walamat" class="error"></div>
         <label>Alamat</label><textarea name="alamat" id="alamat" rows="8" type="text"><?php echo isset($this->d_ubah)?$this->d_ubah->get_alamat():(isset($this->d_rekam)?$this->d_rekam->get_alamat():'');?></textarea>
-        <div id="wtelepon"></div>
+        <div id="wtelepon" class="error"></div>
         <label>Telepon</label><input type="text" name="telepon" id="telepon" size="15" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telepon():(isset($this->d_rekam)?$this->d_rekam->get_telepon():'');?>">
-        <div id="wlokasi"></div>
+        <div id="wlokasi" class="error"></div>
         <label>Lokasi</label><input type="text" name="lokasi" id="lokasi" size="30" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_lokasi():(isset($this->d_rekam)?$this->d_rekam->get_lokasi():'');?>">
 <!--        <label>Status</label><select id="status" name="status">
             <option value="aktif">aktif</option>
             <option value="non_aktif">non aktif</option>
         </select></br>-->
-        <div id="wpic"></div>
+        <div id="wpic" class="error"></div>
         <label>PIC</label><select type="text" id="pic" name="pic">
             <?php 
                     foreach ($this->pic as $val){
@@ -60,7 +61,7 @@
         </select>
         <ul class="inline tengah">
 			<li><input class="normal" type="submit" onclick="" value="BATAL"></li>
-			<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'upd_univ':'add_univ';?>" value="SIMPAN" onClick=";"></li>
+			<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'upd_univ':'add_univ';?>" value="SIMPAN" onClick="return cek();"></li>
 		</ul>
         </form>
     </div>
@@ -105,6 +106,49 @@
 </div>
 </div>
 <script type="text/javascript">
+$(function(){
+        hideErrorId();
+        hideWarning();
+        
+    });
+    
+function hideErrorId(){
+    $('.error').fadeOut(0);
+}
+
+function hideWarning(){
+    $('#kode').keyup(function(){
+        if(document.getElementById('kode').value !=''){
+            $('#wkode').fadeOut(200);
+        }
+    })
+    
+    $('#nama').keyup(function(){
+        if(document.getElementById('nama').value !=''){
+            $('#wnama').fadeOut(200);
+        }
+    })
+    
+    $('#alamat').keyup(function(){
+        if(document.getElementById('alamat').value !=''){
+            $('#walamat').fadeOut(200);
+        }
+    })
+    
+    $('#telepon').keyup(function(){
+        if(document.getElementById('telepon').value !=''){
+            $('#wtelepon').fadeOut(200);
+        }
+    })
+    
+    $('#lokasi').keyup(function(){
+        if(document.getElementById('lokasi').value !=''){
+            $('#wlokasi').fadeOut(200);
+        }
+    })
+
+}
+    
 function cek(){
     var kode = document.getElementById('kode').value;
     var nama = document.getElementById('nama').value;
@@ -121,7 +165,7 @@ function cek(){
     }
     
     if(nama==''){
-        var wnama= '<font color="red">Nama Perguruan Tinggi harus diisi!</font>';
+        var wnama= 'Nama Perguruan Tinggi harus diisi!';
         $('#wnama').fadeIn(0);
         $('#wnama').html(wnama);
         jml++;

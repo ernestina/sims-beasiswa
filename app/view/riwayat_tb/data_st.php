@@ -8,9 +8,9 @@
                 }else{
                     $_SERVER['PHP_SELF'];
                 }?>" enctype="multipart/form-data">
-            <div id="wnost"></div>
+            <div id="wnost" class="error"></div>
             <label>no. Surat Tugas(ST)</label><input type="text" name="no_st" id="no_st" size="30" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nomor():'';?>"></br>
-            <div id="wstlama"></div>
+            <div id="wstlama" class="error"></div>
             <label>No. ST Lama</label><select name="st_lama" id="st_lama">
                 <?php 
                     foreach($this->d_st_lama as $val){
@@ -18,7 +18,7 @@
                     }
                 ?>
             </select></br>
-            <div id="wjenis"></div>
+            <div id="wjenis" class="error"></div>
             <label>jenis ST</label><select name="jns_st" id="jenis">
                 <?php 
                     foreach($this->d_jst as $val){
@@ -26,13 +26,13 @@
                     }
                 ?>
             </select></br>
-            <div id="wtglst"></div>
-            <label>Tanggal ST</label><input type="text" name="tgl_st" id="datepicker" readonly></br>
-            <div id="wtglmulai"></div>
-            <label>Tanggal Mulai ST</label><input type="text" name="tgl_mulai" id="datepicker1" readonly></br>
-            <div id="wtglselesai"></div>
-            <label>Tanggal Selesai ST</label><input type="text" name="tgl_selesai" id="datepicker2" readonly></br>
-            <div id="wpemberi"></div>
+            <div id="wtglst" class="error"></div>
+            <label>Tanggal ST</label><input type="text" name="tgl_st" id="datepicker" value="<?php echo Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly></br>
+            <div id="wtglmulai" class="error"></div>
+            <label>Tanggal Mulai ST</label><input type="text" name="tgl_mulai" id="datepicker1"  value="<?php echo Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly></br>
+            <div id="wtglselesai" class="error"></div>
+            <label>Tanggal Selesai ST</label><input type="text" name="tgl_selesai" id="datepicker2"  value="<?php echo Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly></br>
+            <div id="wpemberi" class="error"></div>
             <label>Pemberi Beasiswa</label><select name="pemb" id="pemberi">
                 <?php 
                     foreach($this->d_pemb as $val){
@@ -40,7 +40,7 @@
                     }
                 ?>
             </select></br>
-            <div id="wnost"></div>
+            <div id="wuniv"  class="error"></div>
             <label>Universitas</label><select name="univ" id="univ" onchange="get_jurusan(this.value)">
                 <?php 
                     foreach($this->d_univ as $val){
@@ -48,7 +48,7 @@
                     }
                 ?>
             </select></br>
-            <div id="wjurusan"></div>
+            <div id="wjurusan" class="error"></div>
             <label>Jurusan/Prodi</label><select name="jur" id="jur">
                 <?php 
                     foreach($this->d_jur as $val){
@@ -56,7 +56,7 @@
                     }
                 ?>
             </select></br>
-            <div id="wthnmasuk"></div>
+            <div id="wthnmasuk" class="error"></div>
             <label>Tahun Masuk</label><select name="th_masuk" id="th_masuk">
                 <?php
                     foreach ($this->d_th_masuk as $key=>$val){
@@ -64,7 +64,7 @@
                     }
                 ?>
             </select></br>
-            <div id="wfile"></div>
+            <div id="wfile" class="error"></div>
             <label>Unggah ST</label><input type="file" name="fupload" id="file">
             <ul class="inline tengah">
 			<li><input class="normal" type="submit" onclick="" value="BATAL"></li>
@@ -113,11 +113,41 @@
 <script type="text/javascript">
     
     $(function(){
+        hideErrorId();
+        hideWarning();
         get_jurusan(document.getElementById('univ').value);
+        
     });
     
-    function showdialog(){
-        $('#dialog_pb').show();
+    function hideErrorId(){
+        $('.error').fadeOut(0);
+    }
+    
+    function hideWarning(){
+        $('#no_st').keyup(function(){
+            if(document.getElementById('no_st').value !=''){
+                $('#wnost').fadeOut(200);
+            }
+        })
+        
+        if($('#datepicker').val()!=''){
+            $('wtglst').fadeOut(200);
+        }
+        
+        if($('#datepicker1').val()!=''){
+            $('wtglmulai').fadeOut(200);
+        }
+        
+        if($('#datepicker2').val()!=''){
+            $('wtglselesai').fadeOut(200);
+        }
+        
+        $('#file').change(function(){
+            if($('#file').val()!=''){
+                $('#wfile').fadeOut(200);
+            }
+        });
+        
     }
     
     function get_surat_tugas(univ,th_masuk){

@@ -41,14 +41,14 @@
             ?>
 			</select>
 
-                        <div id="wnama"></div>
+                        <div id="wnama" class="error"></div>
 				<label>Nama</label>
 
 				<input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():(isset($this->d_rekam)?$this->d_rekam->get_nama():'');?>">
 			
-			<div id="walamat"></div>
+			<div id="walamat" class="error"></div>
 				<label>Alamat</label><textarea type="text" name="alamat" id="alamat" rows="8" ><?php echo isset($this->d_ubah)?$this->d_ubah->get_alamat():(isset($this->d_rekam)?$this->d_rekam->get_alamat():'');?></textarea>
-                                <div id="wtelepon"></div>
+                                <div id="wtelepon" class="error"></div>
 				<label>Telepon</label><input type="text" name="telepon" id="telepon" size="15" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telepon():(isset($this->d_rekam)?$this->d_rekam->get_telepon():'');?>">
         
 			<ul class="inline tengah">
@@ -98,6 +98,37 @@
 </div>
 </div>
 <script type="text/javascript">
+$(function(){
+        hideErrorId();
+        hideWarning();
+        
+    });
+    
+function hideErrorId(){
+    $('.error').fadeOut(0);
+}
+
+function hideWarning(){
+    
+    $('#nama').keyup(function(){
+        if(document.getElementById('nama').value !=''){
+            $('#wnama').fadeOut(200);
+        }
+    })
+    
+    $('#alamat').keyup(function(){
+        if(document.getElementById('alamat').value !=''){
+            $('#walamat').fadeOut(200);
+        }
+    })
+    
+    $('#telepon').keyup(function(){
+        if(document.getElementById('telepon').value !=''){
+            $('#wtelepon').fadeOut(200);
+        }
+    })
+
+}
 
 function cek(){
     var univ = document.getElementById('univ').value;

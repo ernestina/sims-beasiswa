@@ -21,7 +21,7 @@ class AdminController extends BaseController {
 
     public function addUniversitas($id = null) {
         $univ = new Universitas($this->registry);
-        $pic = new User($this->registry);
+        
         if (isset($_POST['add_univ'])) {
             $kode = $_POST['kode'];
             $nama = $_POST['nama'];
@@ -55,7 +55,7 @@ class AdminController extends BaseController {
             $univ->set_kode_in($id);
             $this->view->d_ubah = $univ->get_univ_by_id($univ);
         }
-
+        $pic = new User($this->registry);
         $this->view->data = $univ->get_univ();
         $this->view->pic = $pic->get_user(TRUE);
         $this->view->render('admin/universitas');
