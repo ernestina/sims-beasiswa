@@ -1,8 +1,9 @@
 <div id="top">
-    <div><h2>DATA JENIS SURAT CUTI</h2>
+<div id="form">
+    <h2>DATA JENIS SURAT CUTI</h2></div>
     <div class="kolom3">
 	  <fieldset><legend>Tambah Jenis Surat Cuti</legend>
-		<div id="form-input" disable>
+		<div id="form-input"><div class="kiri">
         <form method="POST" action="<?php 
             if(isset($this->d_ubah)){
                 echo URL.'admin/updCuti';
@@ -20,16 +21,16 @@
                 echo "<div class=error>".$this->error."</div>";
             }
         ?>
-        <div id="wnama" class="warning_field"></div>
-        <div class="kiri">
-		<label>Nama</label><input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():'';?>">
-        <div id="wketerangan"></div>
-        <label>Keterangan</label><textarea name="keterangan" id="keterangan" rows="8" type="text"><?php echo isset($this->d_ubah)?$this->d_ubah->get_keterangan():'';?></textarea>
+        
+	<div id="wnama"  class="error"></div>
+        <label>Nama</label><input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():(isset($this->d_rekam)?$this->d_rekam->get_nama():'');?>">
+        <div id="wketerangan" class="error"></div>
+        <label>Keterangan</label><textarea name="keterangan" id="keterangan" rows="8" type="text"><?php echo isset($this->d_ubah)?$this->d_ubah->get_keterangan():(isset($this->d_rekam)?$this->d_rekam->get_keterangan():'');?></textarea>
+        </select>
         <ul class="inline tengah">
 			<li><input class="normal" type="submit" onclick="" value="BATAL"></li>
 			<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'upd_sc':'add_sc';?>" value="SIMPAN" onClick="return cek();"></li>
 		</ul>
-		</div>
         </form>
     </div>
 	</div>
@@ -42,8 +43,8 @@
         <table class="table-bordered zebra scroll">
             <thead>
                 <th>No</th>
-                <th width="300">Nama</th>
-                <th width="300">Keterangan</th>
+                <th>Nama</th>
+                <th>Keterangan</th>
                 <th width="30">Aksi</th>
             </thead>
             <tbody>
@@ -60,25 +61,53 @@
                     $no++;
                 }
             ?>
-            </tbody>
+                </tbody>
         </table>
     </div>
 </div>
 </div>
+</div>
 <script type="text/javascript">
+$(function(){
+        hideErrorId();
+        hideWarning();
+        
+    });
+    
+function hideErrorId(){
+    $('.error').fadeOut(0);
+}
+
+function hideWarning(){
+    
+    $('#nama').keyup(function(){
+        if(document.getElementById('nama').value !=''){
+            $('#wnama').fadeOut(200);
+        }
+    })
+    
+    $('#keterangan').keyup(function(){
+        if(document.getElementById('keterangan').value !=''){
+            $('#wketerangan').fadeOut(200);
+        }
+    })
+}
+    
 function cek(){
+    
     var nama = document.getElementById('nama').value;
     var keterangan = document.getElementById('keterangan').value;
-    var jml=0;    
+    var jml=0;
+    
     if(nama==''){
-        var wnama= '<font color="red">Nama Jenis Surat Cuti harus diisi!</font>';
+        var wnama= 'Nama jenis surat tugas harus diisi!';
         $('#wnama').fadeIn(0);
         $('#wnama').html(wnama);
         jml++;
     }
     
     if(keterangan==''){
-        var wketerangan= '<font color="red">Keterangan harus diisi!';
+        var wketerangan= 'Keterangan harus diisi!';
         $('#wketerangan').fadeIn(0);
         $('#wketerangan').html(wketerangan);
         jml++;

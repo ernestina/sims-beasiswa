@@ -1,8 +1,9 @@
 <div id="top">
-    <h2>DATA JENIS SURAT TUGAS</h2>
+<div id="form">
+    <h2>DATA JENIS SURAT TUGAS</h2></div>
     <div class="kolom3">
 	  <fieldset><legend>Tambah Jenis Surat Tugas</legend>
-		<div id="form-input">
+		<div id="form-input"><div class="kiri">
         <form method="POST" action="<?php 
             if(isset($this->d_ubah)){
                 echo URL.'admin/updST';
@@ -20,20 +21,21 @@
                 echo "<div class=error>".$this->error."</div>";
             }
         ?>
-        <div id="wnama" class="warning_field"></div>
-        <div class="kiri">
-		<label>Nama</label><input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():'';?>">
-        <div id="wketerangan"></div>
-        <label>Keterangan</label><textarea name="keterangan" id="keterangan" rows="8" type="text"><?php echo isset($this->d_ubah)?$this->d_ubah->get_keterangan():'';?></textarea>
+        
+	<div id="wnama"  class="error"></div>
+        <label>Nama</label><input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():(isset($this->d_rekam)?$this->d_rekam->get_nama():'');?>">
+        <div id="wketerangan" class="error"></div>
+        <label>Keterangan</label><textarea name="keterangan" id="keterangan" rows="8" type="text"><?php echo isset($this->d_ubah)?$this->d_ubah->get_keterangan():(isset($this->d_rekam)?$this->d_rekam->get_keterangan():'');?></textarea>
+        </select>
         <ul class="inline tengah">
 			<li><input class="normal" type="submit" onclick="" value="BATAL"></li>
 			<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'upd_st':'add_st';?>" value="SIMPAN" onClick="return cek();"></li>
 		</ul>
-		</div>
         </form>
-    </div> <!--end form-input-->
+    </div>
+	</div>
    </fieldset>
-</div> <!--end kolom3-->
+</div>
 <div class="kolom4" id="table">
 	<fieldset><legend>Daftar Jenis Surat Tugas</legend>
     <div id="table-title"></div>
@@ -41,8 +43,8 @@
         <table class="table-bordered zebra scroll">
             <thead>
                 <th>No</th>
-                <th width="200">Nama</th>
-                <th width="390">Keterangan</th>
+                <th>Nama</th>
+                <th>Keterangan</th>
                 <th width="30">Aksi</th>
             </thead>
             <tbody>
@@ -59,25 +61,53 @@
                     $no++;
                 }
             ?>
-            </tbody>
+                </tbody>
         </table>
-    </div> <!--end table-content-->
-</div> <!--end kolom4-->
+    </div>
+</div>
+</div>
 </div>
 <script type="text/javascript">
+$(function(){
+        hideErrorId();
+        hideWarning();
+        
+    });
+    
+function hideErrorId(){
+    $('.error').fadeOut(0);
+}
+
+function hideWarning(){
+    
+    $('#nama').keyup(function(){
+        if(document.getElementById('nama').value !=''){
+            $('#wnama').fadeOut(200);
+        }
+    })
+    
+    $('#keterangan').keyup(function(){
+        if(document.getElementById('keterangan').value !=''){
+            $('#wketerangan').fadeOut(200);
+        }
+    })
+}
+    
 function cek(){
+    
     var nama = document.getElementById('nama').value;
     var keterangan = document.getElementById('keterangan').value;
-    var jml=0;    
+    var jml=0;
+    
     if(nama==''){
-        var wnama= '<font color="red">Nama Jenis Surat Tugas harus diisi!</font>';
+        var wnama= 'Nama jenis surat tugas harus diisi!';
         $('#wnama').fadeIn(0);
         $('#wnama').html(wnama);
         jml++;
     }
     
     if(keterangan==''){
-        var wketerangan= '<font color="red">Keterangan harus diisi!';
+        var wketerangan= 'Keterangan harus diisi!';
         $('#wketerangan').fadeIn(0);
         $('#wketerangan').html(wketerangan);
         jml++;
