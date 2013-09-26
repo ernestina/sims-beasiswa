@@ -3,14 +3,16 @@
     <head>
         <title>rekam penerima beasiswa</title>
         <script src="<?php echo URL; ?>public/js/jquery-2.0.3.min.js"></script>
+        <link href="<?php echo URL; ?>public/css/style.css" rel="stylesheet">
     </head>
-    <body>
-<div id="dialog_pb" >
-    <div id="winput"></div>
+    <body style="max-width: 370px;max-height: 500px; text-align: center; overflow:no-content;">
+<div id="dialog_pb" style="text-align: left;">
+    
     <form id="form_add_pb" method="POST" action="">
         <table>
             <input type="hidden" id="cek" value="">
             <input type="hidden" id="kd_st" name="st" value="<?php echo $this->id;?>">
+            <div id="winput" class="error"></div>
             <tr><td><label>NIP</label></td><td><input type="text" id="t_nip" name="nip" onkeyup="getNama(this.value);"></td></tr>
             <tr><td><label>Nama</label></td><td><input type="text" id="t_nm" name="nama" readonly></td></tr>
             <tr><td><label>Jenis Kelamin</label></td><td><input type="text" id="t_jk" name="jkel" readonly></td></tr>
@@ -36,7 +38,17 @@
 <div id="test"></div>
     </body>
 <script>
+    $(function(){
+        $('.error').fadeOut(0);
+        hideError();
+        $('#t_nip').focus();
+    });
     
+    function hideError(){
+        $('#t_nip').keyup(function(){
+            $('.error').fadeOut(100);
+        })
+    }
     function getNama(nip){
 //        $.post("<?php echo URL; ?>penerima/get_nama_peg", {param:""+nip+""},
 //        function(data){
@@ -70,15 +82,27 @@
         var rek = document.getElementById('t_rek').value;
         var cek = document.getElementById('cek').value;
         
+        if(nip==""){
+            var winput = "masukkan nip pegawai!"
+            $('#winput').html(winput);
+            $('#winput').fadeIn(200);
+            
+            return false;
+        }
+        
         if(nm==""){
             var winput = "pegawai ini tidak terdaftar di database"
             $('#winput').html(winput);
+            $('#winput').fadeIn(200);
+            
             return false;
         }
         
         if(cek!=0){
-            var winput = "pegawai ini telah terdaftar sebagai penerima beasiswa : "+cek;
+            var winput = "pegawai ini telah terdaftar sebagai penerima beasiswa";
             $('#winput').html(winput);
+            $('#winput').fadeIn(200);
+            
             return false;
         }
 //        validate(nip);
@@ -101,7 +125,7 @@
 //        var idFromCallPage = getUrlVars()["id"];
 //        window.opener.callFromDialog(data); //or use //window.opener.document.getElementById(idFromCallPage).value = data;
 //        window.close();
-        setInterval(function(){
+        
         var formData = new FormData($('#form_add_pb')[0]);
         
         $.ajax({
@@ -118,7 +142,6 @@
             contentType: false,
             processData: false
         });
-        },2000);
         
     }
     

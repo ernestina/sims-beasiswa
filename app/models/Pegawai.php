@@ -15,7 +15,7 @@ class Pegawai{
     private $_jk;
     private $_gol;
     private $_unit_asal;
-    private $_tb_peg = 'd_peg';
+    private $_tb_peg = 'd_sik';
     
     public function __construct($registry) {
         $this->registry=$registry;
@@ -23,14 +23,22 @@ class Pegawai{
     }
     
     public function get_peg_by_nip($peg = Pegawai){
-        $sql = "SELECT * FROM ".$this->_tb_peg." WHERE NIP_PEG='".$peg->get_nip()."'";
+        $sql = "SELECT 
+            a.nip as nip,
+            a.nama as nama,
+            a.sex as sex,
+            a.gol as gol,
+            b.new as unit
+            FROM ".$this->_tb_peg." a
+                LEFT JOIN ref_unit_convert_2013 b ON a.unit = b.idNew 
+                WHERE a.nip='".$peg->get_nip()."'";
         $result = $this->db->select($sql);
         foreach ($result as $val){
-            $this->set_kd_peg($val['KD_PEG']);
-            $this->set_nama($val['NM_PEG']);
-            $this->set_jkel($val['JK_PEG']);
-            $this->set_golongan($val['PKT_PEG']);
-            $this->set_unit_asal($val['UNIT_PEG']);
+            $this->set_kd_peg($val['nip']);
+            $this->set_nama($val['nama']);
+            $this->set_jkel($val['sex']);
+            $this->set_golongan($val['gol']);
+            $this->set_unit_asal($val['unit']);
         }
         
         return $this;

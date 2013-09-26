@@ -52,8 +52,8 @@
 
     function choose(id){
         var URL = "<?php echo URL?>surattugas/dialog_add_pb/"+id;
-        var w = 350;
-        var h = 330;
+        var w = 370;
+        var h = 500;
         var left = (screen.width/2)-(w/2);
         var top = (screen.height/2)-(h/2);
         var title = "rekam penerima beasiswa";
