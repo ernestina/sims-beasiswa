@@ -22,10 +22,10 @@ body {
   background-image:url('../img/bg.png');
 }
 
-header {
-	text-align: center;
-	padding-bottom: 10px;
-	
+#header h1 {
+	background: url('../img/logo-square1.png') top left no-repeat;
+	height: 100px;
+	margin: 0px 0px 0px 20px;
 }
 
 #wrapper {

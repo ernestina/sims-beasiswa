@@ -24,10 +24,9 @@
     </head>
     <body>
        <div id="wrapper">
-			<header>
-				<h2>SCHOLARSHIP INFORMATION MANAGEMENT SYSTEM<br>
-				Bagian Pengembangan Pegawai, Setditjen PBN Jakarta</h2>
-			</header>
+			<div id="header">
+				<h1 id="logo"></h1>
+			</div>
         
            <div id="menu">
     <ul>
