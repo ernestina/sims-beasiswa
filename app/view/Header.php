@@ -31,35 +31,55 @@
         
            <div id="menu">
     <ul>
-		<li class="nav">
-			<a href="<?php echo URL;?>index">BERANDA</a>
-		</li>
+        <li class="nav">
+                <a href="<?php echo URL;?>index">BERANDA</a>
+        </li>
         <li class="subnav">
-			<a href="#">ADMIN</a>
-			<ul>
-				<li><a href="<?php echo URL;?>admin/addUniversitas">UNIVERSITAS</a></li>
-				<li><a href="<?php echo URL;?>admin/addFakultas">FAKULTAS</a></li>
-				<li><a href="<?php echo URL;?>admin/addJurusan">JURUSAN</a></li>
-				<li><a href="<?php echo URL;?>admin/addStrata">STRATA</a></li>
-				<li><a href="<?php echo URL;?>admin/addPemberi">PEMBERI BEASISWA</a></li>
-				<li><a href="<?php echo URL;?>admin/addPejabat">PEJABAT</a></li>
-				<li><a href="<?php echo URL;?>admin/addST">JENIS SURAT TUGAS</a></li>
-				<li><a href="<?php echo URL;?>admin/addCuti">JENIS SURAT CUTI</a></li>
-				<li><a href="<?php echo URL;?>admin/addBank">BANK</a></li>
-				<li><a href="<?php echo URL;?>admin/addPIC">USER</a></li>
-			</ul>
-		</li>
-		<li class="subnav">
-			<a href="#">PIC</a>
-			<ul>
-				<li><a href="<?php echo URL.'surattugas/datast'?>">Surat Tugas</a></li>
-                <li><a href="">Cuti</a></li>
-                <li><a href="<?php echo URL.'kontrak/display';?>">Kontrak</a></li>
+            <a href="<?php echo URL;?>admin/addUniversitas">ADMIN</a>
+            <ul>
+                    <li><a href="<?php echo URL;?>admin/addUniversitas">UNIVERSITAS</a></li>
+                    <li><a href="<?php echo URL;?>admin/addFakultas">FAKULTAS</a></li>
+                    <li><a href="<?php echo URL;?>admin/addJurusan">JURUSAN</a></li>
+                    <li><a href="<?php echo URL;?>admin/addStrata">STRATA</a></li>
+                    <li><a href="<?php echo URL;?>admin/addPemberi">PEMBERI BEASISWA</a></li>
+                    <li><a href="<?php echo URL;?>admin/addPejabat">PEJABAT</a></li>
+                    <li><a href="<?php echo URL;?>admin/addST">JENIS SURAT TUGAS</a></li>
+                    <li><a href="<?php echo URL;?>admin/addCuti">JENIS SURAT CUTI</a></li>
+                    <li><a href="<?php echo URL;?>admin/addBank">BANK</a></li>
+                    <li><a href="<?php echo URL;?>admin/addPIC">USER</a></li>
+            </ul>
+        </li>
+        <li class="subnav">
+            <a href="#">CONFIG</a>
+            <ul>
+                <li><a href="<?php echo URL.'#'?>">Database</a></li>
+                <li><a href="<?php echo URL.'#'?>">IP-Server</a></li>
+            </ul>
+        </li>
+        <li class="subnav">
+            <a href="<?php echo URL.'kontrak/display';?>">KONTRAK</a>
+            <ul>
+                <li><a href="<?php echo URL.'kontrak/display';?>"> Data Kontrak</a></li>
+                <li><a href="<?php echo URL.'#';?>">Monitoring Kontrak</a></li>
+            </ul>
+        </li>
+        <li class="subnav">
+            <a href="<?php echo URL.'penerima/datapb';?>">PROFIL BEASISWA</a>
+            <ul>
+                <li><a href="<?php echo URL.'surattugas/datast'?>">Surat Tugas</a></li>
+                <li><a href="<?php echo URL.'#'?>">Surat Cuti</a></li>
                 <li><a href="<?php echo URL.'penerima/datapb';?>">Penerima Beasiswa</a></li>
-                <li><a href="<?php echo URL;?>elemenBeasiswa/index">Elemen Beasiswa</a></li>
-                <li><a href="<?php echo URL;?>admin/addUniversitas">Admin</a></li>
-			</ul>
-		</li>
+            </ul>
+        </li>
+        <li class="subnav">
+            <a href="<?php echo URL.'elemenBeasiswa/mon_pembayaran'?>">ELEMEN BEASISWA</a>
+            <ul>
+                <li><a href="<?php echo URL.'elemenBeasiswa/mon_pembayaran'?>">Monitoring Pembayaran</a></li>
+                <li><a href="<?php echo URL.'elemenBeasiswa/addJadup';?>">Tunjangan Hidup</a></li>
+                <li><a href="<?php echo URL.'elemenBeasiswa/addBuku';?>">Tunjangan Buku</a></li>
+                <li><a href="<?php echo URL.'elemenBeasiswa/addSkripsi';?>">Tunjangan Skripsi/TA/Tesis</a></li>
+            </ul>
+        </li>
     </ul>
 </div>
 			
