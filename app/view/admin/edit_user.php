@@ -28,28 +28,26 @@
             <div id="table-title"></div>
             <div id="table-content">
                 <table class="table-bordered zebra scroll">
-                    <thead>
+                    <thead>                   
+                    <th width="5%">No</th>
                     <th width="20%">NIP</th>
-                    <th width="20%">Nama</th>
+                    <th width="30%">Nama</th>
                     <th width="20%">Pass</th>
-                    <th width="10%">Akses</th>
-                    <th width="20%">Foto</th>
-                    <th width="5%">Aksi</th>
+                    <th width="15%">Akses</th>                     
                     </thead>
                     <tbody>
                         <?php
+                        $i = 1;
                         foreach ($this->data2 as $value) {
                             echo '<tr>';
+                            echo '<td>' . $i. '</td>';
                             echo '<td>' . $value->get_nip() . '</td>';
                             echo '<td>' . $value->get_nmUser() . '</td>';
                             echo '<td>' . $value->get_pass() . '</td>';
                             echo '<td>' . $value->get_akses() . '</td>';
-                            echo '<td>' . $value->get_foto() . '</td>';
-                            echo '<td>
-                        <a href="' . URL . 'Admin/deleteUser/' . $value->get_id() . '">X</a>
-			<a href="' . URL . 'Admin/editUser/' . $value->get_id() . '">...</a>
-                        </td>';
                             echo '</tr>';
+                            
+                            $i++;
                         }
                         ?>
                     </tbody>
