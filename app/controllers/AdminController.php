@@ -210,7 +210,7 @@ class AdminController extends BaseController {
             $pejabat->jenis_jabatan = $_POST['jenis_jabatan'];
             if ($pejabat->isEmpty($pejabat) == FALSE) { //mengecek apakah data pejabat kosong
                 if (Validasi::cekNip($pejabat->nip_pejabat) == true) { //mengecek apakah format nip benar
-                    if ($pejabat->cekJenisJabatan($pejabat->jenis_jabatan == TRUE)) { //mengecek apakah sudah ada pejabat dengan jenis jabatan yang sama
+                    if ($pejabat->cekJenisJabatan($pejabat->jenis_jabatan) == TRUE) { //mengecek apakah sudah ada pejabat dengan jenis jabatan yang sama
                         $pejabat->add($pejabat);
                         header('location:' . URL . 'admin/addPejabat/');
                     } else {
