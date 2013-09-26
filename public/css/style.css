@@ -340,7 +340,7 @@ table {
 .scroll {
 	display: block;
 	border: 1px;
-	height: 350px;
+	height: 400px;
 	overflow-y: scroll;
 }
 
