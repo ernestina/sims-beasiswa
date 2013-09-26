@@ -45,7 +45,7 @@
                     <li><a href="<?php echo URL;?>admin/addPejabat">PEJABAT</a></li>
                     <li><a href="<?php echo URL;?>admin/addST">JENIS SURAT TUGAS</a></li>
                     <li><a href="<?php echo URL;?>admin/addCuti">JENIS SURAT CUTI</a></li>
-                    <li><a href="<?php echo URL;?>admin/addBank">BANK</a></li>
+                    <li><a href="<?php echo URL;?>admin/list_bank">BANK</a></li>
                     <li><a href="<?php echo URL;?>admin/listUser">USER</a></li>
             </ul>
         </li>
