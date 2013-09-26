@@ -11,8 +11,7 @@ $this->load('admin/menu_admin');
                 <label>Kode</label><input type="text" name="kode_strata" id="kode" size="8">
                 <label>Strata</label><input type="text" name="nama_strata" id="nama" size="50">
               <ul class="inline tengah">  
-				<li><input class="normal" type="reset" value="BATAL"></li>
-				
+				<li><input class="normal" type="submit" value="BATAL"></li>
 				<li><input class="sukses" type="submit" name="add_strata" value="SIMPAN"></li>
 			  </ul>
             </form>
