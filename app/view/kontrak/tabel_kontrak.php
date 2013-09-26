@@ -23,13 +23,13 @@
                 echo $val->tgl_kontrak; 
                 ?></td>
                 <td><?php
-            if ($val->kd_jurusan != 0) {
+            if ($val->kd_jurusan != "") {
                 $this->jurusan->set_kode_jur($val->kd_jurusan);
-                echo $val->kd_jurusan;
+                //echo $val->kd_jurusan;
                 $jurusan = $this->jurusan->get_jur_by_id($this->jurusan);
                 $universitas = $this->universitas->get_univ_by_jur($val->kd_jurusan);
                 //var_dump($universitas);
-                echo $jurusan->get_nama()." ".$universitas->get_kode();
+                 echo $jurusan->get_nama()." ".$universitas->get_kode();
             } else {
                 echo "";
             }

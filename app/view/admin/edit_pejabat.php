@@ -7,11 +7,11 @@
             <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'admin/updPejabat' ?>">
             <input type="hidden" name="kd_pejabat" id="kd_pejabat" size="8" value="<?php echo $this->pejabat->kd_pejabat;?>">
 				<div class="kiri">
-                <label>NIP</label><input type="text" name="nip_pejabat" id="nip_pejabat" size="18" value="<?php echo $this->pejabat->nip_pejabat; ?>">
-                <label>Nama</label><input type="text" name="nama_pejabat" id="nama_pejabat" size="50" value="<?php echo $this->pejabat->nama_pejabat; ?>">
-                <label>Jabatan</label><input type="text" name="nama_jabatan" id="nama_jabatan" size="50" value="<?php echo $this->pejabat->nama_jabatan; ?>">
+                <label>NIP</label><input type="text" name="nip_pejabat" id="nip_pejabat" size="18" value="<?php echo $this->pejabat->nip_pejabat; ?>"><div id="wnip_pejabat"></div>
+                <label>Nama</label><input type="text" name="nama_pejabat" id="nama_pejabat" size="50" value="<?php echo $this->pejabat->nama_pejabat; ?>"><div id="wnama_pejabat"></div>
+                <label>Jabatan</label><input type="text" name="nama_jabatan" id="nama_jabatan" size="50" value="<?php echo $this->pejabat->nama_jabatan; ?>"><div id="wnama_jabatan"></div>
                 <label>Jenis Jabatan</label>
-                <select type="text" name="jenis_jabatan" readonly>
+                <select type="text" name="jenis_jabatan" readonly id="jenis_jabatan">
                     <?php if($this->pejabat->jenis_jabatan == '1'){ ?>
                     <option value="1" >Pejabat Pembuat Komitmen</option>
                     <?php } ?>
@@ -23,11 +23,11 @@
                     <?php } ?>
                     
                     
-                </select>
+                </select><div id="wjenis_jabatan"></div>
                 <ul class="inline tengah">
 					<li><input class="normal" type="submit" onclick="window.location.href='<?php echo URL."admin/addPejabat"; ?>'" value="BATAL"></li>
 					
-					<li><input class="sukses" type="submit" name="upd_pejabat" value="SIMPAN"></li>
+					<li><input class="sukses" type="submit" name="upd_pejabat" value="SIMPAN" id="simpan"></li>
 				</ul>
 			</div> <!--end class kiri-->
             </form>
@@ -71,4 +71,72 @@
 	</fieldset>
     </div>
 </div>
-
+<script type="text/javascript">
+    
+	$('#nip_pejabat').keyup(function() {   
+            $('#wnip_pejabat').fadeOut(0);             
+    });
+	$('#nama_pejabat').keyup(function() {   
+            $('#wnama_pejabat').fadeOut(0);             
+    });
+	$('#nama_jabatan').keyup(function() {   
+            $('#wnama_jabatan').fadeOut(0);             
+    });
+	$('#enis_jabatan').keyup(function() {   
+            $('#enis_jabatan').fadeOut(0);             
+    });
+	
+	
+    $("#simpan").click(function() {
+        var angka = /^\d{18}$/;
+        var jml = 0;
+        
+        if($('#nip_pejabat').val()==''){
+            var wnip_pejabat= 'NIP harus diisi!';
+            $('#wnip_pejabat').fadeIn(0);
+            $('#wnip_pejabat').html(wnip_pejabat);
+			$('#wnip_pejabat').addClass('error');
+            jml++;
+        }
+    
+        if($('#nama_pejabat').val()==''){
+            var wnama_pejabat= 'Nama harus diisi!';
+            $('#wnama_pejabat').fadeIn(0);
+            $('#wnama_pejabat').html(wnama_pejabat);
+			$('#wnama_pejabat').addClass('error');
+            jml++;
+        }
+        
+        if($('#nama_jabatan').val()==''){
+            var wnama_jabatan= 'Jabatan harus diisi!';
+            $('#wnama_jabatan').fadeIn(0);
+            $('#wnama_jabatan').html(wnama_jabatan);
+			$('#wnama_jabatan').addClass('error');
+            jml++;
+        }
+    
+        if($('#jenis_jabatan').val()==''){
+            var wjenis_jabatan= 'Jenis Jabatan harus diisi!';
+            $('#wjenis_jabatan').fadeIn(0);
+            $('#wjenis_jabatan').html(wjenis_jabatan);
+			$('#wjenis_jabatan').addClass('error');
+            jml++;
+        }
+                
+        if(jml>0){
+            //alert('Isian form belum lengkap');
+            return false;
+        }
+        
+        if (angka.test($('#nip_pejabat').val())==false){
+            var wnip_pejabat= 'NIP harus diisi dengan 18 digit angka!';
+            $('#wnip_pejabat').fadeIn(0);
+            $('#wnip_pejabat').html(wnip_pejabat);
+            return false;
+        }
+        
+    });
+    
+    
+    
+</script>
