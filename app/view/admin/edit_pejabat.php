@@ -1,15 +1,17 @@
-<div>
 
-    <div id="form">
-        <div id="form-title"><h1>DATA PEJABAT</h1></div>
-        <div id="form-input" >
+    <div id="top">
+        <h2>DATA PEJABAT</h2>
+		<div class="kolom3">
+			<fieldset><legend>Ubah Data Pejabat</legend>
+			<div id="form-input" >
             <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'admin/updPejabat' ?>">
-            <input type="hidden" name="kd_pejabat" id="kd_pejabat" size="8" value="<?php echo $this->pejabat->kd_pejabat;?>"></br>
-                <label>NIP</label><input type="text" name="nip_pejabat" id="nip_pejabat" size="18" value="<?php echo $this->pejabat->nip_pejabat; ?>"></br>
-                <label>Nama</label><input type="text" name="nama_pejabat" id="nama_pejabat" size="50" value="<?php echo $this->pejabat->nama_pejabat; ?>"></br>
-                <label>Jabatan</label><input type="text" name="nama_jabatan" id="nama_jabatan" size="50" value="<?php echo $this->pejabat->nama_jabatan; ?>"></br>
+            <input type="hidden" name="kd_pejabat" id="kd_pejabat" size="8" value="<?php echo $this->pejabat->kd_pejabat;?>">
+				<div class="kiri">
+                <label>NIP</label><input type="text" name="nip_pejabat" id="nip_pejabat" size="18" value="<?php echo $this->pejabat->nip_pejabat; ?>">
+                <label>Nama</label><input type="text" name="nama_pejabat" id="nama_pejabat" size="50" value="<?php echo $this->pejabat->nama_pejabat; ?>">
+                <label>Jabatan</label><input type="text" name="nama_jabatan" id="nama_jabatan" size="50" value="<?php echo $this->pejabat->nama_jabatan; ?>">
                 <label>Jenis Jabatan</label>
-                <select name="jenis_jabatan" readonly>
+                <select type="text" name="jenis_jabatan" readonly>
                     <?php if($this->pejabat->jenis_jabatan == '1'){ ?>
                     <option value="1" >Pejabat Pembuat Komitmen</option>
                     <?php } ?>
@@ -22,22 +24,30 @@
                     
                     
                 </select>
-                </br>
-                <label></label><input type="button" onclick="window.location.href='<?php echo URL."admin/addPejabat"; ?>'" value="BATAL"><input type="submit" name="upd_pejabat" value="SIMPAN">
+                <ul class="inline tengah">
+					<li><input class="normal" type="submit" onclick="window.location.href='<?php echo URL."admin/addPejabat"; ?>'" value="BATAL"></li>
+					
+					<li><input class="sukses" type="submit" name="upd_pejabat" value="SIMPAN"></li>
+				</ul>
+			</div> <!--end class kiri-->
             </form>
         </div>
-    </div>
-    <br />
-    <div id="table">
+		</fieldset>
+    </div> <!--end kolom3-->
+
+	
+<div class="kolom4" id="table">
+	<fieldset><legend>Daftar Pejabat</legend>
+   
         <div id="table-content">
-            <table>
+            <table class="table-bordered zebra scroll">
                 <thead>
-                <th>No</th>
-                <th>NIP Pejabat</th>
-                <th>Nama Pejabat</th>
-                <th>Jabatan</th>
-                <th>Jenis Jabatan</th>
-                <th></th>                
+                <th width="5px">No</th>
+                <th width="20%">NIP Pejabat</th>
+                <th width="20%">Nama Pejabat</th>
+                <th width="30%">Jabatan</th>
+                <th width="30%">Jenis Jabatan</th>
+                              
                 </thead>
                 <?php $i = 1;
                 foreach ($this->data as $pejabat) { ?>
@@ -52,15 +62,13 @@
                         if($pejabat->jenis_jabatan==3){ echo "Bendahara";}
                          
                         ?></td>
-                        <td>
-                            <?php echo "<a href=" . URL . "admin/delPejabat/" . $pejabat->kd_pejabat . ">X</a> | 
-                    <a href=" . URL . "admin/editPejabat/" . $pejabat->kd_pejabat . ">...</a>" ?>
-                        </td>
+                        
                     </tr>
     <?php $i++;
 } ?>
             </table>
         </div>
+	</fieldset>
     </div>
 </div>
 

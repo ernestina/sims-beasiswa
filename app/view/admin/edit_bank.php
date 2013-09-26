@@ -27,8 +27,8 @@
         <table class="table-bordered zebra scroll">
             <thead>
             <th>No</th>
-            <th>Nama</th>
-            <th>Keterangan</th>
+            <th width="40%">Nama</th>
+            <th width="60%">Keterangan</th>
             
             </thead>
             <tbody><?php

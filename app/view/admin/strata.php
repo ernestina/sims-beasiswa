@@ -23,9 +23,9 @@
             <table class="table-bordered zebra scroll">
                 <thead>
                 <th>No</th>
-                <th width="200">Kode</th>
-                <th width="300">Nama</th>
-                <th width="70">Aksi</th>
+                <th width="20%">Kode</th>
+                <th width="70%">Nama</th>
+                <th width="10%">Aksi</th>
                 </thead>
                 <?php $i = 1;
                 foreach ($this->data as $strata) { ?>
@@ -33,7 +33,7 @@
                         <td><?php echo $i; ?></td>
                         <td><?php echo $strata->kode_strata; ?></td>
                         <td><?php echo $strata->nama_strata; ?></td>
-                        <td>
+                        <td align="center">
                             <?php echo "<a href=" . URL . "admin/delStrata/" . $strata->kd_strata . ">X</a> | 
                     <a href=" . URL . "admin/editStrata/" . $strata->kd_strata . ">...</a>" ?>
                         </td>
