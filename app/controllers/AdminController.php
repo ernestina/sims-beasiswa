@@ -908,6 +908,9 @@ class AdminController extends BaseController {
         $user = new User($registry);
 
         $this->view->data = $user->getUser_id($id);
+        
+        $user2 = new User($registry);
+        $this->view->data2 = $user2->get_user();
 
         $this->view->render('admin/edit_user');
     }
