@@ -55,7 +55,7 @@
                     echo "<td>$no</td>";
                     echo "<td>".$val->get_nama()."</td>";
                     echo "<td>".$val->get_keterangan()."</td>";
-                    echo "<td><a href=".URL."admin/delST/".$val->get_kode().">X</a> | 
+                    echo "<td><a href=".URL."admin/delST/".$val->get_kode()." onclick='return del()'>X</a> | 
                         <a href=".URL."admin/addST/".$val->get_kode().">...</a></td>";
                     echo "</tr>";
                     $no++;
@@ -68,6 +68,12 @@
 </div>
 </div>
 <script type="text/javascript">
+function del(){
+    if(confirm('Apakah Anda yakin akan menghapus data ini?'))
+        return true;
+    else return false
+}
+
 $(function(){
         hideErrorId();
         hideWarning();
