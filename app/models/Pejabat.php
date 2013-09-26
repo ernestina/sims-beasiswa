@@ -142,14 +142,14 @@ class Pejabat extends BaseModel {
      */
 
     public function cekJenisJabatan($id) {
-        $cek = FALSE; //belum ada pejabat dengan jenis jabatan sama dengan $id
+        $cek = TRUE; //belum ada pejabat dengan jenis jabatan sama dengan $id
         $table = "r_pejabat";
         $where = "JENIS_JABATAN='" . $id . "'";
         $sql = "SELECT * FROM $table where $where";
         $result = $this->db->select($sql);
         //var_dump($result);
         if(!empty($result)){
-            $cek=true;   //jika ditemukan terdapat pejabat dengan jenis jabatan yang seperti $id
+            $cek=FALSE;   //jika ditemukan terdapat pejabat dengan jenis jabatan yang seperti $id
         }
         return $cek;
     }

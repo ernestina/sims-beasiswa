@@ -210,7 +210,7 @@ class AdminController extends BaseController {
             $pejabat->jenis_jabatan = $_POST['jenis_jabatan'];
             if ($pejabat->isEmpty($pejabat) == FALSE) { //mengecek apakah data pejabat kosong
                 if (Validasi::cekNip($pejabat->nip_pejabat) == true) { //mengecek apakah format nip benar
-                    if ($pejabat->cekJenisJabatan($pejabat->jenis_jabatan == False)) { //mengecek apakah sudah ada pejabat dengan jenis jabatan yang sama
+                    if ($pejabat->cekJenisJabatan($pejabat->jenis_jabatan == TRUE)) { //mengecek apakah sudah ada pejabat dengan jenis jabatan yang sama
                         $pejabat->add($pejabat);
                         header('location:' . URL . 'admin/addPejabat/');
                     } else {
@@ -940,6 +940,20 @@ class AdminController extends BaseController {
         foreach ($data as $val){
             echo "<option value=".$val->get_kode_jur().">".$val->get_nama()."</option>";
         }
+    }
+	
+	public function cekJabatan(){
+        $pejabat = new Pejabat();
+        //$id='4';
+        $id = $_POST['jenis_jabatan'];
+        //$respon="";
+        if($pejabat->cekJenisJabatan($id) == TRUE){
+            $respon="TRUE";
+        } else {
+            $respon="FALSE";
+        }
+        $res = array('respon' => $respon);
+        echo json_encode($res);
     }
 
 }
