@@ -23,7 +23,7 @@
         ?>
         
 		
-        <div id="wkode" class="error">kjdsjdkwnbdw</div>
+        <div id="wkode" class="error"></div>
         <label>Kode</label><input type="text" name="kode" id="kode" size="8" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_kode():(isset($this->d_rekam)?$this->d_rekam->get_kode():'');?>">
         <div id="wnama"  class="error"></div>
         <label>Nama</label><input type="text" name="nama" id="nama" size="50" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nama():(isset($this->d_rekam)?$this->d_rekam->get_nama():'');?>">
@@ -157,7 +157,7 @@ function cek(){
     var lokasi = document.getElementById('lokasi').value;
     var pic = document.getElementById('pic').value;
     var jml=0;
-    if(kode=''){
+    if(kode==''){
         var wkode= 'Singkatan Perguruan Tinggi harus diisi!';
         $('#wkode').fadeIn(0);
         $('#wkode').html(wkode);
