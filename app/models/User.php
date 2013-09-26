@@ -36,7 +36,7 @@ class User {
         foreach ($result as $value) {
             $user = new User($registry);
             $user->set_id($value['KD_USER']);
-            $user->set_nip($value ['NIP']);
+            $user->set_nip($value ['NIP_USER']);
             $user->set_nmUser($value ['NM_USER']);
             $user->set_pass($value['PASS_WAKTU']);
             $user->set_akses($value['AKSES_USER']);
