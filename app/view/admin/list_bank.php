@@ -1,7 +1,7 @@
 <div id="top">
     <h2>DATA BANK</h2>
 	<div class="kolom3">
-	  <fieldset><legend>Tambah Fakultas</legend>
+	  <fieldset><legend>Tambah Data Bank</legend>
 		<div id="form-input">
 			<form method="POST" action="<?php echo URL.'Admin/addBank' ?> ">
 				<div class="kiri">
@@ -18,29 +18,31 @@
 		</fieldset>
 	</div>
 <div class="kolom4" id="table">
-	  <fieldset><legend>Tambah Fakultas</legend>
+	  <fieldset><legend>Daftar Data Bank</legend>
 			<div id="table-title"></div>
 			<div id="table-content">
 			<table class="table-bordered zebra scroll">
 				<thead>
 					<th>No</th>
-					<th width="200">Nama</th>
+					<th width="200">Nama Bank</th>
 					<th width="400">Keterangan</th>
 					<th width="30">Aksi</th>
 				</thead>
             <tbody>
                 <?php
+                $i = 1;
                 foreach ($this->data as $value) {
                     echo '<tr>';
-                    echo '<td>' . $value->get_id() . '</td>';
+                    echo '<td>' . $i . '</td>';
                     echo '<td>' . $value->get_nama() . '</td>';
                     echo '<td>' . $value->get_keterangan() . '</td>';
                     echo
                     '<td>
                         <a href="' . URL . 'Admin/deleteBank/' . $value->get_id() . '">X</a>
-						<a href="' . URL . 'Admin/editBank/' . $value->get_id() . '">...</a>
+			<a href="' . URL . 'Admin/editBank/' . $value->get_id() . '">...</a>
                     </td>';
                     echo '</tr>';
+                    $i++;
                 }
                 ?>            
             </tbody>
@@ -49,3 +51,9 @@
 	</fieldset>
 </div>
 </div>
+
+<script type="text/javascript">
+    function validate (){
+        
+    }
+</script>
