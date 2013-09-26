@@ -206,6 +206,11 @@ header {
 	background-color: #da4f49;
 }
 
+.biru {
+	border: 1px solid #49afcd;
+	background-color: #49afcd;
+}
+
 fieldset{
 	border: 2px solid #49afcd;
 	border-radius: 10px;
@@ -277,11 +282,12 @@ input[type="submit"]{
 
 input[type="button"]{
 	color: #ffffff;
-	border: 1px #49afcd;
+	
 	background-color: #49afcd;
-	width: 60px;
+	width: 100px;
 	cursor: pointer;
 	float: right;
+	margin-top: 10px;
 }
 
 input.sukses[type="submit"] :focus, input.sukses[type="submit"]:hover {
