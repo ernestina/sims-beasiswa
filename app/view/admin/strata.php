@@ -1,4 +1,4 @@
-   <div id="top">
+<div id="top">
         <!--div id="form-title"-->
 	  <h2>DATA STRATA</h2>
 		<div class="kolom3">

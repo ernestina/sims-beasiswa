@@ -932,6 +932,15 @@ class AdminController extends BaseController {
         $user->delUser($id);
         header('location:' . URL . 'admin/listUser');
     }
+    
+    public function get_jur_by_univ(){
+        $univ = $_POST['param'];
+        $jur = new Jurusan($this->registry);
+        $data = $jur->get_jur_by_univ($univ);
+        foreach ($data as $val){
+            echo "<option value=".$val->get_kode_jur().">".$val->get_nama()."</option>";
+        }
+    }
 
 }
 

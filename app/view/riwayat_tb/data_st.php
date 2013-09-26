@@ -14,7 +14,7 @@
             <label>No. ST Lama</label><select name="st_lama" id="st_lama">
                 <?php 
                     foreach($this->d_st_lama as $val){
-                        echo "<option value=".$val->get_kd_st().">".$val->get_nomor()."-".$val->get_jur()."</option>";
+                        echo "<option value=".$val->get_kd_st().">".$val->get_nomor()." [".$val->get_jur()."]</option>";
                     }
                 ?>
             </select></br>
@@ -41,7 +41,7 @@
                 ?>
             </select></br>
             <div id="wnost"></div>
-            <label>Universitas</label><select name="univ" id="univ">
+            <label>Universitas</label><select name="univ" id="univ" onchange="get_jurusan(this.value)">
                 <?php 
                     foreach($this->d_univ as $val){
                         echo "<option value=".$val->get_kode_in().">".$val->get_nama()."</option>";
@@ -65,8 +65,12 @@
                 ?>
             </select></br>
             <div id="wfile"></div>
-            <label>Unggah ST</label><input type="file" name="fupload" id="file"></br>
-            <label></label><input type="reset" value="RESET"><input type="submit" name="<?php echo isset($this->d_ubah)?'sb_upd':'sb_add';?>" value="SIMPAN" onClick="return cek();">
+            <label>Unggah ST</label><input type="file" name="fupload" id="file">
+            <ul class="inline tengah">
+			<li><input class="normal" type="submit" onclick="" value="BATAL"></li>
+			<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'sb_upd':'sb_add';?>" value="SIMPAN" onClick="return cek();"></li>
+		</ul>
+<!--            <label></label><input type="reset" value="RESET"><input type="submit" name="<?php echo isset($this->d_ubah)?'sb_upd':'sb_add';?>" value="SIMPAN" onClick="return cek();">-->
         </form>
             </fieldset>
     </div>
@@ -97,7 +101,7 @@
             </tr>
         </table>
     </div>
-    <div id="tb_pb">
+    <div id="tb_st">
         <?php 
             $this->load('riwayat_tb/tabel_st');
         ?>
@@ -108,6 +112,10 @@
 
 <script type="text/javascript">
     
+    $(function(){
+        get_jurusan(document.getElementById('univ').value);
+    });
+    
     function showdialog(){
         $('#dialog_pb').show();
     }
@@ -117,6 +125,13 @@
         function(data){                
             $('#tb_st').fadeIn(100);
             $('#tb_st').html(data);
+        });
+    }
+    
+    function get_jurusan(univ){
+        $.post("<?php echo URL; ?>admin/get_jur_by_univ", {param:""+univ+""},
+        function(data){
+            $('#jur').html(data);
         });
     }
     
