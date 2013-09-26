@@ -16,7 +16,7 @@ class Bank {
 
     public function __construct($registry) {
         $this->_registry = $registry;
-        $this->_db = $registry->db;
+        $this->_db = new Database();
     }
 
     public function get_bank() {
@@ -52,6 +52,17 @@ class Bank {
             $data = $bank;
         }
         return $data;
+    }
+
+    public function get_bank_name($nama) {
+        $sql = "SELECT * FROM " . $this->_table . " WHERE NM_BANK = '".$nama."'";
+
+        $result = $this->_db->select($sql);
+
+        $hasil = count($result);
+//        var_dump($result);
+
+        return $hasil;
     }
 
     public function addBank(Bank $bank) {
