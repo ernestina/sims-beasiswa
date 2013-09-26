@@ -152,6 +152,29 @@ class Penerima {
     }
     
     /*
+     * cek pb exist
+     * @param TRUE sudah ada dan belum terdaftar di ST 
+     */
+    public function cek_exist_pb($cek_st=FALSE){
+        $sql = "SELECT * FROM ".$this->_tb_penerima." WHERE NIP_PB='".$this->get_nip()."'";
+        if($cek_st){
+            $sql .= " AND KD_ST=0 ";
+        }
+//        var_dump($this->_db);
+        $cek = count($this->db->select($sql));
+        $return = array();
+        if($cek_st){
+            $return['aksi']='ubah';
+        }else{
+            $return['aksi']='rekam';
+        }
+        
+        $return['cek']=$cek;
+        return $return;
+    }
+
+
+    /*
      * setter
      */
     public function set_kd_pb($kd){

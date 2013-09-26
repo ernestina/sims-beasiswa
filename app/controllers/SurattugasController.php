@@ -178,5 +178,22 @@ class SurattugasController extends BaseController{
         header('location:'.URL.'surattugas/addpb/'.$d[0]);
         
     }
+    
+    /*
+     * cek apakah pb telah terdaftar di data pb, atau belum terdaftar pada st manapun
+     */
+    public function cek_pb_on_st($nip){
+//        $nip = $_POST['nip'];
+        $return = 0;
+        $pb = new Penerima($this->registry);
+        $pb->set_nip($nip);
+        $d_cek = $pb->cek_exist_pb();
+        if(((int) $d_cek['cek'])>0) {
+            $return=1;
+        }else{
+            $return=0;
+        }
+        echo $return;
+    }
 }
 ?>

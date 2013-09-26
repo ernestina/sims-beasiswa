@@ -6,8 +6,10 @@
     </head>
     <body>
 <div id="dialog_pb" >
+    <div id="winput"></div>
     <form id="form_add_pb" method="POST" action="">
         <table>
+            <input type="hidden" id="cek" value="">
             <input type="hidden" id="kd_st" name="st" value="<?php echo $this->id;?>">
             <tr><td><label>NIP</label></td><td><input type="text" id="t_nip" name="nip" onkeyup="getNama(this.value);"></td></tr>
             <tr><td><label>Nama</label></td><td><input type="text" id="t_nm" name="nama" readonly></td></tr>
@@ -27,7 +29,7 @@
                 </td></tr>
 <!--            <tr><td><label>Cabang</label></td><td><input type="text" id="t_cb" name="t_cb"></td></tr>-->
             <tr><td><label>No. Rekening</label></td><td><input type="text" id="t_rek" name="no_rek"></td></tr>
-            <tr><td colspan="2"><input type="button" id="bt_ok" value="simpan" onclick="goSelect();"></td></tr>
+            <tr><td colspan="2"><input type="button" id="bt_ok" value="simpan" onclick="return goSelect();"></td></tr>
         </table>
     </form>
 </div>
@@ -50,6 +52,7 @@
                $('#t_jk').val(data.jkel);
                $('#t_gol').val(data.gol);
                $('#t_unit').val(data.unit);
+               $('#cek').val(data.registered);
            },
            error:function(){
                alert("nip tidak ada dalam database!");
@@ -65,11 +68,40 @@
         var hp = document.getElementById('t_hp').value;
         var bank = document.getElementById('t_bank').value;
         var rek = document.getElementById('t_rek').value;
-        var data = nip+"*"+nm;
+        var cek = document.getElementById('cek').value;
+        
+        if(nm==""){
+            var winput = "pegawai ini tidak terdaftar di database"
+            $('#winput').html(winput);
+            return false;
+        }
+        
+        if(cek!=0){
+            var winput = "pegawai ini telah terdaftar sebagai penerima beasiswa : "+cek;
+            $('#winput').html(winput);
+            return false;
+        }
+//        validate(nip);
+        
+        /*$.post("<?php echo URL?>surattugas/cek_pb_on_st",{nip:""+nip+""},
+        function(data){
+            if(data==1){
+                    var winput = "pegawai ini telah terdaftar sebagai penerima beasiswa"
+                    $('#winput').html(winput);
+                    cek = false;
+                }
+        });
+        
+        if(cek==false){
+            return false;
+        }*/
+        
+//        return false;
         //langsung menyimpan ke tabel penerima tb
 //        var idFromCallPage = getUrlVars()["id"];
 //        window.opener.callFromDialog(data); //or use //window.opener.document.getElementById(idFromCallPage).value = data;
 //        window.close();
+        setInterval(function(){
         var formData = new FormData($('#form_add_pb')[0]);
         
         $.ajax({
@@ -86,10 +118,28 @@
             contentType: false,
             processData: false
         });
-        
+        },2000);
         
     }
-
+    
+    function validate(nip){
+        var cek;
+        $.ajax({
+            type:'POST',
+            url:'<?php echo URL?>surattugas/cek_pb_on_st',
+            data:'nip='+nip,
+            dataType:'json',
+            success:function(data){
+                /*if(data.cek>0){
+                    var winput = "pegawai ini telah terdaftar sebagai penerima beasiswa"
+                    $('#winput').html(winput);
+                }*/
+//                $('#cek').val(data.cek);
+                cek = data.cek;
+                return cek;
+            }
+        });
+    }
 
     function getUrlVars(){
         var vars = [], hash;

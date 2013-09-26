@@ -212,6 +212,7 @@ class PenerimaController extends BaseController{
     
     public function get_nama_peg(){
         $nip = $_POST['param'];
+        
         $peg = new Pegawai($this->registry);
         $peg->set_nip($nip);
         $data = $peg->get_peg_by_nip($peg);
@@ -219,11 +220,16 @@ class PenerimaController extends BaseController{
         $jk = $data->get_jkel();
         $gol = $data->get_golongan();
         $unit = $data->get_unit_asal();
+        $pb = new Penerima($this->registry);
+        $pb->set_nip($nip);
+        $d_cek = $pb->cek_exist_pb();
+        $d_cek = $d_cek['cek'];
         $return = json_encode(array(
             'nama'=>$nm,
             'jkel'=>$jk,
             'gol'=>$gol,
-            'unit'=>$unit
+            'unit'=>$unit,
+            'registered'=>$d_cek
         ));
         
         echo $return;
