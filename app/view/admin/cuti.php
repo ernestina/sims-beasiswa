@@ -1,6 +1,3 @@
-<?php
-    $this->load('admin/menu_admin');
-?>
 <div id="top">
     <div><h2>DATA JENIS SURAT CUTI</h2>
     <div class="kolom3">

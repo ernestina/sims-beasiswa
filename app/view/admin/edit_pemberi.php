@@ -1,7 +1,3 @@
-<?php
-    $this->load('admin/menu_admin');
-?>
-
 <div id="form">
     <div id="form-title"><h1>EDIT DATA STRATA</h1></div>
     <div id="form-input">

@@ -1,6 +1,3 @@
-<?php
-    $this->load('admin/menu_admin');
-?>
 <div id="top">
     <!--div id="form-title"-->
 	<h2>DATA FAKULTAS</h2>

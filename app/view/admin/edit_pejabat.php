@@ -1,8 +1,3 @@
-<?php
-$this->load('admin/menu_admin');
-//var_dump($this->pejabat);
-?>
-
 <div>
 
     <div id="form">

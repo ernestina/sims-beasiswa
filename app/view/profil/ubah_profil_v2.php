@@ -1,5 +1,3 @@
-<?php //include ('../Header.php');?>
-<!--link href="../../../public/css/bootstrap.css" rel="stylesheet" media="screen"-->
 <link href="../../../public/css/style.css" rel="stylesheet" media="screen">
 <body>
   

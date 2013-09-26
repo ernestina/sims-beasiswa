@@ -1,6 +1,3 @@
-<?php
-    $this->load('bantuan/bantuan_header');
-?>
 <div>
     BIAYA TUNJANGAN HIDUP > TAMBAH <!-- memakai breadcrumb -->
 </div>

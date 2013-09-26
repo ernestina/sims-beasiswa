@@ -1,6 +1,3 @@
-<?php
-    $this->load('admin/menu_admin');
-?>
 <div id="top">
 <div id="form">
     <h2>DATA UNIVERSITAS</h2></div>

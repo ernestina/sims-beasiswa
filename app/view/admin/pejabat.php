@@ -1,10 +1,4 @@
-<?php
-$this->load('admin/menu_admin');
-?>
-
-
-
-    <div id="top">
+ <div id="top">
         <h2>DATA PEJABAT</h2>
 		<div class="kolom3">
 			<fieldset><legend>Tambah Fakultas</legend>

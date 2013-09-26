@@ -1,1 +1,3 @@
-ini nantinya index dari aplikasi
+<div>
+    INI NANTINYA AKAN DIISI SAMA NITIFIKASI EARLY WARNING
+</div>

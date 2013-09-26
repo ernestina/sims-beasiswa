@@ -1,6 +1,3 @@
-<?php
-    $this->load('bantuan/bantuan_header');
-?>
 <div>
     MONITORING PEMBAYARAN KEUANGAN
 </div>

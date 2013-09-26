@@ -1,7 +1,3 @@
-<?php
-    $this->load('admin/menu_admin');
-?>
-
 <div>
     <br/>
 <div id="form">

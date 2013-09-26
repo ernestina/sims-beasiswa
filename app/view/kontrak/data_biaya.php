@@ -1,6 +1,3 @@
-<?php 
-
-?>
 <div>
     DATA KONTRAK KERJASAMA > BIAYA <!-- ntar pake breadcrumb -->
     <input type="button" value="KEMBALI">

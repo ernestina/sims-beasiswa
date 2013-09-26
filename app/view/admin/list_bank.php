@@ -1,6 +1,3 @@
-<?php
-    $this->load('admin/menu_admin');
-?>
 <div id="top">
     <h2>DATA BANK</h2>
 	<div class="kolom3">

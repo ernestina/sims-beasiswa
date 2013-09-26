@@ -1,6 +1,3 @@
-<?php
-    $this->load('admin/menu_admin');
-?>
 <div id="top">
     <h2>DATA JENIS SURAT TUGAS</h2>
     <div class="kolom3">

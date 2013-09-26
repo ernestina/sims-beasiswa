@@ -32,7 +32,7 @@
            <div id="menu">
     <ul>
 		<li class="nav">
-			<a href="#">BERANDA</a>
+			<a href="<?php echo URL;?>index">BERANDA</a>
 		</li>
         <li class="subnav">
 			<a href="#">ADMIN</a>
