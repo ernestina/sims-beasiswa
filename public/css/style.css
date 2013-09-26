@@ -258,6 +258,7 @@ select {
 input[type="text"],
 input[type="email"],
 input[type="file"],
+
 textarea[type="text"],
 select[type="text"]{
 	color: #5a5854;
@@ -272,7 +273,7 @@ input[type="email"] :focus, input[type="email"]:hover {
 select[type="text"] :focus, select[type="text"]:hover {
 	border: 1px solid #2f96b4;}
 
-input[type="submit"]{
+input[type="submit"], input[type="reset"]{
 	color: #ffffff;
 	width: 100px;
 	cursor: pointer;
