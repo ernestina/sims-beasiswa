@@ -835,13 +835,20 @@ class AdminController extends BaseController {
 
     public function addBank() {
 
-        if (isset($_POST['submit'])) {
-            $bank = new Bank($registry);
+        if (isset($_POST['submit'])) { 
+            
+            if ($_POST['nama']==""){
+                echo 'ada field yang masih kosong';
+            } 
+            else 
+                {
+                $bank = new Bank($registry);
 
-            $bank->set_nama($_POST['nama']);
-            $bank->set_keterangan($_POST['keterangan']);
+                $bank->set_nama($_POST['nama']);
+                $bank->set_keterangan($_POST['keterangan']);
 
-            $bank->addBank($bank);
+                $bank->addBank($bank);
+                }           
         }
         header('location:' . URL . 'Admin/list_bank');
     }
