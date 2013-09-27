@@ -7,6 +7,7 @@
 <!--        <script src="<?php echo URL; ?>public/js/jquery-ui-1.10.2/ui/jquery.ui.datepicker.js"></script>-->
 
     <script src="<?php echo URL; ?>public/js/jquery-ui.js"></script>
+	<script src="<?php echo URL; ?>public/js/myjs.js"></script>
 <!--    <link href="<?php echo URL; ?>public/css/flick/jquery-ui-1.10.1.custom.css" rel="stylesheet">-->
     <!--link href="<?php echo URL; ?>public/css/jquery-ui.css" rel="stylesheet">
     <link href="<?php echo URL; ?>public/css/ui.theme.css" rel="stylesheet">
