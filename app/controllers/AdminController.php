@@ -895,16 +895,24 @@ class AdminController extends BaseController {
     public function addUser() {
 
         if (ISSET($_POST['submit'])) {
-            $user = new User($registry);
+            
+            if ($_POST['nip']=="" || $_POST['nama']=="" || $_POST['pass']=="" || $_POST['akses']==""){
+                echo 'ada field yang masih kosong';
+            } 
+            else 
+                {
+                $user = new User($registry);
 
-            $user->set_nip($_POST['nip']);
-            $user->set_nmUser($_POST['nama']);
-            $user->set_pass($_POST['pass']);
-            $user->set_akses($_POST['akses']);
-            $user->set_foto($_POST['foto']);
+                $user->set_nip($_POST['nip']);
+                $user->set_nmUser($_POST['nama']);
+                $user->set_pass($_POST['pass']);
+                $user->set_akses($_POST['akses']);
+                $user->set_foto($_POST['foto']);
 
-//            var_dump($user);
-            $user->addUser($user);
+    //            var_dump($user);
+                $user->addUser($user);
+                }
+           
         }
         header('location:' . URL . 'admin/listuser');
     }
