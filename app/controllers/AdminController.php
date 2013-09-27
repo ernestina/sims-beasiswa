@@ -971,6 +971,36 @@ class AdminController extends BaseController {
         $res = array('respon' => $respon);
         echo json_encode($res);
     }
+    
+    public function config($ubah=false){
+        $xml = new ClassXML('1.0','utf-8');
+        if(isset($_POST['add_conf'])){
+            $host = $_POST['host'];
+            $db = $_POST['db'];
+            $username = $_POST['username'];
+            $pass = $_POST['pass'];
+
+            
+            $data = array('config'=>array(
+                'host'=>$host,
+                'db'=>$db,
+                'username'=>$username,
+                'password'=>$pass
+            ));
+
+            $xml->writeXML('libs/testing', $data);
+        }
+        
+        $this->view->data = $xml->readXML('libs/testing');
+        /*echo $data->host.'</br>';
+        echo $data->db.'</br>';
+        echo $data->username.'</br>';
+        echo $data->password->test->log.'</br>';*/
+        if($ubah){
+            $this->view->ubah = true;
+        }
+        $this->view->render('admin/config_database');
+    }
 
 }
 

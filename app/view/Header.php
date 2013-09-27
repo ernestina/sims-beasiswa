@@ -61,8 +61,8 @@
         <li class="subnav">
             <a href="#">CONFIG</a>
             <ul>
-                <li><a href="<?php echo URL.'#'?>">Database</a></li>
-                <li><a href="<?php echo URL.'#'?>">IP-Server</a></li>
+                <li><a href="<?php echo URL;?>admin/config"">Database</a></li>
+<!--                <li><a href="<?php echo URL.'#'?>">IP-Server</a></li>-->
             </ul>
         </li>
         <li class="subnav">
