@@ -13,3 +13,10 @@ function removeError(id){
     $('#'+id).fadeOut(0);
     $('#'+id).removeClass('error'); 
 }
+
+function cekAngka(val){
+    var angka = /^[0-9]+$/;
+    if (angka.test(val)==false){	  
+        return false;
+    }
+}

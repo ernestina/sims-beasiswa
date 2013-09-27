@@ -49,6 +49,10 @@
             <?php
             $i++;
         }
+        if(empty($this->data)){
+            echo "<tr><td colspan=10>Kontrak tidak ditemukan.</td></tr>";
+        }
         ?>
+            
     </table>
 </div>

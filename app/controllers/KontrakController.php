@@ -54,9 +54,17 @@ class KontrakController extends BaseController {
 
             if ($kontrak->isEmpty($kontrak) == false) {
                 //var_dump($kontrak);
-                $kontrak->add($kontrak);
-                $upload->uploadFile();
-                header('location:' . URL . 'kontrak/display');
+                $validasi = new Validasi();
+                if ($validasi->validate_number($kontrak->jml_pegawai_kontrak) == TRUE) {
+                    $kontrak->add($kontrak);
+                    $upload->uploadFile();
+                    header('location:' . URL . 'kontrak/display');
+                } else {
+                    $url = URL . 'kontrak/rekamKontrak';
+                    header("refresh:1;url=" . $url);
+                    echo "Jumlah pegawai harus diisi angka.";
+                    //header('location:' . URL . 'kontrak/rekamKontrak/');
+                }
             } else {
                 $url = URL . 'kontrak/rekamKontrak';
                 header("refresh:1;url=" . $url);
@@ -71,6 +79,7 @@ class KontrakController extends BaseController {
             $univ = $_POST['univ'];
             $jurusan = new Jurusan($this->registry);
             $data = $jurusan->get_jur_by_univ($univ);
+            echo "<option value=''>Pilih Jurusan</option>";
             foreach ($data as $jur) {
                 if (isset($_POST['jur_def'])) {
                     if ($jur->get_kode_jur() == $_POST['jur_def']) {
@@ -83,7 +92,8 @@ class KontrakController extends BaseController {
                     echo "<option value=" . $jur->get_kode_jur() . ">" . $jur->get_nama() . "</option>\n";
                 }
             }
-        } else {
+        } 
+        else {
             echo "<option value=''>Pilih Jurusan</option>";
         }
     }
@@ -136,7 +146,7 @@ class KontrakController extends BaseController {
                 }
                 header('location:' . URL . 'kontrak/display');
             } else {
-                $url = URL . 'kontrak/editKontrak/'.$kontrak->kd_kontrak;
+                $url = URL . 'kontrak/editKontrak/' . $kontrak->kd_kontrak;
                 header("refresh:1;url=" . $url);
                 echo "Isian form belum lengkap";
                 //header('location:' . URL . 'kontrak/editKontrak/');
@@ -163,7 +173,7 @@ class KontrakController extends BaseController {
         $this->view->load('kontrak/tabel_kontrak');
     }
 
-    public function biaya($id=null) {
+    public function biaya($id = null) {
         if ($id != "") {
             $kontrak = new Kontrak();
             $data = $kontrak->get_by_id($id);
@@ -180,7 +190,6 @@ class KontrakController extends BaseController {
         } else {
             header('location:' . URL . 'kontrak/display');
         }
-       
     }
 
     public function delKontrak($id = null) {
