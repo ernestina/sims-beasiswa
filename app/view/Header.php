@@ -26,8 +26,17 @@
     <body>
        <div id="wrapper">
 			<div id="header">
-				<h1 id="logo"></h1>
+				<div class="kolom1">
+					<img src="./../public/img/logo.png" style="padding-left: 20px; padding-bottom: 10px">
+				</div>
+	
+				<div class="kolom2">
+					<img class="profil" src="./../public/img/pic.jpg" />
+				</div>
 			</div>
+			
+			
+			
         
            <div id="menu">
     <ul>

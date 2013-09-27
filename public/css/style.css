@@ -22,10 +22,11 @@ body {
   background-image:url('../img/bg.png');
 }
 
-#header h1 {
-	background: url('../img/logo-square1.png') top left no-repeat;
-	height: 100px;
-	margin: 0px 0px 0px 20px;
+#header {
+	float: left;
+	width: 100%;
+	margin: 0px 0px 0px 0px;
+	background-color: #ffffff;
 }
 
 #wrapper {
@@ -124,6 +125,15 @@ body {
 	width: 250px;
 	margin: 0px 0px 10px 10px;
 }
+.profil {
+	padding-right: 45px; float: right;
+	height: 75px;
+	
+}
+
+img.profil:hover {
+	background-image:url("../img/home.png");
+	}
 
 .frame {	  
 	  padding: 4px;
