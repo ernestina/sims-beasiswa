@@ -66,14 +66,21 @@ class Bank {
     }
 
     public function addBank(Bank $bank) {
-//        var_dump($bank);
-        $data = array(
+        
+        if ($bank->get_bank_name($bank->get_nama())==1){
+            echo 'data ada';
+        }
+        
+       else 
+            {
+            $data = array(
             'NM_BANK' => $bank->get_nama(),
             'KET_BANK' => $bank->get_keterangan()
-        );
-//       var_dump($data);
-        $database = new Database();
-        $database->insert($this->_table, $data);
+            );
+////       var_dump($data);    
+        $this->_db->insert($this->_table, $data);
+        }
+//        
     }
 
     public function updateBank($data) {
