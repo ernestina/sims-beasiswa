@@ -14,7 +14,7 @@
     <link href="<?php echo URL; ?>public/css/sims.css" rel="stylesheet"-->
         <link href="<?php echo URL; ?>public/css/style.css" rel="stylesheet">
         <link href="<?php echo URL; ?>public/css/dialog.css" rel="stylesheet">
-    <hr>
+    
     <script type="text/javascript">
     $(function(){
        $('#datepicker').datepicker(); 
@@ -31,7 +31,7 @@
 				</div>
 	
 				<div class="kolom2">
-					<img class="profil" src="./../public/img/pic.jpg" />
+					<a href="#"><img class="profil" src="./../public/img/pic.jpg" /></a>
 				</div>
 			</div>
 			
@@ -89,6 +89,9 @@
                 <li><a href="<?php echo URL.'elemenBeasiswa/viewSkripsi';?>">Tunjangan Skripsi/TA/Tesis</a></li>
             </ul>
         </li>
+		<li class="nav">
+			<a class="blok" href="#"><img class="profil" src="./../public/img/pic.jpg" /></a>
+		</li>
     </ul>
 </div>
 			

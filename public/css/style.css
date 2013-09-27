@@ -14,13 +14,24 @@
     src: url("../font/Nexa-Light.otf");
 }
 
-body {
-  width: 1100px;
-  margin: 0px auto;
-  font-family: "Nexa";
-  font-size: 12px;
-  background-image:url('../img/bg.png');
+@font-face {
+    font-family: "Sub";
+    src: url("../font/Novecentowide-Medium.otf");
 }
+
+body {
+	width: 1100px;
+	margin: 0px auto;
+	font-family: "Nexa";
+	font-size: 12px;
+	background-image:url('../img/bg.png');
+}
+
+h2, legend {
+	font-family: "Sub";
+	font-size: 24px;
+}
+
 
 #header {
 	float: left;
@@ -35,6 +46,7 @@ body {
 	background-color: #ffffff;
 	padding: 20px 0px 20px 0px;
 	box-shadow: #aaa 2px 2px 10px 1px;
+	min-height: 620px;
 	}
 
 #fitur {
@@ -42,22 +54,13 @@ body {
 	width: 100%;
 	margin: 20px 0px 0px 0px;
 }	
-/*
-#nav {
-	text-align: right;
-	padding: 10px;
-	margin: 10px 0px 10px 0px;
-	background-color: red;
-	font-family: "Nexa";
-}
-*/
+
 #top {
-	padding: 20px 20px 0px 20px;
+	padding: 0px 20px 0px 20px;
 }
 
 /*Dropdown menu*/
 #menu {
-	
 	padding: 0; margin: 0; 
 	background: #333;
 	border-bottom: 4px solid #49afcd;
@@ -126,12 +129,17 @@ body {
 	margin: 0px 0px 10px 10px;
 }
 .profil {
-	padding-right: 45px; float: right;
-	height: 75px;
-	
+	padding-right: 0px; float: right;
+	height: 45px;
+	border: 2px solid #49afcd;
+	margin: 0px 0px 0px 70px;
+}
+.blok {
+	width: 100px;
+	background-color: #49afcd;
 }
 
-img.profil:hover {
+.profil a img:hover {
 	background-image:url("../img/home.png");
 	}
 
@@ -357,7 +365,7 @@ table {
 .scroll {
 	display: block;
 	border: 1px;
-	height: 400px;
+	height: 370px;
 	overflow-y: scroll;
 }
 
