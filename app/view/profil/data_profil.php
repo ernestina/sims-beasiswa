@@ -6,69 +6,69 @@
 	<h1>PROFIL PENERIMA BEASISWA</h1>
 	<fieldset><legend>Profil Penerima Beasiswa</legend>
 		<div class="foto">
-			<img class="frame" src="../../public/img/home.png" width="185" height="220">
+			<img class="frame" src="../../public/img/<?php echo $this->d_pb->get_foto();?>" width="185" height="220">
 			</div>
 		<form action="#" method="post">
 			<label class="isian">NIP :</label>
-			<input class="utama" type="text" id="NIP" name="NIP" disabled />
+			<input class="utama" type="text" id="NIP" name="NIP" disabled value="<?php echo $this->d_pb->get_nip();?>"/>
 			
 			<label class="isian">Nama :</label>
-			<input class="utama" type="text" id="nama" name="nama" disabled />
+			<input class="utama" type="text" id="nama" name="nama" disabled  value="<?php echo $this->d_pb->get_nama();?>"/>
 
 			<label class="isian">Jenis Kelamin :</label>
-			<input class="utama" type="text" id="jenis_kelamin" name="jenis_kelamin" disabled />
+			<input class="utama" type="text" id="jenis_kelamin" name="jenis_kelamin" disabled  value="<?php echo ($this->d_pb->get_jkel()==1)?'Laki-laki':'Perempuan';?>"/>
 			
 			<label class="isian">Pangkat/Gol :</label>
-			<input class="utama" type="text" id="pangkat" name="pangkat" disabled />
+                        <input class="utama" type="text" id="pangkat" name="pangkat" disabled  value="<?php echo Golongan::golongan_int_string($this->d_pb->get_gol());?>"/>
 			
 			<label class="isian">Unit Asal :</label>
-			<input class="utama" type="text" id="asal" name="asal" disabled />
+			<input class="utama" type="text" id="asal" name="asal" disabled  value="<?php echo $this->d_pb->get_unit_asal();?>"/>
 			
 			<label class="isian">Alamat :</label>
-			<textarea class="utama" type="text" id="alamat" name="alamat" disabled /></textarea>
+			<textarea class="utama" type="text" id="alamat" name="alamat" disabled /> <?php echo $this->d_pb->get_alamat();?></textarea>
 			
 			<label class="isian">Email :</label>
-			<input class="utama" type="email" id="email" name="email" disabled />
+			<input class="utama" type="email" id="email" name="email" disabled  value="<?php echo $this->d_pb->get_email();?>"/>
 			
 			<label class="isian">No. HP :</label>
-			<input class="utama" type="text" id="hp" name="hp" disabled />
+			<input class="utama" type="text" id="hp" name="hp" disabled  value="<?php echo $this->d_pb->get_telp();?>"/>
 			
 			<label class="isian">Bank Penerima</label>
-			<input class="utama" type="text" id="bank" name="bank" disabled />
+			<input class="utama" type="text" id="bank" name="bank" disabled  value="<?php echo $this->d_bank->get_nama();?>"/>
 			
 			<label class="isian">No Rekening</label>
-			<input class="utama" type="text" id="rekening" name="rekening" disabled />
+			<input class="utama" type="text" id="rekening" name="rekening" disabled  value="<?php echo $this->d_pb->get_no_rek();?>"/>
 	</fieldset>
 	
 	<!--level2: Profil Beasiswa & Riwayat Pembayaran-->
 	<div class="kolom1">
 		<fieldset><legend>Profil Beasiswa</legend>
 			<label class="isian">No. Surat Tugas (ST) :</label>
-			<input type="text" id="st" name="st" disabled />
+			<input type="text" id="st" name="st" disabled  value="<?php echo $this->d_st->get_nomor();?>"/>
 			
 			<label class="isian">Tanggal ST :</label>
-			<input type="text" id="tgl_st" name="tanggal_st" disabled />
+                        <input type="text" id="tgl_st" name="tanggal_st" disabled value="<?php echo Tanggal::tgl_indo($this->d_st->get_tgl_st());?>"/>
 
 			<label class="isian">Tanggal Mulai ST :</label>
-			<input type="text" id="tgl_mulai_st" name="tgl_mulai_st" disabled />
+			<input type="text" id="tgl_mulai_st" name="tgl_mulai_st" disabled value="<?php echo Tanggal::tgl_indo($this->d_st->get_tgl_mulai());?>"/>
 			
 			<label class="isian">Tanggal Akhir ST :</label>
-			<input type="text" id="tgl_akhir_st" name="tgl_akhir_st" disabled />
+			<input type="text" id="tgl_akhir_st" name="tgl_akhir_st" disabled value="<?php echo Tanggal::tgl_indo($this->d_st->get_tgl_selesai());?>"/>
 			
 			<label class="isian">Jenis Beasiswa :</label>
-			<input type="text" id="jenis_beasiswa" name="jenis_beasiswa" disabled />
+			<input type="text" id="jenis_beasiswa" name="jenis_beasiswa" disabled value="<?php echo $this->d_st->get_nomor();?>"/>
 			
 			<label class="isian">Universitas :</label>
-			<input type="text" id="universitas" name="universitas" disabled />
+			<input type="text" id="universitas" name="universitas" disabled value="<?php echo $this->d_univ->get_nama();?>"/>
 			
 			<label class="isian">Jurusan :</label>
-			<input type="text" id="jurusan" name="jurusan"disabled />
+			<input type="text" id="jurusan" name="jurusan"disabled value="<?php echo $this->d_jur->get_nama();?>"/>
 			
 			<label class="isian">Tahun Masuk :</label>
-			<input type="text" id="th_masuk" name="th_masuk" disabled />
+			<input type="text" id="th_masuk" name="th_masuk" disabled value="<?php echo $this->d_st->get_th_masuk();?>"/>
 			
 			<label class="isian">Status Tugas Belajar (TB) :</label>
-			<input type="text" id="status_tb" name="status_tb" disabled />
+                        <input type="text" id="status_tb" name="status_tb" disabled value="<?php echo StatusPB::status_int_string($this->d_pb->get_status());?>"/>
 			<!--row berikut hanya muncul jika status TB: lulus dan/atau tidak lulus -->
 			
 			<label class="isian">Tanggal Akhir TB :</label>
@@ -126,45 +126,19 @@
 		<div class="kolom5">
 		
 			<label class="isian2">Judul Skripsi :</label>
-			<textarea class="midi" type="text"></textarea>
+			<textarea class="midi" type="text"><?php echo $this->d_pb->get_skripsi();?></textarea>
 			<label class="isian2">Permasalahan Tugas Belajar :</label>
 			<textarea class="midi" type="text" rows="8"></textarea>
 			
 		</div>
 		
 			<label class="isian">IPK :</label>
-			<input type="text" id="IPK" name="IPK" />
+			<input type="text" id="IPK" name="IPK" value="<?php echo $this->d_cur_ipk->get_ipk()/100;?>"/>
 			
 			<label class="isian">Unggah Transkrip:</label>
-			<ul class="inline">
-				<li><input type="file" id="IPK" name="fileipk" style="display: none" onChange="IPKchange();"/>
-				<input class="unggah" type="text" id="namafileipk" disabled /></li>
-				<li><input type="button" value="Pilih..." id="fakeBrowse" onclick="Pilih();"/>
-				</li>
-			</ul>
-			
-			<table class="table-bordered zebra">
-				<thead>
-					<th>No</th>
-					<th>Keterangan</th>
-					<th>IP</th>
-					<th>File</th>
-				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td><input class="keterangan" type="text" id="ket" name="ket" /></td>
-						<td><input class="mini" type="text" id="IP" name="IP" /></td>
-						<td><input type="button" value="Pilih..." id="uplod_ip" name="uplod_ip" /></td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td><input class="keterangan" type="text" id="ket" name="ket" /></td>
-						<td><input class="mini" type="text" id="IP" name="IP" /></td>
-						<td><input type="button" value="Pilih..." id="uplod_ip" name="uplod_ip" /></td>
-					</tr>
-				</tbody>
-			</table>
+			<?php 
+                            $this->load("profil/tabel_nilai");
+                        ?>
 		
 		</fieldset>
 	</div>

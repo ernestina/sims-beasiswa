@@ -12,10 +12,36 @@ class PenerimaController extends BaseController{
     }
     
     public function profil($id=null){
-        $pb = new Penerima($this->registry);
+        $pb = new Penerima($this->registry); //mendapatkan informasi pb
+        $st = new SuratTugas($this->registry); //mendapatkan informasi surat tugas
+        $el = new ElemenBeasiswa($this->registry); //mendapatkan pembayaran
+        $bank = new Bank($this->registry); //mendapatkan nama bank
+        $jst = new JenisSuratTugas($this->registry); //mendapatkan jenis surat tugas
+        $jur = new Jurusan($this->registry);
+//        $fakul = new Fakultas($this->registry);
+        $univ = new Universitas($this->registry);
+        $nilai = new Nilai($this->registry);
         if(!is_null($id)){
             $pb->set_kd_pb($id);
             $this->view->d_pb = $pb->get_penerima_by_id($pb);
+//            var_dump($this->view->d_pb);
+            $st->set_kd_st($this->view->d_pb->get_st());
+            $this->view->d_st = $st->get_surat_tugas_by_id($st);
+//            var_dump($this->view->d_st);
+            $this->view->d_bank = $bank->get_bank_id($this->view->d_pb->get_bank());
+//            var_dump($this->view->d_bank);
+            $jur->set_kode_jur($this->view->d_pb->get_jur());
+            $this->view->d_jur = $jur->get_jur_by_id($jur);
+//            var_dump($this->view->d_jur);
+            $jst->set_kode($this->view->d_st->get_jenis_st());
+            $this->view->d_jst = $jst->get_jst_by_id($jst);
+//            var_dump($this->view->d_jst);
+//            $fakul->set_kode_fakul($this->view->d_jur->get_kode_fakul());
+//            $fakul->get_fakul_by_id($fakul);
+//            $univ->set_kode_in($fakul->get_kode_univ());
+            $this->view->d_univ = $univ->get_univ_by_jur($this->view->d_jur->get_kode_jur());
+            $this->view->d_nil = $nilai->get_nilai($pb);
+            $this->view->d_cur_ipk = $nilai->get_current_ipk($pb);
         }
         
         $this->view->render('profil/data_profil');
