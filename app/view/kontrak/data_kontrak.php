@@ -1,10 +1,11 @@
-<div>
-    DATA KONTRAK KERJASAMA
-</div>
-<div>
-    <div>
-        <label>Universitas</label>
-        <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/display' ?>">
+<div id="top">
+    <h2>DATA KONTRAK KERJASAMA</h2>
+	
+	<table width=100% style="margin-left: 0px">
+				<tr>
+					<td width="95px" ><label >Pilih Universitas :</label></td>
+					<td style="padding-top:15px;">
+						<form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/display' ?>">
 <!--            <input type="hidden" name="pilih_univ">-->
             <select name="universitas" id="univ">
                 <option value="0">Semua</option>
@@ -20,9 +21,19 @@
                 <?php } ?>
             </select>
 <!--            <input type="button" value="SUBMIT">-->
-    </div>
-    <div><input type="button" value="TAMBAH" onClick="location.href='<?php echo URL . 'kontrak/rekamKontrak'; ?>'"></div>
-</form>
+					
+					</td>
+				
+				<td><input type="button" value="TAMBAH" onClick="location.href='<?php echo URL . 'kontrak/rekamKontrak'; ?>'"style="margin-top:0px; margin-right: -8px"><!--View file SKL-->
+				</form>
+				</td>
+				</tr>
+			</table>
+
+     
+        
+    
+
 </div>
 <div id="tb_kontrak">
    

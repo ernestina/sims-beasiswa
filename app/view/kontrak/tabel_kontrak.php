@@ -1,16 +1,16 @@
 <div id="table-content" >
     <table class="table-bordered zebra scroll" id="table">
         <thead>
-        <th>No</th>
-        <th>No. Kontrak</th>
-        <th>Tgl. Kontrak</th>
-        <th>Jurusan</th>
-        <th>Tahun Masuk</th>
-        <th>Jml Pegawai</th>
-        <th>Lama Semester</th>
-        <th>Nilai Kontrak</th>
-        <th>Jumlah dibayarkan</th>
-        <th>Aksi</th>
+        <th width="5%">No</th>
+        <th width="10%">No. Kontrak</th>
+        <th width="10%">Tgl. Kontrak</th>
+        <th width="10%">Jurusan</th>
+        <th width="10%">Tahun Masuk</th>
+        <th width="10%">Jml Pegawai</th>
+        <th width="10%">Lama Semester</th>
+        <th width="10%">Nilai Kontrak</th>
+        <th width="10%">Jumlah dibayarkan</th>
+        <th width="10%">Aksi</th>
         </thead>
         <?php
         $i = 1;

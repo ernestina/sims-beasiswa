@@ -1,7 +1,8 @@
-<div id="form"> <!-- FORM -->
-    <h2>DATA SURAT TUGAS</h2></div>
+<div id="top"> <!-- FORM -->
+    <h2>DATA SURAT TUGAS</h2>
     <div class="kolom3">
         <fieldset><legend>Tambah Surat Tugas</legend>
+		<div class="kiri">
         <form method="POST" action="<?php 
                 if(isset($this->d_ubah)){
                     echo URL.'surattugas/updst';
@@ -9,61 +10,61 @@
                     $_SERVER['PHP_SELF'];
                 }?>" enctype="multipart/form-data">
             <div id="wnost" class="error"></div>
-            <label>no. Surat Tugas(ST)</label><input type="text" name="no_st" id="no_st" size="30" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nomor():'';?>"></br>
+            <label>no. Surat Tugas(ST)</label><input type="text" name="no_st" id="no_st" size="30" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nomor():'';?>">
             <div id="wstlama" class="error"></div>
-            <label>No. ST Lama</label><select name="st_lama" id="st_lama">
+            <label>No. ST Lama</label><select name="st_lama" id="st_lama" type="text">
                 <?php 
                     foreach($this->d_st_lama as $val){
                         echo "<option value=".$val->get_kd_st().">".$val->get_nomor()." [".$val->get_jur()."]</option>";
                     }
                 ?>
-            </select></br>
+            </select>
             <div id="wjenis" class="error"></div>
-            <label>jenis ST</label><select name="jns_st" id="jenis">
+            <label>jenis ST</label><select name="jns_st" id="jenis" type="text">
                 <?php 
                     foreach($this->d_jst as $val){
                         echo "<option value=".$val->get_kode().">".$val->get_nama()."</option>";
                     }
                 ?>
-            </select></br>
+            </select>
             <div id="wtglst" class="error"></div>
-            <label>Tanggal ST</label><input type="text" name="tgl_st" id="datepicker" value="<?php echo Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly></br>
+            <label>Tanggal ST</label><input type="text" name="tgl_st" id="datepicker" value="<?php echo Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly>
             <div id="wtglmulai" class="error"></div>
-            <label>Tanggal Mulai ST</label><input type="text" name="tgl_mulai" id="datepicker1"  value="<?php echo Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly></br>
+            <label>Tanggal Mulai ST</label><input type="text" name="tgl_mulai" id="datepicker1"  value="<?php echo Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly>
             <div id="wtglselesai" class="error"></div>
-            <label>Tanggal Selesai ST</label><input type="text" name="tgl_selesai" id="datepicker2"  value="<?php echo Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly></br>
+            <label>Tanggal Selesai ST</label><input type="text" name="tgl_selesai" id="datepicker2"  value="<?php echo Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly>
             <div id="wpemberi" class="error"></div>
-            <label>Pemberi Beasiswa</label><select name="pemb" id="pemberi">
+            <label>Pemberi Beasiswa</label><select name="pemb" id="pemberi" type="text">
                 <?php 
                     foreach($this->d_pemb as $val){
                         echo "<option value=".$val->kd_pemberi.">".$val->nama_pemberi."</option>";
                     }
                 ?>
-            </select></br>
+            </select>
             <div id="wuniv"  class="error"></div>
-            <label>Universitas</label><select name="univ" id="univ" onchange="get_jurusan(this.value)">
+            <label>Universitas</label><select name="univ" id="univ" onchange="get_jurusan(this.value)" type="text">
                 <?php 
                     foreach($this->d_univ as $val){
                         echo "<option value=".$val->get_kode_in().">".$val->get_nama()."</option>";
                     }
                 ?>
-            </select></br>
+            </select>
             <div id="wjurusan" class="error"></div>
-            <label>Jurusan/Prodi</label><select name="jur" id="jur">
+            <label>Jurusan/Prodi</label><select name="jur" id="jur" type="text">
                 <?php 
                     foreach($this->d_jur as $val){
                         echo "<option value=".$val->get_kode_jur().">".$val->get_nama()." [".$val->get_kode_fakul()."]</option>";
                     }
                 ?>
-            </select></br>
+            </select>
             <div id="wthnmasuk" class="error"></div>
-            <label>Tahun Masuk</label><select name="th_masuk" id="th_masuk">
+            <label>Tahun Masuk</label><select name="th_masuk" id="th_masuk" type="text">
                 <?php
                     foreach ($this->d_th_masuk as $key=>$val){
                         echo "<option value=".$key.">".$val."</option>";
                     }
                 ?>
-            </select></br>
+            </select>
             <div id="wfile" class="error"></div>
             <label>Unggah ST</label><input type="file" name="fupload" id="file">
             <ul class="inline tengah">
@@ -72,6 +73,7 @@
 		</ul>
 <!--            <label></label><input type="reset" value="RESET"><input type="submit" name="<?php echo isset($this->d_ubah)?'sb_upd':'sb_add';?>" value="SIMPAN" onClick="return cek();">-->
         </form>
+		</div>
             </fieldset>
     </div>
 <div class="kolom4"> <!-- TABEL DATA -->
@@ -81,7 +83,7 @@
     <div>
         <table>
             <tr align="left">
-                <td><label>Universitas</label><select id="univ" onchange="get_surat_tugas(this.value,document.getElementById('thn').value)">
+                <td><label>Universitas</label><select id="univ" onchange="get_surat_tugas(this.value,document.getElementById('thn').value)" type="text">
                         <option value=0>semua</option>
                     <?php 
                         foreach($this->d_univ as $val){
@@ -89,7 +91,7 @@
                         }
                     ?>
                     </select></td>
-                <td><label>Tahun Masuk</label><select id="thn" onchange="get_surat_tugas(document.getElementById('univ').value,this.value)">
+                <td><label>Tahun Masuk</label><select id="thn" onchange="get_surat_tugas(document.getElementById('univ').value,this.value)" type="text">
                         <option value=0>semua</option>
                         <?php
                             foreach ($this->d_th_masuk as $key=>$val){
@@ -107,6 +109,7 @@
         ?>
     </div>
             </fieldset>
+</div>
 </div>
 
 

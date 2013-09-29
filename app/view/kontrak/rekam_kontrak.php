@@ -1,13 +1,15 @@
-<div>
-    DATA KONTRAK KERJASAMA > TAMBAH <!-- pake breadcrumb-->
-</div>
+<div id="top">
+    <h2><a href="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/display' ?>">DATA KONTRAK KERJASAMA</a> > TAMBAH</h2> <!-- pake breadcrumb-->
+
 <div class="kolom3" id="div_rekam">
+<fieldset><legend>Rekam Kontrak</legend>
+	<div class="kiri">
     <form method="POST" enctype="multipart/form-data" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/rekamKontrak' ?>">
         <input type="hidden" name="rekam_kontrak">
         <label>Nomor </label><input type="text" name="nomor" id="nomor" size="30">
-        <div id="wnomor"></div></br>
+        <div id="wnomor"></div>
         <label>Tanggal </label><input type="text" name="tanggal" id="tanggal" size="30" readonly="readonly">
-        <div id="wtanggal"></div></br>
+        <div id="wtanggal"></div>
         <label>Universitas </label><select name="univ" id="univ">
             <option value="" select>Pilih Universitas</option>
             <?php
@@ -15,12 +17,12 @@
                 ?>
                 <option value="<?php echo $univ->get_kode_in(); ?>"><?php echo $univ->get_nama(); ?></option>
             <?php } ?>
-        </select><div id="wuniv"></div></br>
+        </select><div id="wuniv"></div>
         <label>Jurusan </label><select name="jur" id="jur">
             <option value="">Pilih Jurusan</option>
-        </select><div id="wjur"></div></br>
+        </select><div id="wjur"></div>
         <label>Jumlah Pegawai</label><input type="text" name="jml_peg" id="jml_peg" size="4">
-        <div id="wjml_peg"></div></br>
+        <div id="wjml_peg"></div>
         <label>Lama Semester</label><select id="lama_semester" name="lama_semester">
             <option value="">Pilih Lama Semester</option>
             <?php
@@ -29,7 +31,7 @@
                 <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
             <?php } ?>
         </select><div id="wlama_semester"></div>
-        </br>
+        
         <label>Tahun Masuk</label><select name="tahun_masuk" id="tahun_masuk">
             <option value="">Pilih Tahun Masuk</option>
             <?php
@@ -38,7 +40,7 @@
                 <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
             <?php } ?>
         </select><div id="wtahun_masuk"></div>
-        </select></br>
+        </select>
         <label>Kontrak Lama </label><select name="kontrak_lama" id="kontrak_lama">
             <option value="">Pilih Kontrak Lama</option>
             <?php
@@ -48,15 +50,17 @@
             <?php } ?>
         </select><div id="wkontrak_lama"></div>
         <label>File Kontrak </label><input type="file" name="fupload" id="fupload">
-        <div id="wfupload"></div></br>
+        <div id="wfupload"></div>
 
         <ul class="inline tengah">
             <li><input type="reset" class="normal" value="BATAL" onClick="location.href='<?php echo URL . 'kontrak/display'; ?>'"></li>
             <li><input type="submit" class="sukses" name="sb_rekam" id="sb_rekam" value="SIMPAN" onClick="return cek();"></li>
         </ul>
 
-
+		</div>
     </form>
+	</fieldset>
+</div>
 </div>
 
 <script>

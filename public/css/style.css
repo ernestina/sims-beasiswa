@@ -362,6 +362,10 @@ table {
   
 }
 
+table.fix {
+	margin-left: 0px;
+}
+
 .scroll {
 	display: block;
 	border: 1px;
