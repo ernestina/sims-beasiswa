@@ -55,7 +55,7 @@ class Bank {
     }
 
     public function get_bank_name($nama) {
-        $sql = "SELECT * FROM " . $this->_table . " WHERE NM_BANK = '".$nama."'";
+        $sql = "SELECT * FROM " . $this->_table . " WHERE NM_BANK = '" . $nama . "'";
 
         $result = $this->_db->select($sql);
 
@@ -66,31 +66,33 @@ class Bank {
     }
 
     public function addBank(Bank $bank) {
-        
-        if ($bank->get_bank_name($bank->get_nama())==1){
-            echo 'data ada';
-        }
-        
-       else 
-            {
+
+        if ($bank->get_bank_name($bank->get_nama()) == 1) {
+            echo 'data telah ada di dalam database';
+        } else {
             $data = array(
-            'NM_BANK' => $bank->get_nama(),
-            'KET_BANK' => $bank->get_keterangan()
+                'NM_BANK' => $bank->get_nama(),
+                'KET_BANK' => $bank->get_keterangan()
             );
 ////       var_dump($data);    
-        $this->_db->insert($this->_table, $data);
+            $this->_db->insert($this->_table, $data);
         }
 //        
     }
 
     public function updateBank($data) {
 
-//        print_r($bank);
-//        var_dump($data);
-
-        $where = 'KD_BANK =' . $data['KD_BANK'];
+        if ($data['NM_BANK'] == "") {
+            echo 'nama bank kosong';
+        } else {
+            if ($this->get_bank_name($data['NM_BANK']) == 1) {
+                echo 'nama bank telah ada di dalam database';
+            } else {
+                $where = 'KD_BANK =' . $data['KD_BANK'];
 //        print_r($data['id']);
-        $this->_db->update($this->_table, $data, $where);
+                $this->_db->update($this->_table, $data, $where);
+            }
+        }
     }
 
     public function deleteBank() {
