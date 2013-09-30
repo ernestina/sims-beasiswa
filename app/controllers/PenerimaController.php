@@ -21,6 +21,7 @@ class PenerimaController extends BaseController{
 //        $fakul = new Fakultas($this->registry);
         $univ = new Universitas($this->registry);
         $nilai = new Nilai($this->registry);
+        $cuti = new Cuti($this->registry);
         if(!is_null($id)){
             $pb->set_kd_pb($id);
             $this->view->d_pb = $pb->get_penerima_by_id($pb);
@@ -42,6 +43,8 @@ class PenerimaController extends BaseController{
             $this->view->d_univ = $univ->get_univ_by_jur($this->view->d_jur->get_kode_jur());
             $this->view->d_nil = $nilai->get_nilai($pb);
             $this->view->d_cur_ipk = $nilai->get_current_ipk($pb);
+            $this->view->d_cuti = $cuti->get_cuti($pb);
+            $this->view->d_rwt_beas = $pb->get_penerima_by_nip($pb,true);
         }
         
         $this->view->render('profil/data_profil');

@@ -43,13 +43,13 @@
             <?php 
                         foreach ($this->strata as $val){
                             if(isset($this->d_ubah)){
-                                if($val->get_kode_fakul()==$this->d_ubah->get_kode_fakul()){
+                                if($val->kd_strata==$this->d_ubah->get_kode_strata()){
                                     echo "<option value=".$val->kd_strata." selected>[".$val->kode_strata."] ".$val->nama_strata."</option>";
                                 }else{
                                     echo "<option value=".$val->kd_strata." >[".$val->kode_strata."] ".$val->nama_strata."</option>";
                                 }
                             }elseif(isset($this->d_rekam)){
-                                if($val->get_kode_fakul()==$this->d_rekam->get_kode_fakul()){
+                                if($val->kd_strata==$this->d_rekam->get_kode_strata()){
                                     echo "<option value=".$val->kd_strata." selected>[".$val->kode_strata."] ".$val->nama_strata."</option>";
                                 }else{
                                     echo "<option value=".$val->kd_strata." >[".$val->kode_strata."] ".$val->nama_strata."</option>";

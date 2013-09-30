@@ -39,10 +39,10 @@
         </select></br>-->
         <div id="wpic" class="error"></div>
         <label>PIC</label><select type="text" id="pic" name="pic">
-            <?php 
+            <?php   
                     foreach ($this->pic as $val){
                         if(isset($this->d_ubah)){
-                            if($val->get_id()==$this->d_ubah->get_id()){
+                            if($val->get_id()==$this->d_ubah->get_pic()){
                                 echo "<option value=".$val->get_id()." selected>".$val->get_nmUser()."</option>";
                             }else{
                                 echo "<option value=".$val->get_id()." >".$val->get_nmUser()."</option>";

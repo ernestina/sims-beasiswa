@@ -146,23 +146,9 @@
 <div id="fitur">
 	<fieldset><legend>Riwayat Cuti</legend>
 		
-		<table class="table-bordered zebra" style="display: block">
-				<thead>
-					<th>No</th>
-					<th width="100">No. Surat Cuti</th>
-					<th width="150">Tanggal Surat Cuti</th>
-					<th width="150">Periode Awal Cuti</th>
-					<th width="150">Periode Akhir Cuti</th>
-					<th width="200">Jenis Cuti</th>
-					<th width="100">File</th>
-				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td>1</td>
-					</tr>
-				</tbody>
-		</table>
+		<?php 
+                    $this->load('profil/tabel_cuti');
+                ?>
 		
 	</fieldset>
 </div> <!--div level 4-->
@@ -182,15 +168,21 @@
 					<th width="200">Status TB</th>
 				</thead>
 				<tbody>
+                                    <?php $no=1;
+                                        foreach($this->d_rwt_beas as $v){
+                                    ?>
 					<tr>
-						<td>1</td>
-						<td>1</td>
-						<td>1</td>
-						<td>1</td>
-						<td>1</td>
-						<td>1</td>
-						<td>Lulus dengan perpanjangan 2</td>
+						<td><?php echo $no;?></td>
+						<td><?php echo $v->get_st();?></td>
+						<td><?php // echo $v->get_strata();?></td>
+						<td><?php // echo $v->get_univ();?></td>
+						<td><?php echo $v->get_jur();?></td>
+						<td><?php // echo $v->get_th_masuk();?></td>
+						<td><?php echo $v->get_status();?></td>
 					</tr>
+                                        <?php 
+                                        $no++;
+                                        } ?>
 				</tbody>
 		</table>
 		
