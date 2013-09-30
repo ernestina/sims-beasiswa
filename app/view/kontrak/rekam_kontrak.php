@@ -41,7 +41,7 @@
             <?php } ?>
         </select><div id="wtahun_masuk"></div>
         </select>
-        <label>Nilai kontrak </label><input type="text" name="nilai_kontrak" id="nilai_kontrak" size="30">
+        <label>Nilai kontrak </label><input type="text" name="nilai_kontrak" id="nilai_kontrak" maxlength="14">
         <div id="wnilai_kontrak"></div>
         <label>Kontrak Lama </label><select name="kontrak_lama" id="kontrak_lama">
             <option value="">Pilih Kontrak Lama</option>

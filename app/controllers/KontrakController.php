@@ -43,7 +43,7 @@ class KontrakController extends BaseController {
             $kontrak->tgl_kontrak = date('Y-m-d', strtotime($_POST['tanggal']));
             $kontrak->thn_masuk_kontrak = $_POST['tahun_masuk'];
             $kontrak->jml_pegawai_kontrak = $_POST['jml_peg'];
-            $kontrak->nilai_kontrak = (int)str_replace(',', '', $_POST['nilai_kontrak']); 
+            $kontrak->nilai_kontrak = str_replace(',', '', $_POST['nilai_kontrak']); 
             $kontrak->lama_semester_kontrak = $_POST['lama_semester'];
             $kontrak->kontrak_lama = $_POST['kontrak_lama'];
 
@@ -53,7 +53,7 @@ class KontrakController extends BaseController {
             $nama = array($kontrak->no_kontrak, $kontrak->tgl_kontrak);
             $upload->changeFileName($upload->getFileName(), $nama);
             $kontrak->file_kontrak = $upload->getFileTo();
-            var_dump($kontrak);
+            //var_dump($kontrak);
 
             if ($kontrak->isEmpty($kontrak) == false) {
                 //var_dump($kontrak);
@@ -135,12 +135,14 @@ class KontrakController extends BaseController {
             $kontrak->thn_masuk_kontrak = $_POST['tahun_masuk'];
             $kontrak->jml_pegawai_kontrak = $_POST['jml_peg'];
             $kontrak->lama_semester_kontrak = $_POST['lama_semester'];
-            $kontrak->nilai_kontrak = (int)str_replace(',', '', $_POST['nilai_kontrak']);
+            $kontrak->nilai_kontrak = str_replace(',', '', $_POST['nilai_kontrak']);
             $kontrak->kontrak_lama = $_POST['kontrak_lama'];
 
             $upload = new Upload();
             $upload->init('fupload');
-
+            
+            //var_dump($kontrak);
+            
             if ($upload->getFileName() != "") {
                 $upload->setDirTo('files/');
                 $nama = array($kontrak->no_kontrak, $kontrak->tgl_kontrak);

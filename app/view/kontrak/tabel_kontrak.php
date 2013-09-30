@@ -48,7 +48,7 @@
                 <td><?php echo $val->thn_masuk_kontrak; ?></td>
                 <td><?php echo $val->jml_pegawai_kontrak; ?></td>
                 <td><?php echo $val->lama_semester_kontrak; ?></td>
-                <td><?php echo number_format($val->nilai_kontrak) ?></td>
+                <td><?php echo number_format($val->nilai_kontrak); ?></td>
                 <td><?php ?></td>
                 <td><?php
                  echo "<a href=" . URL . "kontrak/delKontrak/" . $val->kd_kontrak . ">X</a>|

@@ -12,8 +12,8 @@ $kontrak_lama = $this->kontrak->get_by_id($this->data->kontrak_lama);
         <label>Program Studi</label><input type="text" size="70" readonly value="<?php echo $this->jurusan->get_nama() . " " . $this->univ->get_nama() . " " . $this->data->thn_masuk_kontrak; ?>"></br>
         <label>Jumlah Pegawai</label><input type="text" size="4" readonly value="<?php echo $this->data->jml_pegawai_kontrak; ?>"></br>
         <label>Lama Semester</label><input type="text" size="4" readonly value="<?php echo $this->data->lama_semester_kontrak; ?>"></br>
-        <label>Total Biaya</label><input type="text" size="14" readonly></br>
-        <label>Kontrak Lama</label><input type="text" size="40" readonly value="<?php if ($kontrak_lama != false) echo $kontrak_lama->no_kontrak; ?>"></br>
+        <label>Total Biaya</label><input type="text" size="14" readonly value="<?php echo number_format($this->data->nilai_kontrak); ?>"></br>
+        <label>Kontrak Lama</label><input type="text" size="40" readonly value="<?php if ($kontrak_lama != false) {echo $kontrak_lama->no_kontrak;}else {echo "-";} ?>"></br>
     </div>
     <div><input type="button" value="TAMBAH" onClick="location.href='<?php echo URL . 'kontrak/rekambiaya/' .$this->data->kd_kontrak; ?>'"</div>
 </div>
