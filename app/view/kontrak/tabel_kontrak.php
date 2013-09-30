@@ -18,7 +18,18 @@
             ?>
             <tr>
                 <td><?php echo $i; ?></td>
-                <td><?php echo $val->no_kontrak; ?></td>
+                <td>
+                    <a href="<?php echo URL . "kontrak/file/" . $val->file_kontrak; ?>" target="_blank"><?php echo $val->no_kontrak; ?></a>
+                    <?php $kontrak_lama = $this->kontrak->get_by_id($val->kontrak_lama);
+                    //var_dump($kontrak_lama);
+                    if($kontrak_lama != false){
+                        echo "<br /> (Amandemen: "; ?>
+                        <a href="<?php echo URL . "kontrak/file/" . $kontrak_lama->file_kontrak; ?>" target="_blank"><?php echo $kontrak_lama->no_kontrak; ?></a>
+                        <?php
+                        echo " )";
+                    }
+                    ?>
+                </td>
                 <td><?php 
                 echo $val->tgl_kontrak; 
                 ?></td>

@@ -44,6 +44,7 @@ class KontrakController extends BaseController {
             $kontrak->thn_masuk_kontrak = $_POST['tahun_masuk'];
             $kontrak->jml_pegawai_kontrak = $_POST['jml_peg'];
             $kontrak->lama_semester_kontrak = $_POST['lama_semester'];
+            $kontrak->kontrak_lama = $_POST['kontrak_lama'];
 
             $upload = new Upload();
             $upload->init('fupload');
@@ -54,8 +55,8 @@ class KontrakController extends BaseController {
 
             if ($kontrak->isEmpty($kontrak) == false) {
                 //var_dump($kontrak);
-                $validasi = new Validasi();
-                if ($validasi->validate_number($kontrak->jml_pegawai_kontrak) == TRUE) {
+                //$validasi = new Validasi();
+                if (Validasi::validate_number($kontrak->jml_pegawai_kontrak) == TRUE) {
                     $kontrak->add($kontrak);
                     $upload->uploadFile();
                     header('location:' . URL . 'kontrak/display');
@@ -92,8 +93,7 @@ class KontrakController extends BaseController {
                     echo "<option value=" . $jur->get_kode_jur() . ">" . $jur->get_nama() . "</option>\n";
                 }
             }
-        } 
-        else {
+        } else {
             echo "<option value=''>Pilih Jurusan</option>";
         }
     }
@@ -106,8 +106,10 @@ class KontrakController extends BaseController {
             $universitas = new Universitas($this->registry);
             $this->view->universitas = $universitas;
             $univ = $universitas->get_univ();
+            $kon = $kontrak->get_All();
             $this->view->univ = $univ;
             $this->view->data = $data;
+            $this->view->kon = $kon;
             $this->view->render('kontrak/edit_kontrak');
         } else {
             header('location:' . URL . 'kontrak/display');
@@ -124,17 +126,19 @@ class KontrakController extends BaseController {
             $kontrak->thn_masuk_kontrak = $_POST['tahun_masuk'];
             $kontrak->jml_pegawai_kontrak = $_POST['jml_peg'];
             $kontrak->lama_semester_kontrak = $_POST['lama_semester'];
+            $kontrak->kontrak_lama = $_POST['kontrak_lama'];
 
             $upload = new Upload();
             $upload->init('fupload');
-            $upload->setDirTo('files/');
-            $nama = array($kontrak->no_kontrak, $kontrak->tgl_kontrak);
-            $upload->changeFileName($upload->getFileName(), $nama);
-            $file_baru = $upload->getFileTo();
-            $file_lama = $_POST['fupload_lama'];
-            if ($file_baru != "") {
+
+            if ($upload->getFileName() != "") {
+                $upload->setDirTo('files/');
+                $nama = array($kontrak->no_kontrak, $kontrak->tgl_kontrak);
+                $upload->changeFileName($upload->getFileName(), $nama);
+                $file_baru = $upload->getFileTo();
                 $kontrak->file_kontrak = $file_baru;
             } else {
+                $file_lama = $_POST['fupload_lama'];
                 $kontrak->file_kontrak = $file_lama;
             }
 
@@ -162,13 +166,15 @@ class KontrakController extends BaseController {
         $jurusan = new Jurusan($this->registry);
         $universitas = new Universitas($this->registry);
 
-        if ($univ == 0) {
+        if ($univ == "") {
             $data = $kontrak->get_All();
             $this->view->data = $data;
+            //var_dump($data);
         } else {
             $this->view->data = $kontrak->get_by_univ($univ);
         }
         $this->view->jurusan = $jurusan;
+        $this->view->kontrak = $kontrak;
         $this->view->universitas = $universitas;
         $this->view->load('kontrak/tabel_kontrak');
     }
@@ -184,6 +190,7 @@ class KontrakController extends BaseController {
             $jurusan = new Jurusan($this->registry);
             $jurusan->set_kode_jur($data->kd_jurusan);
             $this->view->jurusan = $jurusan->get_jur_by_id($jurusan);
+            $this->view->kontrak = $kontrak;
             $this->view->univ = $univ;
             $this->view->data = $data;
             $this->view->render('kontrak/data_biaya');

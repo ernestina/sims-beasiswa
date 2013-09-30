@@ -8,7 +8,7 @@
 						<form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/display' ?>">
 <!--            <input type="hidden" name="pilih_univ">-->
             <select name="universitas" id="univ">
-                <option value="0">Semua</option>
+                <option value="">Semua</option>
                 <?php
                 foreach ($this->univ as $univ) {
                     if ($this->pil == $univ->get_kode_in()) {
@@ -40,8 +40,8 @@
 </div>
 
 <script>
-     if($("#univ").val() == "0"){
-            univ = "0";
+     if($("#univ").val() == ""){
+            univ = "";
             $.post("<?php echo URL; ?>kontrak/get_data_kontrak", {univ:""+univ},
             function(data){                
                 $('#tb_kontrak').fadeIn(100);
