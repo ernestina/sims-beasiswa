@@ -92,7 +92,7 @@
             </ul>
         </li>
 		<li class="nav">
-			<a class="blok" href="#"><img class="profil" src="./../public/img/pic.jpg" /></a>
+			<a class="blok" href="#"><img class="profil" src="<?php echo URL;?>public/img/pic.jpg" /></a>
 		</li>
     </ul>
 </div>
