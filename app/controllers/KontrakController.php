@@ -12,7 +12,7 @@ class KontrakController extends BaseController {
     }
 
     public function index() {
-        $this->view->render('kontrak/mon_pembayaran');
+        header('location:' . URL . 'kontrak/display');
     }
 
     public function display() {
@@ -43,7 +43,7 @@ class KontrakController extends BaseController {
             $kontrak->tgl_kontrak = date('Y-m-d', strtotime($_POST['tanggal']));
             $kontrak->thn_masuk_kontrak = $_POST['tahun_masuk'];
             $kontrak->jml_pegawai_kontrak = $_POST['jml_peg'];
-            $kontrak->nilai_kontrak = str_replace(',', '', $_POST['nilai_kontrak']); 
+            $kontrak->nilai_kontrak = str_replace(',', '', $_POST['nilai_kontrak']);
             $kontrak->lama_semester_kontrak = $_POST['lama_semester'];
             $kontrak->kontrak_lama = $_POST['kontrak_lama'];
 
@@ -140,9 +140,9 @@ class KontrakController extends BaseController {
 
             $upload = new Upload();
             $upload->init('fupload');
-            
+
             //var_dump($kontrak);
-            
+
             if ($upload->getFileName() != "") {
                 $upload->setDirTo('files/');
                 $nama = array($kontrak->no_kontrak, $kontrak->tgl_kontrak);
@@ -191,20 +191,51 @@ class KontrakController extends BaseController {
         $this->view->load('kontrak/tabel_kontrak');
     }
 
+    public function get_data_biaya_by_kontrak($id = null) {
+        if ($id != "") {
+            $biaya = new Biaya();
+            $data = $biaya->get_by_kontrak($id);
+            $this->view->data = $data;
+            $this->view->load('kontrak/tabel_biaya');
+        } else {
+            header('location:' . URL . 'kontrak/display');
+        }
+    }
+
     public function biaya($id = null) {
         if ($id != "") {
+            //menampilkan detil kontrak (header)
             $kontrak = new Kontrak();
-            $data = $kontrak->get_by_id($id);
-            //var_dump($kontrak);
+            $data_kontrak = $kontrak->get_by_id($id); //detil kontrak berdasarkan kd_kontrak (id)
             $universitas = new Universitas($this->registry);
-            $this->view->universitas = $universitas;
-            $univ = $universitas->get_univ_by_jur($data->kd_jurusan);
+            $univ = $universitas->get_univ_by_jur($data_kontrak->kd_jurusan);
+            $nama_univ = $univ->get_kode(); //mendapatkan nama singkatan universitas
+            
+            $kontrak_lama = $kontrak->get_by_id($data_kontrak->kontrak_lama); //mendapatkan objek kontrak lama
+            //var_dump($kontrak_lama);
+            //echo $kontrak_lama->no_kontrak;
+            if($kontrak_lama != false){
+                $kon_lama = $kontrak_lama->no_kontrak;
+            } else {
+                $kon_lama = "";
+            }
+            
             $jurusan = new Jurusan($this->registry);
-            $jurusan->set_kode_jur($data->kd_jurusan);
-            $this->view->jurusan = $jurusan->get_jur_by_id($jurusan);
-            $this->view->kontrak = $kontrak;
-            $this->view->univ = $univ;
-            $this->view->data = $data;
+            $jurusan->set_kode_jur($data_kontrak->kd_jurusan);
+            $jur = $jurusan->get_jur_by_id($jurusan);
+            //var_dump($jur->get_nama());
+            $nama_jur = $jur->get_nama(); //mendapatkan nama jurusan
+            
+            //menampilkan daftar biaya berdasarkan kontrak
+            $biaya = new Biaya();
+            $data_biaya = $biaya->get_by_kontrak($id); //mendapatkan objek biaya berdasarkan kd_kontrak (id)
+            
+            //menyimpan variabel-variabel ke obje view
+            $this->view->data_kontrak = $data_kontrak;
+            $this->view->nama_univ = $nama_univ;
+            $this->view->nama_jur = $nama_jur;
+            $this->view->kon_lama = $kon_lama;
+            $this->view->data_biaya = $data_biaya;
             $this->view->render('kontrak/data_biaya');
         } else {
             header('location:' . URL . 'kontrak/display');
