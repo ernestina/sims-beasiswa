@@ -1001,6 +1001,14 @@ class AdminController extends BaseController {
         }
         $this->view->render('admin/config_database');
     }
+    
+    public function backup() {
+        $this->view->render('admin/backup_db');
+    }
+    
+    public function restore() {
+        $this->view->render('admin/restore_db');
+    }
 
 }
 

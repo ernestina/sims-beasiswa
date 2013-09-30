@@ -8,7 +8,7 @@
             ?>">
         
             <div id="whost" class="error"></div>
-        <label>HOST</label><input type="text" name="host" id="host" size="8" value="<?php echo isset($this->ubah)?$this->data->host:'';?>">
+        <label>IP - HOST</label><input type="text" name="host" id="host" size="8" value="<?php echo isset($this->ubah)?$this->data->host:'';?>">
         <div id="wdb" class="error"></div>
         <label>DATABASE</label><input type="text" name="db" id="db" size="50" value="<?php echo isset($this->ubah)?$this->data->db:'';?>">
         <div id="wusername" class="error"></div>
@@ -30,7 +30,7 @@
     <div id="table-title"></div>
     <div id="table-content">
         <table class="table-bordered zebra scroll">
-        <tr><td>HOST</td><td><?php echo $this->data->host;?></td></tr>
+        <tr><td>IP - HOST</td><td><?php echo $this->data->host;?></td></tr>
         <tr><td>DATABASE</td><td><?php echo $this->data->db;?></td></tr>
         <tr><td>USERNAME</td><td><?php echo $this->data->username;?></td></tr>
         <tr><td>PASSWORD</td><td><?php echo $this->data->pass;?></td></tr>

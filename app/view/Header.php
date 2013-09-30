@@ -61,10 +61,12 @@
             </ul>
         </li>
         <li class="subnav">
-            <a href="#">CONFIG</a>
+            <a href="#">DATABASE</a>
             <ul>
-                <li><a href="<?php echo URL;?>admin/config"">Database</a></li>
+                <li><a href="<?php echo URL;?>admin/config"">Setting</a></li>
 <!--                <li><a href="<?php echo URL.'#'?>">IP-Server</a></li>-->
+                <li><a href="<?php echo URL;?>admin/backup"">Backup</a></li>
+                <li><a href="<?php echo URL;?>admin/restore"">Restore</a></li>
             </ul>
         </li>
         <li class="subnav">
