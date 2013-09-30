@@ -99,17 +99,21 @@ class User {
     }
 
     public function updateUser($user) {
-        $where = "KD_USER = " . $user['id'];
 
-//        var_dump($user);
-        $data = array(
-            'NIP_USER' => $user['nip'],
-            'NM_USER' => $user['nama'],
-            'PASS_USER' => $user['pass'],
-            'AKSES_USER' => $user['akses'],
-            'FOTO_USER' => $user['foto']
-        );
-        $this->_db->update($this->_table, $data, $where);
+        if ($user['nip']=="" || $user['nama']=="" || $user['pass']=="" || $user['akses']=="") {
+            echo 'data tidak boleh kosong';
+        } else {
+            $where = "KD_USER = " . $user['id'];
+
+            $data = array(
+                'NIP_USER' => $user['nip'],
+                'NM_USER' => $user['nama'],
+                'PASS_USER' => $user['pass'],
+                'AKSES_USER' => $user['akses'],
+                'FOTO_USER' => $user['foto']
+            );
+            $this->_db->update($this->_table, $data, $where);
+        }
     }
 
     public function delUser($id) {
