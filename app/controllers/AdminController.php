@@ -53,13 +53,11 @@ class AdminController extends BaseController {
         if (!is_null($id)) {
             $univ->set_kode_in($id);
             $this->view->d_ubah = $univ->get_univ_by_id($univ);
-            var_dump($this->view->d_ubah);
         }
         
         $pic = new User($this->registry);
         $this->view->data = $univ->get_univ();
         $this->view->pic = $pic->get_user(TRUE);
-        var_dump($this->view->pic);
         $this->view->render('admin/universitas');
     }
 
