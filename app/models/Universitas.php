@@ -146,7 +146,7 @@ class Universitas {
             $this->_error .= "Alamat belum diinput!</br>";
             $this->_valid = FALSE;
         }
-        if($this->get_telepon()=="" OR !Validasi::validate_telephone($this->get_telepon())){
+        if($this->get_telepon()=="" OR !Validasi::validate_number($this->get_telepon())){
             $this->_error .= "Telepon belum diinput!</br>";
             $this->_valid = FALSE;
         }
