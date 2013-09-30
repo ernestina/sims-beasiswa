@@ -30,7 +30,7 @@ class Kontrak extends BaseModel {
 
     public function get_All() {
         $table = "d_kontrak";
-        $sql = "SELECT * FROM $table";
+        $sql = "SELECT * FROM $table order by KD_KON desc";
         $result = $this->db->select($sql);
         //var_dump($result);
         $data = array();

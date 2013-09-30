@@ -43,6 +43,7 @@ class KontrakController extends BaseController {
             $kontrak->tgl_kontrak = date('Y-m-d', strtotime($_POST['tanggal']));
             $kontrak->thn_masuk_kontrak = $_POST['tahun_masuk'];
             $kontrak->jml_pegawai_kontrak = $_POST['jml_peg'];
+            $kontrak->nilai_kontrak = (int)str_replace(',', '', $_POST['nilai_kontrak']); 
             $kontrak->lama_semester_kontrak = $_POST['lama_semester'];
             $kontrak->kontrak_lama = $_POST['kontrak_lama'];
 
@@ -52,14 +53,22 @@ class KontrakController extends BaseController {
             $nama = array($kontrak->no_kontrak, $kontrak->tgl_kontrak);
             $upload->changeFileName($upload->getFileName(), $nama);
             $kontrak->file_kontrak = $upload->getFileTo();
+            var_dump($kontrak);
 
             if ($kontrak->isEmpty($kontrak) == false) {
                 //var_dump($kontrak);
                 //$validasi = new Validasi();
                 if (Validasi::validate_number($kontrak->jml_pegawai_kontrak) == TRUE) {
-                    $kontrak->add($kontrak);
-                    $upload->uploadFile();
-                    header('location:' . URL . 'kontrak/display');
+                    if (Validasi::validate_number($kontrak->nilai_kontrak) == TRUE) {
+                        $kontrak->add($kontrak);
+                        $upload->uploadFile();
+                        header('location:' . URL . 'kontrak/display');
+                    } else {
+                        $url = URL . 'kontrak/rekamKontrak';
+                        header("refresh:1;url=" . $url);
+                        echo "Nilai kontrak harus diisi angka.";
+                        //header('location:' . URL . 'kontrak/rekamKontrak/'); 
+                    }
                 } else {
                     $url = URL . 'kontrak/rekamKontrak';
                     header("refresh:1;url=" . $url);
@@ -126,6 +135,7 @@ class KontrakController extends BaseController {
             $kontrak->thn_masuk_kontrak = $_POST['tahun_masuk'];
             $kontrak->jml_pegawai_kontrak = $_POST['jml_peg'];
             $kontrak->lama_semester_kontrak = $_POST['lama_semester'];
+            $kontrak->nilai_kontrak = (int)str_replace(',', '', $_POST['nilai_kontrak']);
             $kontrak->kontrak_lama = $_POST['kontrak_lama'];
 
             $upload = new Upload();
@@ -208,8 +218,23 @@ class KontrakController extends BaseController {
         header("Location:" . URL . "kontrak/display");
     }
 
-    public function rekambiaya() {
-        $this->view->render('kontrak/rekam_biaya');
+    public function rekambiaya($id = null) {
+        if ($id != "") {
+            $kontrak = new Kontrak();
+            $data = $kontrak->get_by_id($id);
+            //var_dump($kontrak);
+            $universitas = new Universitas($this->registry);
+            $this->view->universitas = $universitas;
+            $univ = $universitas->get_univ_by_jur($data->kd_jurusan);
+            $jurusan = new Jurusan($this->registry);
+            $jurusan->set_kode_jur($data->kd_jurusan);
+            $this->view->jurusan = $jurusan->get_jur_by_id($jurusan);
+            $this->view->univ = $univ;
+            $this->view->data = $data;
+            $this->view->render('kontrak/rekam_biaya');
+        } else {
+            header("Location:" . URL . "kontrak/display");
+        }
     }
 
     public function monitoring() {

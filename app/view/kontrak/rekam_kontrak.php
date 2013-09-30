@@ -35,12 +35,14 @@
         <label>Tahun Masuk</label><select name="tahun_masuk" id="tahun_masuk">
             <option value="">Pilih Tahun Masuk</option>
             <?php
-            for ($i = 2007; $i <= date('Y') + 5; $i++) {
+            for ($i = 2007; $i <= date('Y') + 3; $i++) {
                 ?>
-                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                <option value="<?php echo $i; ?>" <?php if($i==date('Y')){echo "selected";} ?>><?php echo $i; ?></option>
             <?php } ?>
         </select><div id="wtahun_masuk"></div>
         </select>
+        <label>Nilai kontrak </label><input type="text" name="nilai_kontrak" id="nilai_kontrak" size="30">
+        <div id="wnilai_kontrak"></div>
         <label>Kontrak Lama </label><select name="kontrak_lama" id="kontrak_lama">
             <option value="">Pilih Kontrak Lama</option>
             <?php
@@ -65,7 +67,11 @@
 
 <script>
     
-    $(document).ready(function(){       
+    $(document).ready(function(){  
+        
+        //mengubah inputan nilai kontrak dengan memunculkan separator ribuan
+        $('#nilai_kontrak').number(true,0);
+        
         //agar ketika halaman direfresh, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
         $.post("<?php echo URL; ?>kontrak/get_jur_by_univ", {univ:$("#univ").val()},
         function(data){                
@@ -111,6 +117,9 @@
         $('#tahun_masuk').change(function() {   
             removeError('wtahun_masuk');          
         });
+        $('#nilai_kontrak').keyup(function() {   
+            removeError('wnilai_kontrak');            
+        });
         $('#fupload').click(function() {   
             removeError('wfupload');          
         });
@@ -119,6 +128,7 @@
     //melakukan validasi input ketika tombol simpan diklik: tidak boleh kosong
     function cek(){
         var jml = 0;
+        var jml2 = 0;
         if($('#nomor').val()==""){
             viewError('wnomor','Nomor harus diisi');
             jml++;
@@ -147,10 +157,15 @@
             viewError('wtahun_masuk','Tahun masuk harus dipilih');
             jml++;
         }
+        if($('#nilai_kontrak').val()==""){
+            viewError('wnilai_kontrak','Nilai kontrak harus diisi');
+            jml++;
+        }
         if($('#fupload').val()==""){
             viewError('wfupload','File kontrak harus dipilih');
             jml++;
         }
+        
         if(jml>0){
             //alert('Isian form belum lengkap');
             return false;
@@ -158,6 +173,16 @@
         
         if(cekAngka($('#jml_peg').val())== false){
             viewError('wjml_peg','Jumlah pegawai harus diisi angka');
+            jml2++;
+        }
+        
+        if(cekAngka($('#nilai_kontrak').val())== false){
+            viewError('wnilai_kontrak','Nilai kontrak harus diisi angka');
+            jml2++;
+        }
+        
+        if(jml2>0){
+            //alert('Isian form belum lengkap');
             return false;
         }
     }

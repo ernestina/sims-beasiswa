@@ -15,7 +15,7 @@ $kontrak_lama = $this->kontrak->get_by_id($this->data->kontrak_lama);
         <label>Total Biaya</label><input type="text" size="14" readonly></br>
         <label>Kontrak Lama</label><input type="text" size="40" readonly value="<?php if ($kontrak_lama != false) echo $kontrak_lama->no_kontrak; ?>"></br>
     </div>
-    <div><input type="button" value="TAMBAH" onClick="location.href='<?php echo URL . 'kontrak/rekambiaya'; ?>'"</div>
+    <div><input type="button" value="TAMBAH" onClick="location.href='<?php echo URL . 'kontrak/rekambiaya/' .$this->data->kd_kontrak; ?>'"</div>
 </div>
 <div>
     <table>
