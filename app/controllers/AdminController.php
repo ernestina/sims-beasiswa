@@ -438,7 +438,6 @@ class AdminController extends BaseController {
             $this->view->error = $jur->get_error();
             $this->view->fakul = $fakul->get_fakul();
             $this->view->strata = $strata->get_All();
-            var_dump($this->view->strata);
 
             $this->view->data = $jur->get_jurusan();
             $this->view->render('admin/jurusan');

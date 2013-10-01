@@ -97,22 +97,25 @@
 					<th>Jumlah (Rp)</th>
 				</thead>
 				<tbody>
+                                    <?php $no=1;
+                                    foreach($this->d_bea as $v){ ?>
 				<tr>
-					<td>1</td>
-					<td>qwertyui</td>
+					<td><?php echo $no ;?></td>
+					<td><?php echo $v->get_nama_biaya();?></td>
 					<td align="right">
-						<?php $harga=10000000;
-						echo number_format($harga,2,',','.'); ?>
+						<?php 
+						echo number_format($v->get_jumlah_biaya(),2,',','.'); ?>
 					</td>
 				</tr>
-				<tr>
+                                <?php $no++; } ?>
+<!--				<tr>
 					<td>2</td>
 					<td>qwertyui</td>
 					<td align="right">
 						<?php $harga=100000;
 						echo number_format($harga,2,',','.'); ?>
 					</td>
-				</tr>
+				</tr>-->
 				</tbody>
 			</table>
 	
@@ -170,14 +173,22 @@
 				<tbody>
                                     <?php $no=1;
                                         foreach($this->d_rwt_beas as $v){
+                                            $d_st = explode(",", $v->get_st());
+                                            $no_st = $d_st[0];
+                                            $tgl_st = $d_st[1];
+                                            $thn_masuk = $d_st[2];
+                                            $d_jur = explode(",", $v->get_jur());
+                                            $univ = $d_jur[1];
+                                            $jur = $d_jur[0];
+                                            $strata = $d_jur[2];
                                     ?>
 					<tr>
 						<td><?php echo $no;?></td>
-						<td><?php echo $v->get_st();?></td>
-						<td><?php // echo $v->get_strata();?></td>
-						<td><?php // echo $v->get_univ();?></td>
-						<td><?php echo $v->get_jur();?></td>
-						<td><?php // echo $v->get_th_masuk();?></td>
+                                                <td><?php echo $no_st."</br>".Tanggal::tgl_indo($tgl_st);?></td>
+						<td><?php echo $strata;?></td>
+						<td><?php echo $univ;?></td>
+						<td><?php echo $jur;?></td>
+						<td><?php echo $thn_masuk;?></td>
 						<td><?php echo $v->get_status();?></td>
 					</tr>
                                         <?php 

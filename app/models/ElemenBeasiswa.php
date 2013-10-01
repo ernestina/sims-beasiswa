@@ -120,6 +120,43 @@ class ElemenBeasiswa {
         $this->db->delete($this->_table,$where);
     }
     
+    public function get_elem_per_pb(Penerima $pb, $lunas=false){
+        $sql = "SELECT a.KD_D_ELEM_BEASISWA AS KD_D_ELEM_BEASISWA,
+            b.NM_ELEM_BEASISWA as KD_R_ELEM_BEASISWA,
+            a.JML_PEG_D_ELEM_BEASISWA as JML_PEG_D_ELEM_BEASISWA,
+            a.BLN_D_ELEM_BEASISWA as BLN_D_ELEM_BEASISWA,
+            a.THN_D_ELEM_BEASISWA as THN_D_ELEM_BEASISWA,
+            a.TOTAL_BAYAR_D_ELEM_BEASISWA as TOTAL_BAYAR_D_ELEM_BEASISWA,
+            c.KD_PB as KD_PB,
+            a.NO_SP2D_D_ELEM_BEASISWA as NO_SP2D_D_ELEM_BEASISWA
+            FROM ".$this->_table." a 
+                LEFT JOIN r_elem_beasiswa b ON a.KD_R_ELEM_BEASISWA = b.KD_R_ELEM_BEASISWA
+                LEFT JOIN t_elem_beasiswa c ON a.KD_D_ELEM_BEASISWA = c.KD_D_ELEM_BEASISWA
+                WHERE c.KD_PB=".$pb->get_kd_pb();
+        if($lunas){
+            $sql .= " AND a.NO_SP2D_D_ELEM_BEASISWA<>NULL";
+        }
+        $result = $this->db->select($sql);
+        $data = array();
+        foreach ($result as $v){
+            $elem = new $this($this->registry);
+            $elem->set_kd_d($v['KD_D_ELEM_BEASISWA']);
+            $elem->set_kd_r($v['KD_R_ELEM_BEASISWA']);
+            $jml_peg = (int) $v['JML_PEG_D_ELEM_BEASISWA'];
+            $total_bayar = (int) $v['TOTAL_BAYAR_D_ELEM_BEASISWA'];
+            $by_per_peg = ($total_bayar/$jml_peg);
+            $elem->set_total_bayar($by_per_peg);
+            $elem->set_bln(Tanggal::bulan_indo($v['BLN_D_ELEM_BEASISWA']));
+            $elem->set_thn($v['THN_D_ELEM_BEASISWA']);
+            $elem->set_no_sp2d($v['NO_SP2D_KD_D_ELEM_BEASISWA']);
+            $elem->set_no_sp2d($v['NO_SP2D_D_ELEM_BEASISWA']);
+            $data[] = $elem;
+        }
+        
+        return $data;
+    }
+
+
     /*
      * setter
      */

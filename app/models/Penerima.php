@@ -158,11 +158,11 @@ class Penerima {
         return $data;
     }
     
-    public function get_penerima_by_nip($pb = Penerima, $info = false){
+    public function get_penerima_by_column($pb = Penerima, $cat="",$info = false){
         $sql = "SELECT a.KD_PB as KD_PB,";
         if($info){
-            $sql .= "(b.NO_ST+','+b.TGL_ST+','+b.THN_MASUK) as KD_ST,
-                c.NM_JUR as KD_JUR,
+            $sql .= "CONCAT(b.NO_ST,',',b.TGL_ST,',',b.THN_MASUK) as KD_ST,
+                CONCAT(c.NM_JUR,',',g.NM_UNIV,',',h.STRATA) as KD_JUR,
                 d.NM_STS_TB as KD_STS_TB,
                 e.NM_BANK as KD_BANK,";
         }else{
@@ -191,9 +191,15 @@ class Penerima {
             $sql .= "LEFT JOIN d_srt_tugas b ON a.KD_ST=b.KD_ST
                 LEFT JOIN r_jur c ON a.KD_JUR=c.KD_JUR
                 LEFT JOIN r_stb d ON a.KD_STS_TB=d.KD_STS_TB
-                LEFT JOIN r_bank e ON a.KD_BANK=e.KD_BANK ";
+                LEFT JOIN r_bank e ON a.KD_BANK=e.KD_BANK 
+                LEFT JOIN r_fakul f ON c.KD_FAKUL=f.KD_FAKUL
+                LEFT JOIN r_univ g ON f.KD_UNIV=g.KD_UNIV
+                LEFT JOIN r_strata h ON c.KD_STRATA=h.KD_STRATA ";
         }
-        $sql .= "WHERE NIP_PB =".$pb->get_nip();
+        if($cat=='nip'){
+            $sql .= "WHERE NIP_PB =".$pb->get_nip();
+        }
+        
         $result = $this->db->select($sql);
         $data = array();
         foreach($result as $val){

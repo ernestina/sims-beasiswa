@@ -22,6 +22,7 @@ class PenerimaController extends BaseController{
         $univ = new Universitas($this->registry);
         $nilai = new Nilai($this->registry);
         $cuti = new Cuti($this->registry);
+        $beaya = new Biaya();
         if(!is_null($id)){
             $pb->set_kd_pb($id);
             $this->view->d_pb = $pb->get_penerima_by_id($pb);
@@ -44,7 +45,27 @@ class PenerimaController extends BaseController{
             $this->view->d_nil = $nilai->get_nilai($pb);
             $this->view->d_cur_ipk = $nilai->get_current_ipk($pb);
             $this->view->d_cuti = $cuti->get_cuti($pb);
-            $this->view->d_rwt_beas = $pb->get_penerima_by_nip($pb,true);
+            $this->view->d_rwt_beas = $pb->get_penerima_by_column($pb,'nip',true);
+            $elem = $el->get_elem_per_pb($pb, false);
+            $bea = $beaya->get_cost_per_pb($pb,false);
+            $d_bea = array();
+            /*
+             * sementara versi dummy dulu ye :p
+             */
+            foreach($elem as $v){
+                $d = new BiayaPenerimaBeasiswa();
+                $d->set_nama_biaya($v->get_kd_r());
+                $d->set_jumlah_biaya($v->get_total_bayar());
+                $d_bea[] = $d;
+            }
+            
+            foreach($bea as $v){
+                $d = new BiayaPenerimaBeasiswa();
+                $d->set_nama_biaya($v->nama_tagihan);
+                $d->set_jumlah_biaya($v->biaya_per_pegawai);
+                $d_bea[] = $d;
+            }
+            $this->view->d_bea = $d_bea;
         }
         
         $this->view->render('profil/data_profil');
