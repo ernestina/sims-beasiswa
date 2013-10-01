@@ -89,7 +89,7 @@ class User {
             $data = array(
                 'NIP_USER' => $user->get_nip(),
                 'NM_USER' => $user->get_nmUser(),
-                'PASS_USER' => $user->get_pass(),
+                'PASS_USER' => Hash::create('sha1', $user->get_pass(), HASH_SALT_KEY),
                 'AKSES_USER' => $user->get_akses(),
                 'FOTO_USER' => $user->get_foto()
             );
@@ -98,22 +98,19 @@ class User {
         }
     }
 
-    public function updateUser($user) {
-
-        if ($user['nip']=="" || $user['nama']=="" || $user['pass']=="" || $user['akses']=="") {
-            echo 'data tidak boleh kosong';
-        } else {
-            $where = "KD_USER = " . $user['id'];
+    public function updateUser(User $user) {
+      
+            $where = "KD_USER = " . $user->get_id();
 
             $data = array(
-                'NIP_USER' => $user['nip'],
-                'NM_USER' => $user['nama'],
-                'PASS_USER' => $user['pass'],
-                'AKSES_USER' => $user['akses'],
-                'FOTO_USER' => $user['foto']
+                'NIP_USER' => $user->get_nip(),
+                'NM_USER' => $user->get_nmUser(),
+                'PASS_USER' => Hash::create('sha1', $user->get_pass(), HASH_SALT_KEY),
+                'AKSES_USER' => $user->get_akses(),
+                'FOTO_USER' => $user->get_foto()
             );
             $this->_db->update($this->_table, $data, $where);
-        }
+       
     }
 
     public function delUser($id) {
