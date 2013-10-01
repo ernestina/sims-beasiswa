@@ -81,18 +81,11 @@ class Bank {
     }
 
     public function updateBank($data) {
-
-        if ($data['NM_BANK'] == "") {
-            echo 'nama bank kosong';
-        } else {
-            if ($this->get_bank_name($data['NM_BANK']) == 1) {
-                echo 'nama bank telah ada di dalam database';
-            } else {
+       
                 $where = 'KD_BANK =' . $data['KD_BANK'];
 //        print_r($data['id']);
                 $this->_db->update($this->_table, $data, $where);
-            }
-        }
+           
     }
 
     public function deleteBank() {
