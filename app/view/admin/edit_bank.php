@@ -3,15 +3,15 @@
     <div class="kolom3">
 	<fieldset><legend>Ubah Data Bank</legend>
 	<div id="form-input">           
-        <form method="POST" action="<?php echo URL . 'Admin/updateBank'; ?>">
+        <form method="POST" name="myform" action="<?php echo URL . 'Admin/updateBank'; ?>" onsubmit="return validate()">
             <label></label><input type="hidden" name="id" id="id" value="<?php echo $this->data->get_id(); ?>" size="30">
             <div class="kiri">
-				<label>Nama</label><input type="text" name="nama" id="nama" value="<?php echo $this->data->get_nama(); ?>" size="30">
+				<label>Nama</label><input type="text" name="nama" id="nama" value="<?php echo $this->data->get_nama(); ?>" size="30"><div id="warningnama"></div>
 				
 				<label>Keterangan</label><input type="text" name="keterangan" id="keterangan" value="<?php echo $this->data->get_keterangan(); ?>" size="50">
 				
 				<ul class="inline tengah">
-					<li><input class="normal" type="submit" onclick="" value="BATAL"></li>
+					<li><input class="normal" type="reset" onclick="" value="BATAL"></li>
 					<li><input class="sukses" type="submit" name="submit" value="SIMPAN"></li>
 				</ul>
 			</div> <!--end class kiri-->
@@ -46,3 +46,16 @@
 	</fieldset>
 </div>
 </div> <!--end top-->
+<script type="text/javascript">
+    function validate (){
+        if( document.myform.nama.value == "" )
+        {
+          var warning = 'nama bank harus diisi';
+          $('#warningnama').fadeIn(0);
+          $('#warningnama').html(warning);
+          $('#warningnama').addClass('error');
+          return false;
+        }
+    }
+    //-->
+</script>

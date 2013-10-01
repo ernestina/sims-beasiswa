@@ -60,8 +60,8 @@
           $('#warningnama').fadeIn(0);
           $('#warningnama').html(warning);
           $('#warningnama').addClass('error');
+          return false;
         }
-       
     }
     //-->
 </script>
