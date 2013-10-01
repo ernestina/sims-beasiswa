@@ -21,7 +21,7 @@ class AdminController extends BaseController {
 
     public function addUniversitas($id = null) {
         $univ = new Universitas($this->registry);
-        
+
         if (isset($_POST['add_univ'])) {
             $kode = $_POST['kode'];
             $nama = $_POST['nama'];
@@ -29,22 +29,22 @@ class AdminController extends BaseController {
             $telepon = $_POST['telepon'];
             $lokasi = $_POST['lokasi'];
             $pic = $_POST['pic'];
-            
+
             $univ->set_pic($pic);
             $univ->set_kode($kode);
             $univ->set_nama($nama);
             $univ->set_telepon($telepon);
             $univ->set_alamat($alamat);
             $univ->set_lokasi($lokasi);
-            /*$data = array(
-                'KD_USER' => $pic,
-                'SINGKAT_UNIV' => $kode,
-                'NM_UNIV' => $nama,
-                'ALMT_UNIV' => $alamat,
-                'TELP_UNIV' => $telepon,
-                'LOK_UNIV' => $lokasi
-            );*/
-            if(!$univ->add_univ()){
+            /* $data = array(
+              'KD_USER' => $pic,
+              'SINGKAT_UNIV' => $kode,
+              'NM_UNIV' => $nama,
+              'ALMT_UNIV' => $alamat,
+              'TELP_UNIV' => $telepon,
+              'LOK_UNIV' => $lokasi
+              ); */
+            if (!$univ->add_univ()) {
                 $this->view->d_rekam = $univ;
                 $this->view->error = $univ->get_error();
             }
@@ -54,7 +54,7 @@ class AdminController extends BaseController {
             $univ->set_kode_in($id);
             $this->view->d_ubah = $univ->get_univ_by_id($univ);
         }
-        
+
         $pic = new User($this->registry);
         $this->view->data = $univ->get_univ();
         $this->view->pic = $pic->get_user(TRUE);
@@ -74,19 +74,19 @@ class AdminController extends BaseController {
             $nama = $_POST['nama'];
             $alamat = $_POST['alamat'];
             $telepon = $_POST['telepon'];
-            
+
             $fakul->set_kode_univ($univ);
             $fakul->set_nama($nama);
             $fakul->set_alamat($alamat);
             $fakul->set_telepon($telepon);
-            /*$data = array(
-                'KD_UNIV' => $univ,
-                'NM_FAKUL' => $nama,
-                'ALMT_FAKUL' => $alamat,
-                'TELP_FAKUL' => $telepon
-            );*/
+            /* $data = array(
+              'KD_UNIV' => $univ,
+              'NM_FAKUL' => $nama,
+              'ALMT_FAKUL' => $alamat,
+              'TELP_FAKUL' => $telepon
+              ); */
 
-            if(!$fakul->add_fakul()){
+            if (!$fakul->add_fakul()) {
                 $this->view->d_rekam = $fakul;
                 $this->view->error = $fakul->get_error();
             }
@@ -120,7 +120,7 @@ class AdminController extends BaseController {
             $pic_jur = $_POST['pic_jur'];
             $telp_pic_jur = $_POST['telp_pic_jur'];
             $status = $_POST['status'];
-            
+
             $jur->set_kode_fakul($fak);
             $jur->set_kode_strata($strata);
             $jur->set_nama($nama);
@@ -129,8 +129,8 @@ class AdminController extends BaseController {
             $jur->set_pic($pic_jur);
             $jur->set_telp_pic($telp_pic_jur);
             $jur->set_status($status);
-            
-            if(!$jur->add_jurusan()){
+
+            if (!$jur->add_jurusan()) {
                 $this->view->d_rekam = $jur;
                 $this->view->error = $jur->get_error();
             }
@@ -237,17 +237,17 @@ class AdminController extends BaseController {
         if (isset($_POST['add_st'])) {
             $nama = $_POST['nama'];
             $keterangan = $_POST['keterangan'];
-            
+
             $st->set_nama($nama);
             $st->set_keterangan($keterangan);
-            
-            if(!$st->add_jst()){
+
+            if (!$st->add_jst()) {
                 $this->view->d_rekam = $st;
                 $this->view->error = $st->get_error();
             }
         }
-        
-        
+
+
 
         if (!is_null($id)) {
             $st->set_kode($id);
@@ -268,17 +268,17 @@ class AdminController extends BaseController {
         if (isset($_POST['add_sc'])) {
             $nama = $_POST['nama'];
             $keterangan = $_POST['keterangan'];
-            
+
             $sc->set_nama($nama);
             $sc->set_keterangan($keterangan);
-            
-            if(!$sc->add_jsc()){
+
+            if (!$sc->add_jsc()) {
                 $this->view->d_rekam = $sc;
                 $this->view->error = $sc->get_error();
             }
         }
-        
-        
+
+
 
         if (!is_null($id)) {
             $sc->set_kode($id);
@@ -324,15 +324,15 @@ class AdminController extends BaseController {
             $lokasi = $_POST['lokasi'];
             $pic = $_POST['pic'];
 
-            /*$data = array(
-                'KD_UNIV' => $kd_univ,
-                'KD_USER' => $pic,
-                'SINGKAT_UNIV' => $kode,
-                'NM_UNIV' => $nama,
-                'ALMT_UNIV' => $alamat,
-                'TELP_UNIV' => $telepon,
-                'LOK_UNIV' => $lokasi
-            );*/
+            /* $data = array(
+              'KD_UNIV' => $kd_univ,
+              'KD_USER' => $pic,
+              'SINGKAT_UNIV' => $kode,
+              'NM_UNIV' => $nama,
+              'ALMT_UNIV' => $alamat,
+              'TELP_UNIV' => $telepon,
+              'LOK_UNIV' => $lokasi
+              ); */
             $univ->set_pic($pic);
             $univ->set_kode($kode);
             $univ->set_nama($nama);
@@ -341,16 +341,16 @@ class AdminController extends BaseController {
             $univ->set_lokasi($lokasi);
 
             $univ->set_kode_in($kd_univ);
-            if(!$univ->update_univ()){
+            if (!$univ->update_univ()) {
                 $this->view->d_ubah = $univ;
                 $this->view->error = $univ->get_error();
                 $this->view->data = $univ->get_univ();
-        //        var_dump($this->view->d_ubah);
+                //        var_dump($this->view->d_ubah);
                 $this->view->render('admin/universitas');
             }
         }
-        
-        
+
+
 //        header('location:' . URL . 'admin/addUniversitas');
     }
 
@@ -367,23 +367,23 @@ class AdminController extends BaseController {
         $alamat = $_POST['alamat'];
         $telepon = $_POST['telepon'];
 
-        /*$data = array(
-            'KD_UNIV' => $univ,
-            'NM_FAKUL' => $nama,
-            'ALMT_FAKUL' => $alamat,
-            'TELP_FAKUL' => $telepon
-        );*/
+        /* $data = array(
+          'KD_UNIV' => $univ,
+          'NM_FAKUL' => $nama,
+          'ALMT_FAKUL' => $alamat,
+          'TELP_FAKUL' => $telepon
+          ); */
         $fakul->set_kode_univ($univ);
         $fakul->set_nama($nama);
         $fakul->set_alamat($alamat);
         $fakul->set_telepon($telepon);
 
         $fakul->set_kode_fakul($kd_fakul);
-        if(!$fakul->update_fakul()){
+        if (!$fakul->update_fakul()) {
             $this->view->d_ubah = $fakul;
             $this->view->error = $fakul->get_error();
-            
-            
+
+
             $univ = new Universitas($this->registry);
             $this->view->univ = $univ->get_univ();
             $this->view->data = $fakul->get_fakul();
@@ -410,17 +410,17 @@ class AdminController extends BaseController {
         $telp_pic_jur = $_POST['telp_pic_jur'];
         $status = $_POST['status'];
 
-        /*$data = array(
-            'KD_FAKUL' => $fak,
-            'KD_STRATA' => $strata,
-            'NM_JUR' => $nama,
-            'ALMT_JUR' => $alamat,
-            'TELP_JUR' => $telepon,
-            'PIC_JUR' => $pic_jur,
-            'TELP_PIC_JUR' => $telp_pic_jur,
-            'STS_JUR' => $status,
-        );*/
-        
+        /* $data = array(
+          'KD_FAKUL' => $fak,
+          'KD_STRATA' => $strata,
+          'NM_JUR' => $nama,
+          'ALMT_JUR' => $alamat,
+          'TELP_JUR' => $telepon,
+          'PIC_JUR' => $pic_jur,
+          'TELP_PIC_JUR' => $telp_pic_jur,
+          'STS_JUR' => $status,
+          ); */
+
         $jur->set_kode_fakul($fak);
         $jur->set_kode_strata($strata);
         $jur->set_nama($nama);
@@ -431,17 +431,18 @@ class AdminController extends BaseController {
         $jur->set_status($status);
 
         $jur->set_kode_jur($kd_jur);
-        if(!$jur->update_jurusan()){
+        if (!$jur->update_jurusan()) {
             $fakul = new Fakultas($this->registry);
             $strata = new Strata();
             $this->view->d_ubah = $jur;
             $this->view->error = $jur->get_error();
             $this->view->fakul = $fakul->get_fakul();
             $this->view->strata = $strata->get_All();
+            var_dump($this->view->strata);
 
             $this->view->data = $jur->get_jurusan();
             $this->view->render('admin/jurusan');
-        }else{
+        } else {
             header('location:' . URL . 'admin/addJurusan');
         }
 
@@ -506,8 +507,8 @@ class AdminController extends BaseController {
             $st->set_kode($kd_jenis_st);
             $st->set_nama($nama);
             $st->set_keterangan($keterangan);
-            
-            if(!$st->update_jst()){
+
+            if (!$st->update_jst()) {
                 $this->view->d_ubah = $st;
                 $this->view->error = $st->get_error();
                 $this->view->data = $st->get_jst();
@@ -533,8 +534,8 @@ class AdminController extends BaseController {
             $sc->set_kode($kd_jns_srt_cuti);
             $sc->set_nama($nama);
             $sc->set_keterangan($keterangan);
-            
-            if(!$sc->update_jsc()){
+
+            if (!$sc->update_jsc()) {
                 $this->view->d_ubah = $sc;
                 $this->view->error = $sc->get_error();
                 $this->view->data = $sc->get_jsc();
@@ -835,20 +836,24 @@ class AdminController extends BaseController {
 
     public function addBank() {
 
-        if (isset($_POST['submit'])) { 
-            
-            if ($_POST['nama']==""){
+        if (isset($_POST['submit'])) {
+
+            if ($_POST['nama'] == "") {
                 echo 'ada field yang masih kosong';
-            } 
-            else 
-                {
+            } else {
+
                 $bank = new Bank($registry);
 
-                $bank->set_nama($_POST['nama']);
-                $bank->set_keterangan($_POST['keterangan']);
+                if ($bank->get_bank_name($_POST['nama']) == 1) {
+                    echo 'data bank telah ada di dalam database';
+                } else {
 
-                $bank->addBank($bank);
-                }           
+                    $bank->set_nama($_POST['nama']);
+                    $bank->set_keterangan($_POST['keterangan']);
+
+                    $bank->addBank($bank);
+                }
+            }
         }
         header('location:' . URL . 'Admin/list_bank');
     }
@@ -866,13 +871,24 @@ class AdminController extends BaseController {
     public function updateBank() {
 //        $bank = new Bank($this->registry);
         if (isset($_POST['submit'])) {
-            $data['KD_BANK'] = $_POST['id'];
-            $data['NM_BANK'] = $_POST['nama'];
-            $data['KET_BANK'] = $_POST['keterangan'];
+            if ($_POST['nama'] == "") {
+
+                echo 'nama bank tidak boleh kosong';
+            } else {
+                $bank = new Bank($registry);
+                if ($bank->get_bank_name($_POST['nama']) == 1) {
+                    echo 'data bank ada di dalam database';
+                } else {
+                    $data = array();
+                    $data['KD_BANK'] = $_POST['id'];
+                    $data['NM_BANK'] = $_POST['nama'];
+                    $data['KET_BANK'] = $_POST['keterangan'];
+
+                    $bank->updateBank($data);
+                }
+            }
         }
 //        var_dump($data);
-        $bank = new Bank($this->registry);
-        $bank->updateBank($data);
         header('location:' . URL . 'Admin/list_bank');
     }
 
@@ -884,7 +900,8 @@ class AdminController extends BaseController {
 
         header('location:' . URL . 'Admin/list_bank');
     }
-	public function listUser() {
+
+    public function listUser() {
 
         $user = new User($registry);
         $this->view->data = $user->get_user();
@@ -895,24 +912,26 @@ class AdminController extends BaseController {
     public function addUser() {
 
         if (ISSET($_POST['submit'])) {
-            
-            if ($_POST['nip']=="" || $_POST['nama']=="" || $_POST['pass']=="" || $_POST['akses']==""){
+
+            if ($_POST['nip'] == "" || $_POST['nama'] == "" || $_POST['pass'] == "" || $_POST['cpass'] == "" || $_POST['akses'] == "") {
                 echo 'ada field yang masih kosong';
-            } 
-            else 
-                {
-                $user = new User($registry);
+            } else {
+                if ($_POST['pass'] !== $_POST['cpass']) {
 
-                $user->set_nip($_POST['nip']);
-                $user->set_nmUser($_POST['nama']);
-                $user->set_pass($_POST['pass']);
-                $user->set_akses($_POST['akses']);
-                $user->set_foto($_POST['foto']);
+                    echo 'password tidak sama dengan confirm password';
+                } else {
+                    $user = new User($registry);
 
-    //            var_dump($user);
-                $user->addUser($user);
+                    $user->set_nip($_POST['nip']);
+                    $user->set_nmUser($_POST['nama']);
+                    $user->set_pass($_POST['pass']);
+                    $user->set_akses($_POST['akses']);
+                    $user->set_foto($_POST['foto']);
+
+                    //            var_dump($user);
+                    $user->addUser($user);
                 }
-           
+            }
         }
         header('location:' . URL . 'admin/listuser');
     }
@@ -921,7 +940,7 @@ class AdminController extends BaseController {
         $user = new User($registry);
 
         $this->view->data = $user->getUser_id($id);
-        
+
         $user2 = new User($registry);
         $this->view->data2 = $user2->get_user();
 
@@ -931,14 +950,28 @@ class AdminController extends BaseController {
     public function updateUser() {
         if (ISSET($_POST['submit'])) {
 
-            $data['id'] = $_POST['id'];
-            $data['nip'] = $_POST['nip'];
-            $data['nama'] = $_POST['nama'];
-            $data['pass'] = $_POST['pass'];
-            $data['akses'] = $_POST['akses'];
-            $data['foto'] = $_POST['foto'];
-            $user = new User($registry);
-            $user->updateUser($data);
+            if ($_POST['nip'] == "" || $_POST['nama'] == "" || $_POST['pass'] == "" || $_POST['cpass'] == "" || $_POST['akses'] == "") {
+                echo 'ada field yang masih belum diisi';
+            } else {                
+
+                if ($_POST['pass'] !== $_POST['cpass']) {
+                    echo 'user pass tidak sama dengan confirm pass nya';
+                } else {
+                    
+                    $user = new User($registry);
+                    
+                    $user->set_id($_POST['id']);
+                    $user->set_nip($_POST['nip']);
+                    $user->set_nmUser($_POST['nama']);
+                    $user->set_pass($_POST['pass']);
+                    $user->set_akses($_POST['akses']);
+                    $user->set_foto($_POST['foto']);
+                                       
+                    $user->updateUser($user);
+                    
+                    var_dump($user);
+                }
+            }
         }
         header('location:' . URL . 'admin/listUser');
     }
@@ -948,64 +981,64 @@ class AdminController extends BaseController {
         $user->delUser($id);
         header('location:' . URL . 'admin/listUser');
     }
-    
-    public function get_jur_by_univ(){
+
+    public function get_jur_by_univ() {
         $univ = $_POST['param'];
         $jur = new Jurusan($this->registry);
         $data = $jur->get_jur_by_univ($univ);
-        foreach ($data as $val){
-            echo "<option value=".$val->get_kode_jur().">".$val->get_nama()."</option>";
+        foreach ($data as $val) {
+            echo "<option value=" . $val->get_kode_jur() . ">" . $val->get_nama() . "</option>";
         }
     }
-	
-	public function cekJabatan(){
+
+    public function cekJabatan() {
         $pejabat = new Pejabat();
         //$id='4';
         $id = $_POST['jenis_jabatan'];
         //$respon="";
-        if($pejabat->cekJenisJabatan($id) == TRUE){
-            $respon="TRUE";
+        if ($pejabat->cekJenisJabatan($id) == TRUE) {
+            $respon = "TRUE";
         } else {
-            $respon="FALSE";
+            $respon = "FALSE";
         }
         $res = array('respon' => $respon);
         echo json_encode($res);
     }
-    
-    public function config($ubah=false){
-        $xml = new ClassXML('1.0','utf-8');
-        if(isset($_POST['add_conf'])){
+
+    public function config($ubah = false) {
+        $xml = new ClassXML('1.0', 'utf-8');
+        if (isset($_POST['add_conf'])) {
             $host = $_POST['host'];
             $db = $_POST['db'];
             $username = $_POST['username'];
             $pass = $_POST['pass'];
 
-            
-            $data = array('config'=>array(
-                'host'=>$host,
-                'db'=>$db,
-                'username'=>$username,
-                'password'=>$pass
-            ));
+
+            $data = array('config' => array(
+                    'host' => $host,
+                    'db' => $db,
+                    'username' => $username,
+                    'password' => $pass
+                    ));
 
             $xml->writeXML('libs/testing', $data);
         }
-        
+
         $this->view->data = $xml->readXML('libs/testing');
-        /*echo $data->host.'</br>';
-        echo $data->db.'</br>';
-        echo $data->username.'</br>';
-        echo $data->password->test->log.'</br>';*/
-        if($ubah){
+        /* echo $data->host.'</br>';
+          echo $data->db.'</br>';
+          echo $data->username.'</br>';
+          echo $data->password->test->log.'</br>'; */
+        if ($ubah) {
             $this->view->ubah = true;
         }
         $this->view->render('admin/config_database');
     }
-    
+
     public function backup() {
         $this->view->render('admin/backup_db');
     }
-    
+
     public function restore() {
         $this->view->render('admin/restore_db');
     }
