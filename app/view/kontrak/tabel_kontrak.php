@@ -23,7 +23,7 @@
                     <?php $kontrak_lama = $this->kontrak->get_by_id($val->kontrak_lama);
                     //var_dump($kontrak_lama);
                     if($kontrak_lama != false){
-                        echo "<br /> (Amandemen: "; ?>
+                        echo "<br /> (Adendum: "; ?>
                         <a href="<?php echo URL . "kontrak/file/" . $kontrak_lama->file_kontrak; ?>" target="_blank"><?php echo $kontrak_lama->no_kontrak; ?></a>
                         <?php
                         echo " )";
