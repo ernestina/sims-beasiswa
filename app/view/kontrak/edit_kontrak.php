@@ -10,7 +10,7 @@
                     <div id="wnomor"></div>
                     <label>Tanggal </label><input type="text" name="tanggal" id="tanggal" size="30" readonly="readonly" value="<?php echo $this->data->tgl_kontrak; ?>">
                     <div id="wtanggal"></div>
-                    <label>Universitas </label><select name="univ" id="univ">
+                    <label>Universitas </label><select name="univ" id="univ" type="text">
                         <?php
                         foreach ($this->univ as $univ) {
                             $universitas = $this->universitas->get_univ_by_jur($this->data->kd_jurusan);
@@ -24,12 +24,12 @@
                         <?php } ?>
                     </select><div id="wuniv"></div>
                     <label>Jurusan </label>
-                    <select name="jur" id="jur">
+                    <select name="jur" id="jur" type="text">
                         <option value="">Pilih Jurusan</option>
                     </select><div id="wjur"></div>
                     <label>Jumlah Pegawai</label><input type="text" name="jml_peg" id="jml_peg" size="4" value="<?php echo $this->data->jml_pegawai_kontrak; ?>">
                     <div id="wjml_peg"></div>
-                    <label>Lama Semester</label><select name="lama_semester" id="lama_semester">
+                    <label>Lama Semester</label><select name="lama_semester" id="lama_semester" type="text">
                         <option value="">Pilih Lama Semester</option>
                         <?php
                         for ($i = 1; $i <= 10; $i++) {
@@ -43,7 +43,7 @@
                         <?php } ?>
                     </select><div id="wlama_semester"></div>
                     
-                    <label>Tahun Masuk</label><select name="tahun_masuk" id="tahun_masuk">
+                    <label>Tahun Masuk</label><select name="tahun_masuk" id="tahun_masuk" type="text">
                         <option value="">Pilih Tahun Masuk</option>
                         <?php
                         for ($i = 2007; $i <= date('Y') + 5; $i++) {
@@ -58,7 +58,7 @@
                     </select><div id="wtahun_masuk"></div>
                     <label>Nilai kontrak </label><input type="text" name="nilai_kontrak" id="nilai_kontrak" maxlength="14" value="<?php echo number_format($this->data->nilai_kontrak); ?>">
                     <div id="wnilai_kontrak"></div>
-                    <label>Kontrak Lama </label><select name="kontrak_lama" id="kontrak_lama">
+                    <label>Kontrak Lama </label><select name="kontrak_lama" id="kontrak_lama" type="text">
                         <option value="">Pilih Kontrak Lama</option>
                         <?php
                         foreach ($this->kon as $kon) {
@@ -77,7 +77,7 @@
                         <input type="hidden" name="kd_kontrak" id="kd_kontrak" value="<?php echo $this->data->kd_kontrak; ?>">
                         <input type="hidden" name="fupload_lama" id="fupload_lama" value="<?php echo $this->data->file_kontrak; ?>">
                         <ul class="inline tengah">
-                            <li><input type="button" class="normal" value="BATAL" onClick="location.href='<?php echo URL . 'kontrak/display'; ?>'"></li>
+                            <li><input type="reset" class="normal" value="BATAL" onClick="location.href='<?php echo URL . 'kontrak/display'; ?>'"></li>
                             <li><input type="submit" class="sukses" value="SIMPAN" onClick="return cek();"></li>
                         </ul>
 

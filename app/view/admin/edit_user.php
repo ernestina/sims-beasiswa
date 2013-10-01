@@ -31,8 +31,8 @@
                 <table class="table-bordered zebra scroll">
                     <thead>                   
                     <th width="5%">No</th>
-                    <th width="20%">NIP</th>
-                    <th width="30%">Nama</th>
+                    <th width="30%">NIP</th>
+                    <th width="40%">Nama</th>
                     <th width="20%">Pass</th>
                     <th width="15%">Akses</th>                     
                     </thead>

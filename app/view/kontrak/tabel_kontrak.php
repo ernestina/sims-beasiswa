@@ -51,9 +51,9 @@
                 <td><?php echo number_format($val->nilai_kontrak); ?></td>
                 <td><?php ?></td>
                 <td><?php
-                 echo "<a href=" . URL . "kontrak/delKontrak/" . $val->kd_kontrak . ">X</a>|
-                     <a href=" . URL . "kontrak/editKontrak/" . $val->kd_kontrak . ">...</a>|
-                     <a href=" . URL . "kontrak/biaya/" . $val->kd_kontrak . ">Biaya</a>";
+                 echo "<a href=" . URL . "kontrak/delKontrak/" . $val->kd_kontrak . "><i class=\"icon-trash\"></i></a> &nbsp &nbsp
+                     <a href=" . URL . "kontrak/editKontrak/" . $val->kd_kontrak . "><i class=\"icon-pencil\"></i></a> &nbsp &nbsp
+                     <a href=" . URL . "kontrak/biaya/" . $val->kd_kontrak . "><i class=\"icon-tag\"></i></a>";
                  //echo $val->kd_kontrak;
                 ?>   
             </tr>

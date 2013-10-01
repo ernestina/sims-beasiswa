@@ -36,8 +36,8 @@
                     <th width="20%">NIP</th>
                     <th width="30%">Nama</th>
                     <th width="20%">Pass</th>
-                    <th width="15%">Akses</th>               
-                    <th width="5%">Aksi</th>
+                    <th width="5%">Akses</th>               
+                    <th width="9%">Aksi</th>
                     </thead>
                     <tbody>
                         <?php
@@ -50,8 +50,8 @@
                             echo '<td>' . $value->get_pass() . '</td>';
                             echo '<td>' . $value->get_akses() . '</td>';
                             echo '<td>
-                        <a href="' . URL . 'Admin/deleteUser/' . $value->get_id() . '">X</a>
-			<a href="' . URL . 'Admin/editUser/' . $value->get_id() . '">...</a>
+                        <a href="' . URL . 'Admin/deleteUser/' . $value->get_id() . '"><i class="icon-trash"></i></a> &nbsp &nbsp
+			<a href="' . URL . 'Admin/editUser/' . $value->get_id() . '"><i class="icon-pencil"></i></a>
                         </td>';
                             echo '</tr>';
                             $i++;
