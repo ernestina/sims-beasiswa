@@ -30,17 +30,8 @@
 				<div class="kolom1">
 					<img src="<?php echo URL;?>public/img/logo.png" style="padding-left: 20px; padding-bottom: 10px">
 				</div>
-	
-				<div class="kolom2">
-
-					<a href="#"><img class="profil" src="<?php echo URL;?>public/img/pic.jpg" /></a>
-
-				</div>
 			</div>
 			
-			
-			
-        
            <div id="menu">
     <ul>
         <li class="nav">
