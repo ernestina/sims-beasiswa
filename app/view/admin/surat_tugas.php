@@ -43,9 +43,9 @@
         <table class="table-bordered zebra scroll">
             <thead>
                 <th>No</th>
-                <th>Nama</th>
-                <th>Keterangan</th>
-                <th width="30">Aksi</th>
+                <th width="200">Nama</th>
+                <th width="400">Keterangan</th>
+                <th width="50">Aksi</th>
             </thead>
             <tbody>
             <?php
@@ -55,8 +55,8 @@
                     echo "<td>$no</td>";
                     echo "<td>".$val->get_nama()."</td>";
                     echo "<td>".$val->get_keterangan()."</td>";
-                    echo "<td><a href=".URL."admin/delST/".$val->get_kode()." onclick='return del()'>X</a> | 
-                        <a href=".URL."admin/addST/".$val->get_kode().">...</a></td>";
+                    echo "<td><a href=".URL."admin/delST/".$val->get_kode()." onclick='return del()'><i class=\"icon-trash\"></i></a> &nbsp &nbsp
+                        <a href=".URL."admin/addST/".$val->get_kode()."><i class=\"icon-pencil\"></i></a></td>";
                     echo "</tr>";
                     $no++;
                 }

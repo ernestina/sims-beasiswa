@@ -106,7 +106,7 @@
                 <th>PIC Jurusan</th>
                 <th width="50">Telp PIC Jurusan</th>
                 <th>Status</th>
-                <th width="50">Aksi</th>
+                <th width="70">Aksi</th>
             </thead>
 			<tbody>
             <?php
@@ -122,8 +122,8 @@
                     echo "<td>".$val->get_pic()."</td>";
                     echo "<td>".$val->get_telp_pic()."</td>";
                     echo "<td>".$val->get_status()."</td>";
-                    echo "<td><a href=".URL."admin/delJurusan/".$val->get_kode_jur().">X</a> | 
-                        <a href=".URL."admin/addJurusan/".$val->get_kode_jur().">...</a></td>";
+                    echo "<td><a href=".URL."admin/delJurusan/".$val->get_kode_jur()."><i class=\"icon-trash\"></i></a> &nbsp  
+                        <a href=".URL."admin/addJurusan/".$val->get_kode_jur()."><i class=\"icon-pencil\"></i></a></td>";
                     echo "</tr>";
                     $no++;
                 }

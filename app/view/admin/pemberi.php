@@ -40,7 +40,7 @@
                 <th width="50">Telepon</th>
                 <th width="70">PIC</th>
                 <th width="70">Telp. PIC</th>
-                <th width="30">Aksi</th>
+                <th width="45">Aksi</th>
             </thead>
 			<tbody>
 				<?php $i=1; foreach($this->data as $pemberi){ ?>
@@ -52,8 +52,8 @@
 					<td><?php echo $pemberi->pic_pemberi;?></td>
 					<td><?php echo $pemberi->telp_pic_pemberi;?></td>
 					<td>
-						<?php echo "<a href=".URL."admin/delPemberi/".$pemberi->kd_pemberi." onclick=\"return del()\">X</a> | 
-                    <a href=".URL."admin/editPemberi/".$pemberi->kd_pemberi.">...</a>" ?>                    
+						<?php echo "<a href=".URL."admin/delPemberi/".$pemberi->kd_pemberi." onclick=\"return del()\"><i class=\"icon-trash\"></i></a> &nbsp  
+                    <a href=".URL."admin/editPemberi/".$pemberi->kd_pemberi."><i class=\"icon-pencil\"></i></a>" ?>                    
 					</td>
 				</tr>
 				<?php $i++; } ?>

@@ -21,7 +21,7 @@
             <td><label>Status</label><select type="text"></select></td>
             <td><input type="search" name="cari" id="cari" size="30"></td>
         </tr>
-        <tr><td colspan="3"></td><td style="padding-right: 45px; padding-top: 0px"><input type="button" value="TAMBAH" onclick="location.href='<?php echo URL.'penerima/penerima'?>'"></td></tr>
+        <!--tr><td colspan="3"></td><td style="padding-right: 45px; padding-top: 0px"><input type="button" value="TAMBAH" onclick="location.href='<?php echo URL.'penerima/penerima'?>'"></td></tr-->
     </table>
 </div>
 <div>

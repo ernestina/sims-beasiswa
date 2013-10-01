@@ -35,8 +35,9 @@
                                 <td><?php echo $strata->kode_strata; ?></td>
                                 <td><?php echo $strata->nama_strata; ?></td>
                                 <td align="center">
-                                    <?php echo "<a href=" . URL . "admin/delStrata/" . $strata->kd_strata . " onclick=\"return del()\">X</a> | 
-                    <a href=" . URL . "admin/editStrata/" . $strata->kd_strata . ">...</a>" ?>
+                                    <?php echo "<a href=" . URL . "admin/delStrata/" . $strata->kd_strata . " onclick=\"return del()\"><i class=\"icon-trash\"></i></a>
+									&nbsp &nbsp
+									<a href=" . URL . "admin/editStrata/" . $strata->kd_strata . "><i class=\"icon-pencil\"></i></a>" ?>
                                 </td>
                             </tr>
                             <?php $i++;

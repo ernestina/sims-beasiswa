@@ -80,7 +80,7 @@
                 <th>Alamat</th>
                 <th>Telepon</th>
                 <th>lokasi</th>
-                <th width="30">Aksi</th>
+                <th width="50">Aksi</th>
             </thead>
             <tbody>
             <?php
@@ -93,8 +93,8 @@
                     echo "<td>".$val->get_alamat()."</td>";
                     echo "<td>".$val->get_telepon()."</td>";
                     echo "<td>".$val->get_lokasi()."</td>";
-                    echo "<td><a href=".URL."admin/delUniversitas/".$val->get_kode_in().">X</a> | 
-                        <a href=".URL."admin/addUniversitas/".$val->get_kode_in().">...</a></td>";
+                    echo "<td><a href=".URL."admin/delUniversitas/".$val->get_kode_in()."><i class=\"icon-trash\"></i></a> &nbsp &nbsp 
+                        <a href=".URL."admin/addUniversitas/".$val->get_kode_in()."><i class=\"icon-pencil\"></i></a></td>";
                     echo "</tr>";
                     $no++;
                 }

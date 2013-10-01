@@ -1,7 +1,7 @@
 <ul class="inline">
-				<li><input type="file" id="IPK" name="fileipk" style="display: none" onChange="IPKchange();"/>
-				<input class="unggah" type="text" id="namafileipk" disabled /></li>
-				<li><input type="button" value="Pilih..." id="fakeBrowse" onclick="Pilih();"/>
+				<!--li><input class="unggah" type="text" id="tgl_lapor" disabled /></li-->
+				<li><input type="text" id="IPK" name="IPK" value="<?php echo $this->d_cur_ipk->get_ipk()/100;?>" disabled class="unggah"/></li>
+				<li><input type="button" value="Lihat" id="fileIPK" class="lihat"/><!--View file transkrip IPK akhir-->
 				</li>
 			</ul>
 			

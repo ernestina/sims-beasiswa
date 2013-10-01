@@ -6,7 +6,7 @@
                 <form method="POST" action="<?php echo URL . 'Admin/addBank' ?>" name="myform" onsubmit="return(validate())">
                     <div class="kiri">
                         <label>Nama</label><input type="text" name="nama" id="nama" size="30"><div id="warningnama"></div>
-                        <label>Keterangan</label><input type="text" name="keterangan" id="keterangan" size="50">
+                        <label>Keterangan</label><textarea type="text" name="keterangan" id="keterangan" rows="8"></textarea>
 
                         <ul class="inline tengah">
                             <li><input class="normal" type="submit" onclick="" value="BATAL"></li>
@@ -26,7 +26,7 @@
                     <th>No</th>
                     <th width="200">Nama Bank</th>
                     <th width="400">Keterangan</th>
-                    <th width="30">Aksi</th>
+                    <th width="50">Aksi</th>
                     </thead>
                     <tbody>
                         <?php
@@ -38,8 +38,8 @@
                             echo '<td>' . $value->get_keterangan() . '</td>';
                             echo
                             '<td>
-                        <a href="' . URL . 'Admin/deleteBank/' . $value->get_id() . '">X</a>
-			<a href="' . URL . 'Admin/editBank/' . $value->get_id() . '">...</a>
+                        <a href="' . URL . 'Admin/deleteBank/' . $value->get_id() . '"><i class="icon-trash"></i></a> &nbsp &nbsp
+			<a href="' . URL . 'Admin/editBank/' . $value->get_id() . '"><i class="icon-pencil"></i></a>
                     </td>';
                             echo '</tr>';
                             $i++;

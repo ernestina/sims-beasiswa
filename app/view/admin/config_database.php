@@ -1,3 +1,4 @@
+<div id="top"><h2>PENGATURAN</h2>
 <div class="kolom3">
 <fieldset><legend>Pegaturan Database</legend>
 		<div id="form-input"><div class="kiri">
@@ -29,7 +30,7 @@
     <fieldset><legend>Pengaturan Server</legend>
     <div id="table-title"></div>
     <div id="table-content">
-        <table class="table-bordered zebra scroll">
+        <table class="table-bordered zebra">
         <tr><td>IP - HOST</td><td><?php echo $this->data->host;?></td></tr>
         <tr><td>DATABASE</td><td><?php echo $this->data->db;?></td></tr>
         <tr><td>USERNAME</td><td><?php echo $this->data->username;?></td></tr>
@@ -38,9 +39,9 @@
     </table>
     </div>
 </div>
+</div>
 
 <script type="text/javascript">
-
 $(function(){
     $('.error').fadeOut(0);
     

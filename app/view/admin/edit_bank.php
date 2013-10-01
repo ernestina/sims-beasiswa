@@ -8,7 +8,7 @@
             <div class="kiri">
 				<label>Nama</label><input type="text" name="nama" id="nama" value="<?php echo $this->data->get_nama(); ?>" size="30"><div id="warningnama"></div>
 				
-				<label>Keterangan</label><input type="text" name="keterangan" id="keterangan" value="<?php echo $this->data->get_keterangan(); ?>" size="50">
+				<label>Keterangan</label><textarea type="text" rows="8" name="keterangan" id="keterangan" value="<?php echo $this->data->get_keterangan(); ?>" size="50"></textarea>
 				
 				<ul class="inline tengah">
 					<li><input class="normal" type="reset" onclick="" value="BATAL"></li>

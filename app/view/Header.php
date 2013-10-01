@@ -30,7 +30,7 @@
                 <div class="kolom1">
                     <img src="<?php echo URL; ?>public/img/logo.png" style="padding-left: 20px; padding-bottom: 10px">
                 </div>
-                <div class="kolom2" align="right">
+                <div id="jam" class="kolom2" >
 
                     <p id="jam" onload="jam()"></p>
 

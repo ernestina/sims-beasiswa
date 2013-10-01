@@ -73,7 +73,7 @@
                 <th width="150">Fakultas</th>
                 <th width="250">Alamat</th>
                 <th width="50">Telepon</th>
-                <th width="30">Aksi</th>
+                <th width="61">Aksi</th>
             </thead>
 			<tbody>
 
@@ -86,8 +86,8 @@
                     echo "<td>".$val->get_nama()."</td>";
                     echo "<td>".$val->get_alamat()."</td>";
                     echo "<td>".$val->get_telepon()."</td>";
-                    echo "<td><a href=".URL."admin/delFakultas/".$val->get_kode_fakul().">X</a> | 
-                        <a href=".URL."admin/addFakultas/".$val->get_kode_fakul().">...</a></td>";
+                    echo "<td><a href=".URL."admin/delFakultas/".$val->get_kode_fakul()."><i class=\"icon-trash\"></i></a> &nbsp &nbsp 
+                        <a href=".URL."admin/addFakultas/".$val->get_kode_fakul()."><i class=\"icon-pencil\"></i></a></td>";
                     echo "</tr>";
                     $no++;
                 }

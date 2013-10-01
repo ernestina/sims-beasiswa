@@ -36,7 +36,7 @@
                                             <th width="100">Nama Pejabat</th>
                                             <th width="200">Jabatan</th>
                                             <th width="200">Jenis Jabatan</th>
-                                            <th width="30">Aksi</th>                
+                                            <th width="50">Aksi</th>                
                                             </thead>
                                             <?php
                                             $i = 1;
@@ -59,8 +59,8 @@
                                             }
                                                 ?></td>
                                                     <td>
-                                                        <?php echo "<a href=" . URL . "admin/delPejabat/" . $pejabat->kd_pejabat . " onclick=\"return del()\">X</a> | 
-                    <a href=" . URL . "admin/editPejabat/" . $pejabat->kd_pejabat . ">...</a>" ?>
+                                                        <?php echo "<a href=" . URL . "admin/delPejabat/" . $pejabat->kd_pejabat . " onclick=\"return del()\"><i class=\"icon-trash\"></i></a> &nbsp 
+                    <a href=" . URL . "admin/editPejabat/" . $pejabat->kd_pejabat . "><i class=\"icon-pencil\"></i></a>" ?>
                                                     </td>
                                                 </tr>
                                                 <?php

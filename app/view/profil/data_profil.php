@@ -75,14 +75,14 @@
 			<!--input type="file" id="skl" name="skl" /-->
 			<ul class="inline">
 				<li><input class="unggah" type="text" id="tgl_akhir_tb" disabled /></li>
-				<li><input type="button" value="Lihat" id="fileSKL"/><!--View file SKL-->
+				<li><input type="button" value="Lihat" id="fileSKL" class="lihat"/><!--View file SKL-->
 				</li>
 			</ul>
 			
 			<label class="isian">Tanggal Lapor Selesai TB :</label>
 			<ul class="inline">
 				<li><input class="unggah" type="text" id="tgl_lapor" disabled /></li>
-				<li><input type="button" value="Lihat" id="fileSKL"/><!--View file SPMT-->
+				<li><input type="button" value="Lihat" id="fileSPMT" class="lihat"/><!--View file SPMT-->
 				</li>
 			</ul>
 	</fieldset>
@@ -136,9 +136,9 @@
 		</div>
 		
 			<label class="isian">IPK :</label>
-			<input type="text" id="IPK" name="IPK" value="<?php echo $this->d_cur_ipk->get_ipk()/100;?>"/>
+			<!--input type="text" id="IPK" name="IPK" value="<?php echo $this->d_cur_ipk->get_ipk()/100;?>" disabled />
 			
-			<label class="isian">Unggah Transkrip:</label>
+			<label class="isian">Transkrip:</label-->
 			<?php 
                             $this->load("profil/tabel_nilai");
                         ?>
