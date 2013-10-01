@@ -191,17 +191,6 @@ class KontrakController extends BaseController {
         $this->view->load('kontrak/tabel_kontrak');
     }
 
-    public function get_data_biaya_by_kontrak($id = null) {
-        if ($id != "") {
-            $biaya = new Biaya();
-            $data = $biaya->get_by_kontrak($id);
-            $this->view->data = $data;
-            $this->view->load('kontrak/tabel_biaya');
-        } else {
-            header('location:' . URL . 'kontrak/display');
-        }
-    }
-
     public function biaya($id = null) {
         if ($id != "") {
             //menampilkan detil kontrak (header)
@@ -210,31 +199,32 @@ class KontrakController extends BaseController {
             $universitas = new Universitas($this->registry);
             $univ = $universitas->get_univ_by_jur($data_kontrak->kd_jurusan);
             $nama_univ = $univ->get_kode(); //mendapatkan nama singkatan universitas
-            
+
             $kontrak_lama = $kontrak->get_by_id($data_kontrak->kontrak_lama); //mendapatkan objek kontrak lama
             //var_dump($kontrak_lama);
             //echo $kontrak_lama->no_kontrak;
-            if($kontrak_lama != false){
+            if ($kontrak_lama != false) {
                 $kon_lama = $kontrak_lama->no_kontrak;
             } else {
                 $kon_lama = "";
             }
-            
+
             $jurusan = new Jurusan($this->registry);
             $jurusan->set_kode_jur($data_kontrak->kd_jurusan);
             $jur = $jurusan->get_jur_by_id($jurusan);
             //var_dump($jur->get_nama());
             $nama_jur = $jur->get_nama(); //mendapatkan nama jurusan
-            
             //menampilkan daftar biaya berdasarkan kontrak
             $biaya = new Biaya();
             $data_biaya = $biaya->get_by_kontrak($id); //mendapatkan objek biaya berdasarkan kd_kontrak (id)
-            
+            $total_biaya = $biaya->get_biaya_by_kontrak($id); //mendapatkan total biaya berdasarkan kd_kontrak (id)
+            //echo $total_biaya;
             //menyimpan variabel-variabel ke obje view
             $this->view->data_kontrak = $data_kontrak;
             $this->view->nama_univ = $nama_univ;
             $this->view->nama_jur = $nama_jur;
             $this->view->kon_lama = $kon_lama;
+            $this->view->total_biaya = $total_biaya;
             $this->view->data_biaya = $data_biaya;
             $this->view->render('kontrak/data_biaya');
         } else {
@@ -251,20 +241,42 @@ class KontrakController extends BaseController {
         header("Location:" . URL . "kontrak/display");
     }
 
-    public function rekambiaya($id = null) {
+    public function rekamBiaya($id = null) {
         if ($id != "") {
             $kontrak = new Kontrak();
             $data = $kontrak->get_by_id($id);
             //var_dump($kontrak);
-            $universitas = new Universitas($this->registry);
-            $this->view->universitas = $universitas;
-            $univ = $universitas->get_univ_by_jur($data->kd_jurusan);
-            $jurusan = new Jurusan($this->registry);
-            $jurusan->set_kode_jur($data->kd_jurusan);
-            $this->view->jurusan = $jurusan->get_jur_by_id($jurusan);
-            $this->view->univ = $univ;
-            $this->view->data = $data;
+            $this->view->kontrak = $data;
             $this->view->render('kontrak/rekam_biaya');
+        }
+        else if (isset($_POST['rekam_biaya'])) {
+            $biaya = new Biaya();
+            $biaya->kd_kontrak = $_POST['kd_kontrak'];
+            $biaya->nama_biaya = $_POST['nama_biaya'];
+            $biaya->biaya_per_pegawai = str_replace(',', '', $_POST['biaya_per_peg']);
+            $biaya->jml_pegawai_bayar = $_POST['jml_peg'];
+            $biaya->jadwal_bayar = date('Y-m-d', strtotime($_POST['jadwal_bayar']));
+            $biaya->jumlah_biaya = str_replace(',', '', $_POST['jml_biaya']);
+            $biaya->status_bayar = "belum";
+            //var_dump($biaya);
+            if ($biaya->isEmptyBiaya($biaya) == false) {
+                if (Validasi::validate_number($biaya->biaya_per_pegawai) == TRUE &&
+                        Validasi::validate_number($biaya->jmlh_pegawai_bayar) == TRUE &&
+                        Validasi::validate_number($biaya->jumlah_biaya) == TRUE) {
+                    $biaya->add($biaya);
+                    header('location:' . URL . 'kontrak/biaya/'.$biaya->kd_kontrak); 
+                } else {
+                    $url = URL . 'kontrak/rekamBiaya/' . $biaya->kd_kontrak;
+                    header("refresh:1;url=" . $url);
+                    echo "Isian Biaya per pegawai, jumlah pegawai dan jumlah biaya harus diisi angka.";
+                    //header('location:' . URL . 'kontrak/rekamBiaya/'.$biaya->kd_kontrak); 
+                }
+            } else {
+                $url = URL . 'kontrak/rekamBiaya/' . $biaya->kd_kontrak;
+                header("refresh:1;url=" . $url);
+                echo "Isian form belum lengkap.";
+                //header('location:' . URL . 'kontrak/rekamBiaya/'.$biaya->kd_kontrak); 
+            }
         } else {
             header("Location:" . URL . "kontrak/display");
         }
