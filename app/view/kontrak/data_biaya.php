@@ -24,7 +24,6 @@
         <th>Jumlah Pegawai yang dibayarkan</th>
         <th>Jumlah Biaya</th>
         <th>Jadwal dibayarkan</th>
-        <th>Jumlah dibayarkan</th>
         <th>Status Pembayaran</th>
         <th>No dan Tgl SP2D</th>
         <th>Aksi</th>
@@ -34,15 +33,14 @@
         foreach ($this->data_biaya as $val) { ?>
             <tr>
                 <td><?php echo $i; ?></td>
-                <td>Nama Biaya</td>
-                <td>Biaya per Pegawai</td>
-                <td>Jumlah Pegawai yang dibayarkan</td>
-                <td>Jumlah Biaya</td>
-                <td>Jadwal dibayarkan</td>
-                <td>Jumlah dibayarkan</td>
-                <td>Status Pembayaran</td>
-                <td>No dan Tgl SP2D</td>
-                <td>Aksi</td>
+                <td><?php echo $val->nama_tagihan; ?></td>
+                <td><?php echo $val->biaya_per_pegawai; ?></td>
+                <td><?php echo $val->jmlh_pegawai_bayar; ?></td>
+                <td><?php echo $val->jumlah_biaya; ?></td>
+                <td><?php echo $val->jadwal_bayar; ?></td>
+                <td><?php echo "status"; ?></td>
+                <td><?php echo $val->no_sp2d."/".$val->tgl_sp2d; ?></td>
+                <td></td>
             </tr>
 <?php } ?>
     </table>
