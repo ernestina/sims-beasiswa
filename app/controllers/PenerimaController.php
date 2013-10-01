@@ -18,29 +18,21 @@ class PenerimaController extends BaseController{
         $bank = new Bank($this->registry); //mendapatkan nama bank
         $jst = new JenisSuratTugas($this->registry); //mendapatkan jenis surat tugas
         $jur = new Jurusan($this->registry);
-//        $fakul = new Fakultas($this->registry);
         $univ = new Universitas($this->registry);
         $nilai = new Nilai($this->registry);
         $cuti = new Cuti($this->registry);
+        $mas = new MasalahPenerima($this->registry);
         $beaya = new Biaya();
         if(!is_null($id)){
             $pb->set_kd_pb($id);
             $this->view->d_pb = $pb->get_penerima_by_id($pb);
-//            var_dump($this->view->d_pb);
             $st->set_kd_st($this->view->d_pb->get_st());
             $this->view->d_st = $st->get_surat_tugas_by_id($st);
-//            var_dump($this->view->d_st);
             $this->view->d_bank = $bank->get_bank_id($this->view->d_pb->get_bank());
-//            var_dump($this->view->d_bank);
             $jur->set_kode_jur($this->view->d_pb->get_jur());
             $this->view->d_jur = $jur->get_jur_by_id($jur);
-//            var_dump($this->view->d_jur);
             $jst->set_kode($this->view->d_st->get_jenis_st());
             $this->view->d_jst = $jst->get_jst_by_id($jst);
-//            var_dump($this->view->d_jst);
-//            $fakul->set_kode_fakul($this->view->d_jur->get_kode_fakul());
-//            $fakul->get_fakul_by_id($fakul);
-//            $univ->set_kode_in($fakul->get_kode_univ());
             $this->view->d_univ = $univ->get_univ_by_jur($this->view->d_jur->get_kode_jur());
             $this->view->d_nil = $nilai->get_nilai($pb);
             $this->view->d_cur_ipk = $nilai->get_current_ipk($pb);
@@ -48,6 +40,7 @@ class PenerimaController extends BaseController{
             $this->view->d_rwt_beas = $pb->get_penerima_by_column($pb,'nip',true);
             $elem = $el->get_elem_per_pb($pb, false);
             $bea = $beaya->get_cost_per_pb($pb,false);
+            $this->view->d_mas = $mas->get_masalah($pb);
             $d_bea = array();
             /*
              * sementara versi dummy dulu ye :p
@@ -246,7 +239,7 @@ class PenerimaController extends BaseController{
         if(!is_null($_FILES['fupload'])){
             $upload = $this->registry->upload;
             $upload->init('fupload'); //awali dengan fungsi ini
-            $upload->setDirTo('files/'); //set direktori tujuan
+            $upload->setDirTo('files/foto'); //set direktori tujuan
             $ubahNama = array('KAKA','KIKI','KEKE'); //pola nama baru dalam array
             $upload->changeFileName($upload->getFileName(), $ubahNama); //ubah nama
             $data['FOTO_PB'] = $upload->getFileTo();
@@ -296,7 +289,112 @@ class PenerimaController extends BaseController{
         
         echo $return;
     }
-
+    
+    public function editpb($kode_pb){
+        $pb = new Penerima($this->registry); //mendapatkan informasi pb
+        $st = new SuratTugas($this->registry); //mendapatkan informasi surat tugas
+        $bank = new Bank($this->registry); //mendapatkan nama bank
+        $jst = new JenisSuratTugas($this->registry); //mendapatkan jenis surat tugas
+        $jur = new Jurusan($this->registry);
+        $univ = new Universitas($this->registry);
+        $nilai = new Nilai($this->registry);
+        $cuti = new Cuti($this->registry);
+        $mas = new MasalahPenerima($this->registry);
+        $pb->set_kd_pb($kode_pb);
+        $this->view->d_pb = $pb->get_penerima_by_id($pb);
+        $st->set_kd_st($this->view->d_pb->get_st());
+        $this->view->d_st = $st->get_surat_tugas_by_id($st);
+        $this->view->d_bank = $bank->get_bank_id($this->view->d_pb->get_bank());
+        $jur->set_kode_jur($this->view->d_pb->get_jur());
+        $this->view->d_jur = $jur->get_jur_by_id($jur);
+        $jst->set_kode($this->view->d_st->get_jenis_st());
+        $this->view->t_jst = $jst->get_jst();
+        $this->view->d_jst = $jst->get_jst_by_id($jst);
+        $this->view->d_univ = $univ->get_univ_by_jur($this->view->d_jur->get_kode_jur());
+        $this->view->d_nil = $nilai->get_nilai($pb);
+        $this->view->d_cur_ipk = $nilai->get_current_ipk($pb);
+        $this->view->d_cuti = $cuti->get_cuti($pb);
+        $this->view->d_rwt_beas = $pb->get_penerima_by_column($pb,'nip',true);
+        $this->view->d_mas = $mas->get_masalah($pb);
+        $this->view->render('profil/ubah_profil_v2');
+    }
+    
+    public function dialog_masalah($kd_pb){
+        $this->view->kd_pb = $kd_pb;
+        $pb = new Penerima($this->registry);
+        $pb->set_kd_pb($kd_pb);
+        $this->view->d_pb = $pb->get_penerima_by_id($pb);
+        $this->view->load('profil/dialog_masalah');
+    }
+    
+    public function add_problem(){
+        $kd_pb = $_POST['kd_pb'];
+        $uraian = $_POST['uraian'];
+        $sumber = $_POST['sumber'];
+        
+        $mas = new MasalahPenerima($this->registry);
+        $mas->set_kode_pb($kd_pb);
+        $mas->set_uraian($uraian);
+        $mas->set_sumber_masalah($sumber);
+        $mas->add_masalah();
+    }
+    
+    public function get_masalah($kd_pb){
+        $pb = new Penerima($this->registry);
+        $pb->set_kd_pb($kd_pb);
+        
+        $mas = new MasalahPenerima($this->registry);
+        $this->view->d_mas = $mas->get_masalah($pb);
+        
+        $this->view->load('profil/tabel_masalah');
+    }
+    
+    public function dialog_nilai($kd_pb){
+        $this->view->kd_pb = $kd_pb;
+        $pb = new Penerima($this->registry);
+        $pb->set_kd_pb($kd_pb);
+        $this->view->d_pb = $pb->get_penerima_by_id($pb);
+        $this->view->load('profil/dialog_nilai');
+    }
+    
+    public function add_nilai(){
+        $kd_pb = $_POST['kd_pb'];
+        $ips = $_POST['ips'];
+        $ipk = $_POST['ipk'];
+        $sem = $_POST['semester'];
+        $pb = new Penerima($this->registry);
+        $pb->set_kd_pb($kd_pb);
+        $d_pb = $pb->get_penerima_by_id($pb);
+        /*
+         * upload file
+         */
+        $upload = new Upload();
+        $upload->init('sfile');
+        $upload->setDirTo('files/transkrip');
+        $nm_file = array('TRANSKRIP',$d_pb->get_nip(),$sem);
+        $upload->changeFileName($upload->getFileName(), $nm_file);
+        $file = $upload->getFileName();
+        $upload->uploadFile();
+        /*
+         * rekam nilai di tabel d_nil
+         */
+        $nilai = new Nilai($this->registry);
+        $nilai->set_pb($kd_pb);
+        $nilai->set_ips($ips);
+        $nilai->set_ipk($ipk);
+        $nilai->set_semester($sem);
+        $nilai->set_file($file);
+        $nilai->add_nilai();
+    }
+    
+    public function get_nilai($kd_pb){
+        $pb = new Penerima($this->registry);
+        $pb->set_kd_pb($kd_pb);
+        
+        
+        
+        $this->view->load('profil/tabel_nilai');
+    }
 
     public function __destruct() {
         parent::__destruct();

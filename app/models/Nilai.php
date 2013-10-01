@@ -13,6 +13,7 @@ class Nilai{
     private $_ips;
     private $_ipk;
     private $_sem;
+    private $_file;
     private $_tb_nilai = 'd_nil_pb';
     
     public function __construct($registry) {
@@ -48,6 +49,10 @@ class Nilai{
         }
         return $this;
     }
+    
+    public function add_nilai(){
+        
+    }
 
 
     /*
@@ -69,7 +74,9 @@ class Nilai{
     public function set_semester($semester){
         $this->_sem = $semester;
     }
-    
+    public function set_file($file){
+        $this->_file = $file;
+    }
     /*
      * getter
      */
@@ -87,6 +94,9 @@ class Nilai{
     }
     public function get_semester(){
         return $this->_sem;
+    }
+    public function get_file(){
+        return $this->_file;
     }
     
     public function __destruct() {

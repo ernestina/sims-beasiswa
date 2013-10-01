@@ -11,35 +11,36 @@
 
 
 		<form action="#" method="post">
+                    <input type="hidden" id="id_pb" value="<?php echo $this->d_pb->get_kd_pb();?>">
 			<label class="isian">NIP :</label>
-			<input type="text" id="NIP" name="NIP" disabled />
+			<input type="text" id="NIP" name="NIP" disabled value="<?php echo $this->d_pb->get_nip();?>"/>
 			
 			<label class="isian">Nama :</label>
-			<input type="text" id="nama" name="nama" disabled />
+			<input type="text" id="nama" name="nama" disabled value="<?php echo $this->d_pb->get_nama();?>"/>
 
 			<label class="isian">Jenis Kelamin :</label>
-			<input type="text" id="jenis_kelamin" name="jenis_kelamin" disabled />
+			<input type="text" id="jenis_kelamin" name="jenis_kelamin" disabled value="<?php echo ($this->d_pb->get_jkel()==1)?'Laki-laki':'Perempuan';?>"/>
 			
 			<label class="isian">Pangkat/Gol :</label>
-			<input type="text" id="pangkat" name="pangkat" disabled />
+                        <input type="text" id="pangkat" name="pangkat" disabled value="<?php echo Golongan::golongan_int_string($this->d_pb->get_gol());?>"/>
 			
 			<label class="isian">Unit Asal :</label>
-			<input type="text" id="asal" name="asal" disabled />
+			<input type="text" id="asal" name="asal" disabled value="<?php echo $this->d_pb->get_unit_asal();?>"/>
 			
 			<label class="isian">Alamat :</label>
-			<textarea type="text" id="alamat" name="alamat" rows="7"/></textarea>
+			<textarea type="text" id="alamat" name="alamat" rows="7"/><?php echo $this->d_pb->get_alamat();?></textarea>
 			
 			<label class="isian">Email :</label>
-			<input type="email" id="email" name="email" />
+			<input type="email" id="email" name="email" value="<?php echo $this->d_pb->get_email();?>"/>
 			
 			<label class="isian">No. HP :</label>
-			<input type="text" id="hp" name="hp" />
+			<input type="text" id="hp" name="hp" value="<?php echo $this->d_pb->get_telp();?>"/>
 			
 			<label class="isian">Bank Penerima</label>
-			<input type="text" id="bank" name="bank" />
+			<input type="text" id="bank" name="bank" value="<?php echo $this->d_bank->get_nama();?>"/>
 			
 			<label class="isian">No Rekening</label>
-			<input type="text" id="rekening" name="rekening" />
+			<input type="text" id="rekening" name="rekening" value="<?php echo $this->d_pb->get_no_rek();?>"/>
 			
 			<label class="isian">Unggah Foto:</label>
 			<ul class="inline">
@@ -55,37 +56,46 @@
 	<div class="kolom2">
 		<fieldset><legend>Profil Beasiswa</legend>
 			<label class="isian">No. Surat Tugas (ST) :</label>
-			<input type="text" id="st" name="st" disabled />
+			<input type="text" id="st" name="st" disabled value="<?php echo $this->d_st->get_nomor();?>"/>
 			
 			<label class="isian">Tanggal ST :</label>
-			<input type="text" id="tgl_st" name="tanggal_st" disabled />
+                        <input type="text" id="tgl_st" name="tanggal_st" disabled value="<?php echo Tanggal::tgl_indo($this->d_st->get_tgl_st());?>"/>
 
 			<label class="isian">Tanggal Mulai ST :</label>
-			<input type="text" id="tgl_mulai_st" name="tgl_mulai_st" disabled />
+			<input type="text" id="tgl_mulai_st" name="tgl_mulai_st" disabled value="<?php echo Tanggal::tgl_indo($this->d_st->get_tgl_mulai());?>"/>
 			
 			<label class="isian">Tanggal Akhir ST :</label>
-			<input type="text" id="tgl_akhir_st" name="tgl_akhir_st" disabled />
+			<input type="text" id="tgl_akhir_st" name="tgl_akhir_st" disabled value="<?php echo Tanggal::tgl_indo($this->d_st->get_tgl_selesai());?>"/>
 			
 			<label class="isian">Jenis Beasiswa :</label>
-			<input type="text" id="jenis_beasiswa" name="jenis_beasiswa" disabled />
+			<input type="text" id="jenis_beasiswa" name="jenis_beasiswa" disabled value="<?php // echo $this->d_st->get_jns_beasiswa();?>"/>
 			
 			<label class="isian">Universitas :</label>
-			<input type="text" id="universitas" name="universitas" disabled />
+			<input type="text" id="universitas" name="universitas" disabled value="<?php echo $this->d_univ->get_nama();?>"/>
 			
 			<label class="isian">Jurusan :</label>
-			<input type="text" id="jurusan" name="jurusan"disabled />
+			<input type="text" id="jurusan" name="jurusan"disabled value="<?php echo $this->d_jur->get_nama();?>"/>
 			
 			<label class="isian">Tahun Masuk :</label>
-			<input type="text" id="th_masuk" name="th_masuk" disabled />
+			<input type="text" id="th_masuk" name="th_masuk" disabled value="<?php echo $this->d_st->get_th_masuk();?>"/>
 			
 			<label class="isian">Status Tugas Belajar (TB) :</label>
 			<select type="text">
-				<option>belum lulus</option>
+<!--				<option>belum lulus</option>
 				<option>lulus</option>
 				<option>lulus awal waktu</option>
 				<option>lulus dengan perpanjangan 1</option>
 				<option>lulus dengan perpanjangan 2</option>
-				<option>tidak lulus</option>
+				<option>tidak lulus</option>-->
+                                <?php 
+                                    foreach ($this->t_jst as $v){
+                                        if($v->get_kode()==$this->d_jst->get_kode()){
+                                            echo "<option value=".$v->get_kode()." selected>".$v->get_nama()."</option>";
+                                        }else{
+                                            echo "<option value=".$v->get_kode().">".$v->get_nama()."</option>";
+                                        }
+                                    }
+                                ?>
 			</select>
 			<!--row berikut hanya muncul jika status TB: lulus dan/atau tidak lulus -->
 			
@@ -120,17 +130,34 @@
 		<div class="kolom5">
 		
 			<label class="isian2">Judul Tugas Akhir/Skripsi/Thesis/Desertasi :</label>
-			<textarea class="midi" type="text" rows="4"></textarea>
+			<textarea class="midi" type="text" rows="4"><?php echo $this->d_pb->get_skripsi();?></textarea>
 			<label class="isian2">Permasalahan Tugas Belajar :</label>
-			<textarea class="midi" type="text" rows="8"></textarea>
-			
+                        <input type="button" value="+" id="add_problem">
+<!--			<textarea class="midi" type="text" rows="8"></textarea>-->
+                        <div id="t_masalah">
+                        <?php 
+                            $this->load('profil/tabel_masalah');
+                        ?>
+			</div> 
 		</div>
 		
 			<label class="isian">IPK :</label>
-			<input type="text" id="IPK" name="IPK" />
+			<input type="text" id="IPK" name="IPK" value="<?php echo $this->d_cur_ipk->get_ipk()/100;?>"/>
 			
 			<label class="isian">Unggah Transkrip:</label>
-			<ul class="inline">
+                        <ul class="inline">
+				<li><input type="file" id="IPK" name="fileipk" style="display: none" onChange="IPKchange();"/>
+				<input class="unggah" type="text" id="namafileipk" disabled /></li>
+				<li><input type="button" value="Pilih..." id="fakeBrowse" onclick="Pilih();"/>
+				</li>
+			</ul>
+			<input type="button" value="+" id="add_nilai">
+                        <div id="t_nilai">
+                        <?php 
+                            $this->load("profil/tabel_nilai");
+                        ?>
+                            </div>
+<!--			<ul class="inline">
 				<li><input type="file" id="IPK" name="fileipk" style="display: none" onChange="IPKchange();"/>
 				<input class="unggah" type="text" id="namafileipk" disabled /></li>
 				<li><input type="button" value="Pilih..." id="fakeBrowse" onclick="Pilih();"/>
@@ -158,7 +185,7 @@
 						<td><input type="button" value="Pilih..." id="uplod_ip" name="uplod_ip" /></td>
 					</tr>
 				</tbody>
-			</table>
+			</table>-->
 		
 		</fieldset>
 	</div>
@@ -172,6 +199,52 @@
 </body>
 
 <script language="JavaScript" type="text/javascript">
+$(function(){
+    $('#add_problem').click(function(){
+        open_dialog(document.getElementById('id_pb').value,'problem');
+    });
+    
+    $('#add_nilai').click(function(){
+        open_dialog(document.getElementById('id_pb').value,'nilai');
+    });
+});
+
+function callFromDialog(id_pb,kategori){
+    switch(kategori){
+        case 'problem':
+            $.ajax({
+                type:'POST',
+                url:'<?php echo URL;?>penerima/get_masalah/'+id_pb,
+                data:'',
+                success:function(data){
+                    $('#t_masalah').fadeIn(200);
+                    $('#t_masalah').html(data);
+                }
+            })
+            break;
+        case 'nilai':
+            alert(id_pb);
+            break;
+    }
+    
+}
+function open_dialog(id_pb,kategori){
+    switch(kategori){
+        case 'problem':
+            var url = "<?php echo URL;?>penerima/dialog_masalah/"+id_pb;
+            break;
+        case 'nilai':
+            var url = "<?php echo URL;?>penerima/dialog_nilai/"+id_pb;
+            break;
+    }
+    
+    var w = 370;
+    var h = 500;
+    var left = (screen.width/2)-(w/2);
+    var top = (screen.height/2)-(h/2);
+    var title = "rekam penerima beasiswa";
+    window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+}
 function HandleBrowseClick()
 {
     var fileinput = document.getElementById("SKL");

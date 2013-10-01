@@ -98,24 +98,25 @@
 				</thead>
 				<tbody>
                                     <?php $no=1;
+                                        $jml_biaya = 0;
                                     foreach($this->d_bea as $v){ ?>
 				<tr>
 					<td><?php echo $no ;?></td>
-					<td><?php echo $v->get_nama_biaya();?></td>
+					<td><?php echo strtoupper($v->get_nama_biaya());?></td>
 					<td align="right">
 						<?php 
 						echo number_format($v->get_jumlah_biaya(),2,',','.'); ?>
 					</td>
 				</tr>
-                                <?php $no++; } ?>
-<!--				<tr>
-					<td>2</td>
-					<td>qwertyui</td>
+                                <?php $jml_biaya += (int) $v->get_jumlah_biaya();$no++; } ?>
+				<tr>
+					<td></td>
+					<td><b>Jumlah</b></td>
 					<td align="right">
-						<?php $harga=100000;
-						echo number_format($harga,2,',','.'); ?>
+						<?php 
+						echo "<b>".number_format($jml_biaya,2,',','.')."</b>"; ?>
 					</td>
-				</tr>-->
+				</tr>
 				</tbody>
 			</table>
 	
@@ -131,14 +132,19 @@
 			<label class="isian2">Judul Skripsi :</label>
 			<textarea class="midi" type="text"><?php echo $this->d_pb->get_skripsi();?></textarea>
 			<label class="isian2">Permasalahan Tugas Belajar :</label>
-			<textarea class="midi" type="text" rows="8"></textarea>
+<!--			<textarea class="midi" type="text" rows="8"></textarea>-->
+                        <?php 
+                            $this->load('profil/tabel_masalah');
+                        ?>
 			
 		</div>
 		
 			<label class="isian">IPK :</label>
 			<!--input type="text" id="IPK" name="IPK" value="<?php echo $this->d_cur_ipk->get_ipk()/100;?>" disabled />
 			
-			<label class="isian">Transkrip:</label-->
+
+		<label class="isian">Unggah Transkrip:</label>-->
+
 			<?php 
                             $this->load("profil/tabel_nilai");
                         ?>
@@ -199,13 +205,19 @@
 		
 	</fieldset>
 </div> <!--div level 4-->
-<input class="sukses" type="submit" value="UBAH" style="font-size: 130%; margin-top:20px"/>
+<input class="sukses" id="bt_edit" type="button" value="UBAH"  style="font-size: 130%; margin-top:20px"/>
 
 
 </div> <!--top-->
 </body>
 
 <script language="JavaScript" type="text/javascript">
+    
+$(function(){
+    $('#bt_edit').click(function(){
+        window.location.href="<?php echo URL;?>penerima/editpb/<?php echo $this->d_pb->get_kd_pb();?>";
+    })
+})
 function HandleBrowseClick()
 {
     var fileinput = document.getElementById("SKL");
