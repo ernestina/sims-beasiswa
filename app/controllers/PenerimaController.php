@@ -368,13 +368,13 @@ class PenerimaController extends BaseController{
         /*
          * upload file
          */
-        $upload = new Upload();
-        $upload->init('sfile');
-        $upload->setDirTo('files/transkrip');
+        //        $upload = new Upload();
+        $this->registry->upload->init('sfile');
+        $this->registry->upload->setDirTo('files/transkrip');
         $nm_file = array('TRANSKRIP',$d_pb->get_nip(),$sem);
-        $upload->changeFileName($upload->getFileName(), $nm_file);
-        $file = $upload->getFileName();
-        $upload->uploadFile();
+        $this->registry->upload->changeFileName($this->registry->upload->getFileName(), $nm_file);
+        $file = $this->registry->upload->getFileName();
+        $this->registry->upload->uploadFile();
         /*
          * rekam nilai di tabel d_nil
          */
@@ -390,7 +390,8 @@ class PenerimaController extends BaseController{
     public function get_nilai($kd_pb){
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($kd_pb);
-        
+        $nil = new Nilai($this->registry);
+        $this->view->d_nil= $nil->get_nilai($pb);
         
         
         $this->view->load('profil/tabel_nilai');

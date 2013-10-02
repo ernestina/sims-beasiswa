@@ -51,7 +51,15 @@ class Nilai{
     }
     
     public function add_nilai(){
+        $data = array(
+            'KD_PB'=>$this->get_pb(),
+            'IPS_NIL_PB'=>$this->get_ips(),
+            'IPK_NIL_PB'=>$this->get_ipk(),
+            'SEM_NIL_PB'=>$this->get_semester(),
+            'FILE_NIL_PB'=>$this->get_file()
+        );
         
+        $this->registry->db->insert($this->_tb_nilai,$data);
     }
 
 

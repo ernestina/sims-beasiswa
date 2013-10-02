@@ -223,7 +223,15 @@ function callFromDialog(id_pb,kategori){
             })
             break;
         case 'nilai':
-            alert(id_pb);
+            $.ajax({
+                type:'POST',
+                url:'<?php echo URL;?>penerima/get_nilai/'+id_pb,
+                data:'',
+                success:function(data){
+                    $('#t_nilai').fadeIn(200);
+                    $('#t_nila').html(data);
+                }
+            });
             break;
     }
     

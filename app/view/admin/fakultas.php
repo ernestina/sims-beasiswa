@@ -86,7 +86,7 @@
                     echo "<td>".$val->get_nama()."</td>";
                     echo "<td>".$val->get_alamat()."</td>";
                     echo "<td>".$val->get_telepon()."</td>";
-                    echo "<td><a href=".URL."admin/delFakultas/".$val->get_kode_fakul()."><i class=\"icon-trash\"></i></a> &nbsp &nbsp 
+                    echo "<td><a href=".URL."admin/delFakultas/".$val->get_kode_fakul()." onclick=\"return del('".$val->get_nama()."')\"><i class=\"icon-trash\"></i></a> &nbsp &nbsp 
                         <a href=".URL."admin/addFakultas/".$val->get_kode_fakul()."><i class=\"icon-pencil\"></i></a></td>";
                     echo "</tr>";
                     $no++;
@@ -128,6 +128,15 @@ function hideWarning(){
         }
     })
 
+}
+
+function del(fakultas){
+    var text = "Yakin data fakultas "+fakultas+" akan dihapus?\npenghapusan akan mengakibatkan terhapusnya jurusan di bawahnya!";
+    if(confirm(text)){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 function cek(){

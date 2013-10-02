@@ -122,7 +122,7 @@
                     echo "<td>".$val->get_pic()."</td>";
                     echo "<td>".$val->get_telp_pic()."</td>";
                     echo "<td>".$val->get_status()."</td>";
-                    echo "<td><a href=".URL."admin/delJurusan/".$val->get_kode_jur()."><i class=\"icon-trash\"></i></a> &nbsp  
+                    echo "<td><a href=".URL."admin/delJurusan/".$val->get_kode_jur()." onclick=\"return del('".$val->get_nama()."')\"><i class=\"icon-trash\"></i></a> &nbsp  
                         <a href=".URL."admin/addJurusan/".$val->get_kode_jur()."><i class=\"icon-pencil\"></i></a></td>";
                     echo "</tr>";
                     $no++;
@@ -177,6 +177,15 @@ function hideWarning(){
         }
     })
 
+}
+
+function del(jurusan){
+    var text = "Yakin data jurusan "+jurusan+" akan dihapus?";
+    if(confirm(text)){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 function cek(){

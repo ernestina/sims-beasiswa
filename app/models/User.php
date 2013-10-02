@@ -48,25 +48,23 @@ class User {
 
     public function getUser_id($KD_USER) {
 
-        $sql = "SELECT * FROM " . $this->_table . " WHERE KD_USER = " . $KD_USER . "";
-
+        $sql = "SELECT * FROM " . $this->_table . " WHERE KD_USER = " . $KD_USER;
         $result = $this->_db->select($sql);
-
-        $data = array();
+//        $data = array();
 
         foreach ($result as $value) {
-            $user = new User($registry);
-            $user->set_id($value['KD_USER']);
-            $user->set_nip($value['NIP_USER']);
-            $user->set_nmUser($value['NM_USER']);
-            $user->set_pass($value['PASS_USER']);
-            $user->set_akses($value['AKSES_USER']);
-            $user->set_foto($value['FOTO_USER']);
+//            $user = new User($this->registry);
+            $this->set_id($value['KD_USER']);
+            $this->set_nip($value['NIP_USER']);
+            $this->set_nmUser($value['NM_USER']);
+            $this->set_pass($value['PASS_USER']);
+            $this->set_akses($value['AKSES_USER']);
+            $this->set_foto($value['FOTO_USER']);
 
-            $data = $user;
+//            $data = $user;
         }
-
-        return $data;
+        
+        return $this;
     }
 
     public function check_user_nip($nip) {

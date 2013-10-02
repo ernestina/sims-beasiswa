@@ -54,11 +54,13 @@ class Jurusan{
         }
         $result = $this->db->select($sql);
         $data = array();
+		$strata = new Strata();
         foreach ($result as $val){
             $jur = new $this($this->registry);
             $jur->set_kode_jur($val['KD_JUR']);
             $jur->set_kode_fakul($val['KD_FAKUL']);
-            $jur->set_kode_strata($val['KD_STRATA']);
+            $str_jur = $strata->get_by_id($val['KD_STRATA']);
+            $jur->set_kode_strata($str_jur->nama_strata);
             $jur->set_nama($val['NM_JUR']);
             $jur->set_alamat($val['ALMT_JUR']);
             $jur->set_telepon($val['TELP_JUR']);
@@ -175,7 +177,7 @@ class Jurusan{
             $this->_error .= "PIC jurusan belum diinput!</br>";
             $this->_valid = FALSE;
         }
-        if($this->get_telp_pic()=="" OR !Validasi::validate_telephone($this->get_telepon())){
+        if($this->get_telp_pic()=="" OR !Validasi::validate_number($this->get_telepon())){
             $this->_error .= "telepon PIC belum diinput!</br>";
             $this->_valid = FALSE;
         }

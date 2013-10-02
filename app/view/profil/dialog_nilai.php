@@ -17,7 +17,13 @@
             <div id="winput" class="error"></div>
             <tr><td><label>IPS</label></td><td><input type="text" id="ips" name="ips"></td></tr>
             <tr><td><label>IPK</label></td><td><input type="text" id="ipk" name="ipk"></td></tr>
-            <tr><td><label>Semester</label></td><td><input type="text" id="semester" name="semester"></td></tr>
+            <tr><td><label>Semester</label></td><td><select id="semester" name="semester">
+                        <?php 
+                            for($i=1;$i<=10;$i++){
+                                echo "<option value=$i>Semester $i</option>";
+                            }
+                        ?>
+                    </select></td></tr>
             <tr><td><label>File</label></td><td><input type="file" id="sfile" name="sfile"></td></tr>
             <tr><td colspan="2"><input type="button" id="bt_ok" value="simpan" onclick="return goSelect();"></td></tr>
         </table>
@@ -87,6 +93,16 @@
             $('#winput').fadeIn(200);
             
             return false;
+        }else{
+            var fsplit = sfile.split(".");
+            var ext = fsplit[fsplit.length-1];
+            if(ext!='pdf'){
+                var winput = "Format file harus pdf!"
+                $('#winput').html(winput);
+                $('#winput').fadeIn(200);
+
+                return false;
+            }
         }
         
         var formData = new FormData($('#form_rekam')[0]);

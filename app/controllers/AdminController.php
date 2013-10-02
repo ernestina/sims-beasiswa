@@ -347,7 +347,9 @@ class AdminController extends BaseController {
                 $this->view->data = $univ->get_univ();
                 //        var_dump($this->view->d_ubah);
                 $this->view->render('admin/universitas');
-            }
+            }else{
+				header('location:' . URL . 'admin/addUniversitas');
+			}
         }
 
 
@@ -388,7 +390,9 @@ class AdminController extends BaseController {
             $this->view->univ = $univ->get_univ();
             $this->view->data = $fakul->get_fakul();
             $this->view->render('admin/fakultas');
-        }
+        }else{
+			header('location:' . URL . 'admin/addFakultas');
+		}
 
 //        header('location:' . URL . 'admin/addFakultas');
     }

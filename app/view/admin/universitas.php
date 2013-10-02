@@ -80,6 +80,7 @@
                 <th>Alamat</th>
                 <th>Telepon</th>
                 <th>lokasi</th>
+				<th>PIC</th>
                 <th width="50">Aksi</th>
             </thead>
             <tbody>
@@ -93,7 +94,8 @@
                     echo "<td>".$val->get_alamat()."</td>";
                     echo "<td>".$val->get_telepon()."</td>";
                     echo "<td>".$val->get_lokasi()."</td>";
-                    echo "<td><a href=".URL."admin/delUniversitas/".$val->get_kode_in()."><i class=\"icon-trash\"></i></a> &nbsp &nbsp 
+					echo "<td>".$val->get_pic()."</td>";
+                    echo "<td><a href=".URL."admin/delUniversitas/".$val->get_kode_in()." onclick=\"return del('".$val->get_nama()."')\"><i class=\"icon-trash\"></i></a> &nbsp &nbsp 
                         <a href=".URL."admin/addUniversitas/".$val->get_kode_in()."><i class=\"icon-pencil\"></i></a></td>";
                     echo "</tr>";
                     $no++;
@@ -148,6 +150,15 @@ function hideWarning(){
     })
 
 }
+
+function del(univ){
+    var text = "Yakin data universitas "+univ+" akan dihapus?\npenghapusan akan mengakibatkan ikut terhapusnya fakultas dan jurusan dibawahnya!";
+    if(confirm(text)){
+        return true;
+    }else{
+        return false;
+    }
+}
     
 function cek(){
     var kode = document.getElementById('kode').value;
@@ -183,6 +194,12 @@ function cek(){
         $('#wtelepon').fadeIn(0);
         $('#wtelepon').html(wtelepon);
         jml++;
+    }else if(!telepon.match('^[0-9]*$')){
+            var wtelepon= 'Format telepon salah!';
+            $('#wtelepon').fadeIn(0);
+            $('#wtelepon').html(wtelepon);
+            jml++;
+        
     }
     
     if(lokasi==''){
