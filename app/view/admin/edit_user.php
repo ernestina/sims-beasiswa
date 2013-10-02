@@ -10,12 +10,16 @@
                         <input type="hidden" name="id" id="id" value="<?php echo $this->data->get_id(); ?>" size="30">
                         <label>NIP</label><input type="text" name="nip" id="nip" value="<?php echo $this->data->get_nip(); ?>" size="30"/><div id="warningnip" ></div>
                         <label>Nama</label><input type="text" name="nama" id="nama" value="<?php echo $this->data->get_nmUser(); ?>" size="30"/><div id="warningnama" ></div>
-                        <label>Password</label><input type="password" name="pass" id="pass" value="" size="30"/><div id="warningpass" ></div>
-                        <label>Confirm Password</label><input type="password" name="cpass" id="cpass" value="" size="30"/>
-                        <label>Akses</label><input type="text" name="akses" id="akses" value="<?php echo $this->data->get_akses(); ?>" size="30"/><div id="warningakses" ></div>
+                        <label>Password</label><input type="password" name="pass" id="pass" value="no_change" size="30"/><div id="warningpass" ></div>
+                        <label>Confirm Password</label><input type="password" name="cpass" id="cpass" value="no_change" size="30"/>
+                       <label>AKSES</label>
+                        <select type="text" name="akses">
+                            <option value="User">User</option>
+                            <option value="Admin">Admin</option>                          
+                        </select>
                         <label>Upload Foto</label><input type="file" name="foto" id="foto" value="" size="30"/>
                         <ul class="inline tengah">
-                            <li><input class="normal" type="reset" onclick="" value="BATAL"></li>
+                            <li><input class="normal" type="reset" onclick="window.location.href='<?php echo URL."admin/listUser"; ?>'" value="BATAL"></li>
                             <li><input class="sukses" type="submit" name="submit" value="SIMPAN" onclick=""></li>
                         </ul>
                     </div>
@@ -33,7 +37,7 @@
                     <th width="5%">No</th>
                     <th width="30%">NIP</th>
                     <th width="40%">Nama</th>
-                    <th width="20%">Pass</th>
+                  
                     <th width="15%">Akses</th>                     
                     </thead>
                     <tbody>
@@ -44,7 +48,7 @@
                             echo '<td>' . $i. '</td>';
                             echo '<td>' . $value->get_nip() . '</td>';
                             echo '<td>' . $value->get_nmUser() . '</td>';
-                            echo '<td>' . $value->get_pass() . '</td>';
+                          
                             echo '<td>' . $value->get_akses() . '</td>';
                             echo '</tr>';
                             
@@ -75,30 +79,14 @@
             $('#warningnama').addClass('error');
             jml++;
         }
-    
-        if (document.myform.akses.value==""){
-            var warning5 = 'akses belum diisi';
-            $('#warningakses').fadeIn(0);
-            $('#warningakses').html(warning5);
-            $('#warningakses').addClass('error');
-            jml++;
-        }
-        if(document.myform.pass.value==""){
-          var warning3 = 'password harus diisi';
-          $('#warningpass').fadeIn(0);
-          $('#warningpass').html(warning3);
-          $('#warningpass').addClass('error');
-          jml++;
-        } else {
-            if(document.myform.pass.value!==document.myform.cpass.value){
+        if(document.myform.pass.value!==document.myform.cpass.value){
                 var warning4 = 'password tidak sama dengan confirm password nya';
                 $('#warningpass').fadeIn(0);
                 $('#warningpass').html(warning4);
                 $('#warningpass').addClass('error');
                 jml++;
             }
-        }
-        
+          
         if (jml>0){
             return false;
         }

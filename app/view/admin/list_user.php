@@ -12,11 +12,15 @@
                         <label>Nama</label><input type="text" name="nama" id="nama" value="" size="30"/><div id="warningnama"></div>
                         <label>PASS</label><input type="password" name="pass" id="pass" value="" size="30"/><div id="warningpass"></div>
                         <label>CONFIRM PASS</label><input type="password" name="cpass" id="cpass" value="" size="30"/>
-                        <label>AKSES</label><input type="text" name="akses" id="akses" value="" size="30"/><div id="warningakses"></div>
+                        <label>AKSES</label>
+                        <select type="text" name="akses">
+                            <option value="User">User</option>
+                            <option value="Admin">Admin</option>                          
+                        </select>
                         <label>Upload Foto</label><input type="file" name="foto" id="upload" value="" size="30"/>
 
                         <ul class="inline tengah">
-                            <li><input class= "normal" type="reset" onclick="" value="BATAL"></li>
+                            <li><input class= "normal" type="reset" onclick="window.location.href='<?php echo URL."admin/listUser"; ?>'" value="BATAL"></li>
                             <li><input class= "sukses" type="submit" name="submit" value="SIMPAN"></li>
                         </ul>
                     </div> <!--end class kiri-->
@@ -35,7 +39,7 @@
                     <th width="5%">No</th>
                     <th width="20%">NIP</th>
                     <th width="30%">Nama</th>
-                    <th width="20%">Pass</th>
+                    
                     <th width="5%">Akses</th>               
                     <th width="9%">Aksi</th>
                     </thead>
@@ -47,7 +51,7 @@
                             echo '<td>' . $i . '</td>';
                             echo '<td>' . $value->get_nip() . '</td>';
                             echo '<td>' . $value->get_nmUser() . '</td>';
-                            echo '<td>' . $value->get_pass() . '</td>';
+                            
                             echo '<td>' . $value->get_akses() . '</td>';
                             echo '<td>
                         <a href="' . URL . 'Admin/deleteUser/' . $value->get_id() . '"><i class="icon-trash"></i></a> &nbsp &nbsp
@@ -63,6 +67,23 @@
     </div>
 </div>
 <script type="text/javascript">
+    $('#nip').keyup(function() {   
+        $('#warningnip').fadeOut(0);             
+    });
+    $('#nama').keyup(function() {   
+        $('#warningnama').fadeOut(0);             
+    });
+    $('#pass').keyup(function() {   
+        $('#warningpass').fadeOut(0);             
+    });
+    $('#nip').keyup(function() { 
+        var angka = /^\d{18}$/;
+        var angka2 = /^\d{9}$/;
+        if (angka.test($('#nip').val())==false && angka2.test($('#nip').val())==false){
+            viewError('warningnip','NIP harus diisi dengan 9 atau 18 digit angka!'); 
+        }             
+    });
+   
     function validate(){
         var jml=0;
         
@@ -79,21 +100,13 @@
             $('#warningnama').html(warning2);
             $('#warningnama').addClass('error');
             jml++;
-        }
-    
-        if (document.myform.akses.value==""){
-            var warning5 = 'akses belum diisi';
-            $('#warningakses').fadeIn(0);
-            $('#warningakses').html(warning5);
-            $('#warningakses').addClass('error');
-            jml++;
-        }
+        }   
         if(document.myform.pass.value==""){
-          var warning3 = 'password harus diisi';
-          $('#warningpass').fadeIn(0);
-          $('#warningpass').html(warning3);
-          $('#warningpass').addClass('error');
-          jml++;
+            var warning3 = 'password harus diisi';
+            $('#warningpass').fadeIn(0);
+            $('#warningpass').html(warning3);
+            $('#warningpass').addClass('error');
+            jml++;
         } else {
             if(document.myform.pass.value!==document.myform.cpass.value){
                 var warning4 = 'password tidak sama dengan confirm password nya';
