@@ -189,6 +189,36 @@ class Biaya extends BaseModel {
         return $cek;
     }
 
+public function get_cost_per_pb(Penerima $pb,$lunas=false){
+        
+        $sql = "SELECT CONCAT(c.NO_KON,',',c.TGL_KON) as KD_KONTRAK,
+            a.NM_TAGIHAN AS NM_TAGIHAN,
+            a.BIAYA_PER_PEG_TAGIHAN AS BIAYA_PER_PEG_TAGIHAN,
+            a.NO_SP2D_TAGIHAN as NO_SP2D_TAGIHAN,
+            a.TGL_SP2D_TAGIHAN as TGL_SP2D_TAGIHAN
+            FROM d_tagihan a 
+            LEFT JOIN t_tagihan_kontrak b ON a.KD_TAGIHAN=b.KD_TAGIHAN
+            LEFT JOIN d_kontrak c ON a.KD_KON=c.KD_KON 
+            WHERE b.KD_PB=".$pb->get_kd_pb();
+        
+        if($lunas){
+            $sql .= " AND a.NO_SP2D_TAGIHAN<>NULL";
+        }
+        $result = $this->db->select($sql);
+        $data = array();
+        foreach ($result as $v){
+            $bea = new $this;
+            $bea->kd_kontrak = $v['KD_KONTRAK'];
+            $bea->nama_tagihan = $v['NM_TAGIHAN'];
+            $bea->biaya_per_pegawai = $v['BIAYA_PER_PEG_TAGIHAN'];
+            $bea->no_sp2d = $v['NO_SP2D_TAGIHAN'];
+            $bea->tgl_sp2d = $v['TGL_SP2D_TAGIHAN'];
+            $data[] = $bea;
+        }
+        
+        return $data;
+    }
+
 }
 
 ?>
