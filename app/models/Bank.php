@@ -45,6 +45,7 @@ class Bank {
 //        var_dump($result);
         $data = array();
         foreach ($result as $value) {
+
             $bank = new Bank($registry);
             $bank->set_id($value['KD_BANK']);
             $bank->set_nama($value['NM_BANK']);
@@ -80,12 +81,25 @@ class Bank {
 //        
     }
 
-    public function updateBank($data) {
-       
-                $where = 'KD_BANK =' . $data['KD_BANK'];
+    public function updateBank(Bank $bank) {
+
+        $where = 'KD_BANK =' . $bank->get_id();
+        
+        $data = array (
+            'NM_BANK' => $bank->get_nama(),
+            'KET_BANK' => $bank->get_keterangan()
+        );
 //        print_r($data['id']);
-                $this->_db->update($this->_table, $data, $where);
-           
+        $this->_db->update($this->_table, $data, $where);
+    }
+
+    public function update_ketbank($data) {
+        $where = 'KD_BANK =' . $data['KD_BANK'];
+//        print_r($data['id']);
+        $input = array (
+            'KET_BANK' => $data['KET_BANK']
+        );
+        $this->_db->update($this->_table, $input, $where);
     }
 
     public function deleteBank() {
