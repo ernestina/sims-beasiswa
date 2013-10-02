@@ -121,7 +121,7 @@ class Universitas {
         if(!$this->get_valid()) return false;
         if(!is_array($data)) return false;
         $where = ' KD_UNIV='.$this->get_kode_in();
-        $this->db->update($this->_table,$data, $where);
+        return $this->db->update($this->_table,$data, $where);
     }
     
     /*

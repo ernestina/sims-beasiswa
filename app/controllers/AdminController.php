@@ -348,10 +348,11 @@ class AdminController extends BaseController {
                 $this->view->data = $univ->get_univ();
                 //        var_dump($this->view->d_ubah);
                 $this->view->pic = $pic->get_user(TRUE);
+                echo "jdsakjfdashjfs";
                 $this->view->render('admin/universitas');
-            }else{
-				header('location:' . URL . 'admin/addUniversitas');
-			}
+            } else {
+                header('location:' . URL . 'admin/addUniversitas');
+            }
         }
 
 
@@ -392,9 +393,9 @@ class AdminController extends BaseController {
             $this->view->univ = $univ->get_univ();
             $this->view->data = $fakul->get_fakul();
             $this->view->render('admin/fakultas');
-        }else{
-			header('location:' . URL . 'admin/addFakultas');
-		}
+        } else {
+            header('location:' . URL . 'admin/addFakultas');
+        }
 
 //        header('location:' . URL . 'admin/addFakultas');
     }
@@ -957,23 +958,23 @@ class AdminController extends BaseController {
 
             if ($_POST['nip'] == "" || $_POST['nama'] == "" || $_POST['pass'] == "" || $_POST['cpass'] == "" || $_POST['akses'] == "") {
                 echo 'ada field yang masih belum diisi';
-            } else {                
+            } else {
 
                 if ($_POST['pass'] !== $_POST['cpass']) {
                     echo 'user pass tidak sama dengan confirm pass nya';
                 } else {
-                    
+
                     $user = new User($registry);
-                    
+
                     $user->set_id($_POST['id']);
                     $user->set_nip($_POST['nip']);
                     $user->set_nmUser($_POST['nama']);
                     $user->set_pass($_POST['pass']);
                     $user->set_akses($_POST['akses']);
                     $user->set_foto($_POST['foto']);
-                                       
+
                     $user->updateUser($user);
-                    
+
                     var_dump($user);
                 }
             }

@@ -111,7 +111,7 @@ class Fakultas{
         if(!$this->get_valid()) return false;
         if(!is_array($data)) return false;
         $where = ' KD_FAKUL='.$this->get_kode_fakul();
-        $this->db->update($this->_table,$data, $where);
+        return $this->db->update($this->_table,$data, $where);
     }
     
     /*

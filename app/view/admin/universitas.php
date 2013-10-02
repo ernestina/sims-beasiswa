@@ -2,7 +2,13 @@
 <div id="form">
     <h2>DATA UNIVERSITAS</h2></div>
     <div class="kolom3">
-	  <fieldset><legend>Tambah Universitas</legend>
+	  <fieldset><legend><?php 
+                if(isset($this->d_ubah)){
+                    echo 'Ubah Universitas';
+                }else{
+                    echo 'Tambah Universitas'; //echo URL.'admin/addUniversitas'
+                }
+          ?></legend>
 		<div id="form-input"><div class="kiri">
         <form method="POST" action="<?php 
             if(isset($this->d_ubah)){

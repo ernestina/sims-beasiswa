@@ -142,7 +142,7 @@ class Jurusan{
         if(!$this->get_valid()) return false;
         if(!is_array($data)) return false;
         $where = ' kd_jur='.$this->get_kode_jur();
-        $this->db->update($this->_table,$data, $where);
+        return $this->db->update($this->_table,$data, $where);
     }
     
     /*

@@ -2,7 +2,13 @@
     
 	<!--div id="form-title"--><h2>DATA JURUSAN</h2>
 	<div class="kolom3">
-	  <fieldset><legend>Tambah Jurusan</legend>
+	  <fieldset><legend><?php 
+                if(isset($this->d_ubah)){
+                    echo 'Ubah Jurusan';
+                }else{
+                    echo 'Tambah Jurusan'; //echo URL.'admin/addUniversitas'
+                }
+          ?></legend>
 		<div id="form-input">
         <form method="POST" action="<?php 
             if(isset($this->d_ubah)){
