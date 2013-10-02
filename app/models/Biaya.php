@@ -7,7 +7,7 @@ class Biaya extends BaseModel {
     public $nama_biaya;
     public $biaya_per_pegawai;
     public $jml_pegawai_bayar;
-    public $jumlah_biaya;
+    public $jml_biaya;
     public $jadwal_bayar;
     public $no_bast;
     public $tgl_bast;
@@ -44,7 +44,7 @@ class Biaya extends BaseModel {
             $biaya->biaya_per_pegawai = $val['BIAYA_PER_PEG_TAGIHAN'];
             $biaya->jml_pegawai_bayar = $val['JML_PEG_BAYAR_TAGIHAN'];
             $biaya->jadwal_bayar = date('d-m-Y', strtotime($val['JADWAL_BAYAR_TAGIHAN'])); //$val['TGL_KON']; 
-            $biaya->jumlah_biaya = $val['JML_SUDAH_BAYAR_TAGIHAN'];
+            $biaya->jml_biaya = $val['JML_SUDAH_BAYAR_TAGIHAN'];
             $biaya->no_bast = $val['NO_BAST_TAGIHAN'];
             $biaya->tgl_bast = date('d-m-Y', strtotime($val['TGL_BAST_TAGIHAN']));
             $biaya->file_bast = $val['FILE_BAST_TAGIHAN'];
@@ -81,7 +81,7 @@ class Biaya extends BaseModel {
             $biaya->biaya_per_pegawai = $val['BIAYA_PER_PEG_TAGIHAN'];
             $biaya->jml_pegawai_bayar = $val['JML_PEG_BAYAR_TAGIHAN'];
             $biaya->jadwal_bayar = date('d-m-Y', strtotime($val['JADWAL_BAYAR_TAGIHAN'])); //$val['TGL_KON']; 
-            $biaya->jumlah_biaya = $val['JML_SUDAH_BAYAR_TAGIHAN'];
+            $biaya->jml_biaya = $val['JML_SUDAH_BAYAR_TAGIHAN'];
             $biaya->no_bast = $val['NO_BAST_TAGIHAN'];
             $biaya->tgl_bast = date('d-m-Y', strtotime($val['TGL_BAST_TAGIHAN']));
             $biaya->file_bast = $val['FILE_BAST_TAGIHAN'];
@@ -106,7 +106,7 @@ class Biaya extends BaseModel {
 
     public function get_by_id($id) {
         $table = "d_tagihan";
-        $where = "kd_biaya='" . $id . "'";
+        $where = "KD_TAGIHAN='" . $id . "'";
         $sql = "SELECT * FROM $table where $where";
         $result = $this->db->select($sql);
         //var_dump($result);
@@ -119,7 +119,7 @@ class Biaya extends BaseModel {
             $biaya->biaya_per_pegawai = $val['BIAYA_PER_PEG_TAGIHAN'];
             $biaya->jml_pegawai_bayar = $val['JML_PEG_BAYAR_TAGIHAN'];
             $biaya->jadwal_bayar = date('d-m-Y', strtotime($val['JADWAL_BAYAR_TAGIHAN'])); //$val['TGL_KON']; 
-            $biaya->jumlah_biaya = $val['JML_SUDAH_BAYAR_TAGIHAN'];
+            $biaya->jml_biaya = $val['JML_SUDAH_BAYAR_TAGIHAN'];
             $biaya->no_bast = $val['NO_BAST_TAGIHAN'];
             $biaya->tgl_bast = date('d-m-Y', strtotime($val['TGL_BAST_TAGIHAN']));
             $biaya->file_bast = $val['FILE_BAST_TAGIHAN'];
@@ -141,7 +141,8 @@ class Biaya extends BaseModel {
         return $biaya;
     }
 
-    public function add(Biaya $biaya) {
+    //menambahkan data biaya
+    public function addBiaya(Biaya $biaya) {
         $table = "d_tagihan";
         //var_dump($biaya);
         $data = array(
@@ -150,19 +151,65 @@ class Biaya extends BaseModel {
             'BIAYA_PER_PEG_TAGIHAN' => $biaya->biaya_per_pegawai,
             'JML_PEG_BAYAR_TAGIHAN' => $biaya->jml_pegawai_bayar,
             'JADWAL_BAYAR_TAGIHAN' => $biaya->jadwal_bayar,
-            'JML_SUDAH_BAYAR_TAGIHAN' => $biaya->jumlah_biaya,
+            'JML_SUDAH_BAYAR_TAGIHAN' => $biaya->jml_biaya,
             'STS_TAGIHAN' => $biaya->status_bayar
         );
-        var_dump($data);
+        //var_dump($data);
         $this->db->insert($table, $data);
     }
-    
-    public function getStatusBayar(Biaya $biaya){
-        $status = "Belum";
-        
+
+    //mengupdate data biaya
+    public function updateBiaya(Biaya $biaya) {
+        $table = "d_tagihan";
+        //var_dump($biaya);
+        $data = array(
+            'KD_KON' => $biaya->kd_kontrak,
+            'NM_TAGIHAN' => $biaya->nama_biaya,
+            'BIAYA_PER_PEG_TAGIHAN' => $biaya->biaya_per_pegawai,
+            'JML_PEG_BAYAR_TAGIHAN' => $biaya->jml_pegawai_bayar,
+            'JADWAL_BAYAR_TAGIHAN' => $biaya->jadwal_bayar,
+            'JML_SUDAH_BAYAR_TAGIHAN' => $biaya->jml_biaya,
+            'STS_TAGIHAN' => $biaya->status_bayar
+        );
+        $where = "KD_TAGIHAN='" . $biaya->kd_biaya . "'";
+        $this->db->update($table, $data, $where);
     }
-    
-    public function get_biaya_by_kontrak($id){
+
+    //mengupdate data tagihan
+    public function updateTagihan(Biaya $biaya) {
+        $table = "d_tagihan";
+        //var_dump($biaya);
+        $data = array(
+            'NO_BAST_TAGIHAN' => $biaya->no_bast,
+            'TGL_BAST_TAGIHAN' => $biaya->tgl_bast,
+            'FILE_BAST_TAGIHAN' => $biaya->file_bast,
+            'NO_BAP_TAGIHAN' => $biaya->no_bap,
+            'TGL_BAP_TAGIHAN' => $biaya->tgl_bap,
+            'FILE_BAP_TAGIHAN' => $biaya->file_bap,
+            'NO_ring_kontrak_TAGIHAN' => $biaya->no_ring_kontrak,
+            'TGL_ring_kontrak_TAGIHAN' => $biaya->tgl_ring_kontrak,
+            'FILE_ring_kontrak_TAGIHAN' => $biaya->file_ring_kontrak,
+            'NO_KUITANSI_TAGIHAN' => $biaya->no_kuitansi,
+            'FILE_KUITANSI_TAGIHAN' => $biaya->file_kuitansi,
+            'TGL_KUITANSI_TAGIHAN' => $biaya->tgl_kuitansi
+        );
+        $where = "KD_TAGIHAN='" . $biaya->kd_biaya . "'";
+        $this->db->update($table, $data, $where);
+    }
+
+    //menghapus data biaya
+    public function deleteBiaya($id) {
+        $table = "d_tagihan";
+        $where = 'KD_TAGIHAN=' . $id;
+        //echo $id;
+        $this->db->delete($table, $where);
+    }
+
+    public function getStatusBayar(Biaya $biaya) {
+        $status = "Belum";
+    }
+
+    public function get_biaya_by_kontrak($id) {
         $table = "d_tagihan";
         $where = "KD_KON='" . $id . "'";
         $sql = "SELECT SUM(JML_SUDAH_BAYAR_TAGIHAN) AS TOTAL_BIAYA FROM $table where $where";
@@ -181,7 +228,7 @@ class Biaya extends BaseModel {
                 $biaya->biaya_per_pegawai != "" &&
                 $biaya->jml_pegawai_bayar != "" &&
                 $biaya->jadwal_bayar != "" &&
-                $biaya->jumlah_biaya != "" &&
+                $biaya->jml_biaya != "" &&
                 $biaya->status_bayar != ""
         ) {
             $cek = false;
@@ -189,8 +236,8 @@ class Biaya extends BaseModel {
         return $cek;
     }
 
-public function get_cost_per_pb(Penerima $pb,$lunas=false){
-        
+    public function get_cost_per_pb(Penerima $pb, $lunas = false) {
+
         $sql = "SELECT CONCAT(c.NO_KON,',',c.TGL_KON) as KD_KONTRAK,
             a.NM_TAGIHAN AS NM_TAGIHAN,
             a.BIAYA_PER_PEG_TAGIHAN AS BIAYA_PER_PEG_TAGIHAN,
@@ -199,14 +246,14 @@ public function get_cost_per_pb(Penerima $pb,$lunas=false){
             FROM d_tagihan a 
             LEFT JOIN t_tagihan_kontrak b ON a.KD_TAGIHAN=b.KD_TAGIHAN
             LEFT JOIN d_kontrak c ON a.KD_KON=c.KD_KON 
-            WHERE b.KD_PB=".$pb->get_kd_pb();
-        
-        if($lunas){
+            WHERE b.KD_PB=" . $pb->get_kd_pb();
+
+        if ($lunas) {
             $sql .= " AND a.NO_SP2D_TAGIHAN<>NULL";
         }
         $result = $this->db->select($sql);
         $data = array();
-        foreach ($result as $v){
+        foreach ($result as $v) {
             $bea = new $this;
             $bea->kd_kontrak = $v['KD_KONTRAK'];
             $bea->nama_tagihan = $v['NM_TAGIHAN'];
@@ -215,7 +262,7 @@ public function get_cost_per_pb(Penerima $pb,$lunas=false){
             $bea->tgl_sp2d = $v['TGL_SP2D_TAGIHAN'];
             $data[] = $bea;
         }
-        
+
         return $data;
     }
 

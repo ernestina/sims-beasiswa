@@ -14,17 +14,17 @@
         <h2>Data Utama Biaya</h2>
         <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/rekamBiaya' ?>">
             <input type="hidden" name="rekam_biaya" size="50">
-            <label>Nomor Kontrak</label><input type="text" size="50" name="kontrak" id="kontrak" value="<? echo $this->kontrak->no_kontrak; ?>" readonly>
+            <label class="isian">Nomor Kontrak</label><input type="text" size="50" name="kontrak" id="kontrak" value="<? echo $this->kontrak->no_kontrak; ?>" readonly>
             <input type="hidden" size="50" name="kd_kontrak" id="kd_kontrak" value="<? echo $this->kontrak->kd_kontrak; ?>" readonly>
-            <label>Nama Biaya</label><input type="text" size="50" name="nama_biaya" id="nama_biaya">
+            <label class="isian">Nama Biaya</label><input type="text" size="50" name="nama_biaya" id="nama_biaya">
             <div id="wnama_biaya"></div>
-            <label>Biaya per Pegawai</label><input type="text" size="12" name="biaya_per_peg" id="biaya_per_peg" maxlength="14">
+            <label class="isian">Biaya per Pegawai</label><input type="text" size="12" name="biaya_per_peg" id="biaya_per_peg" maxlength="14">
             <div id="wbiaya_per_peg"></div>
-            <label>Jumlah Pegawai</label><input type="text" size="4" name="jml_peg" id="jml_peg" >
+            <label class="isian">Jumlah Pegawai</label><input type="text" size="4" name="jml_peg" id="jml_peg" >
             <div id="wjml_peg"></div>
-            <label>Jumlah Biaya</label><input type="text" size="14" name="jml_biaya" id="jml_biaya" maxlength="14" readonly>
+            <label class="isian">Jumlah Biaya</label><input type="text" size="14" name="jml_biaya" id="jml_biaya" maxlength="14" readonly>
             <div id="wjml_biaya"></div>
-            <label>Jadwal dibayarkan</label><input type="text" size="20" name="jadwal_bayar" id="jadwal_bayar" readonly>
+            <label class="isian">Jadwal dibayarkan</label><input type="text" size="20" name="jadwal_bayar" id="jadwal_bayar" readonly>
             <div id="wjadwal_bayar"></div>
             <input type="submit" class="sukses" value="simpan" onClick="return cek1();">
         </form>
