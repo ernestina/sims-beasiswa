@@ -1,7 +1,7 @@
 <div id="top">
     <h2>DATA PEJABAT</h2>
     <div class="kolom3">
-        <fieldset><legend>Tambah Fakultas</legend>
+        <fieldset><legend>Tambah Pejabat</legend>
             <div id="form-input" >
                 <form method="POST" id="myform" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'admin/addPejabat' ?>">
     <!--                <label>Kode</label><input type="text" name="kd_pejabat" id="kd_pejabat" size="8"></br>-->
