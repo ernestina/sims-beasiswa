@@ -884,19 +884,14 @@ class AdminController extends BaseController {
                 echo 'nama bank tidak boleh kosong';
             } else {
                 $bank = new Bank($registry);
-                if ($bank->get_bank_name($_POST['nama']) == 1) {
-                    echo 'data bank ada di dalam database';
-                } else {
-                    $data = array();
-                    $data['KD_BANK'] = $_POST['id'];
-                    $data['NM_BANK'] = $_POST['nama'];
-                    $data['KET_BANK'] = $_POST['keterangan'];
-
-                    $bank->updateBank($data);
-                }
+                
+                $bank->set_id($_POST['id']);
+                $bank->set_nama($_POST['nama']);
+                $bank->set_keterangan($_POST['keterangan']);
+//                    print_r($data);
+                $bank->updateBank($bank);
             }
         }
-//        var_dump($data);
         header('location:' . URL . 'Admin/list_bank');
     }
 
