@@ -9,7 +9,7 @@
                         <label>Keterangan</label><textarea type="text" name="keterangan" id="keterangan" rows="8"></textarea>
 
                         <ul class="inline tengah">
-                            <li><input class="normal" type="submit" onclick="" value="BATAL"></li>
+                            <li><input class="normal" type="submit" onclick="window.location.href='<?php echo URL."admin/list_bank"; ?>'" value="BATAL"></li>
                             <li><input class="sukses" type="submit" name="submit" value="SIMPAN"></li>
                         </ul>
                     </div>
