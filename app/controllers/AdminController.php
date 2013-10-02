@@ -869,7 +869,9 @@ class AdminController extends BaseController {
         $bank = new Bank($this->registry);
 
         $this->view->data = $bank->get_bank_id($id);
-        $this->view->data2 = $bank->get_bank();
+        
+        $bank2 = new Bank($registry);
+        $this->view->data2 = $bank2->get_bank();
 
         $this->view->render('admin/edit_bank');
     }
@@ -956,14 +958,30 @@ class AdminController extends BaseController {
     public function updateUser() {
         if (ISSET($_POST['submit'])) {
 
-            if ($_POST['nip'] == "" || $_POST['nama'] == "" || $_POST['pass'] == "" || $_POST['cpass'] == "" || $_POST['akses'] == "") {
+//            var_dump($_POST['pass']) ;
+            if ($_POST['nip'] == "" || $_POST['nama'] == "") {
                 echo 'ada field yang masih belum diisi';
             } else {
 
-                if ($_POST['pass'] !== $_POST['cpass']) {
-                    echo 'user pass tidak sama dengan confirm pass nya';
-                } else {
+                if ($_POST['pass'] == "no_change" || $_POST['cpass'] == "no_change") {
 
+//                    echo 'dsadfa';
+                    $user = new User($registry);
+
+                    $user->set_id($_POST['id']);
+                    $user->set_nip($_POST['nip']);
+                    $user->set_nmUser($_POST['nama']);
+                    $user->set_akses($_POST['akses']);
+                    $user->set_foto($_POST['foto']);
+
+                    $user->updateUser_withoutpass($user);
+                }
+                if ($_POST['pass'] !== $_POST['cpass']) {
+
+                    echo 'data tidak bisa disimpan karena password berbeda dengan confirm passwordnya';
+                }
+                if ($_POST['pass'] !== "no_change" && $_POST['pass'] == $_POST['cpass']) {
+//                    echo 'sssssss';
                     $user = new User($registry);
 
                     $user->set_id($_POST['id']);
@@ -974,8 +992,7 @@ class AdminController extends BaseController {
                     $user->set_foto($_POST['foto']);
 
                     $user->updateUser($user);
-
-                    var_dump($user);
+//                    var_dump($user);
                 }
             }
         }
