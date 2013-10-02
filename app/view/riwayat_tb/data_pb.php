@@ -45,7 +45,9 @@
                 echo "<td>".$v->get_gol()."</td>";
                 echo "<td>".$v->get_unit_asal()."</td>";
                 echo "<td>".$v->get_jur()."</td>";
-                echo "<td><a href=".URL."penerima/delpb/".$v->get_kd_pb()."><i class=\"icon-trash\"></i></a> </td>";
+                echo "<td><a href=".URL."penerima/delpb/".$v->get_kd_pb()."><i class=\"icon-trash\"></i></a> &nbsp &nbsp
+				<a href=".URL."penerima/profil/".$v->get_kd_pb()."><i class=\"icon-pencil\"></i></a>
+				</td>";
                 echo "</tr>";
                 $no++;
             }

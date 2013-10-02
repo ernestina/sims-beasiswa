@@ -164,7 +164,8 @@ h2, legend {
 	width: 200px;
 	text-align: right;
 	padding-right: 10px;
-	padding-top: 5px;}	
+	padding-top: 5px;
+	}	
 
 .isian2 {
 	float: left;
@@ -253,7 +254,7 @@ legend {
   font-weight: bold;
 }
 	
-input, select, textarea {
+input, select, textarea, button {
 	font-family: Nexa;
 	font-size: 90%;
 	border-radius: 5px;
@@ -290,6 +291,7 @@ select {
 	}	
 
 input[type="text"],
+input[type="search"],
 input[type="email"],
 input[type="file"],
 input[type="password"],
@@ -315,7 +317,18 @@ input[type="submit"], input[type="reset"]{
 	margin-top: 10px;
 }
 
-input[type="button"]{
+input[type="search"] {
+	padding: 10px;
+	margin-top: 12px;
+}
+
+input[type="checkbox"] {
+	margin-left: 0px;
+	margin-top: 0px;
+	
+}
+
+input[type="button"], button{
 	color: #ffffff;
 	background-color: #49afcd;
 	width: 100px;
@@ -346,6 +359,12 @@ input.normal[type="submit"] :focus, input.normal[type="submit"]:hover {
 	border-color: #bd362f;
 }
 
+button :focus, button:hover, input[type="button"] :focus, input[type="button"] :hover {
+	color: #ffffff;
+	background-color: #2f96b4;
+	border-color: #2f96b4;
+}
+
 input[disabled]{
 	cursor: not-allowed;
 	background-color: #eeeeee;
@@ -361,6 +380,7 @@ option {
 ul.inline > li,
 ol.inline > li {
   display: inline-block;
+  margin-top: -7px;
 }
 
 ul.upline > li{
@@ -465,8 +485,8 @@ th, td {
   display: inline-block;
   width: 14px;
   height: 14px;
-  margin-top: 1px;
-  *margin-right: .3em;
+  margin-top: -1px;
+  margin-right: .3em;
   line-height: 14px;
   vertical-align: text-top;
   background-image: url("../icon/glyphicons-halflings.png");

@@ -1,13 +1,13 @@
-<div>
-    MONITORING PEMBAYARAN KEUANGAN
-</div>
+<div id="top">
+	<h2>MONITORING PEMBAYARAN KEUANGAN</h2>
+
 <div id="dropdown-menu">
-    <div>
-        <table>
+   
+        <table style="margin-left: 40px" >
             <tr>
                 <td>
                     <label>Universitas</label>
-                    <select>
+                    <select type="text">
                         <option value="0">Semua</option>>
                         <?php 
                             foreach ($this->fakul as $val){
@@ -18,7 +18,7 @@
                 </td>
                 <td>
                     <label>Jurusan/Prodi</label>
-                    <select>
+                    <select type="text">
                         <option value="0">Semua</option>>
                         <?php 
                             foreach ($this->jur as $val2){
@@ -29,7 +29,7 @@
                 </td>
                 <td>
                     <label>Tahun Masuk</label>
-                    <select>
+                    <select style="width: 120px" type="text">
                         <option value="0">Semua</option>>
                         <?php 
                             foreach ($this->kon as $val3){
@@ -37,10 +37,14 @@
                             }
                         ?>
                     </select>
+					
                 </td>
+				<td>
+					s.d
+				</td>
                 <td>
-                    <label> s.d </label>
-                    <select>
+                    <label>&nbsp </label>
+                    <select style="width: 120px" type="text">
                         <option value="0">Semua</option>>
                         <?php 
                             foreach ($this->kon as $val3){
@@ -49,13 +53,13 @@
                         ?>
                     </select>
                 </td>
-                <td><input type="search" name="cari" id="cari" value="cari" size="30"></td>
+                <td ><input type="search" name="cari" id="cari" value="cari" size="30"></td>
             </tr>
         </table>
-    </div>
+    
 </div>
 <div id="table">
-    <table>
+    <table class="table-bordered zebra">
         <thead>
         <th>No</th>
         <th>Nama Biaya</th>
@@ -141,6 +145,7 @@
         </tbody>
     </table>
 </div>
-<div>
+<div style="margin-right: 20px">
     <input class="sukses" type="submit" name="cetak" value="CETAK";">
+</div>
 </div>

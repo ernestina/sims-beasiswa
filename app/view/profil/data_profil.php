@@ -1,4 +1,4 @@
-<link href="../../../public/css/style.css" rel="stylesheet" media="screen">
+<!--link href="../../../public/css/style.css" rel="stylesheet" media="screen"-->
 <body>
  
   <div id="top">

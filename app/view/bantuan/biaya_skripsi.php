@@ -1,13 +1,13 @@
-<div>
-    DAFTAR BIAYA TUGAS AKHRI/SKRIPSI/TESIS
-</div>
+<div id="top">
+    <h2>DAFTAR BIAYA TUGAS AKHRI/SKRIPSI/TESIS</h2>
+
 <div id="dropdown-menu">
-    <div>
-        <table>
+    
+        <table style="margin-left: 10px" width="98%" >
             <tr>
                 <td>
                     <label>Universitas</label>
-                    <select>
+                    <select type="text">
                         <option value="0">Semua</option>>
                         <?php 
                             foreach ($this->fakul as $val){
@@ -18,7 +18,7 @@
                 </td>
                 <td>
                     <label>Jurusan/Prodi</label>
-                    <select>
+                    <select type="text">
                         <option value="0">Semua</option>>
                         <?php 
                             foreach ($this->jur as $val2){
@@ -29,7 +29,7 @@
                 </td>
                 <td>
                     <label>Tahun Masuk</label>
-                    <select>
+                    <select type="text">
                         <option value="0">Semua</option>>
                         <?php 
                             foreach ($this->kon as $val3){
@@ -38,26 +38,28 @@
                         ?>
                     </select>
                 </td>
-                <td><input type="search" name="cari" id="cari" value="cari" size="30"></td>
+                <td ><input type="search" name="cari" id="cari" value="cari" style="float: right"> </td>
             </tr>
         </table>
-    </div>
-    <div>
-        <input type="button" id="add" value="TAMBAH" onClick="location.href='<?php echo URL.'elemenBeasiswa/addSkripsi'?>'">
-    </div>
+   
+        <button href="<?php echo URL.'elemenBeasiswa/addSkripsi'?>" style="margin-right:20px"><i class="icon-plus icon-white"></i>  TAMBAH</button>
+		
+		<!--input type="button" id="add" value="TAMBAH" onClick="location.href=''"-->
+    
 </div>
+<BR><BR><br>
 <div id="table">
-    <table>
+    <table class="table-bordered zebra" >
         <thead>
-        <th>No</th>
-        <th>No dan Tgl SP2D</th>
-        <th>Universitas</th>
-        <th>Jurusan/Prodi</th>
-        <th>Th. Masuk</th>
-        <th>Jumlah Pegawai</th>
-        <th>Tahun</th>
-        <th>Total Bayar</th>
-        <th>Aksi</th>
+        <th width='3%'>No</th>
+        <th width='10%'>No dan Tgl SP2D</th>
+        <th width='20%'>Universitas</th>
+        <th width='20%'>Jurusan/Prodi</th>
+        <th width='5%'>Th. Masuk</th>
+        <th width='5%'>Jumlah Pegawai</th>
+        <th width='5%'>Tahun</th>
+        <th width='10%'>Total Bayar</th>
+        <th width='7%'>Aksi</th>
         </thead>
         <tbody>
             <?php
@@ -72,8 +74,8 @@
                     echo "<td>".$val->get_jml_peg()."</td>";
                     echo "<td>".$val->get_thn()."</td>";
                     echo "<td>".$val->get_total_bayar()."</td>";
-                    echo "<td><a href=".URL."elemenBeasiswa/delSkripsi/".$val->get_kd_d().">X</a> | 
-                        <a href=".URL."elemenBeasiswa/addSkripsi/".$val->get_kd_d().">...</a></td>";
+                    echo "<td width='60'><a href=".URL."elemenBeasiswa/delSkripsi/".$val->get_kd_d()."><i class=\"icon-trash\"></i></a> &nbsp &nbsp 
+                        <a href=".URL."elemenBeasiswa/addSkripsi/".$val->get_kd_d()."><i class=\"icon-pencil\"></i></a></td>";
                     echo "</tr>";
                     $no++;
                 }
@@ -81,5 +83,6 @@
         </tbody>
     </table>
     
+</div>
 </div>
 
