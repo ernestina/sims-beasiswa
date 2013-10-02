@@ -41,11 +41,11 @@ class Universitas {
         }
         $result = $this->db->select($sql);
         $data=array();
-		$user = new User($this->registry);
         foreach ($result as $val){
             $univ = new $this($this->registry);
             $univ->set_kode_in($val['KD_UNIV']);
             $univ->set_kode($val['SINGKAT_UNIV']);
+            $user = new User($this->registry);
             $pic = $user->getUser_id($val['KD_USER']);
             $univ->set_pic($pic->get_nmUser());
             $univ->set_nama($val['NM_UNIV']);
@@ -54,6 +54,7 @@ class Universitas {
             $univ->set_status($val['STATUS_UNIV']);
             $univ->set_lokasi($val['LOK_UNIV']);
             $data[] = $univ;
+            unset($user);
         }
         
         return $data;

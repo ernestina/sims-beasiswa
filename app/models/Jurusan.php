@@ -54,11 +54,11 @@ class Jurusan{
         }
         $result = $this->db->select($sql);
         $data = array();
-		$strata = new Strata();
         foreach ($result as $val){
             $jur = new $this($this->registry);
             $jur->set_kode_jur($val['KD_JUR']);
             $jur->set_kode_fakul($val['KD_FAKUL']);
+            $strata = new Strata();
             $str_jur = $strata->get_by_id($val['KD_STRATA']);
             $jur->set_kode_strata($str_jur->nama_strata);
             $jur->set_nama($val['NM_JUR']);
@@ -68,6 +68,7 @@ class Jurusan{
             $jur->set_telp_pic($val['TELP_PIC_JUR']);
             $jur->set_status($val['STS_JUR']);
             $data[]=$jur;
+            unset($strata);
         }
         
         return $data;

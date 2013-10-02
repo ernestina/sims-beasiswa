@@ -121,7 +121,9 @@
                     echo "<td>".$val->get_telepon()."</td>";
                     echo "<td>".$val->get_pic()."</td>";
                     echo "<td>".$val->get_telp_pic()."</td>";
-                    echo "<td>".$val->get_status()."</td>";
+                    echo "<td>";
+                    echo ($val->get_status()==1)?"Aktif":"Non-aktif";
+                    echo "</td>";
                     echo "<td><a href=".URL."admin/delJurusan/".$val->get_kode_jur()." onclick=\"return del('".$val->get_nama()."')\"><i class=\"icon-trash\"></i></a> &nbsp  
                         <a href=".URL."admin/addJurusan/".$val->get_kode_jur()."><i class=\"icon-pencil\"></i></a></td>";
                     echo "</tr>";

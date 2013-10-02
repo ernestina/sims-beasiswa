@@ -342,10 +342,12 @@ class AdminController extends BaseController {
 
             $univ->set_kode_in($kd_univ);
             if (!$univ->update_univ()) {
+                $pic = new User($this->registry);
                 $this->view->d_ubah = $univ;
                 $this->view->error = $univ->get_error();
                 $this->view->data = $univ->get_univ();
                 //        var_dump($this->view->d_ubah);
+                $this->view->pic = $pic->get_user(TRUE);
                 $this->view->render('admin/universitas');
             }else{
 				header('location:' . URL . 'admin/addUniversitas');
@@ -442,7 +444,6 @@ class AdminController extends BaseController {
             $this->view->error = $jur->get_error();
             $this->view->fakul = $fakul->get_fakul();
             $this->view->strata = $strata->get_All();
-            var_dump($this->view->strata);
 
             $this->view->data = $jur->get_jurusan();
             $this->view->render('admin/jurusan');
