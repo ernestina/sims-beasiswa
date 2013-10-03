@@ -51,14 +51,7 @@
                             echo '<td>' . $i . '</td>';
                             echo '<td>' . $value->get_nip() . '</td>';
                             echo '<td>' . $value->get_nmUser() . '</td>';
-                            $akses = $value->get_akses();
-                            if ($akses == 1) {
-                                echo '<td>admin</td>';
-                            } else if ($akses == 2) {
-                                echo '<td>user</td>';
-                            } else {
-                                echo '<td>akses tidak diketahui</td>';
-                            }
+                            echo '<td>' . $value->get_akses() . '</td>';
                             echo '<td>
                         <a href="' . URL . 'Admin/deleteUser/' . $value->get_id() . '"><i class="icon-trash"></i></a>
 			<a href="' . URL . 'Admin/editUser/' . $value->get_id() . '"><i class="icon-pencil"></i></a>

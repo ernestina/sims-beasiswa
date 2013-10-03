@@ -48,14 +48,7 @@
                             echo '<td>' . $i . '</td>';
                             echo '<td>' . $value->get_nip() . '</td>';
                             echo '<td>' . $value->get_nmUser() . '</td>';
-                            $akses = $value->get_akses();
-                            if ($akses == 1) {
-                                echo '<td>admin</td>';
-                            } else if ($akses == 2) {
-                                echo '<td>user</td>';
-                            } else {
-                                echo '<td>akses tidak diketahui</td>';
-                            }
+                            echo '<td>' . $value->get_akses() . '</td>';
                             echo '</tr>';
 
                             $i++;
