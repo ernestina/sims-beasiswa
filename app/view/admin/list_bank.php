@@ -7,9 +7,8 @@
                     <div class="kiri">
                         <label>Nama</label><input type="text" name="nama" id="nama" size="30"><div id="warningnama"></div>
                         <label>Keterangan</label><textarea type="text" name="keterangan" id="keterangan" rows="8"></textarea>
-
                         <ul class="inline tengah">
-                            <li><input class="normal" type="submit" onclick="window.location.href='<?php echo URL."admin/list_bank"; ?>'" value="BATAL"></li>
+                            <li><input class="normal" type="submit" onclick="window.location.href='<?php echo URL . "admin/list_bank"; ?>'" value="BATAL"></li>
                             <li><input class="sukses" type="submit" name="submit" value="SIMPAN"></li>
                         </ul>
                     </div>
@@ -38,9 +37,9 @@
                             echo '<td>' . $value->get_keterangan() . '</td>';
                             echo
                             '<td>
-                        <a href="' . URL . 'Admin/deleteBank/' . $value->get_id() . '"><i class="icon-trash"></i></a> &nbsp &nbsp
-			<a href="' . URL . 'Admin/editBank/' . $value->get_id() . '"><i class="icon-pencil"></i></a>
-                    </td>';
+                            <a href="' . URL . 'Admin/deleteBank/' . $value->get_id() . '"><i class="icon-trash"></i></a>
+                            <a href="' . URL . 'Admin/editBank/' . $value->get_id() . '"><i class="icon-pencil"></i></a>
+                            </td>';
                             echo '</tr>';
                             $i++;
                         }
@@ -56,11 +55,11 @@
     function validate (){
         if( document.myform.nama.value == "" )
         {
-          var warning = 'nama bank harus diisi';
-          $('#warningnama').fadeIn(0);
-          $('#warningnama').html(warning);
-          $('#warningnama').addClass('error');
-          return false;
+            var warning = 'nama bank harus diisi';
+            $('#warningnama').fadeIn(0);
+            $('#warningnama').html(warning);
+            $('#warningnama').addClass('error');
+            return false;
         }
     }
     //-->

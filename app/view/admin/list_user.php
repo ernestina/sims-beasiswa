@@ -60,7 +60,7 @@
                                 echo '<td>akses tidak diketahui</td>';
                             }
                             echo '<td>
-                        <a href="' . URL . 'Admin/deleteUser/' . $value->get_id() . '"><i class="icon-trash"></i></a> &nbsp &nbsp
+                        <a href="' . URL . 'Admin/deleteUser/' . $value->get_id() . '"><i class="icon-trash"></i></a>
 			<a href="' . URL . 'Admin/editUser/' . $value->get_id() . '"><i class="icon-pencil"></i></a>
                         </td>';
                             echo '</tr>';

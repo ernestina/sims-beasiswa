@@ -130,7 +130,7 @@
                     echo "<td>";
                     echo ($val->get_status()==1)?"Aktif":"Non-aktif";
                     echo "</td>";
-                    echo "<td><a href=".URL."admin/delJurusan/".$val->get_kode_jur()." onclick=\"return del('".$val->get_nama()."')\"><i class=\"icon-trash\"></i></a> &nbsp  
+                    echo "<td><a href=".URL."admin/delJurusan/".$val->get_kode_jur()." onclick=\"return del('".$val->get_nama()."')\"><i class=\"icon-trash\"></i></a>
                         <a href=".URL."admin/addJurusan/".$val->get_kode_jur()."><i class=\"icon-pencil\"></i></a></td>";
                     echo "</tr>";
                     $no++;

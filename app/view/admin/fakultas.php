@@ -92,7 +92,7 @@
                     echo "<td>".$val->get_nama()."</td>";
                     echo "<td>".$val->get_alamat()."</td>";
                     echo "<td>".$val->get_telepon()."</td>";
-                    echo "<td><a href=".URL."admin/delFakultas/".$val->get_kode_fakul()." onclick=\"return del('".$val->get_nama()."')\"><i class=\"icon-trash\"></i></a> &nbsp &nbsp 
+                    echo "<td><a href=".URL."admin/delFakultas/".$val->get_kode_fakul()." onclick=\"return del('".$val->get_nama()."')\"><i class=\"icon-trash\"></i></a>
                         <a href=".URL."admin/addFakultas/".$val->get_kode_fakul()."><i class=\"icon-pencil\"></i></a></td>";
                     echo "</tr>";
                     $no++;

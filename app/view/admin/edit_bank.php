@@ -11,7 +11,7 @@
                         <label>Keterangan</label><textarea type="text" rows="8" name="keterangan" id="keterangan" value="" size="50"><?php echo $this->data->get_keterangan(); ?></textarea>
 
                         <ul class="inline tengah">
-                            <li><input class="normal" type="reset" onclick="window.location.href='<?php echo URL."admin/list_bank"; ?>'" value="BATAL"></li>
+                            <li><input class="normal" type="reset" onclick="window.location.href='<?php echo URL . "admin/list_bank"; ?>'" value="BATAL"></li>
                             <li><input class="sukses" type="submit" name="submit" value="SIMPAN"></li>
                         </ul>
                     </div> <!--end class kiri-->
@@ -31,16 +31,17 @@
                     <th width="60%">Keterangan</th>
 
                     </thead>
-                    <tbody><?php
-                    $no=1;
-foreach ($this->data2 as $val) {
-    echo '<tr>';
-    echo '<td>' . $no. '</td>';
-    echo '<td>' . $val->get_nama() . '</td>';
-    echo '<td>' . $val->get_keterangan() . '</td>';
-    $no++;
-}
-?>                          
+                    <tbody>
+                        <?php
+                        $no = 1;
+                        foreach ($this->data2 as $val) {
+                            echo '<tr>';
+                            echo '<td>' . $no . '</td>';
+                            echo '<td>' . $val->get_nama() . '</td>';
+                            echo '<td>' . $val->get_keterangan() . '</td>';
+                            $no++;
+                        }
+                        ?>                          
                     </tbody>
                 </table>
             </div>
