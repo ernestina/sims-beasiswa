@@ -14,6 +14,10 @@ class PemberiBeasiswa extends BaseModel {
     public $pic_pemberi;
     public $telp_pic_pemberi;
 
+    /*
+     * Kostruktor
+     */
+
     public function __construct() {
         parent::__construct();
     }
@@ -56,7 +60,7 @@ class PemberiBeasiswa extends BaseModel {
         $sql = "SELECT * FROM $table where $where";
         $result = $this->db->select($sql);
         //var_dump($result);
-        $pemberi=false;
+        $pemberi = false;
         foreach ($result as $val) {
             $pemberi = new $this();
             $pemberi->kd_pemberi = $val['KD_PEMB'];
@@ -98,7 +102,6 @@ class PemberiBeasiswa extends BaseModel {
     public function delete($id = null) {
         $table = "d_PEMB";
         $where = 'KD_PEMB=' . $id;
-        //echo $id;
         $this->db->delete($table, $where);
     }
 

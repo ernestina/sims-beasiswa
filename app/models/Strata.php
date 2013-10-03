@@ -11,6 +11,10 @@ class Strata extends BaseModel {
     public $kode_strata;
     public $nama_strata;
 
+    /*
+     * Konstruktor
+     */
+
     public function __construct() {
         parent::__construct();
     }
@@ -50,7 +54,7 @@ class Strata extends BaseModel {
         $sql = "SELECT * FROM $table where $where";
         $result = $this->db->select($sql);
         //var_dump($result);
-        $strata=false;
+        $strata = false;
         foreach ($result as $val) {
             $strata = new $this();
             $strata->kd_strata = $val["KD_STRATA"];

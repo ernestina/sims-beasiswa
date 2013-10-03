@@ -13,6 +13,10 @@ class Pejabat extends BaseModel {
     public $nama_jabatan;
     public $jenis_jabatan;
 
+    /*
+     * Konstruktor
+     */
+
     public function __construct() {
         parent::__construct();
     }
@@ -42,7 +46,7 @@ class Pejabat extends BaseModel {
         //var_dump($data);
         return $data;
     }
-    
+
     /*
      * mendapatkan data pejabat
      * mengubah data pejabat ke dalam objek pejabat
@@ -62,7 +66,6 @@ class Pejabat extends BaseModel {
             $pejabat->nama_pejabat = $val['NAMA_PEJABAT'];
             $pejabat->nama_jabatan = $val['NAMA_JABATAN'];
             $pejabat->jenis_jabatan = $val['JENIS_JABATAN'];
-            
         }
         //var_dump($data);
         return $pejabat;
@@ -122,6 +125,7 @@ class Pejabat extends BaseModel {
         }
         return $cek;
     }
+
     /*
      * menghapus data pejabat dari database
      * param id = kd_pejabat
@@ -148,8 +152,8 @@ class Pejabat extends BaseModel {
         $sql = "SELECT * FROM $table where $where";
         $result = $this->db->select($sql);
         //var_dump($result);
-        if(!empty($result)){
-            $cek=FALSE;   //jika ditemukan terdapat pejabat dengan jenis jabatan yang seperti $id
+        if (!empty($result)) {
+            $cek = FALSE;   //jika ditemukan terdapat pejabat dengan jenis jabatan yang seperti $id
         }
         return $cek;
     }

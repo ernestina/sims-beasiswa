@@ -21,17 +21,23 @@ class SuratTugas {
     private $_file;
     private $_tb_st = 'd_srt_tugas';
 
+    /*
+     * Konstruktor
+     */
     public function __construct($registry) {
         $this->registry = $registry;
         $this->db = $registry->db;
     }
 
+    /*
+     * method untuk mndapatkan semua surat tugas
+     * @param id_sutat_tugas
+     */
     public function get_surat_tugas($id = null) {
         $sql = "SELECT * FROM " . $this->_tb_st;
         if (!is_null($id)) {
             $sql .= ' WHERE KD_ST<>' . $id;
         }
-
         $result = $this->db->select($sql);
         $data = array();
         foreach ($result as $val) {
@@ -48,10 +54,13 @@ class SuratTugas {
             $st->set_file($val['FILE_ST']);
             $data[] = $st;
         }
-
         return $data;
     }
 
+    /*
+     * method untuk mndapatkan surat tugas berdasarkan id
+     * @param id_sutat_tugas
+     */
     public function get_surat_tugas_by_id($st = SuratTugas) {
         $sql = "SELECT * FROM " . $this->_tb_st . " WHERE KD_ST=" . $st->get_kd_st();
         $result = $this->db->select($sql);
@@ -67,11 +76,10 @@ class SuratTugas {
             $this->set_th_masuk($val['THN_MASUK']);
             $this->set_file($val['FILE_ST']);
         }
-
         return $this;
     }
-    
-    public function get_surat_tugas_by_univ_thn_masuk($univ,$thn){
+
+    public function get_surat_tugas_by_univ_thn_masuk($univ, $thn) {
         $sql = "SELECT 
             a.KD_ST as KD_ST,
             a.KD_JUR as KD_JUR,
@@ -84,19 +92,19 @@ class SuratTugas {
             a.TGL_SEL_ST as TANGGAL_SELESAI_ST,
             a.THN_MASUK as TAHUN_MASUK,
             a.FILE_ST as FILE_ST
-            FROM ".$this->_tb_st." a";
-        if($univ==0 AND $thn!=0){
-            $sql .=" WHERE a.THN_MASUK=".$thn;
-        }else if($univ!=0 AND $thn==0){
+            FROM " . $this->_tb_st . " a";
+        if ($univ == 0 AND $thn != 0) {
+            $sql .=" WHERE a.THN_MASUK=" . $thn;
+        } else if ($univ != 0 AND $thn == 0) {
             $sql .=" JOIN r_jur b ON a.KD_JUR=b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV
-                WHERE d.KD_UNIV=".$univ;
-        }else{
+                WHERE d.KD_UNIV=" . $univ;
+        } else {
             $sql .=" JOIN r_jur b ON a.KD_JUR=b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV
-                WHERE a.THN_MASUK=".$thn." AND d.KD_UNIV=".$univ;
+                WHERE a.THN_MASUK=" . $thn . " AND d.KD_UNIV=" . $univ;
         }
         $result = $this->db->select($sql);
         $data = array();
@@ -114,7 +122,6 @@ class SuratTugas {
             $st->set_file($val['FILE_ST']);
             $data[] = $st;
         }
-
         return $data;
     }
 
@@ -150,6 +157,10 @@ class SuratTugas {
         $this->db->update($this->_tb_st, $data, $where);
     }
 
+    /*
+     * mendapatkan data tahun masuk
+     * param 
+     */
     public function get_list_th_masuk() {
         $this_year = (int) date('Y');
         $begin_list = $this_year - 6;
@@ -161,6 +172,10 @@ class SuratTugas {
         return $data;
     }
 
+    /*
+     * mendapatkan jenis surat tugas
+     * param 
+     */
     public function get_st_class() {
         $sql = "SELECT * FROM r_jst";
         $result = $this->db->select($sql);
