@@ -2,6 +2,11 @@
     DATA KONTRAK KERJASAMA > BIAYA > UBAH <!-- entar pake breadcrumb-->
     <input type="button" value="KEMBALI" onClick="location.href='<?php echo URL . 'kontrak/biaya/' . $this->kontrak->kd_kontrak; ?>'">
 </div>
+<div id="LoadingImage" style="display: none">
+<!--    <img src="<?php echo URL . 'public/icon/loading.gif'; ?>" alt="Sedang menyimpan..."/>-->
+    <p>Sedang menyimpan......</p>
+</div>
+
 
 <!--<div>
     <label>Nomor / Tgl Kontrak</label><input type="text" size="50"></br>
@@ -14,7 +19,7 @@
         <h2>Data Utama Biaya</h2>
         <form method="POST" id="form_biaya" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/updateBiaya' ?>">
             <input type="hidden" name="update_biaya" size="50">
-            <label class="isian">Nomor Kontrak</label><input type="text" size="50" name="kontrak" id="kontrak" value="<? echo $this->kontrak->no_kontrak; ?>" readonly>
+            <label class="isian">Nomor Kontrak</label><input type="text" size="50" name="kontrak" id="kontrak" value="<? echo $this->kontrak->no_kontrak; ?>" readonly disabled>
             <input type="hidden" size="50" name="kd_kontrak" id="kd_kontrak" value="<? echo $this->kontrak->kd_kontrak; ?>" readonly>
             <label class="isian">Nama Biaya</label><input type="text" size="50" name="nama_biaya" id="nama_biaya" value="<? echo $this->biaya->nama_biaya; ?>">
             <div id="wnama_biaya"></div>
@@ -91,6 +96,12 @@
 
 <script>
     
+    $(document).ajaxStart(function () {
+        $('#LoadingImage').show();
+    }).ajaxStop(function () {
+        $('#LoadingImage').hide();
+    });
+    
     //****
     // memproses update data biaya
     //****
@@ -149,10 +160,12 @@
                 //            showOn: 'button'
             }); 
         });
+        
 
         //ketika tombol simpan diklik
         $('#update_biaya').click(function(){ 
             if(cek()==true){
+                
                 if(cek1()==true){
                     var myform = $('#form_biaya').serialize();
                     $.ajax({
@@ -163,6 +176,7 @@
                         dataType: 'json',
                         success: function(msg){
                             if(msg.respon=="sukses"){
+                                
                                 $( "#update_biaya_sukses" ).dialog({
                                     modal: true,
                                     buttons: {
@@ -172,6 +186,7 @@
                                     }
                                 });
                             }else{
+                                
                                 $( "#update_biaya_gagal" ).dialog({
                                     modal: true,
                                     buttons: {
@@ -180,11 +195,10 @@
                                         }
                                     }
                                 });
-                            }
-                            //$("#loading").hide();
-                            
+                            }   
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            
                             $( "#update_biaya_gagal" ).dialog({
                                 modal: true,
                                 buttons: {

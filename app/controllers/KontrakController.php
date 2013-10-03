@@ -299,6 +299,42 @@ class KontrakController extends BaseController {
         }
     }
 
+    //melakukan proses update biaya dengan proses biasa
+    public function updateBiaya1() {
+        if (isset($_POST['update_biaya'])) {
+            $biaya = new Biaya();
+            $biaya->kd_biaya = $_POST['kd_biaya'];
+            $biaya->kd_kontrak = $_POST['kd_kontrak'];
+            $biaya->nama_biaya = $_POST['nama_biaya'];
+            $biaya->biaya_per_pegawai = str_replace(',', '', $_POST['biaya_per_peg']);
+            $biaya->jml_pegawai_bayar = $_POST['jml_peg'];
+            $biaya->jadwal_bayar = date('Y-m-d', strtotime($_POST['jadwal_bayar']));
+            $biaya->jml_biaya = str_replace(',', '', $_POST['jml_biaya']);
+            $biaya->status_bayar = "belum";
+            if ($biaya->isEmptyBiaya($biaya) == false) {
+                if (Validasi::validate_number($biaya->biaya_per_pegawai) == TRUE &&
+                        Validasi::validate_number($biaya->jmlh_pegawai_bayar) == TRUE &&
+                        Validasi::validate_number($biaya->jumlah_biaya) == TRUE) {
+                    $biaya->updateBiaya($biaya);
+
+                    header('location:' . URL . 'kontrak/biaya/' . $biaya->kd_kontrak);
+                } else {
+                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_kontrak;
+                    header("refresh:1;url=" . $url);
+                    echo "Isian Biaya per pegawai, jumlah pegawai dan jumlah biaya harus diisi angka.";
+                    header('location:' . URL . 'kontrak/editBiaya/' . $biaya->kd_kontrak);
+                }
+            } else {
+                $url = URL . 'kontrak/editBiaya/' . $biaya->kd_kontrak;
+                header("refresh:1;url=" . $url);
+                echo "Isian form belum lengkap.";
+                header('location:' . URL . 'kontrak/editBiaya/' . $biaya->kd_kontrak);
+            }
+        } else {
+            header('location:' . URL . 'kontrak/display');
+        }
+    }
+
     //melakukan proses update biaya dengan ajax
     public function updateBiaya() {
         if (isset($_POST['update_biaya'])) {
@@ -316,31 +352,18 @@ class KontrakController extends BaseController {
                         Validasi::validate_number($biaya->jmlh_pegawai_bayar) == TRUE &&
                         Validasi::validate_number($biaya->jumlah_biaya) == TRUE) {
                     $biaya->updateBiaya($biaya);
-                    //echo "sukses";
                     $respon = "sukses";
-                    //header('location:' . URL . 'kontrak/biaya/' . $biaya->kd_kontrak);
                 } else {
-                    //$url = URL . 'kontrak/editBiaya/' . $biaya->kd_kontrak;
-                    //header("refresh:1;url=" . $url);
-                    //echo "Isian Biaya per pegawai, jumlah pegawai dan jumlah biaya harus diisi angka.";
-                    //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_kontrak); 
-                    //echo "gagal";
                     $respon = "gagal";
                 }
             } else {
-                //$url = URL . 'kontrak/editBiaya/' . $biaya->kd_kontrak;
-                //header("refresh:1;url=" . $url);
-                //echo "Isian form belum lengkap.";
-                //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_kontrak); 
                 $respon = "gagal";
             }
-
             $res = array('respon' => $respon);
             echo json_encode($res);
+        } else {
+            header('location:' . URL . 'kontrak/display');
         }
-//        else {
-//            header('location:' . URL . 'kontrak/display');
-//        }
     }
 
     //menghapus data biaya berdasarkan id=kd_biaya
