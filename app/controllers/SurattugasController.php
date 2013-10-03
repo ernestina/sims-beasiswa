@@ -195,5 +195,7 @@ class SurattugasController extends BaseController{
         }
         echo $return;
     }
+
+//ini sekedar test saja
 }
 ?>
