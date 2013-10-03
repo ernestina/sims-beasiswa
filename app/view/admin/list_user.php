@@ -14,13 +14,13 @@
                         <label>CONFIRM PASS</label><input type="password" name="cpass" id="cpass" value="" size="30"/>
                         <label>AKSES</label>
                         <select type="text" name="akses">
-                            <option value="User">User</option>
-                            <option value="Admin">Admin</option>                          
+                            <option value="1">Admin</option>
+                            <option value="2">User</option>                          
                         </select>
                         <label>Upload Foto</label><input type="file" name="foto" id="upload" value="" size="30"/>
 
                         <ul class="inline tengah">
-                            <li><input class= "normal" type="reset" onclick="window.location.href='<?php echo URL."admin/listUser"; ?>'" value="BATAL"></li>
+                            <li><input class= "normal" type="reset" onclick="window.location.href='<?php echo URL . "admin/listUser"; ?>'" value="BATAL"></li>
                             <li><input class= "sukses" type="submit" name="submit" value="SIMPAN"></li>
                         </ul>
                     </div> <!--end class kiri-->
@@ -39,7 +39,7 @@
                     <th width="5%">No</th>
                     <th width="20%">NIP</th>
                     <th width="30%">Nama</th>
-                    
+
                     <th width="5%">Akses</th>               
                     <th width="9%">Aksi</th>
                     </thead>
@@ -51,8 +51,14 @@
                             echo '<td>' . $i . '</td>';
                             echo '<td>' . $value->get_nip() . '</td>';
                             echo '<td>' . $value->get_nmUser() . '</td>';
-                            
-                            echo '<td>' . $value->get_akses() . '</td>';
+                            $akses = $value->get_akses();
+                            if ($akses == 1) {
+                                echo '<td>admin</td>';
+                            } else if ($akses == 2) {
+                                echo '<td>user</td>';
+                            } else {
+                                echo '<td>akses tidak diketahui</td>';
+                            }
                             echo '<td>
                         <a href="' . URL . 'Admin/deleteUser/' . $value->get_id() . '"><i class="icon-trash"></i></a> &nbsp &nbsp
 			<a href="' . URL . 'Admin/editUser/' . $value->get_id() . '"><i class="icon-pencil"></i></a>

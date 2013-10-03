@@ -12,14 +12,14 @@
                         <label>Nama</label><input type="text" name="nama" id="nama" value="<?php echo $this->data->get_nmUser(); ?>" size="30"/><div id="warningnama" ></div>
                         <label>Password</label><input type="password" name="pass" id="pass" value="no_change" size="30"/><div id="warningpass" ></div>
                         <label>Confirm Password</label><input type="password" name="cpass" id="cpass" value="no_change" size="30"/>
-                       <label>AKSES</label>
+                        <label>AKSES</label>
                         <select type="text" name="akses">
-                            <option value="User">User</option>
-                            <option value="Admin">Admin</option>                          
+                            <option value="1">Admin</option>
+                            <option value="2">User</option>                          
                         </select>
                         <label>Upload Foto</label><input type="file" name="foto" id="foto" value="" size="30"/>
                         <ul class="inline tengah">
-                            <li><input class="normal" type="reset" onclick="window.location.href='<?php echo URL."admin/listUser"; ?>'" value="BATAL"></li>
+                            <li><input class="normal" type="reset" onclick="window.location.href='<?php echo URL . "admin/listUser"; ?>'" value="BATAL"></li>
                             <li><input class="sukses" type="submit" name="submit" value="SIMPAN" onclick=""></li>
                         </ul>
                     </div>
@@ -37,7 +37,7 @@
                     <th width="5%">No</th>
                     <th width="30%">NIP</th>
                     <th width="40%">Nama</th>
-                  
+
                     <th width="15%">Akses</th>                     
                     </thead>
                     <tbody>
@@ -45,13 +45,19 @@
                         $i = 1;
                         foreach ($this->data2 as $value) {
                             echo '<tr>';
-                            echo '<td>' . $i. '</td>';
+                            echo '<td>' . $i . '</td>';
                             echo '<td>' . $value->get_nip() . '</td>';
                             echo '<td>' . $value->get_nmUser() . '</td>';
-                          
-                            echo '<td>' . $value->get_akses() . '</td>';
+                            $akses = $value->get_akses();
+                            if ($akses == 1) {
+                                echo '<td>admin</td>';
+                            } else if ($akses == 2) {
+                                echo '<td>user</td>';
+                            } else {
+                                echo '<td>akses tidak diketahui</td>';
+                            }
                             echo '</tr>';
-                            
+
                             $i++;
                         }
                         ?>
@@ -80,12 +86,12 @@
             jml++;
         }
         if(document.myform.pass.value!==document.myform.cpass.value){
-                var warning4 = 'password tidak sama dengan confirm password nya';
-                $('#warningpass').fadeIn(0);
-                $('#warningpass').html(warning4);
-                $('#warningpass').addClass('error');
-                jml++;
-            }
+            var warning4 = 'password tidak sama dengan confirm password nya';
+            $('#warningpass').fadeIn(0);
+            $('#warningpass').html(warning4);
+            $('#warningpass').addClass('error');
+            jml++;
+        }
           
         if (jml>0){
             return false;

@@ -21,7 +21,6 @@ class AdminController extends BaseController {
 
     public function addUniversitas($id = null) {
         $univ = new Universitas($this->registry);
-
         if (isset($_POST['add_univ'])) {
             $kode = $_POST['kode'];
             $nama = $_POST['nama'];
@@ -29,36 +28,78 @@ class AdminController extends BaseController {
             $telepon = $_POST['telepon'];
             $lokasi = $_POST['lokasi'];
             $pic = $_POST['pic'];
-
             $univ->set_pic($pic);
             $univ->set_kode($kode);
             $univ->set_nama($nama);
             $univ->set_telepon($telepon);
             $univ->set_alamat($alamat);
             $univ->set_lokasi($lokasi);
-            /* $data = array(
-              'KD_USER' => $pic,
-              'SINGKAT_UNIV' => $kode,
-              'NM_UNIV' => $nama,
-              'ALMT_UNIV' => $alamat,
-              'TELP_UNIV' => $telepon,
-              'LOK_UNIV' => $lokasi
-              ); */
             if (!$univ->add_univ()) {
                 $this->view->d_rekam = $univ;
                 $this->view->error = $univ->get_error();
             }
         }
-
         if (!is_null($id)) {
             $univ->set_kode_in($id);
             $this->view->d_ubah = $univ->get_univ_by_id($univ);
         }
-
         $pic = new User($this->registry);
         $this->view->data = $univ->get_univ();
         $this->view->pic = $pic->get_user(TRUE);
         $this->view->render('admin/universitas');
+    }
+
+    /*
+     * ubah referensi universitas
+     * @param id_univ
+     */
+
+    public function updUniversitas() {
+        $univ = new Universitas($this->registry);
+        if (isset($_POST['upd_univ'])) {
+            $kd_univ = $_POST['kd_univ'];
+            $kode = $_POST['kode'];
+            $nama = $_POST['nama'];
+            $alamat = $_POST['alamat'];
+            $telepon = $_POST['telepon'];
+            $lokasi = $_POST['lokasi'];
+            $pic = $_POST['pic'];
+            $univ->set_pic($pic);
+            $univ->set_kode($kode);
+            $univ->set_nama($nama);
+            $univ->set_telepon($telepon);
+            $univ->set_alamat($alamat);
+            $univ->set_lokasi($lokasi);
+            $univ->set_kode_in($kd_univ);
+            if (!$univ->update_univ()) {
+                $pic = new User($this->registry);
+                $this->view->d_ubah = $univ;
+                $this->view->error = $univ->get_error();
+                $this->view->data = $univ->get_univ();
+                //        var_dump($this->view->d_ubah);
+                $this->view->pic = $pic->get_user(TRUE);
+                $this->view->render('admin/universitas');
+            } else {
+                header('location:' . URL . 'admin/addUniversitas');
+            }
+        }
+    }
+
+    /*
+     * hapus referensi universitas
+     * @param id_univ
+     */
+
+    public function delUniversitas($id) {
+        $univ = new Universitas($this->registry);
+        if (is_null($id)) {
+            throw new Exception;
+            echo "id belum dimasukkan!";
+            return;
+        }
+        $univ->set_kode_in($id);
+        $univ->delete_univ();
+        header('location:' . URL . 'admin/addUniversitas');
     }
 
     /*
@@ -74,33 +115,69 @@ class AdminController extends BaseController {
             $nama = $_POST['nama'];
             $alamat = $_POST['alamat'];
             $telepon = $_POST['telepon'];
-
             $fakul->set_kode_univ($univ);
             $fakul->set_nama($nama);
             $fakul->set_alamat($alamat);
             $fakul->set_telepon($telepon);
-            /* $data = array(
-              'KD_UNIV' => $univ,
-              'NM_FAKUL' => $nama,
-              'ALMT_FAKUL' => $alamat,
-              'TELP_FAKUL' => $telepon
-              ); */
-
             if (!$fakul->add_fakul()) {
                 $this->view->d_rekam = $fakul;
                 $this->view->error = $fakul->get_error();
             }
         }
-
         if (!is_null($id)) {
             $univ = new Universitas($this->registry);
             $fakul->set_kode_fakul($id);
             $this->view->d_ubah = $fakul->get_fakul_by_id($fakul);
             $this->view->univ = $univ->get_univ();
         }
-
         $this->view->data = $fakul->get_fakul();
         $this->view->render('admin/fakultas');
+    }
+
+    /*
+     * ubah referensi fakultas
+     * @param id_fakultas
+     */
+
+    public function updFakultas() {
+        $fakul = new Fakultas($this->registry);
+        $kd_fakul = $_POST['kd_fakul'];
+        $univ = $_POST['universitas'];
+        $nama = $_POST['nama'];
+        $alamat = $_POST['alamat'];
+        $telepon = $_POST['telepon'];
+        $fakul->set_kode_univ($univ);
+        $fakul->set_nama($nama);
+        $fakul->set_alamat($alamat);
+        $fakul->set_telepon($telepon);
+        $fakul->set_kode_fakul($kd_fakul);
+        if (!$fakul->update_fakul()) {
+            $this->view->d_ubah = $fakul;
+            $this->view->error = $fakul->get_error();
+            $univ = new Universitas($this->registry);
+            $this->view->univ = $univ->get_univ();
+            $this->view->data = $fakul->get_fakul();
+            $this->view->render('admin/fakultas');
+        } else {
+            header('location:' . URL . 'admin/addFakultas');
+        }
+    }
+
+    /*
+     * hapus referensi fakultas
+     * @param id_fakultas
+     */
+
+    public function delFakultas($id) {
+        $fakul = new Fakultas($this->registry);
+        if (is_null($id)) {
+            throw new Exception;
+            echo "id belum dimasukkan!";
+            return;
+        }
+        $fakul->set_kode_fakul($id);
+        $fakul->delete_fakul();
+        header('location:' . URL . 'admin/addFakultas');
     }
 
     /*
@@ -120,7 +197,6 @@ class AdminController extends BaseController {
             $pic_jur = $_POST['pic_jur'];
             $telp_pic_jur = $_POST['telp_pic_jur'];
             $status = $_POST['status'];
-
             $jur->set_kode_fakul($fak);
             $jur->set_kode_strata($strata);
             $jur->set_nama($nama);
@@ -129,13 +205,11 @@ class AdminController extends BaseController {
             $jur->set_pic($pic_jur);
             $jur->set_telp_pic($telp_pic_jur);
             $jur->set_status($status);
-
             if (!$jur->add_jurusan()) {
                 $this->view->d_rekam = $jur;
                 $this->view->error = $jur->get_error();
             }
         }
-
         if (!is_null($id)) {
             $fakul = new Fakultas($this->registry);
             $jur->set_kode_jur($id);
@@ -146,6 +220,62 @@ class AdminController extends BaseController {
         $this->view->strata = $strata->get_All();
         $this->view->data = $jur->get_jurusan();
         $this->view->render('admin/jurusan');
+    }
+
+    /*
+     * ubah referensi jurusan
+     * @param id_jurusan
+     */
+
+    public function updJurusan() {
+        $jur = new Jurusan($this->registry);
+        $kd_jur = $_POST['kd_jur'];
+        $fak = $_POST['fakultas'];
+        $strata = $_POST['strata'];
+        $nama = $_POST['nama'];
+        $alamat = $_POST['alamat'];
+        $telepon = $_POST['telepon'];
+        $pic_jur = $_POST['pic_jur'];
+        $telp_pic_jur = $_POST['telp_pic_jur'];
+        $status = $_POST['status'];
+        $jur->set_kode_fakul($fak);
+        $jur->set_kode_strata($strata);
+        $jur->set_nama($nama);
+        $jur->set_alamat($alamat);
+        $jur->set_telepon($telepon);
+        $jur->set_pic($pic_jur);
+        $jur->set_telp_pic($telp_pic_jur);
+        $jur->set_status($status);
+        $jur->set_kode_jur($kd_jur);
+        if (!$jur->update_jurusan()) {
+            $fakul = new Fakultas($this->registry);
+            $strata = new Strata();
+            $this->view->d_ubah = $jur;
+            $this->view->error = $jur->get_error();
+            $this->view->fakul = $fakul->get_fakul();
+            $this->view->strata = $strata->get_All();
+            $this->view->data = $jur->get_jurusan();
+            $this->view->render('admin/jurusan');
+        } else {
+            header('location:' . URL . 'admin/addJurusan');
+        }
+    }
+
+    /*
+     * hapus referensi jurusan
+     * @param id_jurusan
+     */
+
+    public function delJurusan($id) {
+        $jur = new Jurusan($this->registry);
+        if (is_null($id)) {
+            throw new Exception;
+            echo "id belum dimasukkan!";
+            return;
+        }
+        $jur->set_kode_jur($id);
+        $jur->delete_jurusan();
+        header('location:' . URL . 'admin/addJurusan');
     }
 
     /*
@@ -168,291 +298,6 @@ class AdminController extends BaseController {
         //var_dump($data);
         $this->view->data = $data;
         $this->view->render('admin/strata');
-    }
-
-    /*
-     * tambah referensi pemberi beasiswa
-     */
-
-    public function addPemberi() {
-        $pemberi = new PemberiBeasiswa;
-        if (isset($_POST['add_pemberi'])) {
-            $pemberi->nama_pemberi = $_POST['nama_pemberi'];
-            $pemberi->alamat_pemberi = $_POST['alamat_pemberi'];
-            $pemberi->telp_pemberi = $_POST['telp_pemberi'];
-            $pemberi->pic_pemberi = $_POST['pic_pemberi'];
-            $pemberi->telp_pic_pemberi = $_POST['telp_pic_pemberi'];
-            if ($pemberi->isEmpty($pemberi) == FALSE) {
-                $pemberi->add($pemberi);
-                header('location:' . URL . 'admin/addPemberi');
-            } else {
-                echo "Isian form belum lengkap";
-            }
-        }
-        $data = $pemberi->get_All();
-        //var_dump($data);
-        $this->view->data = $data;
-        $this->view->render('admin/pemberi');
-    }
-
-    /*
-     * tambah referensi pejabat
-     */
-
-    public function addPejabat() {
-        $pejabat = new Pejabat();
-        if (isset($_POST['add_pejabat'])) {
-            $pejabat->kd_pejabat = $_POST['kd_pejabat'];
-            $pejabat->nip_pejabat = $_POST['nip_pejabat'];
-            $pejabat->nama_pejabat = $_POST['nama_pejabat'];
-            $pejabat->nama_jabatan = $_POST['nama_jabatan'];
-            $pejabat->jenis_jabatan = $_POST['jenis_jabatan'];
-            if ($pejabat->isEmpty($pejabat) == FALSE) { //mengecek apakah data pejabat kosong
-                if (Validasi::cekNip($pejabat->nip_pejabat) == true) { //mengecek apakah format nip benar
-                    if ($pejabat->cekJenisJabatan($pejabat->jenis_jabatan) == TRUE) { //mengecek apakah sudah ada pejabat dengan jenis jabatan yang sama
-                        $pejabat->add($pejabat);
-                        header('location:' . URL . 'admin/addPejabat/');
-                    } else {
-                        echo "Pejabat dengan jenis jabatan tersebut sudah ada....";
-                    }
-                } else {
-                    echo "Format NIP salah...";
-                }
-            } else {
-                echo "Isian form belum lengkap...";
-            }
-        }
-        $data = $pejabat->get_All();
-        //var_dump($data);
-        $this->view->data = $data;
-        $this->view->render('admin/pejabat');
-    }
-
-    /*
-     * tambah referensi jenis surat tugas
-     */
-
-    public function addST($id = null) {
-        $st = new JenisSuratTugas($this->registry);
-        if (isset($_POST['add_st'])) {
-            $nama = $_POST['nama'];
-            $keterangan = $_POST['keterangan'];
-
-            $st->set_nama($nama);
-            $st->set_keterangan($keterangan);
-
-            if (!$st->add_jst()) {
-                $this->view->d_rekam = $st;
-                $this->view->error = $st->get_error();
-            }
-        }
-
-
-
-        if (!is_null($id)) {
-            $st->set_kode($id);
-            $this->view->d_ubah = $st->get_jst_by_id($st);
-        }
-
-        $this->view->data = $st->get_jst();
-//        var_dump($this->view->d_ubah);
-        $this->view->render('admin/surat_tugas');
-    }
-
-    /*
-     * tambah referensi jenis cuti
-     */
-
-    public function addCuti($id = null) {
-        $sc = new JenisSuratCuti($this->registry);
-        if (isset($_POST['add_sc'])) {
-            $nama = $_POST['nama'];
-            $keterangan = $_POST['keterangan'];
-
-            $sc->set_nama($nama);
-            $sc->set_keterangan($keterangan);
-
-            if (!$sc->add_jsc()) {
-                $this->view->d_rekam = $sc;
-                $this->view->error = $sc->get_error();
-            }
-        }
-
-
-
-        if (!is_null($id)) {
-            $sc->set_kode($id);
-            $this->view->d_ubah = $sc->get_jsc_by_id($sc);
-        }
-
-        $this->view->data = $sc->get_jsc();
-//        var_dump($this->view->d_ubah);
-        $this->view->render('admin/cuti');
-    }
-
-    /*
-     * tambah referensi PIC
-     */
-
-    public function addPIC() {
-        if (isset($_POST['add_pic'])) {
-            $nama = $_POST['nama'];
-            $keterangan = $_POST['keterangan'];
-
-            $data = $keterangan . '</br>' . $nama;
-
-            echo $data;
-        }
-
-        $this->view->load('admin/pic');
-    }
-
-    /*
-     * ubah referensi universitas
-     * @param id_univ
-     */
-
-    public function updUniversitas() {
-
-        $univ = new Universitas($this->registry);
-        if (isset($_POST['upd_univ'])) {
-            $kd_univ = $_POST['kd_univ'];
-            $kode = $_POST['kode'];
-            $nama = $_POST['nama'];
-            $alamat = $_POST['alamat'];
-            $telepon = $_POST['telepon'];
-            $lokasi = $_POST['lokasi'];
-            $pic = $_POST['pic'];
-
-            /* $data = array(
-              'KD_UNIV' => $kd_univ,
-              'KD_USER' => $pic,
-              'SINGKAT_UNIV' => $kode,
-              'NM_UNIV' => $nama,
-              'ALMT_UNIV' => $alamat,
-              'TELP_UNIV' => $telepon,
-              'LOK_UNIV' => $lokasi
-              ); */
-            $univ->set_pic($pic);
-            $univ->set_kode($kode);
-            $univ->set_nama($nama);
-            $univ->set_telepon($telepon);
-            $univ->set_alamat($alamat);
-            $univ->set_lokasi($lokasi);
-
-            $univ->set_kode_in($kd_univ);
-            if (!$univ->update_univ()) {
-                $pic = new User($this->registry);
-                $this->view->d_ubah = $univ;
-                $this->view->error = $univ->get_error();
-                $this->view->data = $univ->get_univ();
-                //        var_dump($this->view->d_ubah);
-                $this->view->pic = $pic->get_user(TRUE);
-                echo "jdsakjfdashjfs";
-                $this->view->render('admin/universitas');
-            } else {
-                header('location:' . URL . 'admin/addUniversitas');
-            }
-        }
-
-
-//        header('location:' . URL . 'admin/addUniversitas');
-    }
-
-    /*
-     * ubah referensi fakultas
-     * @param id_fakultas
-     */
-
-    public function updFakultas() {
-        $fakul = new Fakultas($this->registry);
-        $kd_fakul = $_POST['kd_fakul'];
-        $univ = $_POST['universitas'];
-        $nama = $_POST['nama'];
-        $alamat = $_POST['alamat'];
-        $telepon = $_POST['telepon'];
-
-        /* $data = array(
-          'KD_UNIV' => $univ,
-          'NM_FAKUL' => $nama,
-          'ALMT_FAKUL' => $alamat,
-          'TELP_FAKUL' => $telepon
-          ); */
-        $fakul->set_kode_univ($univ);
-        $fakul->set_nama($nama);
-        $fakul->set_alamat($alamat);
-        $fakul->set_telepon($telepon);
-
-        $fakul->set_kode_fakul($kd_fakul);
-        if (!$fakul->update_fakul()) {
-            $this->view->d_ubah = $fakul;
-            $this->view->error = $fakul->get_error();
-
-
-            $univ = new Universitas($this->registry);
-            $this->view->univ = $univ->get_univ();
-            $this->view->data = $fakul->get_fakul();
-            $this->view->render('admin/fakultas');
-        } else {
-            header('location:' . URL . 'admin/addFakultas');
-        }
-
-//        header('location:' . URL . 'admin/addFakultas');
-    }
-
-    /*
-     * ubah referensi jurusan
-     * @param id_jurusan
-     */
-
-    public function updJurusan() {
-        $jur = new Jurusan($this->registry);
-        $kd_jur = $_POST['kd_jur'];
-        $fak = $_POST['fakultas'];
-        $strata = $_POST['strata'];
-        $nama = $_POST['nama'];
-        $alamat = $_POST['alamat'];
-        $telepon = $_POST['telepon'];
-        $pic_jur = $_POST['pic_jur'];
-        $telp_pic_jur = $_POST['telp_pic_jur'];
-        $status = $_POST['status'];
-
-        /* $data = array(
-          'KD_FAKUL' => $fak,
-          'KD_STRATA' => $strata,
-          'NM_JUR' => $nama,
-          'ALMT_JUR' => $alamat,
-          'TELP_JUR' => $telepon,
-          'PIC_JUR' => $pic_jur,
-          'TELP_PIC_JUR' => $telp_pic_jur,
-          'STS_JUR' => $status,
-          ); */
-
-        $jur->set_kode_fakul($fak);
-        $jur->set_kode_strata($strata);
-        $jur->set_nama($nama);
-        $jur->set_alamat($alamat);
-        $jur->set_telepon($telepon);
-        $jur->set_pic($pic_jur);
-        $jur->set_telp_pic($telp_pic_jur);
-        $jur->set_status($status);
-
-        $jur->set_kode_jur($kd_jur);
-        if (!$jur->update_jurusan()) {
-            $fakul = new Fakultas($this->registry);
-            $strata = new Strata();
-            $this->view->d_ubah = $jur;
-            $this->view->error = $jur->get_error();
-            $this->view->fakul = $fakul->get_fakul();
-            $this->view->strata = $strata->get_All();
-
-            $this->view->data = $jur->get_jurusan();
-            $this->view->render('admin/jurusan');
-        } else {
-            header('location:' . URL . 'admin/addJurusan');
-        }
-
-//        header('location:' . URL . 'admin/addJurusan');
     }
 
     /*
@@ -491,7 +336,6 @@ class AdminController extends BaseController {
                 $url = URL . 'admin/editStrata/' . $strata->kd_strata;
                 header("refresh:1;url=" . $url);
                 echo "Isian form belum lengkap";
-                //header('location:' . URL . 'admin/updStrata/' . $strata->kd_strata);
             }
         } else {
             header('location:' . URL . 'admin/addStrata/');
@@ -499,57 +343,43 @@ class AdminController extends BaseController {
     }
 
     /*
-     * ubah referensi jenis surat tugas
-     * @param id_st
+     * hapus referensi strata
+     * @param id_strata
      */
 
-    public function updST() {
-        $st = new JenisSuratTugas($this->registry);
-        if (isset($_POST['upd_st'])) {
-            $kd_jenis_st = $_POST['kd_jenis_st'];
-            $nama = $_POST['nama'];
-            $keterangan = $_POST['keterangan'];
-
-            $st->set_kode($kd_jenis_st);
-            $st->set_nama($nama);
-            $st->set_keterangan($keterangan);
-
-            if (!$st->update_jst()) {
-                $this->view->d_ubah = $st;
-                $this->view->error = $st->get_error();
-                $this->view->data = $st->get_jst();
-                $this->view->render('admin/surat_tugas');
-            }
+    public function delStrata($id = null) {
+        if ($id != null) {
+            $strata = new Strata();
+            $strata->delete($id);
+            header('location:' . URL . 'admin/addStrata');
+        } else {
+            header('location:' . URL . 'admin/addStrata');
         }
-
-        header('location:' . URL . 'admin/addST');
     }
 
     /*
-     * ubah referensi jenis cuti
-     * @param id_cuti
+     * tambah referensi pemberi beasiswa
      */
 
-    public function updCuti() {
-        $sc = new JenisSuratCuti($this->registry);
-        if (isset($_POST['upd_sc'])) {
-            $kd_jns_srt_cuti = $_POST['kd_jns_srt_cuti'];
-            $nama = $_POST['nama'];
-            $keterangan = $_POST['keterangan'];
-
-            $sc->set_kode($kd_jns_srt_cuti);
-            $sc->set_nama($nama);
-            $sc->set_keterangan($keterangan);
-
-            if (!$sc->update_jsc()) {
-                $this->view->d_ubah = $sc;
-                $this->view->error = $sc->get_error();
-                $this->view->data = $sc->get_jsc();
-                $this->view->render('admin/cuti');
+    public function addPemberi() {
+        $pemberi = new PemberiBeasiswa;
+        if (isset($_POST['add_pemberi'])) {
+            $pemberi->nama_pemberi = $_POST['nama_pemberi'];
+            $pemberi->alamat_pemberi = $_POST['alamat_pemberi'];
+            $pemberi->telp_pemberi = $_POST['telp_pemberi'];
+            $pemberi->pic_pemberi = $_POST['pic_pemberi'];
+            $pemberi->telp_pic_pemberi = $_POST['telp_pic_pemberi'];
+            if ($pemberi->isEmpty($pemberi) == FALSE) {
+                $pemberi->add($pemberi);
+                header('location:' . URL . 'admin/addPemberi');
+            } else {
+                echo "Isian form belum lengkap";
             }
         }
-
-        header('location:' . URL . 'admin/addCuti');
+        $data = $pemberi->get_All();
+        //var_dump($data);
+        $this->view->data = $data;
+        $this->view->render('admin/pemberi');
     }
 
     /*
@@ -592,11 +422,58 @@ class AdminController extends BaseController {
                 $url = URL . 'admin/editPemberi/' . $pemberi->kd_pemberi;
                 header("refresh:1;url=" . $url);
                 echo "Isian form belum lengkap...";
-                //header('location:' . URL . 'admin/updPemberi/' . $pemberi->kd_pemberi);
             }
         } else {
             header('location:' . URL . 'admin/addPemberi/');
         }
+    }
+
+    /*
+     * hapus referensi pemberi beasiswa
+     * @param id_pemberi
+     */
+
+    public function delPemberi($id = null) {
+        if ($id != null) {
+            $pemberi = new PemberiBeasiswa();
+            $pemberi->delete($id);
+            header('location:' . URL . 'admin/addPemberi');
+        } else {
+            header('location:' . URL . 'admin/addPemberi');
+        }
+    }
+
+    /*
+     * tambah referensi pejabat
+     */
+
+    public function addPejabat() {
+        $pejabat = new Pejabat();
+        if (isset($_POST['add_pejabat'])) {
+            $pejabat->kd_pejabat = $_POST['kd_pejabat'];
+            $pejabat->nip_pejabat = $_POST['nip_pejabat'];
+            $pejabat->nama_pejabat = $_POST['nama_pejabat'];
+            $pejabat->nama_jabatan = $_POST['nama_jabatan'];
+            $pejabat->jenis_jabatan = $_POST['jenis_jabatan'];
+            if ($pejabat->isEmpty($pejabat) == FALSE) { //mengecek apakah data pejabat kosong
+                if (Validasi::cekNip($pejabat->nip_pejabat) == true) { //mengecek apakah format nip benar
+                    if ($pejabat->cekJenisJabatan($pejabat->jenis_jabatan) == TRUE) { //mengecek apakah sudah ada pejabat dengan jenis jabatan yang sama
+                        $pejabat->add($pejabat);
+                        header('location:' . URL . 'admin/addPejabat/');
+                    } else {
+                        echo "Pejabat dengan jenis jabatan tersebut sudah ada....";
+                    }
+                } else {
+                    echo "Format NIP salah...";
+                }
+            } else {
+                echo "Isian form belum lengkap...";
+            }
+        }
+        $data = $pejabat->get_All();
+        //var_dump($data);
+        $this->view->data = $data;
+        $this->view->render('admin/pejabat');
     }
 
     /*
@@ -639,13 +516,11 @@ class AdminController extends BaseController {
                     $url = URL . 'admin/editPejabat/' . $pejabat->kd_pejabat;
                     header("refresh:1;url=" . $url);
                     echo "Format NIP salah...";
-                    //header('location:' . URL . 'admin/editPejabat/'.$pejabat->kd_pejabat);
                 }
             } else {
                 $url = URL . 'admin/editPejabat/' . $pejabat->kd_pejabat;
                 header("refresh:1;url=" . $url);
                 echo "Isian form belum lengkap...";
-                //header('location:' . URL . 'admin/editPejabat/'.$pejabat->kd_pejabat);
             }
         } else {
             //echo "3";
@@ -654,103 +529,67 @@ class AdminController extends BaseController {
     }
 
     /*
-     * ubah referensi bank
-     * @param id_bank
+     * hapus referensi pejabat
+     * @param id_pemberi
      */
 
-    public function updBank($id) {
-        if (!is_null($id)) {
-            $bank = new Bank();
-            $data = $bank->get($id);
+    public function delPejabat($id = null) {
+        if ($id != null) {
+            $pejabat = new Pejabat();
+            $pejabat->delete($id);
+            header('location:' . URL . 'admin/addPejabat');
         } else {
-            throw new Exception;
-            return;
+            header('location:' . URL . 'admin/addPejabat');
         }
-        $this->view->load('admin/bank');
     }
 
     /*
-     * ubah referensi PIC
-     * @param id_pic
+     * tambah referensi jenis surat tugas
      */
 
-    public function updPIC($id) {
+    public function addST($id = null) {
+        $st = new JenisSuratTugas($this->registry);
+        if (isset($_POST['add_st'])) {
+            $nama = $_POST['nama'];
+            $keterangan = $_POST['keterangan'];
+            $st->set_nama($nama);
+            $st->set_keterangan($keterangan);
+            if (!$st->add_jst()) {
+                $this->view->d_rekam = $st;
+                $this->view->error = $st->get_error();
+            }
+        }
         if (!is_null($id)) {
-            $pic = new PIC();
-            $data = $pic->get($id);
-        } else {
-            throw new Exception;
-            return;
+            $st->set_kode($id);
+            $this->view->d_ubah = $st->get_jst_by_id($st);
         }
-        $this->view->load('admin/pic');
+        $this->view->data = $st->get_jst();
+//        var_dump($this->view->d_ubah);
+        $this->view->render('admin/surat_tugas');
     }
 
     /*
-     * hapus referensi universitas
-     * @param id_univ
+     * ubah referensi jenis surat tugas
+     * @param id_st
      */
 
-    public function delUniversitas($id) {
-        $univ = new Universitas($this->registry);
-        if (is_null($id)) {
-            throw new Exception;
-            echo "id belum dimasukkan!";
-            return;
+    public function updST() {
+        $st = new JenisSuratTugas($this->registry);
+        if (isset($_POST['upd_st'])) {
+            $kd_jenis_st = $_POST['kd_jenis_st'];
+            $nama = $_POST['nama'];
+            $keterangan = $_POST['keterangan'];
+            $st->set_kode($kd_jenis_st);
+            $st->set_nama($nama);
+            $st->set_keterangan($keterangan);
+            if (!$st->update_jst()) {
+                $this->view->d_ubah = $st;
+                $this->view->error = $st->get_error();
+                $this->view->data = $st->get_jst();
+                $this->view->render('admin/surat_tugas');
+            }
         }
-        $univ->set_kode_in($id);
-        $univ->delete_univ();
-        header('location:' . URL . 'admin/addUniversitas');
-    }
-
-    /*
-     * hapus referensi fakultas
-     * @param id_fakultas
-     */
-
-    public function delFakultas($id) {
-        $fakul = new Fakultas($this->registry);
-        if (is_null($id)) {
-            throw new Exception;
-            echo "id belum dimasukkan!";
-            return;
-        }
-        $fakul->set_kode_fakul($id);
-        $fakul->delete_fakul();
-        header('location:' . URL . 'admin/addFakultas');
-    }
-
-    /*
-     * hapus referensi jurusan
-     * @param id_jurusan
-     */
-
-    public function delJurusan($id) {
-        $jur = new Jurusan($this->registry);
-        if (is_null($id)) {
-            throw new Exception;
-            echo "id belum dimasukkan!";
-            return;
-        }
-        $jur->set_kode_jur($id);
-        $jur->delete_jurusan();
-        header('location:' . URL . 'admin/addJurusan');
-    }
-
-    /*
-     * hapus referensi cuti
-     * @param id_cuti
-     */
-
-    public function delCuti($id) {
-        $sc = new JenisSuratCuti($this->registry);
-        if (is_null($id)) {
-            throw new Exception;
-            echo "id belum dimasukkan!";
-            return;
-        }
-        $sc->set_kode($id);
-        $sc->delete_jsc();
-        header('location:' . URL . 'admin/addCuti');
+        header('location:' . URL . 'admin/addST');
     }
 
     /*
@@ -771,92 +610,97 @@ class AdminController extends BaseController {
     }
 
     /*
-     * hapus referensi strata
-     * @param id_strata
+     * tambah referensi jenis cuti
      */
 
-    public function delStrata($id = null) {
-        if ($id != null) {
-            $strata = new Strata();
-            $strata->delete($id);
-            header('location:' . URL . 'admin/addStrata');
-        } else {
-            header('location:' . URL . 'admin/addStrata');
+    public function addCuti($id = null) {
+        $sc = new JenisSuratCuti($this->registry);
+        if (isset($_POST['add_sc'])) {
+            $nama = $_POST['nama'];
+            $keterangan = $_POST['keterangan'];
+            $sc->set_nama($nama);
+            $sc->set_keterangan($keterangan);
+            if (!$sc->add_jsc()) {
+                $this->view->d_rekam = $sc;
+                $this->view->error = $sc->get_error();
+            }
         }
+        if (!is_null($id)) {
+            $sc->set_kode($id);
+            $this->view->d_ubah = $sc->get_jsc_by_id($sc);
+        }
+        $this->view->data = $sc->get_jsc();
+//        var_dump($this->view->d_ubah);
+        $this->view->render('admin/cuti');
     }
 
     /*
-     * hapus referensi pemberi beasiswa
-     * @param id_pemberi
+     * ubah referensi jenis cuti
+     * @param id_cuti
      */
 
-    public function delPemberi($id = null) {
-        if ($id != null) {
-            $pemberi = new PemberiBeasiswa();
-            $pemberi->delete($id);
-            header('location:' . URL . 'admin/addPemberi');
-        } else {
-            header('location:' . URL . 'admin/addPemberi');
+    public function updCuti() {
+        $sc = new JenisSuratCuti($this->registry);
+        if (isset($_POST['upd_sc'])) {
+            $kd_jns_srt_cuti = $_POST['kd_jns_srt_cuti'];
+            $nama = $_POST['nama'];
+            $keterangan = $_POST['keterangan'];
+            $sc->set_kode($kd_jns_srt_cuti);
+            $sc->set_nama($nama);
+            $sc->set_keterangan($keterangan);
+            if (!$sc->update_jsc()) {
+                $this->view->d_ubah = $sc;
+                $this->view->error = $sc->get_error();
+                $this->view->data = $sc->get_jsc();
+                $this->view->render('admin/cuti');
+            }
         }
+        header('location:' . URL . 'admin/addCuti');
     }
 
     /*
-     * hapus referensi pejabat
-     * @param id_pemberi
+     * hapus referensi cuti
+     * @param id_cuti
      */
 
-    public function delPejabat($id = null) {
-        if ($id != null) {
-            $pejabat = new Pejabat();
-            $pejabat->delete($id);
-            header('location:' . URL . 'admin/addPejabat');
-        } else {
-            header('location:' . URL . 'admin/addPejabat');
-        }
-    }
-
-    /*
-     * hapus referensi pic
-     * @param id_pic
-     */
-
-    public function delPIC($id) {
+    public function delCuti($id) {
+        $sc = new JenisSuratCuti($this->registry);
         if (is_null($id)) {
             throw new Exception;
             echo "id belum dimasukkan!";
             return;
         }
+        $sc->set_kode($id);
+        $sc->delete_jsc();
+        header('location:' . URL . 'admin/addCuti');
     }
 
-    public function __destruct() {
-        ;
-    }
+    /*
+     * melihat data bank
+     */
 
     public function list_bank() {
         $bank = new Bank($this->registry);
-
         $this->view->data = $bank->get_bank();
 //        var_dump($data);
         $this->view->render('admin/list_bank');
     }
 
+    /*
+     * menambah data bank
+     */
+
     public function addBank() {
-
         if (isset($_POST['submit'])) {
-
             if ($_POST['nama'] == "") {
                 echo 'ada field yang masih kosong';
             } else {
-
                 $bank = new Bank($registry);
-
                 if ($bank->get_bank_name($_POST['nama']) == 1) {
                     echo 'data bank telah ada di dalam database';
                 } else {
-
                     $bank->set_nama($_POST['nama']);
                     $bank->set_keterangan($_POST['keterangan']);
-
                     $bank->addBank($bank);
                 }
             }
@@ -864,58 +708,68 @@ class AdminController extends BaseController {
         header('location:' . URL . 'Admin/list_bank');
     }
 
+    /*
+     * merubah data bank
+     * @param id_bank
+     */
+
     public function editBank($id) {
-
         $bank = new Bank($this->registry);
-
         $this->view->data = $bank->get_bank_id($id);
-        
         $bank2 = new Bank($registry);
         $this->view->data2 = $bank2->get_bank();
-
         $this->view->render('admin/edit_bank');
     }
+
+    /*
+     * eksekusi perubahan data bank
+     */
 
     public function updateBank() {
 //        $bank = new Bank($this->registry);
         if (isset($_POST['submit'])) {
             if ($_POST['nama'] == "") {
-
                 echo 'nama bank tidak boleh kosong';
             } else {
                 $bank = new Bank($registry);
-                
                 $bank->set_id($_POST['id']);
                 $bank->set_nama($_POST['nama']);
                 $bank->set_keterangan($_POST['keterangan']);
-//                    print_r($data);
                 $bank->updateBank($bank);
             }
         }
         header('location:' . URL . 'Admin/list_bank');
     }
 
-    public function deleteBank($id) {
+    /*
+     * menghapus data bank
+     * @param id_bank
+     */
 
+    public function deleteBank($id) {
         $bank = new Bank($this->registry);
         $bank->set_id($id);
         $bank->deleteBank();
-
         header('location:' . URL . 'Admin/list_bank');
     }
 
-    public function listUser() {
+    /*
+     * melihat data user
+     */
 
+    public function listUser() {
         $user = new User($registry);
         $this->view->data = $user->get_user();
 //        var_dump($user->get_user());
         $this->view->render('admin/list_user');
     }
 
+    /*
+     * menambah data user
+     */
+
     public function addUser() {
-
         if (ISSET($_POST['submit'])) {
-
             if ($_POST['nip'] == "" || $_POST['nama'] == "" || $_POST['pass'] == "" || $_POST['cpass'] == "" || $_POST['akses'] == "") {
                 echo 'ada field yang masih kosong';
             } else {
@@ -924,13 +778,11 @@ class AdminController extends BaseController {
                     echo 'password tidak sama dengan confirm password';
                 } else {
                     $user = new User($registry);
-
                     $user->set_nip($_POST['nip']);
                     $user->set_nmUser($_POST['nama']);
                     $user->set_pass($_POST['pass']);
                     $user->set_akses($_POST['akses']);
                     $user->set_foto($_POST['foto']);
-
                     //            var_dump($user);
                     $user->addUser($user);
                 }
@@ -939,53 +791,50 @@ class AdminController extends BaseController {
         header('location:' . URL . 'admin/listuser');
     }
 
+    /*
+     * merubah data user
+     * @param id_user
+     */
+
     public function editUser($id) {
         $user = new User($registry);
-
         $this->view->data = $user->getUser_id($id);
-
         $user2 = new User($registry);
         $this->view->data2 = $user2->get_user();
-
         $this->view->render('admin/edit_user');
     }
 
+    /*
+     * mengeksekusi data user
+     */
+
     public function updateUser() {
         if (ISSET($_POST['submit'])) {
-
 //            var_dump($_POST['pass']) ;
             if ($_POST['nip'] == "" || $_POST['nama'] == "") {
                 echo 'ada field yang masih belum diisi';
             } else {
-
                 if ($_POST['pass'] == "no_change" || $_POST['cpass'] == "no_change") {
-
 //                    echo 'dsadfa';
                     $user = new User($registry);
-
                     $user->set_id($_POST['id']);
                     $user->set_nip($_POST['nip']);
                     $user->set_nmUser($_POST['nama']);
                     $user->set_akses($_POST['akses']);
                     $user->set_foto($_POST['foto']);
-
                     $user->updateUser_withoutpass($user);
                 }
                 if ($_POST['pass'] !== $_POST['cpass']) {
-
                     echo 'data tidak bisa disimpan karena password berbeda dengan confirm passwordnya';
                 }
                 if ($_POST['pass'] !== "no_change" && $_POST['pass'] == $_POST['cpass']) {
-//                    echo 'sssssss';
                     $user = new User($registry);
-
                     $user->set_id($_POST['id']);
                     $user->set_nip($_POST['nip']);
                     $user->set_nmUser($_POST['nama']);
                     $user->set_pass($_POST['pass']);
                     $user->set_akses($_POST['akses']);
                     $user->set_foto($_POST['foto']);
-
                     $user->updateUser($user);
 //                    var_dump($user);
                 }
@@ -994,11 +843,21 @@ class AdminController extends BaseController {
         header('location:' . URL . 'admin/listUser');
     }
 
+    /*
+     * menghapus data user
+     * @param id_user
+     */
+
     public function deleteUser($id) {
         $user = new User($registry);
         $user->delUser($id);
         header('location:' . URL . 'admin/listUser');
     }
+
+    /*
+     * mendapatkan var jurusan berdasarkan id_univ
+     * @param id_univ
+     */
 
     public function get_jur_by_univ() {
         $univ = $_POST['param'];
@@ -1008,6 +867,10 @@ class AdminController extends BaseController {
             echo "<option value=" . $val->get_kode_jur() . ">" . $val->get_nama() . "</option>";
         }
     }
+
+    /*
+     * mengecek ketersediaan jenis jabatan
+     */
 
     public function cekJabatan() {
         $pejabat = new Pejabat();
@@ -1022,6 +885,10 @@ class AdminController extends BaseController {
         $res = array('respon' => $respon);
         echo json_encode($res);
     }
+
+    /*
+     * meng-set data konfigurasi
+     */
 
     public function config($ubah = false) {
         $xml = new ClassXML('1.0', 'utf-8');
@@ -1043,22 +910,34 @@ class AdminController extends BaseController {
         }
 
         $this->view->data = $xml->readXML('libs/testing');
-        /* echo $data->host.'</br>';
-          echo $data->db.'</br>';
-          echo $data->username.'</br>';
-          echo $data->password->test->log.'</br>'; */
         if ($ubah) {
             $this->view->ubah = true;
         }
         $this->view->render('admin/config_database');
     }
 
+    /*
+     * melakukan backup database
+     */
+
     public function backup() {
         $this->view->render('admin/backup_db');
     }
 
+    /*
+     * melakukan restore database
+     */
+
     public function restore() {
         $this->view->render('admin/restore_db');
+    }
+
+    /*
+     * destruktor
+     */
+
+    public function __destruct() {
+        ;
     }
 
 }

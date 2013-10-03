@@ -32,11 +32,13 @@
 
                     </thead>
                     <tbody><?php
+                    $no=1;
 foreach ($this->data2 as $val) {
     echo '<tr>';
-    echo '<td>' . $val->get_id() . '</td>';
+    echo '<td>' . $no. '</td>';
     echo '<td>' . $val->get_nama() . '</td>';
     echo '<td>' . $val->get_keterangan() . '</td>';
+    $no++;
 }
 ?>                          
                     </tbody>
