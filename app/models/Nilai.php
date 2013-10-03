@@ -32,6 +32,7 @@ class Nilai{
             $nilai->set_ips($v['IPS_NIL_PB']);
             $nilai->set_ipk($v['IPK_NIL_PB']);
             $nilai->set_semester($v['SEM_NIL_PB']);
+            $nilai->set_file($v['FILE_NIL_PB']);
             $data[] = $nilai;
         }
         return $data;
@@ -59,7 +60,7 @@ class Nilai{
             'FILE_NIL_PB'=>$this->get_file()
         );
         
-        $this->registry->db->insert($this->_tb_nilai,$data);
+        return $this->registry->db->insert($this->_tb_nilai,$data);
     }
 
 

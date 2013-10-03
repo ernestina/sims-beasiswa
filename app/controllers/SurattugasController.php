@@ -196,6 +196,10 @@ class SurattugasController extends BaseController{
         echo $return;
     }
 
-//ini sekedar test saja
+    public function view_st($file){
+        $this->view->file = $file;
+        $this->view->load('riwayat_tb/display_st');
+    }
+
 }
 ?>

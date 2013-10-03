@@ -31,3 +31,17 @@
             ?>
         </table>
     </div>
+<script type="text/javascript">
+
+function view(file){
+    var url = "<?php echo URL;?>surattugas/view_st/"+file;
+    
+    var w = 800;
+    var h = 500;
+    var left = (screen.width/2)-(w/2);
+    var top = (screen.height/2)-(h/2);
+    var title = "tampilan surat tugas";
+    window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+}
+
+</script>

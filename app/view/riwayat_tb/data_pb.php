@@ -42,7 +42,7 @@
                 echo "<td>".$no."</td>";
                 echo "<td><a href=".URL."penerima/profil/".$v->get_kd_pb().">".$v->get_nip()."</a></td>";
                 echo "<td>".$v->get_nama()."</td>";
-                echo "<td>".$v->get_gol()."</td>";
+                echo "<td>".Golongan::golongan_int_string($v->get_gol())."</td>";
                 echo "<td>".$v->get_unit_asal()."</td>";
                 echo "<td>".$v->get_jur()."</td>";
                 echo "<td><a href=".URL."penerima/delpb/".$v->get_kd_pb()."><i class=\"icon-trash\"></i></a> &nbsp &nbsp

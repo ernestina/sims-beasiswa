@@ -245,10 +245,31 @@ class Penerima {
     /*
      * update data penerima beasiswa, kode penerima harus diset
      */
-    public function update_penerima($data=array()){
+    public function update_penerima(){
+        $data = array(
+            'KD_PB'=>$this->get_kd_pb(),
+            'KD_ST'=>$this->get_st(),
+            'KD_JUR'=>$this->get_jur(),
+            'KD_BANK'=>$this->get_bank(),
+            'KD_STS_TB'=>$this->get_status(),
+            'NIP_PB'=>$this->get_nip(),
+            'NM_PB'=>$this->get_nama(),
+            'JK_PB'=>$this->get_jkel(),
+            'KD_GOL'=>$this->get_gol(),
+            'UNIT_ASAL_PB'=>$this->get_unit_asal(),
+            'EMAIL_PB'=>$this->get_email(),
+            'TELP_PB'=>$this->get_telp(),
+            'ALMT_PB'=>$this->get_alamat(),
+            'NO_REKENING_PB'=>$this->get_no_rek(),
+            'FOTO_PB'=>$this->get_foto(),
+            'TGL_LAPOR_PB'=>$this->get_tgl_lapor(),
+            'NO_SKL_PB'=>$this->get_skl(),
+            'NO_SPMT_PB'=>$this->get_spmt(),
+            'JUDUL_SKRIPSI_PB'=>$this->get_skripsi()
+        );
         if(!is_array($data)) return false;
         $where = 'KD_PB = '.$this->get_kd_pb();
-        $this->db->update($this->_tb_penerima,$data,$where);
+        return $this->db->update($this->_tb_penerima,$data,$where);
     }
     
     /*

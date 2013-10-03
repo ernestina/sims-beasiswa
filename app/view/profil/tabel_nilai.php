@@ -12,9 +12,9 @@
                                    ?>
 					<tr>
 						<td><?php echo $no;?></td>
-						<td><?php echo "Semester ".$v->get_semester()." dengan IPS ".($v->get_ips()/100); ?></td>
-						<td><?php echo $v->get_ipk()/100;?></td>
-						<td><input type="button" value="Pilih..." id="uplod_ip" name="uplod_ip" /></td>
+						<td><?php echo "Semester ".$v->get_semester()." dengan IPS ".($v->get_ips()); ?></td>
+						<td><?php echo $v->get_ipk();?></td>
+						<td><input type="button" value="Transkrip" id="uplod_ip" name="uplod_ip" onClick="view('<?php echo $v->get_file();?>');"/></td>
 					</tr>
                                     <?php 
                                             $no++;
@@ -22,3 +22,17 @@
                                      ?>
 				</tbody>
 			</table>
+<script type="text/javascript">
+
+function view(file){
+    var url = "<?php echo URL;?>penerima/view_transkrip/"+file;
+    
+    var w = 800;
+    var h = 500;
+    var left = (screen.width/2)-(w/2);
+    var top = (screen.height/2)-(h/2);
+    var title = "tampilan transkrip";
+    window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+}
+
+</script>

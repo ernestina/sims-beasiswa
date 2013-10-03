@@ -112,7 +112,7 @@
             type: 'POST',
             data: formData,
             async: false,
-            success: function () {
+            success: function (data) {
                     window.opener.callFromDialog(kd_pb,'nilai'); //or use //window.opener.document.getElementById(idFromCallPage).value = data;
                     window.close();
             },

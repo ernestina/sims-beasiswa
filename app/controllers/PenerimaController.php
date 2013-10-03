@@ -82,7 +82,7 @@ class PenerimaController extends BaseController{
         
         $upload = $this->registry->upload;
         $upload->init('fupload'); //awali dengan fungsi ini
-        $upload->setDirTo('files/'); //set direktori tujuan
+        $upload->setDirTo('files/foto/'); //set direktori tujuan
         $ubahNama = array('KAKA','KIKI','KEKE'); //pola nama baru dalam array
         $upload->changeFileName($upload->getFileName(), $ubahNama); //ubah nama
         
@@ -239,7 +239,7 @@ class PenerimaController extends BaseController{
         if(!is_null($_FILES['fupload'])){
             $upload = $this->registry->upload;
             $upload->init('fupload'); //awali dengan fungsi ini
-            $upload->setDirTo('files/foto'); //set direktori tujuan
+            $upload->setDirTo('files/foto/'); //set direktori tujuan
             $ubahNama = array('KAKA','KIKI','KEKE'); //pola nama baru dalam array
             $upload->changeFileName($upload->getFileName(), $ubahNama); //ubah nama
             $data['FOTO_PB'] = $upload->getFileTo();
@@ -252,6 +252,89 @@ class PenerimaController extends BaseController{
         header('location:'.URL.'penerima/penerima');
     }
     
+    public function updprofil(){
+        $pb = new Penerima($this->registry);
+        
+        $nip = $_POST['nip'];
+        $kd_pb = $_POST['kd_pb'];
+//        $kd_st = $_POST['kd_st'];
+        $no_st = $_POST['no_st'];
+        $alamat = $_POST['alamat'];
+        $email = $_POST['email'];
+        $telp = $_POST['hp'];
+        $bank = $_POST['bank'];
+        $norek = $_POST['rekening'];
+        /*
+         * upload foto
+         */
+        $upload_foto = $this->registry->upload;
+        $upload_foto->init('fotoinput');
+        $upload_foto->setDirTo('files/foto/');
+        $nm_foto = array($nip);
+        $upload_foto->changeFileName($upload_foto->getFileName(),$nm_foto);
+        $foto = $upload_foto->getFileTo();
+        $upload_foto->uploadFile();
+//        var_dump($upload_foto);
+        unset($upload_foto);
+        /*
+         * upload skl
+         */
+        $upload_skl = $this->registry->upload;
+        $upload_skl->init('sklinput');
+        $upload_skl->setDirTo('files/skl/');
+        $nm_skl = array('SKL',$no_st,$nip);
+        $upload_skl->changeFileName($upload_skl->getFileName(),$nm_skl);
+        $file_skl = $upload_skl->getFileTo();
+        $upload_skl->uploadFile();
+        $lap_selesai_tb = Tanggal::ubahFormatTanggal($_POST['tgl_lapor']);
+//        var_dump($upload_skl);
+        unset($upload_skl);
+        /*
+         * upload spmt
+         */
+        $upload_spmt = $this->registry->upload;
+        $upload_spmt->init('spmtinput');
+        $upload_spmt->setDirTo('files/spmt/');
+        $nm_spmt = array('ST',$nip,$no_st);
+        $upload_spmt->changeFileName($upload_spmt->getFileName(),$nm_spmt);
+        $file_spmt = $upload_spmt->getFileTo();
+        $upload_spmt->uploadFile();
+//        var_dump($upload_spmt);
+        unset($upload_spmt);
+        $skripsi = $_POST['skripsi'];
+        
+        $data = array($kd_pb,$nip,$no_st,$alamat,$email,$telp,$bank,$norek,$foto,$file_skl,$lap_selesai_tb,$file_spmt,$skripsi);
+        var_dump($data);
+        $pb->set_kd_pb($kd_pb);
+        $pb = $pb->get_penerima_by_id($pb);
+        $pb->set_alamat($alamat);
+        $pb->set_email($email);
+        $pb->set_telp($telp);
+        $pb->set_bank($bank);
+        $pb->set_no_rek($norek);
+        $pb->set_foto($foto);
+        $pb->set_tgl_lapor($lap_selesai_tb);
+        $pb->set_skl($file_skl);
+        $pb->set_spmt($file_spmt);
+        $pb->set_skripsi($skripsi);
+        
+        if($pb->update_penerima()){
+            header('location:'.URL.'penerima/profil/'.$kd_pb);
+        }else{
+            /*
+             * gagal insert, balikin isian!!!
+             */
+            $this->view->error = "cek kembali isian anda!";
+            $this->view->alamat = $alamat;
+            $this->view->email = $email;
+            $this->view->telp = $telp;
+            $this->view->bank = $bank;
+            $this->view->no_rek = $norek;
+            $this->view->tgl_lapor = $lap_selesai_tb;
+            $this->view->skripsi = $skripsi;
+            $this->for_edit_pb($kd_pb);
+        }
+    }
     /*
      * hapus penerima tb
      */
@@ -291,6 +374,36 @@ class PenerimaController extends BaseController{
     }
     
     public function editpb($kode_pb){
+//        $pb = new Penerima($this->registry); //mendapatkan informasi pb
+//        $st = new SuratTugas($this->registry); //mendapatkan informasi surat tugas
+//        $bank = new Bank($this->registry); //mendapatkan nama bank
+//        $jst = new JenisSuratTugas($this->registry); //mendapatkan jenis surat tugas
+//        $jur = new Jurusan($this->registry);
+//        $univ = new Universitas($this->registry);
+//        $nilai = new Nilai($this->registry);
+//        $cuti = new Cuti($this->registry);
+//        $mas = new MasalahPenerima($this->registry);
+//        $pb->set_kd_pb($kode_pb);
+//        $this->view->d_pb = $pb->get_penerima_by_id($pb);
+//        $st->set_kd_st($this->view->d_pb->get_st());
+//        $this->view->d_st = $st->get_surat_tugas_by_id($st);
+//        $this->view->d_bank = $bank->get_bank_id($this->view->d_pb->get_bank());
+//        $jur->set_kode_jur($this->view->d_pb->get_jur());
+//        $this->view->d_jur = $jur->get_jur_by_id($jur);
+//        $jst->set_kode($this->view->d_st->get_jenis_st());
+//        $this->view->t_jst = $jst->get_jst();
+//        $this->view->d_jst = $jst->get_jst_by_id($jst);
+//        $this->view->d_univ = $univ->get_univ_by_jur($this->view->d_jur->get_kode_jur());
+//        $this->view->d_nil = $nilai->get_nilai($pb);
+//        $this->view->d_cur_ipk = $nilai->get_current_ipk($pb);
+//        $this->view->d_cuti = $cuti->get_cuti($pb);
+//        $this->view->d_rwt_beas = $pb->get_penerima_by_column($pb,'nip',true);
+//        $this->view->d_mas = $mas->get_masalah($pb);
+//        $this->view->render('profil/ubah_profil_v2');
+        $this->for_edit_pb($kode_pb);
+    }
+    
+    private function for_edit_pb($kode_pb){
         $pb = new Penerima($this->registry); //mendapatkan informasi pb
         $st = new SuratTugas($this->registry); //mendapatkan informasi surat tugas
         $bank = new Bank($this->registry); //mendapatkan nama bank
@@ -305,6 +418,7 @@ class PenerimaController extends BaseController{
         $st->set_kd_st($this->view->d_pb->get_st());
         $this->view->d_st = $st->get_surat_tugas_by_id($st);
         $this->view->d_bank = $bank->get_bank_id($this->view->d_pb->get_bank());
+        $this->view->t_bank = $bank->get_bank();
         $jur->set_kode_jur($this->view->d_pb->get_jur());
         $this->view->d_jur = $jur->get_jur_by_id($jur);
         $jst->set_kode($this->view->d_st->get_jenis_st());
@@ -365,15 +479,16 @@ class PenerimaController extends BaseController{
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($kd_pb);
         $d_pb = $pb->get_penerima_by_id($pb);
+//        echo "penerima";
         /*
          * upload file
          */
         //        $upload = new Upload();
         $this->registry->upload->init('sfile');
-        $this->registry->upload->setDirTo('files/transkrip');
+        $this->registry->upload->setDirTo('files/transkrip/');
         $nm_file = array('TRANSKRIP',$d_pb->get_nip(),$sem);
         $this->registry->upload->changeFileName($this->registry->upload->getFileName(), $nm_file);
-        $file = $this->registry->upload->getFileName();
+        $file = $this->registry->upload->getFileTo();
         $this->registry->upload->uploadFile();
         /*
          * rekam nilai di tabel d_nil
@@ -393,8 +508,12 @@ class PenerimaController extends BaseController{
         $nil = new Nilai($this->registry);
         $this->view->d_nil= $nil->get_nilai($pb);
         
-        
         $this->view->load('profil/tabel_nilai');
+    }
+    
+    public function view_transkrip($file){
+        $this->view->file = $file;
+        $this->view->load('profil/display_transkrip');
     }
 
     public function __destruct() {

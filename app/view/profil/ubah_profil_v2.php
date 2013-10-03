@@ -1,17 +1,22 @@
-<link href="../../../public/css/style.css" rel="stylesheet" media="screen">
-<body>
+<!--<link href="../../../public/css/style.css" rel="stylesheet" media="screen">
+<body>-->
   
   <div id="top">
   <!--level1: Profil Penerima Beasiswa-->
   
 	<h1>PROFIL PENERIMA BEASISWA</h1>
-	
+			<form method="POST" action="<?php echo URL;?>penerima/updprofil" enctype="multipart/form-data">
 <div class="kolom1">
 	<fieldset><legend>Profil Penerima Beasiswa</legend>
+<?php 
+    if(isset($this->error)){
+        echo "<div class=error>".$this->error."</div>";
+    }
+?>
 
-
-		<form action="#" method="post">
-                    <input type="hidden" id="id_pb" value="<?php echo $this->d_pb->get_kd_pb();?>">
+<!--		<form action="<?php echo URL;?>penerima/updprofil" method="post" enctype="multipart/form-data">-->
+                    <input type="hidden" id="id_pb" name="kd_pb" value="<?php echo $this->d_pb->get_kd_pb();?>">
+                    <input type="hidden" id="nip" name="nip" value="<?php echo $this->d_pb->get_nip();?>">
 			<label class="isian">NIP :</label>
 			<input type="text" id="NIP" name="NIP" disabled value="<?php echo $this->d_pb->get_nip();?>"/>
 			
@@ -26,23 +31,34 @@
 			
 			<label class="isian">Unit Asal :</label>
 			<input type="text" id="asal" name="asal" disabled value="<?php echo $this->d_pb->get_unit_asal();?>"/>
-			
+                        <div id="walamat" class="error" ></div>
 			<label class="isian">Alamat :</label>
-			<textarea type="text" id="alamat" name="alamat" rows="7"/><?php echo $this->d_pb->get_alamat();?></textarea>
-			
+			<textarea type="text" id="alamat" name="alamat" rows="7"/><?php echo isset($this->alamat)?$this->alamat:$this->d_pb->get_alamat();?></textarea>
+			<div class="error" id="wemail"></div>
 			<label class="isian">Email :</label>
-			<input type="email" id="email" name="email" value="<?php echo $this->d_pb->get_email();?>"/>
-			
+			<input type="text" id="email" name="email" value="<?php echo isset($this->email)?$this->email:$this->d_pb->get_email();?>"/>
+			<div class="error" id="wtelp"></div>
 			<label class="isian">No. HP :</label>
-			<input type="text" id="hp" name="hp" value="<?php echo $this->d_pb->get_telp();?>"/>
+			<input type="text" id="hp" name="hp" value="<?php echo isset($this->telp)?$this->telp:$this->d_pb->get_telp();?>"/>
 			
 			<label class="isian">Bank Penerima</label>
-			<input type="text" id="bank" name="bank" value="<?php echo $this->d_bank->get_nama();?>"/>
-			
+<!--			<input type="text" id="bank" name="bank" value="<?php echo isset($this->bank)?$this->bank:$this->d_bank->get_id();?>"/>-->
+                        <select id="bank" name="bank">
+                            <?php 
+                                foreach ($this->t_bank as $v){
+                                    if($v->get_id()==$this->d_bank){
+                                        echo "<option value=".$v->get_id()." selected>".$v->get_nama()."</option>";
+                                    }else{
+                                        echo "<option value=".$v->get_id().">".$v->get_nama()."</option>";
+                                    }
+                                }
+                            ?>
+                        </select>
 			<label class="isian">No Rekening</label>
-			<input type="text" id="rekening" name="rekening" value="<?php echo $this->d_pb->get_no_rek();?>"/>
-			
+			<input type="text" id="rekening" name="rekening" value="<?php echo isset($this->no_rek)?$this->no_rek:$this->d_pb->get_no_rek();?>"/>
+			<div class="error" id="wfoto"></div>
 			<label class="isian">Unggah Foto:</label>
+<!--                        <input type="file" id="foto" name="fotoinput">-->
 			<ul class="inline">
 				<li><input type="file" id="foto" name="fotoinput" style="display: none" onChange="FotoChange();"/>
 				<input class="unggah" type="text" id="filefoto" disabled /></li>
@@ -55,6 +71,8 @@
 	<!--level2: Profil Beasiswa & Riwayat Pembayaran-->
 	<div class="kolom2">
 		<fieldset><legend>Profil Beasiswa</legend>
+                        <input type="hidden" id="id_st" name="kd_st" value="<?php echo $this->d_st->get_kd_st();?>">
+                        <input type="hidden" id="no_st" name="no_st" value="<?php echo $this->d_st->get_nomor();?>"/>
 			<label class="isian">No. Surat Tugas (ST) :</label>
 			<input type="text" id="st" name="st" disabled value="<?php echo $this->d_st->get_nomor();?>"/>
 			
@@ -80,42 +98,45 @@
 			<input type="text" id="th_masuk" name="th_masuk" disabled value="<?php echo $this->d_st->get_th_masuk();?>"/>
 			
 			<label class="isian">Status Tugas Belajar (TB) :</label>
-			<select type="text">
-<!--				<option>belum lulus</option>
+<!--			<select type="text">
+				<option>belum lulus</option>
 				<option>lulus</option>
 				<option>lulus awal waktu</option>
 				<option>lulus dengan perpanjangan 1</option>
 				<option>lulus dengan perpanjangan 2</option>
 				<option>tidak lulus</option>-->
+                        <input type="text" disabled value="<?php echo $this->d_jst->get_nama();?>">
                                 <?php 
-                                    foreach ($this->t_jst as $v){
-                                        if($v->get_kode()==$this->d_jst->get_kode()){
-                                            echo "<option value=".$v->get_kode()." selected>".$v->get_nama()."</option>";
-                                        }else{
-                                            echo "<option value=".$v->get_kode().">".$v->get_nama()."</option>";
-                                        }
-                                    }
+//                                    foreach ($this->t_jst as $v){
+//                                        if($v->get_kode()==$this->d_jst->get_kode()){
+//                                            echo $this->d_jst->get_nama();
+//                                        }
+//                                        else{
+//                                            echo "<option value=".$v->get_kode().">".$v->get_nama()."</option>";
+//                                        }
+//                                    }
                                 ?>
-			</select>
+<!--			</select>-->
 			<!--row berikut hanya muncul jika status TB: lulus dan/atau tidak lulus -->
 			
 			<label class="isian">Tanggal Akhir TB :</label>
-			<input type="text" id="tgl_akhir_TB" name="tgl_akhir_TB" />
-			
+			<input type="text" id="tgl_akhir_TB" name="tgl_akhir_TB" disabled/>
+                        <label class="isian">Tanggal Lapor Selesai TB :</label>
+                        <input type="text" id="datepicker" name="tgl_lapor" value="<?php echo isset($this->tgl_lapor)?$this->tgl_lapor:(Tanggal::ubahFormatToDatePicker($this->d_pb->get_tgl_lapor()));?>"/>
+			<div class="error" id="wskl"></div>
 			<label class="isian">Unggah SKL :</label>
 			<!--input type="file" id="skl" name="skl" /-->
 			<ul class="inline">
-				<li><input type="file" id="SKL" name="fileinput" style="display: none" onChange="Handlechange();"/>
+				<li><input type="file" id="SKL" name="sklinput" style="display: none" onChange="Handlechange();"/>
 				<input class="unggah" type="text" id="filename" disabled /></li>
 				<li><input type="button" value="Pilih..." id="fakeBrowse" onclick="HandleBrowseClick();"/>
 				</li>
-			</ul>
-			<label class="isian">Tanggal Lapor Selesai TB :</label>
-			<input type="text" id="tgl_lapor" name="tgl_lapor" />
-			
+                        </ul>
+			<div class="error" id="wspmt"></div>
 			<label class="isian">Unggah SPMT :</label>
+<!--                        <input type="file" id="SPMT" name="spmtinput">-->
 			<ul class="inline">
-				<li><input type="file" id="SPMT" name="fileinput" style="display: none" onChange="Change();"/>
+				<li><input type="file" id="SPMT" name="spmtinput" style="display: none" onChange="Change();"/>
 				<input class="unggah" type="text" id="namafile" disabled /></li>
 				<li><input type="button" value="Pilih..." id="fakeBrowse" onclick="BrowseClick();"/>
 				</li>
@@ -128,9 +149,9 @@
   
 	<fieldset><legend>Riwayat Perkembangan Studi</legend>
 		<div class="kolom5">
-		
+                        <div class="error" id="wskripsi"></div>
 			<label class="isian2">Judul Tugas Akhir/Skripsi/Thesis/Desertasi :</label>
-			<textarea class="midi" type="text" rows="4"><?php echo $this->d_pb->get_skripsi();?></textarea>
+			<textarea class="midi" type="text" rows="4" name="skripsi" id="skripsi"><?php echo isset($this->skripsi)?$this->skripsi:$this->d_pb->get_skripsi();?></textarea>
 			<label class="isian2">Permasalahan Tugas Belajar :</label>
                         <input type="button" value="+" id="add_problem">
 <!--			<textarea class="midi" type="text" rows="8"></textarea>-->
@@ -142,15 +163,16 @@
 		</div>
 		
 			<label class="isian">IPK :</label>
-			<input type="text" id="IPK" name="IPK" value="<?php echo $this->d_cur_ipk->get_ipk()/100;?>"/>
+			<input type="text" id="IPK" name="IPK" disabled value="<?php echo $this->d_cur_ipk->get_ipk()/100;?>"/>
 			
 			<label class="isian">Unggah Transkrip:</label>
-                        <ul class="inline">
+<!--                        <input type="file" id="IPK" name="fileipk">-->
+<!--                        <ul class="inline">
 				<li><input type="file" id="IPK" name="fileipk" style="display: none" onChange="IPKchange();"/>
 				<input class="unggah" type="text" id="namafileipk" disabled /></li>
 				<li><input type="button" value="Pilih..." id="fakeBrowse" onclick="Pilih();"/>
 				</li>
-			</ul>
+			</ul>-->
 			<input type="button" value="+" id="add_nilai">
                         <div id="t_nilai">
                         <?php 
@@ -189,14 +211,15 @@
 		
 		</fieldset>
 	</div>
+        <div>
 <ul class="inline kanan">
-	<li><input class="normal" type="submit" value="BATAL" style="font-size: 130%"/></li>
-	<li><input class="sukses" type="submit" value="SIMPAN" style="font-size: 130%"/></li>
+	<li><input class="normal" type="submit" value="BATAL" style="font-size: 100%"/></li>
+	<li><input class="sukses" type="submit" value="SIMPAN" style="font-size: 100%" onclick="return cek();"/></li></ul></div>
 </form>
 
 </div> <!--div top-->
 
-</body>
+<!--</body>-->
 
 <script language="JavaScript" type="text/javascript">
 $(function(){
@@ -207,7 +230,53 @@ $(function(){
     $('#add_nilai').click(function(){
         open_dialog(document.getElementById('id_pb').value,'nilai');
     });
+//    document.write("jvascript gak jalan coii");
+    hideErrorId();
+    hideWarning();
 });
+
+function hideErrorId(){
+    $('.error').fadeOut(0);
+}
+
+function hideWarning(){
+    $('#email').keyup(function(){
+        if(document.getElementById('email').value !=''){
+            $('#wemail').fadeOut(200);
+        }
+    })
+    
+    $('#hp').keyup(function(){
+        if(document.getElementById('hp').value !=''){
+            $('#wtelp').fadeOut(200);
+        }
+    })
+    
+    $('#foto').change(function(){
+        if(document.getElementById('foto').value !=''){
+            $('#wfoto').fadeOut(200);
+        }
+    })
+    
+    $('#SKL').change(function(){
+        if(document.getElementById('SKL').value !=''){
+            $('#wskl').fadeOut(200);
+        }
+    })
+    
+    $('#SPMT').change(function(){
+        if(document.getElementById('SPMT').value !=''){
+            $('#wspmt').fadeOut(200);
+        }
+    })
+    
+    $('#skripsi').keyup(function(){
+        if(document.getElementById('skripsi').value !=''){
+            $('#wskripsi').fadeOut(200);
+        }
+    })
+
+}
 
 function callFromDialog(id_pb,kategori){
     switch(kategori){
@@ -229,7 +298,7 @@ function callFromDialog(id_pb,kategori){
                 data:'',
                 success:function(data){
                     $('#t_nilai').fadeIn(200);
-                    $('#t_nila').html(data);
+                    $('#t_nilai').html(data);
                 }
             });
             break;
@@ -252,6 +321,96 @@ function open_dialog(id_pb,kategori){
     var top = (screen.height/2)-(h/2);
     var title = "rekam penerima beasiswa";
     window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+}
+
+function cek(){
+    var alamat = document.getElementById('alamat').value;
+    var email = document.getElementById('email').value;
+    var telp = document.getElementById('hp').value;
+    var foto = document.getElementById('foto').value;
+    var skl = document.getElementById('SKL').value;
+    var spmt = document.getElementById('SPMT').value;
+    var tgl_lapor = document.getElementById('datepicker').value;
+    var skripsi = document.getElementById('skripsi').value;
+    var jml=0;
+    
+    
+    if(email!=''){
+        var pattern = '^[a-zA-Z0-9]*(|[-._][a-zA-Z0-9]*)\@([a-z]*)[.]([a-z]{3,4})';
+        if(!email.match(pattern)){
+            var wemail = "format email masih salah! [ex.mail@mail.com]";
+            $('#wemail').fadeIn(200);
+            $('#wemail').html(wemail);
+            jml++;
+        }
+    }
+    
+    if(telp!=''){
+        var pattern = '^0[0-9]{7,15}$';
+        if(!telp.match(pattern)){
+            var wtelp = "format telepon masih salah! [ex. 0XXXXXXXX]";
+            $('#wtelp').fadeIn(200);
+            $('#wtelp').html(wtelp);
+            jml++;
+        }
+    }
+    
+    if(foto!=''){
+        var csplit = foto.split(".");
+        var ext = csplit[csplit.length-1];
+        if(ext!='jpg' && ext!='jpeg'){
+            var wfoto = "format file foto harus jpg/jpeg!";
+            $('#wfoto').fadeIn(200);
+            $('#wfoto').html(wfoto);
+            jml++;
+        }
+    }
+    
+    if(tgl_lapor!=''){
+        if(skl!=''){
+            var csplit = skl.split(".");
+            var ext = csplit[csplit.length-1];
+            if(ext!='pdf'){
+                var wskl = "format file SKL harus pdf!";
+                $('#wskl').fadeIn(200);
+                $('#wskl').html(wskl);
+                jml++;
+            }
+        }else{
+            var wskl = "file SKL harus dipilih!";
+            $('#wskl').fadeIn(200);
+            $('#wskl').html(wskl);
+            jml++;
+        }
+    }
+    
+    if(spmt!=''){
+        var csplit = spmt.split(".");
+        var ext = csplit[csplit.length-1];
+        if(ext!='pdf'){
+            var wspmt = "format file SPMT harus pdf!";
+            $('#wspmt').fadeIn(200);
+            $('#wspmt').html(wspmt);
+            jml++;
+        }
+    }
+    
+    if(skripsi!=''){
+        if(skripsi.length<40){
+            var wskripsi = "judul skripsi minimal 40 karakter!";
+            $('#wskripsi').fadeIn(200);
+            $('#wskripsi').html(wskripsi);
+            jml++;
+        }
+    }
+    
+    if(jml>0){
+        return false;
+    }else{
+        return true;
+    }
+    
+    
 }
 function HandleBrowseClick()
 {
