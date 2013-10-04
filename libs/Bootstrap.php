@@ -67,17 +67,19 @@ class Bootstrap {
         /*         * * load arguments for action ** */
         $arguments = array();
         $i = 0;
+//        var_dump($this->url);
         foreach ($this->url as $key => $val) {
-            if ($key > 1) {
-                $arguments[$this->url[$key - 1]] = $val;
-                $i++;
+            if ($i > 1) {
+                $arguments[] = $val;
+//                var_dump($arguments);
+//                $i++;
             }
+            $i++;
         }
-
         if ($i > 1)
-            call_user_func(array($this->controller, $action), $arguments);
-        else
             call_user_func_array(array($this->controller, $action), $arguments);
+        else
+            call_user_func(array($this->controller, $action), $arguments);
     }
 
     public function __destruct() {

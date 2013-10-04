@@ -523,7 +523,7 @@ class PenerimaController extends BaseController{
 //        echo 'location:'.URL.'penerima/'.$kat.'/'.$kd_pb;
         $nil->del_nilai($nil);
             
-            header('location:'.URL.'penerima/editpb/'.$kd_pb);
+        header('location:'.URL.'penerima/editpb/'.$kd_pb);
         
     }
 

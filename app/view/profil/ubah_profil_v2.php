@@ -124,7 +124,9 @@
 			<label class="isian">Tanggal Akhir TB :</label>
 			<input type="text" id="tgl_akhir_TB" name="tgl_akhir_TB" disabled/>
                         <label class="isian">Tanggal Lapor Selesai TB :</label>
-                        <input type="text" id="datepicker" name="tgl_lapor" value="<?php echo isset($this->tgl_lapor)?$this->tgl_lapor:(($this->d_pb->get_tgl_lapor()=='0000-00-00' OR $this->d_pb->get_tgl_lapor()=='')?'':Tanggal::ubahFormatToDatePicker($this->d_pb->get_tgl_lapor()));?>"/>
+
+                        <input type="text" id="datepicker" name="tgl_lapor" value="<?php echo isset($this->tgl_lapor)?$this->tgl_lapor:(($this->d_pb->get_tgl_lapor()=='0000-00-00' OR $this->d_pb->get_tgl_lapor()=='')?'':(Tanggal::ubahFormatToDatePicker($this->d_pb->get_tgl_lapor())));?>"/>
+
 			<div class="error" id="wskl"></div>
 			<label class="isian">Unggah SKL :</label>
 			<!--input type="file" id="skl" name="skl" /-->
@@ -165,7 +167,7 @@
 		</div>
 		
 			<label class="isian">IPK :</label>
-			<input type="text" id="IPK" name="IPK" disabled value="<?php echo $this->d_cur_ipk->get_ipk()/100;?>"/>
+			<input type="text" id="IPK" name="IPK" disabled value="<?php echo $this->d_cur_ipk->get_ipk();?>"/>
 			
 			<label class="isian">Unggah Transkrip:</label>
 <!--                        <input type="file" id="IPK" name="fileipk">-->

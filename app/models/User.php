@@ -55,10 +55,10 @@ class User {
 
         $result = $this->_db->select($sql);
 
-        $data = array();
-
+//        $data = array();
+        $user = new User($registry);
         foreach ($result as $value) {
-            $user = new User($registry);
+//            $user = new User($registry);
             $user->set_id($value['KD_USER']);
             $user->set_nip($value['NIP_USER']);
             $user->set_nmUser($value['NM_USER']);
@@ -66,10 +66,10 @@ class User {
             $user->set_akses($value['AKSES_USER']);
             $user->set_foto($value['FOTO_USER']);
 
-            $data = $user;
+//            $data = $user;
         }
 //        var_dump($data->get_nmUser());
-        return $data;
+        return $user;
     }
 
     public function check_user_nip($nip) {

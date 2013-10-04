@@ -39,7 +39,8 @@ class Nilai{
     }
     
     public function get_current_ipk($pb){
-        $sql = "SELECT MAX(SEM_NIL_PB) as SEM_NIL_PB, IPK_NIL_PB as IPK_NIL_PB FROM ".$this->_tb_nilai." WHERE KD_PB=".$pb->get_kd_pb();
+        $sql = "SELECT SEM_NIL_PB as SEM_NIL_PB, IPK_NIL_PB as IPK_NIL_PB FROM ".$this->_tb_nilai." WHERE KD_PB=".$pb->get_kd_pb();
+        $sql .= " AND SEM_NIL_PB=(SELECT MAX(SEM_NIL_PB) FROM ".$this->_tb_nilai." WHERE KD_PB=".$pb->get_kd_pb().")";
         $result = $this->_db->select($sql);
         foreach ($result as $v){
             $this->set_kode($v['KD_NIL_PB']);
@@ -63,8 +64,8 @@ class Nilai{
         return $this->registry->db->insert($this->_tb_nilai,$data);
     }
     
-    public function del_nilai(Nilai $nilai){
-        $where = ' KD_NIL_PB='.$nilai->get_kode();
+    public function del_nilai(){
+        $where = ' KD_NIL_PB='.$this->get_kode();
         return $this->_db->delete($this->_tb_nilai,$where);
     }
 

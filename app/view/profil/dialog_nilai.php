@@ -58,7 +58,7 @@
         var ipk = document.getElementById('ipk').value;
         var sem = document.getElementById('semester').value;
         var sfile = document.getElementById('sfile').value;
-        var pattern = '^[1-9]{1}(\.[0-9]{1,2})$';
+        var pattern = '^[0-4]{1}[\.][0-9]{1,2}$';
         if(ips==""){
             var winput = "Indeks Prestasi Semester harus diisi!"
             $('#winput').html(winput);
@@ -67,6 +67,12 @@
             return false;
         }else if(!ips.match(pattern)){
             var winput = "Indeks Prestasi Semester tidak sesuai format!";
+            $('#winput').html(winput);
+            $('#winput').fadeIn(200);
+            
+            return false;
+        }else if(ips>4.00){
+            var winput = "Tidak ada Indeks Prestasi Semester lebih dari 4.00 [SUPERRR SEKALIIII]!";
             $('#winput').html(winput);
             $('#winput').fadeIn(200);
             
@@ -81,6 +87,12 @@
             return false;
         }else if(!ipk.match(pattern)){
             var winput = "Indeks Prestasi Kumulatif tidak sesuai format!";
+            $('#winput').html(winput);
+            $('#winput').fadeIn(200);
+            
+            return false;
+        }else if(ipk>4.00){
+            var winput = "Tidak ada Indeks Prestasi Kumulatif lebih dari 4.00 [SUPERRR SEKALIIII]!";
             $('#winput').html(winput);
             $('#winput').fadeIn(200);
             

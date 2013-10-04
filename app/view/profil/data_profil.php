@@ -6,7 +6,7 @@
 	<h1>PROFIL PENERIMA BEASISWA</h1>
 	<fieldset><legend>Profil Penerima Beasiswa</legend>
 		<div class="foto">
-			<img class="frame" src="<?php echo URL; ?>files/<?php echo $this->d_pb->get_foto();?>" width="185" height="220">
+			<img class="frame" src="<?php echo URL; ?>files/foto/<?php echo $this->d_pb->get_foto();?>" width="185" height="220">
 			</div>
 		<form action="#" method="post">
 			<label class="isian">NIP :</label>
