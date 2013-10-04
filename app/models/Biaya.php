@@ -51,9 +51,9 @@ class Biaya extends BaseModel {
             $biaya->no_bap = $val['NO_BAP_TAGIHAN'];
             $biaya->tgl_bap = date('d-m-Y', strtotime($val['TGL_BAP_TAGIHAN']));
             $biaya->file_bap = $val['FILE_BAP_TAGIHAN'];
-            $biaya->no_ring_kontrak = $val['NO_ring_kontrak_TAGIHAN'];
-            $biaya->tgl_ring_kontrak = date('d-m-Y', strtotime($val['TGL_ring_kontrak_TAGIHAN']));
-            $biaya->file_ring_kontrak = $val['FILE_ring_kontrak_TAGIHAN'];
+            $biaya->no_ring_kontrak = $val['NO_RING_KONTRAK_TAGIHAN'];
+            $biaya->tgl_ring_kontrak = date('d-m-Y', strtotime($val['TGL_RING_KONTRAK_TAGIHAN']));
+            $biaya->file_ring_kontrak = $val['FILE_RING_KONTRAK_TAGIHAN'];
             $biaya->no_kuitansi = $val['NO_KUITANSI_TAGIHAN'];
             $biaya->file_kuitansi = $val['FILE_KUITANSI_TAGIHAN'];
             $biaya->tgl_kuitansi = date('d-m-Y', strtotime($val['TGL_KUITANSI_TAGIHAN']));
@@ -88,9 +88,9 @@ class Biaya extends BaseModel {
             $biaya->no_bap = $val['NO_BAP_TAGIHAN'];
             $biaya->tgl_bap = date('d-m-Y', strtotime($val['TGL_BAP_TAGIHAN']));
             $biaya->file_bap = $val['FILE_BAP_TAGIHAN'];
-            $biaya->no_ring_kontrak = $val['NO_ring_kontrak_TAGIHAN'];
-            $biaya->tgl_ring_kontrak = date('d-m-Y', strtotime($val['TGL_ring_kontrak_TAGIHAN']));
-            $biaya->file_ring_kontrak = $val['FILE_ring_kontrak_TAGIHAN'];
+            $biaya->no_ring_kontrak = $val['NO_RING_KONTRAK_TAGIHAN'];
+            $biaya->tgl_ring_kontrak = date('d-m-Y', strtotime($val['TGL_RING_KONTRAK_TAGIHAN']));
+            $biaya->file_ring_kontrak = $val['FILE_RING_KONTRAK_TAGIHAN'];
             $biaya->no_kuitansi = $val['NO_KUITANSI_TAGIHAN'];
             $biaya->file_kuitansi = $val['FILE_KUITANSI_TAGIHAN'];
             $biaya->tgl_kuitansi = date('d-m-Y', strtotime($val['TGL_KUITANSI_TAGIHAN']));
@@ -126,9 +126,9 @@ class Biaya extends BaseModel {
             $biaya->no_bap = $val['NO_BAP_TAGIHAN'];
             $biaya->tgl_bap = date('d-m-Y', strtotime($val['TGL_BAP_TAGIHAN']));
             $biaya->file_bap = $val['FILE_BAP_TAGIHAN'];
-            $biaya->no_ring_kontrak = $val['NO_ring_kontrak_TAGIHAN'];
-            $biaya->tgl_ring_kontrak = date('d-m-Y', strtotime($val['TGL_ring_kontrak_TAGIHAN']));
-            $biaya->file_ring_kontrak = $val['FILE_ring_kontrak_TAGIHAN'];
+            $biaya->no_ring_kontrak = $val['NO_RING_KONTRAK_TAGIHAN'];
+            $biaya->tgl_ring_kontrak = date('d-m-Y', strtotime($val['TGL_RING_KONTRAK_TAGIHAN']));
+            $biaya->file_ring_kontrak = $val['FILE_RING_KONTRAK_TAGIHAN'];
             $biaya->no_kuitansi = $val['NO_KUITANSI_TAGIHAN'];
             $biaya->file_kuitansi = $val['FILE_KUITANSI_TAGIHAN'];
             $biaya->tgl_kuitansi = date('d-m-Y', strtotime($val['TGL_KUITANSI_TAGIHAN']));
@@ -168,7 +168,17 @@ class Biaya extends BaseModel {
             'BIAYA_PER_PEG_TAGIHAN' => $biaya->biaya_per_pegawai,
             'JML_PEG_BAYAR_TAGIHAN' => $biaya->jml_pegawai_bayar,
             'JADWAL_BAYAR_TAGIHAN' => $biaya->jadwal_bayar,
-            'JML_SUDAH_BAYAR_TAGIHAN' => $biaya->jml_biaya,
+            'JML_SUDAH_BAYAR_TAGIHAN' => $biaya->jml_biaya
+                //'STS_TAGIHAN' => $biaya->status_bayar //untuk melakukan update biaya, maka status biaya tetap tidak berubah
+        );
+        $where = "KD_TAGIHAN='" . $biaya->kd_biaya . "'";
+        $this->db->update($table, $data, $where);
+    }
+
+    //ubah status bayar
+    public function updateStatusBayar(Biaya $biaya) {
+        $table = "d_tagihan";
+        $data = array(
             'STS_TAGIHAN' => $biaya->status_bayar
         );
         $where = "KD_TAGIHAN='" . $biaya->kd_biaya . "'";
@@ -186,15 +196,36 @@ class Biaya extends BaseModel {
             'NO_BAP_TAGIHAN' => $biaya->no_bap,
             'TGL_BAP_TAGIHAN' => $biaya->tgl_bap,
             'FILE_BAP_TAGIHAN' => $biaya->file_bap,
-            'NO_ring_kontrak_TAGIHAN' => $biaya->no_ring_kontrak,
-            'TGL_ring_kontrak_TAGIHAN' => $biaya->tgl_ring_kontrak,
-            'FILE_ring_kontrak_TAGIHAN' => $biaya->file_ring_kontrak,
+            'NO_RING_KONTRAK_TAGIHAN' => $biaya->no_ring_kontrak,
+            'TGL_RING_KONTRAK_TAGIHAN' => $biaya->tgl_ring_kontrak,
+            'FILE_RING_KONTRAK_TAGIHAN' => $biaya->file_ring_kontrak,
             'NO_KUITANSI_TAGIHAN' => $biaya->no_kuitansi,
             'FILE_KUITANSI_TAGIHAN' => $biaya->file_kuitansi,
             'TGL_KUITANSI_TAGIHAN' => $biaya->tgl_kuitansi
         );
         $where = "KD_TAGIHAN='" . $biaya->kd_biaya . "'";
         $this->db->update($table, $data, $where);
+        if ($biaya->status_bayar == "belum") {
+            $biaya->status_bayar = "proses";  //mengubah status bayar dari belum menjadi proses
+            $this->updateStatusBayar($biaya);
+        }
+    }
+
+    //mengupdate data pembayaran tagihan
+    public function updatePembayaranTagihan(Biaya $biaya) {
+        $table = "d_tagihan";
+        //var_dump($biaya);
+        $data = array(
+            'NO_SP2D_TAGIHAN' => $biaya->no_sp2d,
+            'TGL_SP2D_TAGIHAN' => $biaya->tgl_sp2d,
+            'FILE_SP2D_TAGIHAN' => $biaya->file_sp2d,
+        );
+        $where = "KD_TAGIHAN='" . $biaya->kd_biaya . "'";
+        $this->db->update($table, $data, $where);
+        if ($biaya->status_bayar == "proses") {
+            $biaya->status_bayar = "selesai";  //mengubah status bayar dari proses menjadi selesai
+            $this->updateStatusBayar($biaya);
+        }
     }
 
     //menghapus data biaya
@@ -223,13 +254,46 @@ class Biaya extends BaseModel {
 
     public function isEmptyBiaya(Biaya $biaya) {
         $cek = true;
-        if ($biaya->kd_kontrak != "" &&
+        if ($biaya->kd_biaya != "" && $biaya->kd_kontrak != "" &&
                 $biaya->nama_biaya != "" &&
                 $biaya->biaya_per_pegawai != "" &&
                 $biaya->jml_pegawai_bayar != "" &&
                 $biaya->jadwal_bayar != "" &&
                 $biaya->jml_biaya != "" &&
                 $biaya->status_bayar != ""
+        ) {
+            $cek = false;
+        }
+        return $cek;
+    }
+
+    public function isEmptyTagihan(Biaya $biaya) {
+        $cek = true;
+        if ($biaya->kd_biaya != "" &&
+                $biaya->no_bast != "" &&
+                $biaya->tgl_bast != "" &&
+                $biaya->file_bast != "" &&
+                $biaya->no_bap != "" &&
+                $biaya->tgl_bap != "" &&
+                $biaya->file_bap != "" &&
+                $biaya->no_ring_kontrak != "" &&
+                $biaya->tgl_ring_kontrak != "" &&
+                $biaya->file_ring_kontrak != "" &&
+                $biaya->no_kuitansi != "" &&
+                $biaya->tgl_kuitansi != "" &&
+                $biaya->file_kuitansi != "" &&
+                $biaya->status_bayar != ""
+        ) {
+            $cek = false;
+        }
+        return $cek;
+    }
+
+    public function isEmptyPembayaran(Biaya $biaya) {
+        $cek = true;
+        if ($biaya->kd_biaya != "" && $biaya->no_sp2d != "" &&
+                tgl_sp2d != "" &&
+                $biaya->file_sp2d != ""
         ) {
             $cek = false;
         }

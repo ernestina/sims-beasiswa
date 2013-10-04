@@ -7,6 +7,7 @@
 <!--        <script src="<?php echo URL; ?>public/js/jquery-ui-1.10.2/ui/jquery.ui.datepicker.js"></script>-->
 
         <script src="<?php echo URL; ?>public/js/jquery-ui.js"></script>
+        <script src="<?php echo URL; ?>public/js/jquery.form.js"></script>
         <script src="<?php echo URL; ?>public/js/myjs.js"></script>
         <script src="<?php echo URL; ?>public/js/teamdf-jquery-number/jquery.number.js"></script>
 <!--    <link href="<?php echo URL; ?>public/css/flick/jquery-ui-1.10.1.custom.css" rel="stylesheet">-->

@@ -264,7 +264,10 @@ class KontrakController extends BaseController {
                         Validasi::validate_number($biaya->jmlh_pegawai_bayar) == TRUE &&
                         Validasi::validate_number($biaya->jumlah_biaya) == TRUE) {
                     $biaya->addBiaya($biaya);
-                    header('location:' . URL . 'kontrak/biaya/' . $biaya->kd_kontrak);
+                    //header('location:' . URL . 'kontrak/biaya/' . $biaya->kd_kontrak);
+                    $url = URL . 'kontrak/biaya/' . $biaya->kd_kontrak;
+                    header("refresh:1;url=" . $url);
+                    echo "Data biaya berhasil disimpan.";
                 } else {
                     $url = URL . 'kontrak/rekamBiaya/' . $biaya->kd_kontrak;
                     header("refresh:1;url=" . $url);
@@ -300,8 +303,9 @@ class KontrakController extends BaseController {
     }
 
     //melakukan proses update biaya dengan proses biasa
-    public function updateBiaya1() {
+    public function updateBiaya() {
         if (isset($_POST['update_biaya'])) {
+            sleep(1);
             $biaya = new Biaya();
             $biaya->kd_biaya = $_POST['kd_biaya'];
             $biaya->kd_kontrak = $_POST['kd_kontrak'];
@@ -310,25 +314,28 @@ class KontrakController extends BaseController {
             $biaya->jml_pegawai_bayar = $_POST['jml_peg'];
             $biaya->jadwal_bayar = date('Y-m-d', strtotime($_POST['jadwal_bayar']));
             $biaya->jml_biaya = str_replace(',', '', $_POST['jml_biaya']);
-            $biaya->status_bayar = "belum";
+            $biaya_current = $biaya->get_by_id($biaya->kd_biaya);
+            $biaya->status_bayar = $biaya_current->status_bayar; //untuk mendapatkan status bayar terkini
             if ($biaya->isEmptyBiaya($biaya) == false) {
                 if (Validasi::validate_number($biaya->biaya_per_pegawai) == TRUE &&
                         Validasi::validate_number($biaya->jmlh_pegawai_bayar) == TRUE &&
                         Validasi::validate_number($biaya->jumlah_biaya) == TRUE) {
                     $biaya->updateBiaya($biaya);
-
-                    header('location:' . URL . 'kontrak/biaya/' . $biaya->kd_kontrak);
+                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
+                    header("refresh:1;url=" . $url);
+                    echo "Perubahan data biaya berhasil disimpan.";
+                    //header('location:' . URL . 'kontrak/editBiaya/' . $biaya->kd_biaya);
                 } else {
-                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_kontrak;
+                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
                     header("refresh:1;url=" . $url);
                     echo "Isian Biaya per pegawai, jumlah pegawai dan jumlah biaya harus diisi angka.";
-                    header('location:' . URL . 'kontrak/editBiaya/' . $biaya->kd_kontrak);
+                    //header('location:' . URL . 'kontrak/editBiaya/' . $biaya->kd_biaya);
                 }
             } else {
-                $url = URL . 'kontrak/editBiaya/' . $biaya->kd_kontrak;
+                $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
                 header("refresh:1;url=" . $url);
                 echo "Isian form belum lengkap.";
-                header('location:' . URL . 'kontrak/editBiaya/' . $biaya->kd_kontrak);
+                //header('location:' . URL . 'kontrak/editBiaya/' . $biaya->kd_biaya);
             }
         } else {
             header('location:' . URL . 'kontrak/display');
@@ -336,7 +343,7 @@ class KontrakController extends BaseController {
     }
 
     //melakukan proses update biaya dengan ajax
-    public function updateBiaya() {
+    public function updateBiaya2() {
         if (isset($_POST['update_biaya'])) {
             $biaya = new Biaya();
             $biaya->kd_biaya = $_POST['kd_biaya'];
@@ -346,7 +353,8 @@ class KontrakController extends BaseController {
             $biaya->jml_pegawai_bayar = $_POST['jml_peg'];
             $biaya->jadwal_bayar = date('Y-m-d', strtotime($_POST['jadwal_bayar']));
             $biaya->jml_biaya = str_replace(',', '', $_POST['jml_biaya']);
-            $biaya->status_bayar = "belum";
+            $biaya_current = $biaya->get_by_id($biaya->kd_biaya);
+            $biaya->status_bayar = $biaya_current->status_bayar;  //untuk mendapatkan status bayar terkini
             if ($biaya->isEmptyBiaya($biaya) == false) {
                 if (Validasi::validate_number($biaya->biaya_per_pegawai) == TRUE &&
                         Validasi::validate_number($biaya->jmlh_pegawai_bayar) == TRUE &&
@@ -361,6 +369,169 @@ class KontrakController extends BaseController {
             }
             $res = array('respon' => $respon);
             echo json_encode($res);
+        } else {
+            header('location:' . URL . 'kontrak/display');
+        }
+    }
+
+    //melakukan proses update tagihan 
+    public function updateTagihan() {
+        if (isset($_POST['update_tagihan'])) {
+            sleep(1);
+            $biaya = new Biaya();
+            $biaya->kd_biaya = $_POST['kd_biaya'];
+            $biaya->no_bast = $_POST['no_bast'];
+            $biaya->tgl_bast = date('Y-m-d', strtotime($_POST['tgl_bast']));
+            $biaya->no_bap = $_POST['no_bap'];
+            $biaya->tgl_bap = date('Y-m-d', strtotime($_POST['tgl_bap']));
+            $biaya->no_ring_kontrak = $_POST['no_ring_kon'];
+            $biaya->tgl_ring_kontrak = date('Y-m-d', strtotime($_POST['tgl_ring_kon']));
+            $biaya->no_kuitansi = $_POST['no_kuitansi'];
+            $biaya->tgl_kuitansi = date('Y-m-d', strtotime($_POST['tgl_kuitansi']));
+
+            if ($_FILES['file_bast']['name'] != "") {
+                $biaya->file_bast = $_FILES['file_bast']['name'];
+            } else {
+                if ($_POST['file_bast_lama'] != "") {
+                    $biaya->file_bast = $_POST['file_bast_lama'];
+                } else {
+                    $biaya->file_bast = "";
+                }
+            }
+
+            if ($_FILES['file_bap']['name'] != "") {
+                $biaya->file_bap = $_FILES['file_bap']['name'];
+            } else {
+                if ($_POST['file_bap_lama'] != "") {
+                    $biaya->file_bap = $_POST['file_bap_lama'];
+                } else {
+                    $biaya->file_bap = "";
+                }
+            }
+
+            if ($_FILES['file_ring_kon']['name'] != "") {
+                $biaya->file_ring_kontrak = $_FILES['file_ring_kon']['name'];
+            } else {
+                if ($_POST['file_bap_lama'] != "") {
+                    $biaya->file_ring_kontrak = $_POST['file_ring_kon_lama'];
+                } else {
+                    $biaya->file_ring_kontrak = "";
+                }
+            }
+
+            if ($_FILES['file_kuitansi']['name'] != "") {
+                $biaya->file_kuitansi = $_FILES['file_kuitansi']['name'];
+            } else {
+                if ($_POST['file_kuitansi_lama'] != "") {
+                    $biaya->file_kuitansi = $_POST['file_kuitansi_lama'];
+                } else {
+                    $biaya->file_kuitansi = "";
+                }
+            }
+
+            $biaya_current = $biaya->get_by_id($biaya->kd_biaya);
+            $biaya->status_bayar = $biaya_current->status_bayar;  //untuk mendapatkan status bayar terkini
+            //var_dump($biaya);
+            if ($biaya->isEmptyTagihan($biaya) == false) {
+                //echo "terisi";
+                //exit();
+                $upload = new Upload();
+                if ($_FILES['file_bast']['name'] != "") {
+                    $upload->init('file_bast');
+                    $upload->setDirTo('files/bast/');
+                    $nama = array($biaya->no_bast, $biaya->tgl_bast);
+                    $upload->uploadFile2("", $nama);
+                    $biaya->file_bast = $upload->getFileTo();
+                }
+
+                if ($_FILES['file_bap']['name'] != "") {
+                    $upload->init('file_bap');
+                    $upload->setDirTo('files/bap/');
+                    $nama = array($biaya->no_bap, $biaya->tgl_bap);
+                    $upload->uploadFile2("", $nama);
+                    $biaya->file_bap = $upload->getFileTo();
+                }
+
+                if ($_FILES['file_ring_kon']['name'] != "") {
+                    $upload->init('file_ring_kon');
+                    $upload->setDirTo('files/ringkasan_kontrak/');
+                    $nama = array($biaya->no_ring_kontrak, $biaya->tgl_ring_kontrak);
+                    $upload->uploadFile2("", $nama);
+                    $biaya->file_ring_kontrak = $upload->getFileTo();
+                }
+
+                if ($_FILES['file_kuitansi']['name'] != "") {
+                    $upload->init('file_kuitansi');
+                    $upload->setDirTo('files/kwitansi/');
+                    $nama = array($biaya->no_kuitansi, $biaya->tgl_kuitansi);
+                    $upload->uploadFile2("", $nama);
+                    $biaya->file_kuitansi = $upload->getFileTo();
+                }
+
+                $biaya->updateTagihan($biaya);
+                //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
+                $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
+                header("refresh:1;url=" . $url);
+                echo "Perubahan data tagihan berhasil disimpan.";
+            } else {
+                //echo "kosong";
+                //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
+                $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
+                header("refresh:1;url=" . $url);
+                echo "Isian form belum lengkap.";
+            }
+        } else {
+            header('location:' . URL . 'kontrak/display');
+        }
+    }
+
+    //update pembayaran
+    public function updatePembayaran() {
+        sleep(1);
+        if (isset($_POST['update_pembayaran'])) {
+            $biaya = new Biaya();
+            $biaya->kd_biaya = $_POST['kd_biaya'];
+            $biaya->no_sp2d = $_POST['no_sp2d'];
+            $biaya->tgl_sp2d = date('Y-m-d', strtotime($_POST['tgl_sp2d']));
+            if ($_FILES['file_sp2d']['name'] != "") {
+                $biaya->file_sp2d = $_FILES['file_sp2d']['name'];
+            } else {
+                if ($_POST['file_sp2d_lama'] != "") {
+                    $biaya->file_sp2d = $_POST['file_sp2d_lama'];
+                } else {
+                    $biaya->file_sp2d = "";
+                }
+            }
+
+            $biaya_current = $biaya->get_by_id($biaya->kd_biaya);
+            $biaya->status_bayar = $biaya_current->status_bayar;  //untuk mendapatkan status bayar terkini
+            if ($biaya->status_bayar == "belum") {
+                //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
+                $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
+                header("refresh:1;url=" . $url);
+                echo "Data tagihan biaya belum diisi.";
+            } else {
+                if ($biaya->isEmptyPembayaran($biaya) == false) {
+                    $upload = new Upload();
+                    if ($_FILES['file_sp2d']['name'] != "") {
+                        $upload->init('file_sp2d');
+                        $upload->setDirTo('files/sp2d/');
+                        $nama = array($biaya->no_sp2d, $biaya->tgl_sp2d);
+                        $upload->uploadFile2("", $nama);
+                        $biaya->file_sp2d = $upload->getFileTo();
+                    }
+                    $biaya->updatePembayaranTagihan($biaya);
+                    //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
+                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
+                    header("refresh:1;url=" . $url);
+                    echo "Perubahan data Pembayaran tagihan berhasil disimpan.";
+                } else {
+                    //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
+                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
+                    header("refresh:1;url=" . $url);
+                    echo "Isian form pembayaran tagihan biaya belum lengkap.";
+                }
+            }
         } else {
             header('location:' . URL . 'kontrak/display');
         }
@@ -385,6 +556,36 @@ class KontrakController extends BaseController {
     public function file($file = null) {
         if ($file != "") {
             header("Location:" . URL . "files/" . $file);
+        }
+    }
+    
+    public function fileBast($file=null){
+        if ($file != "") {
+            header("Location:" . URL . "files/bast/" . $file);
+        }
+    }
+    
+    public function fileBap($file=null){
+        if ($file != "") {
+            header("Location:" . URL . "files/bap/" . $file);
+        }
+    }
+    
+    public function fileRingKontrak($file=null){
+        if ($file != "") {
+            header("Location:" . URL . "files/ringkasan_kontrak/" . $file);
+        }
+    }
+    
+    public function fileKuitansi($file=null){
+        if ($file != "") {
+            header("Location:" . URL . "files/kwitansi/" . $file);
+        }
+    }
+    
+    public function fileSp2d($file=null){
+        if ($file != "") {
+            header("Location:" . URL . "files/sp2d/" . $file);
         }
     }
 
