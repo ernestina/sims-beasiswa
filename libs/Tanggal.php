@@ -146,5 +146,13 @@ class Tanggal{
     public static function getTimeSekarang(){
         return date('Y-m-d H:i:s');
     }
+    
+    public static function check_before_a_date($date_before,$date_compared){
+        if(strtotime($date_before)<strtotime($date_compared)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
 ?>

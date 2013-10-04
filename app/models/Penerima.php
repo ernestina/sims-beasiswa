@@ -298,6 +298,29 @@ class Penerima {
         $return['cek']=$cek;
         return $return;
     }
+    
+    /*
+     * cek perubahan status tugas belajar
+     * tanggal telah bersih, tidak menerima null atau karakter kosong
+     */
+    public function get_status_change_pb(SuratTugas $st){
+        $tgl_lapor = $pb->get_tgl_lapor();
+        $tgl_sel_st = $st->get_tgl_selesai();
+        $jst = $st->get_jenis_st();
+        /*
+         * 1 belum lulus
+         * 2 belum lulus dengan perpanjangan 1
+         * 3 belum lulus dengan perpanjangan 2
+         * 4 belum lulus cuti
+         * 5 lulus -> X
+         * 6 lulus lebih dini -> X
+         * 7 lulus perpanjangan 1 -> X
+         * 8 lulus perpanjangan 2 -> X
+         * 9 tidak lulus
+         * cek
+         */
+        
+    }
 
 
     /*

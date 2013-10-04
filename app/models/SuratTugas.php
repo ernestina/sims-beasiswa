@@ -190,7 +190,19 @@ class SuratTugas {
 
         return $data;
     }
-
+    
+    /*
+     * get parent
+     */
+    private function get_parent(Surattugas $st){
+        $parent = $st->get_st_lama();
+        if(is_null($parent) OR $parent='') return false;
+        $p_st = new $this($this->registry);
+        $parent = $p_st->get_surat_tugas_by_id($p_st);
+        return $parent;
+        
+    }
+    
     /*
      * setter
      */

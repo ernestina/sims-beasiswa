@@ -75,6 +75,7 @@
 		<fieldset><legend>Profil Beasiswa</legend>
                         <input type="hidden" id="id_st" name="kd_st" value="<?php echo $this->d_st->get_kd_st();?>">
                         <input type="hidden" id="no_st" name="no_st" value="<?php echo $this->d_st->get_nomor();?>"/>
+                        <input type="hidden" id="tgl_sel_st" name="tgl_sel_st" value="<?php echo $this->d_st->get_tgl_selesai();?>"/>
 			<label class="isian">No. Surat Tugas (ST) :</label>
 			<input type="text" id="st" name="st" disabled value="<?php echo $this->d_st->get_nomor();?>"/>
 			

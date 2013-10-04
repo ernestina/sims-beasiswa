@@ -46,6 +46,11 @@ class MasalahPenerima{
         
         $this->registry->db->insert($this->_t_mas,$data);
     }
+    
+    public function del_masalah(){
+        $where = " KD_MAS_TB=".$this->get_kode();
+        return $this->registry->db->delete($this->_t_mas,$where);
+    }
 
 
     /*

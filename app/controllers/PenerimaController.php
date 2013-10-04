@@ -60,7 +60,7 @@ class PenerimaController extends BaseController{
             }
             $this->view->d_bea = $d_bea;
         }
-        
+        $this->view->url = 'profil';
         $this->view->render('profil/data_profil');
     }
     
@@ -254,10 +254,10 @@ class PenerimaController extends BaseController{
     
     public function updprofil(){
         $pb = new Penerima($this->registry);
-        
+        $st = new SuratTugas($this->registry);
         $nip = $_POST['nip'];
         $kd_pb = $_POST['kd_pb'];
-//        $kd_st = $_POST['kd_st'];
+        $kd_st = $_POST['kd_st'];
         $no_st = $_POST['no_st'];
         $alamat = $_POST['alamat'];
         $email = $_POST['email'];
@@ -287,6 +287,15 @@ class PenerimaController extends BaseController{
         $file_skl = $upload_skl->getFileTo();
         $upload_skl->uploadFile();
         $lap_selesai_tb = Tanggal::ubahFormatTanggal($_POST['tgl_lapor']);
+        $tgl_sel_st = $_POST['tgl_sel_st'];
+        if($_POST['tgl_lapor']!=''){
+            $cek = Tanggal::check_before_a_date($lap_selesai_tb, $tgl_sel_st);
+            if($cek){
+                $st->set_kd_st($kd_st);
+                $status = $pb->get_status_change_pb($pb, $st);
+            }
+        }
+        
 //        var_dump($upload_skl);
         unset($upload_skl);
         /*
@@ -517,13 +526,23 @@ class PenerimaController extends BaseController{
         $this->view->load('profil/display_transkrip');
     }
     
-    public function delnilai($kd_nilai,$kd_pb){
+    public function delnilai($kd_nilai,$kd_pb,$url){
         $nil = new Nilai($this->registry);
         $nil->set_kode($kd_nilai);
 //        echo 'location:'.URL.'penerima/'.$kat.'/'.$kd_pb;
-        $nil->del_nilai($nil);
+        $nil->del_nilai();
             
-        header('location:'.URL.'penerima/editpb/'.$kd_pb);
+        header('location:'.URL.'penerima/'.$url.'/'.$kd_pb);
+        
+    }
+    
+    public function delmas($kd_mas,$kd_pb,$url){
+        $mas = new MasalahPenerima($this->registry);
+        $mas->set_kode($kd_mas);
+//        echo 'location:'.URL.'penerima/'.$kat.'/'.$kd_pb;
+        $mas->del_masalah();
+            
+        header('location:'.URL.'penerima/'.$url.'/'.$kd_pb);
         
     }
 
