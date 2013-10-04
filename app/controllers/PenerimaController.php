@@ -400,6 +400,7 @@ class PenerimaController extends BaseController{
 //        $this->view->d_rwt_beas = $pb->get_penerima_by_column($pb,'nip',true);
 //        $this->view->d_mas = $mas->get_masalah($pb);
 //        $this->view->render('profil/ubah_profil_v2');
+        $this->view->url = 'editpb';
         $this->for_edit_pb($kode_pb);
     }
     
@@ -514,6 +515,16 @@ class PenerimaController extends BaseController{
     public function view_transkrip($file){
         $this->view->file = $file;
         $this->view->load('profil/display_transkrip');
+    }
+    
+    public function delnilai($kd_nilai,$kd_pb){
+        $nil = new Nilai($this->registry);
+        $nil->set_kode($kd_nilai);
+//        echo 'location:'.URL.'penerima/'.$kat.'/'.$kd_pb;
+        $nil->del_nilai($nil);
+            
+            header('location:'.URL.'penerima/editpb/'.$kd_pb);
+        
     }
 
     public function __destruct() {

@@ -68,7 +68,7 @@ class User {
 
             $data = $user;
         }
-
+//        var_dump($data->get_nmUser());
         return $data;
     }
 

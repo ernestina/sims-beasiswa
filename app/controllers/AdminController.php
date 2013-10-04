@@ -46,6 +46,7 @@ class AdminController extends BaseController {
         $pic = new User($this->registry);
         $this->view->data = $univ->get_univ();
         $this->view->pic = $pic->get_user(TRUE);
+//        var_dump($this->view->pic);
         $this->view->render('admin/universitas');
     }
 

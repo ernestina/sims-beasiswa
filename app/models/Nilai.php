@@ -62,6 +62,11 @@ class Nilai{
         
         return $this->registry->db->insert($this->_tb_nilai,$data);
     }
+    
+    public function del_nilai(Nilai $nilai){
+        $where = ' KD_NIL_PB='.$nilai->get_kode();
+        return $this->_db->delete($this->_tb_nilai,$where);
+    }
 
 
     /*

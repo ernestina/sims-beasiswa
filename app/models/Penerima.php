@@ -49,7 +49,11 @@ class Penerima {
             $penerima = new $this($this->registry);
             $penerima->set_kd_pb($val['KD_PB']);
             $penerima->set_st($val['KD_ST']);
-            $penerima->set_jur($val['KD_JUR']);
+            $jur = new Jurusan($this->registry);
+            $jur->set_kode_jur($val['KD_JUR']);
+            $d_jur = $jur->get_jur_by_id($jur);
+            $nm_jur = $d_jur->get_nama();
+            $penerima->set_jur($nm_jur);
             $penerima->set_bank($val['KD_BANK']);
             $penerima->set_status($val['KD_STS_TB']);
             $penerima->set_nip($val['NIP_PB']);
@@ -66,6 +70,7 @@ class Penerima {
             $penerima->set_skl($val['NO_SKL_PB']);
             $penerima->set_spmt($val['NO_SPMT_PB']);
             $penerima->set_skripsi($val['JUDUL_SKRIPSI_PB']);
+            unset($jur);
             $data[] = $penerima;
         }
         return $data;

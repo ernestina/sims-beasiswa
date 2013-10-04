@@ -4,6 +4,7 @@
 					<th>Keterangan</th>
 					<th>IP</th>
 					<th>File</th>
+                                        <th>Aksi</th>
 				</thead>
 				<tbody>
                                     <?php 
@@ -15,6 +16,8 @@
 						<td><?php echo "Semester ".$v->get_semester()." dengan IPS ".($v->get_ips()); ?></td>
 						<td><?php echo $v->get_ipk();?></td>
 						<td><input type="button" value="Transkrip" id="uplod_ip" name="uplod_ip" onClick="view('<?php echo $v->get_file();?>');"/></td>
+                                                <td><a href="<?php echo URL;?>penerima/delnilai/<?php echo $v->get_kode().'/'.$this->d_pb->get_kd_pb(); ?>"><i class="icon-trash" onClick="return del_nil('<?php echo $this->d_pb->get_nama();?>','<?php echo $v->get_semester();?>')"></i></a>
+                                                    </td>
 					</tr>
                                     <?php 
                                             $no++;
@@ -33,6 +36,15 @@ function view(file){
     var top = (screen.height/2)-(h/2);
     var title = "tampilan transkrip";
     window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+}
+
+function del_nil(nama_pb,semester){
+    var txt = "Yakin data nilai semester "+semester+" an "+nama_pb+" akan dihapus!"
+    if(confirm(txt)){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 </script>

@@ -8,7 +8,9 @@
 			<form method="POST" action="<?php echo URL;?>penerima/updprofil" enctype="multipart/form-data">
 <div class="kolom1">
 	<fieldset><legend>Profil Penerima Beasiswa</legend>
-<?php 
+<?php
+    $url = "edit";
+//    echo $url;
     if(isset($this->error)){
         echo "<div class=error>".$this->error."</div>";
     }
@@ -105,7 +107,7 @@
 				<option>lulus dengan perpanjangan 1</option>
 				<option>lulus dengan perpanjangan 2</option>
 				<option>tidak lulus</option>-->
-                        <input type="text" disabled value="<?php echo $this->d_jst->get_nama();?>">
+                        <input type="text" disabled value="<?php echo StatusPB::status_int_string($this->d_pb->get_status());?>">
                                 <?php 
 //                                    foreach ($this->t_jst as $v){
 //                                        if($v->get_kode()==$this->d_jst->get_kode()){
@@ -122,7 +124,7 @@
 			<label class="isian">Tanggal Akhir TB :</label>
 			<input type="text" id="tgl_akhir_TB" name="tgl_akhir_TB" disabled/>
                         <label class="isian">Tanggal Lapor Selesai TB :</label>
-                        <input type="text" id="datepicker" name="tgl_lapor" value="<?php echo isset($this->tgl_lapor)?$this->tgl_lapor:(Tanggal::ubahFormatToDatePicker($this->d_pb->get_tgl_lapor()));?>"/>
+                        <input type="text" id="datepicker" name="tgl_lapor" value="<?php echo isset($this->tgl_lapor)?$this->tgl_lapor:(($this->d_pb->get_tgl_lapor()=='0000-00-00' OR $this->d_pb->get_tgl_lapor()=='')?'':Tanggal::ubahFormatToDatePicker($this->d_pb->get_tgl_lapor()));?>"/>
 			<div class="error" id="wskl"></div>
 			<label class="isian">Unggah SKL :</label>
 			<!--input type="file" id="skl" name="skl" /-->
