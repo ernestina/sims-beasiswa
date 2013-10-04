@@ -264,58 +264,76 @@ class PenerimaController extends BaseController{
         $telp = $_POST['hp'];
         $bank = $_POST['bank'];
         $norek = $_POST['rekening'];
+        $pb->set_kd_pb($kd_pb);
+        $pb = $pb->get_penerima_by_id($pb);
         /*
          * upload foto
          */
-        $upload_foto = $this->registry->upload;
-        $upload_foto->init('fotoinput');
-        $upload_foto->setDirTo('files/foto/');
-        $nm_foto = array($nip);
-        $upload_foto->changeFileName($upload_foto->getFileName(),$nm_foto);
-        $foto = $upload_foto->getFileTo();
-        $upload_foto->uploadFile();
-//        var_dump($upload_foto);
-        unset($upload_foto);
+        if($_FILES['fotoinput']!=''){
+            $upload_foto = $this->registry->upload;
+            $upload_foto->init('fotoinput');
+            $upload_foto->setDirTo('files/foto/');
+            $nm_foto = array($nip);
+            $upload_foto->changeFileName($upload_foto->getFileName(),$nm_foto);
+            $foto = $upload_foto->getFileTo();
+            $upload_foto->uploadFile();
+    //        var_dump($upload_foto);
+            unset($upload_foto);
+        }else{
+            $foto = $pb->get_foto();
+        }
+        
         /*
          * upload skl
          */
-        $upload_skl = $this->registry->upload;
-        $upload_skl->init('sklinput');
-        $upload_skl->setDirTo('files/skl/');
-        $nm_skl = array('SKL',$no_st,$nip);
-        $upload_skl->changeFileName($upload_skl->getFileName(),$nm_skl);
-        $file_skl = $upload_skl->getFileTo();
-        $upload_skl->uploadFile();
+        var_dump($_FILES['sklinput']);
+        if($_FILES['sklinput']['name']!=''){
+            $upload_skl = $this->registry->upload;
+            $upload_skl->init('sklinput');
+            $upload_skl->setDirTo('files/skl/');
+            $nm_skl = array('SKL',$no_st,$nip);
+            $upload_skl->changeFileName($upload_skl->getFileName(),$nm_skl);
+            $file_skl = $upload_skl->getFileTo();
+            $upload_skl->uploadFile();
+            var_dump($upload_skl);
+            unset($upload_skl);
+        }else{
+            $file_skl = $pb->get_skl();
+        }
+        
         $lap_selesai_tb = Tanggal::ubahFormatTanggal($_POST['tgl_lapor']);
         $tgl_sel_st = $_POST['tgl_sel_st'];
         if($_POST['tgl_lapor']!=''){
-            $cek = Tanggal::check_before_a_date($lap_selesai_tb, $tgl_sel_st);
-            if($cek){
+//            $cek = Tanggal::check_before_a_date($lap_selesai_tb, $tgl_sel_st);
+//            if($cek){
                 $st->set_kd_st($kd_st);
-                $status = $pb->get_status_change_pb($pb, $st);
-            }
+                $d_st = $st->get_surat_tugas_by_id($st);
+                $status = $pb->get_status_change_pb($d_st,$lap_selesai_tb,$tgl_sel_st);
+//            }
         }
-        
 //        var_dump($upload_skl);
-        unset($upload_skl);
+        
         /*
          * upload spmt
          */
-        $upload_spmt = $this->registry->upload;
-        $upload_spmt->init('spmtinput');
-        $upload_spmt->setDirTo('files/spmt/');
-        $nm_spmt = array('ST',$nip,$no_st);
-        $upload_spmt->changeFileName($upload_spmt->getFileName(),$nm_spmt);
-        $file_spmt = $upload_spmt->getFileTo();
-        $upload_spmt->uploadFile();
-//        var_dump($upload_spmt);
-        unset($upload_spmt);
+        if($_FILES['spmtinput']['nama']!=''){
+            $upload_spmt = $this->registry->upload;
+            $upload_spmt->init('spmtinput');
+            $upload_spmt->setDirTo('files/spmt/');
+            $nm_spmt = array('ST',$nip,$no_st);
+            $upload_spmt->changeFileName($upload_spmt->getFileName(),$nm_spmt);
+            $file_spmt = $upload_spmt->getFileTo();
+            $upload_spmt->uploadFile();
+    //        var_dump($upload_spmt);
+            unset($upload_spmt);
+        }else{
+            $file_spmt = $pb->get_spmt();
+        }
+        
         $skripsi = $_POST['skripsi'];
         
         $data = array($kd_pb,$nip,$no_st,$alamat,$email,$telp,$bank,$norek,$foto,$file_skl,$lap_selesai_tb,$file_spmt,$skripsi);
         var_dump($data);
-        $pb->set_kd_pb($kd_pb);
-        $pb = $pb->get_penerima_by_id($pb);
         $pb->set_alamat($alamat);
         $pb->set_email($email);
         $pb->set_telp($telp);
@@ -326,6 +344,9 @@ class PenerimaController extends BaseController{
         $pb->set_skl($file_skl);
         $pb->set_spmt($file_spmt);
         $pb->set_skripsi($skripsi);
+        if(isset($status)){
+            $pb->set_status($status);
+        }
         
         if($pb->update_penerima()){
             header('location:'.URL.'penerima/profil/'.$kd_pb);
@@ -526,6 +547,21 @@ class PenerimaController extends BaseController{
         $this->view->load('profil/display_transkrip');
     }
     
+    public function view_foto($file){
+        $this->view->file = $file;
+        $this->view->load('profil/display_foto');
+    }
+    
+    public function view_skl($file){
+        $this->view->file = $file;
+        $this->view->load('profil/display_skl');
+    }
+    
+    public function view_spmt($file){
+        $this->view->file = $file;
+        $this->view->load('profil/display_spmt');
+    }
+    
     public function delnilai($kd_nilai,$kd_pb,$url){
         $nil = new Nilai($this->registry);
         $nil->set_kode($kd_nilai);
@@ -536,6 +572,10 @@ class PenerimaController extends BaseController{
         
     }
     
+    /*
+     * hapus masalah
+     */
+    
     public function delmas($kd_mas,$kd_pb,$url){
         $mas = new MasalahPenerima($this->registry);
         $mas->set_kode($kd_mas);
@@ -544,6 +584,43 @@ class PenerimaController extends BaseController{
             
         header('location:'.URL.'penerima/'.$url.'/'.$kd_pb);
         
+    }
+    
+    /*
+     * cek file ada kagak
+     */
+    public function cekfile($kd_pb,$case){
+        $pb = new Penerima($this->registry);
+        $pb->set_kd_pb($kd_pb);
+        $d_pb = $pb->get_penerima_by_id($pb);
+        $return = 0;
+        switch($case){
+            case 'foto':
+                if($d_pb->get_foto()!='' OR !is_null($d_pb->get_foto())){
+                    $cek_file = file_exists(URL.'files/foto/'.$d_pb->get_foto());
+                    if(cek_file){
+                        $return = 1;
+                    }
+                }
+                break;
+            case 'skl':
+                if($d_pb->get_skl()!='' OR !is_null($d_pb->get_skl())){
+                    $cek_file = file_exists(URL.'files/skl/'.$d_pb->get_skl());
+                    if(cek_file){
+                        $return = 1;
+                    }
+                }
+                break;
+            case 'spmt':
+                if($d_pb->get_spmt()!='' OR !is_null($d_pb->get_spmt())){
+                    $cek_file = file_exists(URL.'files/spmt/'.$d_pb->get_spmt());
+                    if(cek_file){
+                        $return = 1;
+                    }
+                }
+                break;
+        }
+        echo $return;
     }
 
     public function __destruct() {

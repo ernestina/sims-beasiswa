@@ -303,9 +303,10 @@ class Penerima {
      * cek perubahan status tugas belajar
      * tanggal telah bersih, tidak menerima null atau karakter kosong
      */
-    public function get_status_change_pb(SuratTugas $st){
-        $tgl_lapor = $pb->get_tgl_lapor();
-        $tgl_sel_st = $st->get_tgl_selesai();
+    public function get_status_change_pb(SuratTugas $st, $tgl_lapor,$tgl_sel_st){
+//        $tgl_lapor = $pb->get_tgl_lapor();
+//        $tgl_sel_st = $st->get_tgl_selesai();
+        $lulus_dini = Tanggal::check_before_a_date($tgl_lapor, $tgl_sel_st);
         $jst = $st->get_jenis_st();
         /*
          * 1 belum lulus
@@ -319,7 +320,24 @@ class Penerima {
          * 9 tidak lulus
          * cek
          */
-        
+        $status = null;
+        switch($jst){
+            case 1:
+                $status = ($lulus_dini)? 6:5;
+                break;
+            case 2:
+                $status = 7;
+                break;
+            case 3:
+                $status = 8;
+                break;
+            case 4:
+                $status = ($lulus_dini)? 6:5;
+                break;
+            default:
+                $status=5;
+        }
+        return $status;
     }
 
 

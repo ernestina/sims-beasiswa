@@ -67,6 +67,7 @@
 				<li><input type="button" value="Pilih..." id="fakeBrowse" onclick="BrowseFoto();"/>
 				</li>
 			</ul>
+                        <input type="button" value="liat foto" id="" onclick="view('foto');"/>
 
 	</fieldset>
 </div>	
@@ -137,6 +138,7 @@
 				<li><input type="button" value="Pilih..." id="fakeBrowse" onclick="HandleBrowseClick();"/>
 				</li>
                         </ul>
+                        <input type="button" value="liat skl" id="" onclick="view('skl');"/>
 			<div class="error" id="wspmt"></div>
 			<label class="isian">Unggah SPMT :</label>
 <!--                        <input type="file" id="SPMT" name="spmtinput">-->
@@ -146,6 +148,7 @@
 				<li><input type="button" value="Pilih..." id="fakeBrowse" onclick="BrowseClick();"/>
 				</li>
 			</ul>
+                        <input type="button" value="liat spmt" id="" onclick="view('skl');"/>
 	</fieldset>
 </div>
 	
@@ -371,24 +374,6 @@ function cek(){
         }
     }
     
-    if(tgl_lapor!=''){
-        if(skl!=''){
-            var csplit = skl.split(".");
-            var ext = csplit[csplit.length-1];
-            if(ext!='pdf'){
-                var wskl = "format file SKL harus pdf!";
-                $('#wskl').fadeIn(200);
-                $('#wskl').html(wskl);
-                jml++;
-            }
-        }else{
-            var wskl = "file SKL harus dipilih!";
-            $('#wskl').fadeIn(200);
-            $('#wskl').html(wskl);
-            jml++;
-        }
-    }
-    
     if(spmt!=''){
         var csplit = spmt.split(".");
         var ext = csplit[csplit.length-1];
@@ -409,11 +394,58 @@ function cek(){
         }
     }
     
+    if(tgl_lapor!=''){
+        if(skl!=''){
+            var csplit = skl.split(".");
+            var ext = csplit[csplit.length-1];
+            if(ext!='pdf'){
+                var wskl = "format file SKL harus pdf!";
+                $('#wskl').fadeIn(200);
+                $('#wskl').html(wskl);
+                jml++;
+            }
+        }else{
+            $.post('<?php echo URL.'penerima/cekfile/'.$this->d_pb->get_kd_pb().'/skl';?>',{kd_pb:''+document.getElementById().value+''},function(data){
+//                $('#cek_skl').val(data);
+                if(data==0){
+                    var wskl = "file SKL harus dipilih!";
+                $('#wskl').fadeIn(200);
+                $('#wskl').html(wskl);
+                jml++;
+                }
+            });
+        }
+    }
+    
     if(jml>0){
         return false;
     }else{
         return true;
     }
+    
+    
+}
+
+function view(file,dokumen){
+    var url = '';
+    switch(dokumen){
+        case 'foto':
+            url = "<?php echo URL;?>penerima/view_foto/"+file;
+            break;
+        case 'skl':
+            url = "<?php echo URL;?>penerima/view_skl/"+file;
+            break;
+        case 'spmt':
+            url = "<?php echo URL;?>penerima/view_spmt/"+file;
+            break;
+    }
+    
+    var w = 800;
+    var h = 500;
+    var left = (screen.width/2)-(w/2);
+    var top = (screen.height/2)-(h/2);
+    var title = "tampilan transkrip";
+    window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
     
     
 }
