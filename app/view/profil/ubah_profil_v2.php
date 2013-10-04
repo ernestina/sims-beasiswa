@@ -67,7 +67,7 @@
 				<li><input type="button" value="Pilih..." id="fakeBrowse" onclick="BrowseFoto();"/>
 				</li>
 			</ul>
-                        <input type="button" value="liat foto" id="" onclick="view('foto');"/>
+                        <input type="button" value="liat foto" id="" onclick="view_file('<?php echo $this->d_pb->get_foto();?>','foto');"/>
 
 	</fieldset>
 </div>	
@@ -138,7 +138,7 @@
 				<li><input type="button" value="Pilih..." id="fakeBrowse" onclick="HandleBrowseClick();"/>
 				</li>
                         </ul>
-                        <input type="button" value="liat skl" id="" onclick="view('skl');"/>
+                        <input type="button" value="liat skl" id="" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');"/>
 			<div class="error" id="wspmt"></div>
 			<label class="isian">Unggah SPMT :</label>
 <!--                        <input type="file" id="SPMT" name="spmtinput">-->
@@ -148,7 +148,7 @@
 				<li><input type="button" value="Pilih..." id="fakeBrowse" onclick="BrowseClick();"/>
 				</li>
 			</ul>
-                        <input type="button" value="liat spmt" id="" onclick="view('skl');"/>
+                        <input type="button" value="liat spmt" id="" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','skl');"/>
 	</fieldset>
 </div>
 	
@@ -426,7 +426,7 @@ function cek(){
     
 }
 
-function view(file,dokumen){
+function view_file(file,dokumen){
     var url = '';
     switch(dokumen){
         case 'foto':
