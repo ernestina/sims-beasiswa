@@ -14,7 +14,7 @@
                     echo "<input type=hidden name=kd_sc value=".$this->d_ubah->get_kd_sc().">";
                 }
             ?>
-            <div id="wnoct" class="error"></div>
+            <div id="wnosc" class="error"></div>
             <label>no. Surat Cuti</label><input type="text" name="no_sc" id="no_sc" size="30" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nomor():'';?>">
             <div id="wjsc" class="error"></div>
             <label>Jenis Cuti</label><select name="jsc" id="jsc" >
@@ -25,12 +25,12 @@
                 ?>
             </select>
             <div id="wtglsc" class="error"></div>
-            <label>Tanggal SC</label><input type="text" name="tgl_sc" id="datepicker" value="<?php echo Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly>
+            <label>Tanggal SC</label><input type="text" name="tgl_sc" id="datepicker" value="" readonly>
             <div id="wpb" class="error"></div>
-            <label>Penerima Beasiswa</label><input type="button" id="bt_pb" value="+" onClick="show_dialog();">
+            <label>Penerima Beasiswa</label><input type="button" id="bt_pb" value="+" onClick="showDialog();">
             <input style="display:none" type="text" name="nip_pb" id="nip_pb" value="<?php echo Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly>
             <input style="display:none" type="text" name="nama_pb" id="nama_pb" value="<?php echo Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly>
-            <input type="hidden" name="kd_pb" value="">
+            <input type="hidden" name="kd_pb" id="kd_pb" value="">
             </br><label>Universitas</label><select id="univ" name="univ" onChange="get_jurusan(this.value);">
                 <option value="0">-Pilih Universitas-</option>
                 <?php 
@@ -143,8 +143,6 @@
         $('#div_jur').fadeOut(0);
         hideErrorId();
         hideWarning();
-//        get_jurusan(document.getElementById('univ').value);
-        
     });
     
     function hideErrorId(){
@@ -159,13 +157,19 @@
         })
         $('#datepicker').change(function(){
             if($('#datepicker').val()!=''){
-                $('wtglsc').fadeOut(200);
+                $('#wtglsc').fadeOut(200);
             }
         })
         
-        $('#kd_pb').change(function(){
-            if($('#kd_pb').val()!=''){
+        $('#bt_pb').click(function(){
+//            if($('#nip_pb').val()!=''){
                 $('#wpb').fadeOut(200);
+//            }
+        })
+        
+        $('#jur').change(function(){
+            if($('#jur').val()!=''){
+                $('#wjur').fadeOut(200);
             }
         })
         
@@ -177,6 +181,34 @@
         });
         
     }
+    
+    function callFromDialog(kd_pb){
+        $.ajax({
+            type:'post',
+            url:"<?php echo URL; ?>penerima/get_data_pb",
+            data:'param='+kd_pb,
+            dataType:'json',
+            success:function(data){
+               $('#nip_pb').val(data.nip);
+               $('#nama_pb').val(data.nama);
+               $('#kd_pb').val(data.kd_pb);
+               $('#bt_pb').fadeOut(200);
+               $('#nip_pb').fadeIn(200);
+               $('#nama_pb').fadeIn(200);
+            }
+        })
+    }
+    
+    function showDialog(){
+        var URL = "<?php echo URL?>cuti/dialog_add_pb/";
+        var w = 370;
+        var h = 500;
+        var left = (screen.width/2)-(w/2);
+        var top = (screen.height/2)-(h/2);
+        var title = "rekam penerima beasiswa";
+        window.open(URL, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+    }
+    
     
     function get_data_sc(univ,th_masuk){
         $.post("<?php echo URL; ?>cuti/get_data_sc", {param:""+univ+","+th_masuk+""},
@@ -196,37 +228,37 @@
     
     function cek(){
         var string_pattern = '/^[a-zA-Z\s0-9]*$';
-        var no_sc = document.getElementById('no_st').value;
+        var no_sc = document.getElementById('no_sc').value;
         var tgl_sc = document.getElementById('datepicker').value;
         var pb = document.getElementById('kd_pb').value;
         var jur = document.getElementById('jur').value;
         var sfile = document.getElementById('file').value;
         var jml =0;
         if(no_sc==''){
-            var wnost = 'Nomor surat harus diisi!';
-            $('#wnost').fadeIn(0);
-            $('#wnost').html(wnost);
+            var wnosc = 'Nomor surat harus diisi!';
+            $('#wnosc').fadeIn(0);
+            $('#wnosc').html(wnosc);
             jml++;
         }
         
         if(tgl_sc==''){
-            var wtglst = 'Tanggal surat tugas harus diisi!';
-            $('wtglst').fadeIn(0);
-            $('wtglst').html(wtglst);
+            var wtglsc = 'Tanggal surat cuti harus diisi!';
+            $('#wtglsc').fadeIn(0);
+            $('#wtglsc').html(wtglsc);
             jml++;
         }
         
         if(pb==''){
-            var wtglmulai = 'Tanggal mulai harus diisi!';
-            $('wtglmulai').fadeIn(0);
-            $('wtglmulai').html(wtglmulai);
+            var wpb = 'Penerima beasiswa belum dipilih!';
+            $('#wpb').fadeIn(0);
+            $('#wpb').html(wpb);
             jml++;
         }
         
         if(jur==''){
-            var wtglselesai = 'Tanggal selesai harus diisi!';
-            $('wtglselesai').fadeIn(0);
-            $('wtglselesai').html(wtglselesai);
+            var wjur = 'Jurusan belum dipilih!';
+            $('#wjur').fadeIn(0);
+            $('#wjur').html(wjur);
             jml++;
         }
         

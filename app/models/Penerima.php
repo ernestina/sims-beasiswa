@@ -133,8 +133,11 @@ class Penerima {
         return $data;
     }
     
-    public function get_penerima_by_name($pb = Penerima){
-        $sql = "SELECT * FROM ".$this->_tb_penerima." WHERE NM_PB LIKE '%".$pb->get_nama()."%' AND KD_ST=".$pb->get_st();
+    public function get_penerima_by_name($pb = Penerima, $filter_st=false){
+        $sql = "SELECT * FROM ".$this->_tb_penerima." WHERE NM_PB LIKE '%".$pb->get_nama()."%'"; 
+        if($filter_st){
+            $sql .= " AND KD_ST=".$pb->get_st();
+        }
         $result = $this->db->select($sql);
         $data = array();
         foreach($result as $val){

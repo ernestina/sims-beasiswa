@@ -14,18 +14,19 @@
             </thead>
             <?php 
                 $no=1;
-                foreach($this->d_st as $val){
+                foreach($this->d_ct as $val){
+                    $d_pb = explode("-",$val->get_pb());
                     echo "<tr>";
                     echo "<td>".$no."</td>";
-                    echo "<td>".$val->get_nomor()."</td>";
-                    echo "<td>".$val->get_tgl_st()."</td>";
-                    echo "<td>".$val->get_tgl_mulai()."</td>";
-                    echo "<td>".$val->get_tgl_selesai()."</td>";
-                    echo "<td>".$val->get_jenis_st()."</td>";
-                    echo "<td>".$val->get_jur()."</td>";
-                    echo "<td><a href=".URL."surattugas/addpb/".$val->get_kd_st()."><i class=\"icon-user\"></i></a>  &nbsp &nbsp
-                        <a href=".URL."surattugas/del_st/".$val->get_kd_st()."><i class=\"icon-trash\"></i></a> &nbsp &nbsp
-                        <a href=".URL."surattugas/datast/".$val->get_kd_st()."><i class=\"icon-pencil\"></i></a></td>";
+                    echo "<td>".$val->get_no_surat_cuti()."</br>".Tanggal::tgl_indo($val->get_tgl_surat_cuti())."</td>";
+                    echo "<td>".$val->get_jenis_cuti()."</td>";
+                    echo "<td>".$d_pb[0]."</br>".$d_pb[1]."</td>";
+                    echo "<td>".$val->get_prd_mulai()."</td>";
+                    echo "<td>".$val->get_perk_stop()."</td>";
+                    echo "<td>".$val->get_perk_go()."</td>";
+                    echo "<td>".$d_pb[2]."</td>";
+                    echo "<td><a href=".URL."cuti/del_sc/".$val->get_kode_cuti()."><i class=\"icon-trash\"></i></a> &nbsp &nbsp
+                        <a href=".URL."cuti/datasc/".$val->get_kode_cuti()."><i class=\"icon-pencil\"></i></a></td>";
                     echo "</tr>";
                     $no++;
                 }

@@ -622,6 +622,29 @@ class PenerimaController extends BaseController{
         }
         echo $return;
     }
+    
+    public function get_data_pb(){
+        $kd_pb = $_POST['param'];
+        $pb = new Penerima($this->registry);
+        $pb->set_kd_pb($kd_pb);
+        $d_pb = $pb->get_penerima_by_id($pb);
+        
+        $return = json_encode(array(
+            'kd_pb'=>$d_pb->get_kd_pb(),
+            'nip'=>$d_pb->get_nip(),
+            'nama'=>$d_pb->get_nama()
+        ));
+        
+        echo $return;
+    }
+    
+    public function get_tabel_peg(){
+        $nama = $_POST['param'];
+        $pb = new Penerima($this->registry);
+        $pb->set_nama($nama);
+        $this->view->d_pb = $pb->get_penerima_by_name($pb);
+        $this->view->load('riwayat_tb/tabel_pb_sc');
+    }
 
     public function __destruct() {
         parent::__destruct();
