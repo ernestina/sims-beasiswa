@@ -84,11 +84,11 @@ class SurattugasController extends BaseController{
             'KD_PEMB'=>$pemb,
             'KD_JENIS_ST'=>$jenis,
             'KD_ST_LAMA'=>$st_lama,
-            'NOMOR_ST'=>$nomor,
-            'TANGGAL_ST'=>  Tanggal::ubahFormatTanggal($tgl_st),
-            'TANGGAL_MULAI_ST'=>  Tanggal::ubahFormatTanggal($tgl_mulai),
-            'TANGGAL_SELESAI_ST'=>  Tanggal::ubahFormatTanggal($tgl_selesai),
-            'TAHUN_MASUK'=>$th_masuk
+            'NO_ST'=>$nomor,
+            'TGL_ST'=>  Tanggal::ubahFormatTanggal($tgl_st),
+            'TGL_MUL_ST'=>  Tanggal::ubahFormatTanggal($tgl_mulai),
+            'TGL_SEL_ST'=>  Tanggal::ubahFormatTanggal($tgl_selesai),
+            'THN_MASUK'=>$th_masuk
         );
         
         if(!is_null($_FILES['fupload'])){
@@ -101,7 +101,6 @@ class SurattugasController extends BaseController{
             $data['FILE_ST']=$upload->getFileTo();
             
         }
-        
         $st->set_kd_st($kd_st);
         $st->update_st($data);
         header('location:'.URL.'surattugas/datast');

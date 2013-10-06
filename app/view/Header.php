@@ -79,7 +79,7 @@
                         <a href="<?php echo URL . 'penerima/datapb'; ?>">PROFIL BEASISWA</a>
                         <ul>
                             <li><a href="<?php echo URL . 'surattugas/datast' ?>"><i class="icon-file icon-white"></i>  Surat Tugas</a></li>
-                            <li><a href="<?php echo URL . '#' ?>"><i class="icon-road icon-white"></i>  Surat Cuti</a></li>
+                            <li><a href="<?php echo URL . 'cuti/datasc' ?>"><i class="icon-road icon-white"></i>  Surat Cuti</a></li>
                             <li><a href="<?php echo URL . 'penerima/datapb'; ?>"><i class="icon-user icon-white"></i>  Penerima Beasiswa</a></li>
                         </ul>
                     </li>

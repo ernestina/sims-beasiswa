@@ -67,6 +67,10 @@ class Cuti{
         }
         return $data;
     }
+    
+    public function get_cuti_by_id(Penerima $pb){
+        
+    }
 
 
     /*

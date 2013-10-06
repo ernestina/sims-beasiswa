@@ -9,6 +9,11 @@
                 }else{
                     $_SERVER['PHP_SELF'];
                 }?>" enctype="multipart/form-data">
+            <?php 
+                if(isset($this->d_ubah)){
+                    echo "<input type=hidden name=kd_st value=".$this->d_ubah->get_kd_st().">";
+                }
+            ?>
             <div id="wnost" class="error"></div>
             <label>no. Surat Tugas(ST)</label><input type="text" name="no_st" id="no_st" size="30" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nomor():'';?>">
             <div id="wstlama" class="error"></div>
