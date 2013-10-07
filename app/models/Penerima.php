@@ -343,6 +343,37 @@ class Penerima {
         return $status;
     }
 
+    //mendapatkan data penerima berhasarkan kd_jurusan dan tahun_masuk
+    
+    public function get_penerima_by_kd_jur_thn_masuk($kd_jur, $thn_masuk){
+        $sql = "SELECT * FROM d_pb a, d_srt_tugas b where a.KD_ST=b.KD_ST and b.KD_JUR='".$kd_jur."' and b.THN_MASUK='".$thn_masuk."'";
+        $result = $this->db->select($sql);
+        $data = array();
+        foreach($result as $val){
+            $penerima = new $this($this->registry);
+            $penerima->set_kd_pb($val['KD_PB']);
+            $penerima->set_st($val['KD_ST']);
+            $penerima->set_jur($val['KD_JUR']);
+            $penerima->set_bank($val['KD_BANK']);
+            $penerima->set_status($val['KD_STS_TB']);
+            $penerima->set_nip($val['NIP_PB']);
+            $penerima->set_nama($val['NM_PB']);
+            $penerima->set_jkel($val['JK_PB']);
+            $penerima->set_gol($val['KD_GOL']);
+            $penerima->set_unit_asal($val['UNIT_ASAL_PB']);
+            $penerima->set_email($val['EMAIL_PB']);
+            $penerima->set_telp($val['TELP_PB']);
+            $penerima->set_alamat($val['ALMT_PB']);
+            $penerima->set_no_rek($val['NO_REKENING_PB']);
+            $penerima->set_foto($val['FOTO_PB']);
+            $penerima->set_tgl_lapor($val['TGL_LAPOR_PB']);
+            $penerima->set_skl($val['NO_SKL_PB']);
+            $penerima->set_spmt($val['NO_SPMT_PB']);
+            $penerima->set_skripsi($val['JUDUL_SKRIPSI_PB']);
+            $data[] = $penerima;
+        }
+        return $data;
+    }
 
     /*
      * setter

@@ -254,7 +254,7 @@ class Biaya extends BaseModel {
 
     public function isEmptyBiaya(Biaya $biaya) {
         $cek = true;
-        if ($biaya->kd_biaya != "" && $biaya->kd_kontrak != "" &&
+        if ($biaya->kd_kontrak != "" &&
                 $biaya->nama_biaya != "" &&
                 $biaya->biaya_per_pegawai != "" &&
                 $biaya->jml_pegawai_bayar != "" &&

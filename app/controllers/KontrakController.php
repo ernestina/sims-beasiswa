@@ -288,14 +288,22 @@ class KontrakController extends BaseController {
     //menampilkan form edit biaya berdasarkan id=kd_biaya
     public function editBiaya($id = null) {
         if ($id != "") {
+
             $biaya = new Biaya();
             $data_biaya = $biaya->get_by_id($id); //mendapatkan data biaya berdasarkan id=kd_biaya
             //var_dump($data_biaya);
             $kontrak = new Kontrak();
             $data_kontrak = $kontrak->get_by_id($data_biaya->kd_kontrak); //detil kontrak berdasarkan kd_kontrak 
-
+            //var_dump($data_kontrak);
+            $penerima = new Penerima($this->registry);
+            $data_pb = $penerima->get_penerima_by_kd_jur_thn_masuk($data_kontrak->kd_jurusan, $data_kontrak->thn_masuk_kontrak);
+            //$data_penerima = $penerima->get_penerima_by_kd_jur_thn_masuk("5", "2012");
+            //var_dump($data_penerima);
+            $data_penerima_biaya = new PenerimaBiayaKontrak();
+            $data_penerima = $data_penerima_biaya->get_by_biaya($data_biaya->kd_biaya);
             $this->view->biaya = $data_biaya;
             $this->view->kontrak = $data_kontrak;
+            $this->view->penerima_pb = $data_pb;   //daftar penerima beasiswa pada jurusan dan angkatan sesuai kontrak
             $this->view->render('kontrak/edit_biaya' . $data->kd_biaya);
         } else {
             header('location:' . URL . 'kontrak/display');
@@ -377,7 +385,7 @@ class KontrakController extends BaseController {
     //melakukan proses update tagihan 
     public function updateTagihan() {
         if (isset($_POST['update_tagihan'])) {
-            sleep(1);
+            //sleep(1);
             $biaya = new Biaya();
             $biaya->kd_biaya = $_POST['kd_biaya'];
             $biaya->no_bast = $_POST['no_bast'];
@@ -388,6 +396,7 @@ class KontrakController extends BaseController {
             $biaya->tgl_ring_kontrak = date('Y-m-d', strtotime($_POST['tgl_ring_kon']));
             $biaya->no_kuitansi = $_POST['no_kuitansi'];
             $biaya->tgl_kuitansi = date('Y-m-d', strtotime($_POST['tgl_kuitansi']));
+            $biaya->jml_pegawai_bayar = $_POST['jml_peg'];
 
             if ($_FILES['file_bast']['name'] != "") {
                 $biaya->file_bast = $_FILES['file_bast']['name'];
@@ -435,44 +444,56 @@ class KontrakController extends BaseController {
             if ($biaya->isEmptyTagihan($biaya) == false) {
                 //echo "terisi";
                 //exit();
-                $upload = new Upload();
-                if ($_FILES['file_bast']['name'] != "") {
-                    $upload->init('file_bast');
-                    $upload->setDirTo('files/bast/');
-                    $nama = array($biaya->no_bast, $biaya->tgl_bast);
-                    $upload->uploadFile2("", $nama);
-                    $biaya->file_bast = $upload->getFileTo();
-                }
+                $penerima_biaya_kontrak = new PenerimaBiayaKontrak();
+                $penerima_biaya = $penerima_biaya_kontrak->get_by_biaya($biaya->kd_biaya);
+                //echo count($penerima_biaya);
+                //echo $biaya->jml_pegawai_bayar;
+                //exit();
+                if (count($penerima_biaya) == $biaya->jml_pegawai_bayar) {
+                    $upload = new Upload();
+                    if ($_FILES['file_bast']['name'] != "") {
+                        $upload->init('file_bast');
+                        $upload->setDirTo('files/bast/');
+                        $nama = array($biaya->no_bast, $biaya->tgl_bast);
+                        $upload->uploadFile2("", $nama);
+                        $biaya->file_bast = $upload->getFileTo();
+                    }
 
-                if ($_FILES['file_bap']['name'] != "") {
-                    $upload->init('file_bap');
-                    $upload->setDirTo('files/bap/');
-                    $nama = array($biaya->no_bap, $biaya->tgl_bap);
-                    $upload->uploadFile2("", $nama);
-                    $biaya->file_bap = $upload->getFileTo();
-                }
+                    if ($_FILES['file_bap']['name'] != "") {
+                        $upload->init('file_bap');
+                        $upload->setDirTo('files/bap/');
+                        $nama = array($biaya->no_bap, $biaya->tgl_bap);
+                        $upload->uploadFile2("", $nama);
+                        $biaya->file_bap = $upload->getFileTo();
+                    }
 
-                if ($_FILES['file_ring_kon']['name'] != "") {
-                    $upload->init('file_ring_kon');
-                    $upload->setDirTo('files/ringkasan_kontrak/');
-                    $nama = array($biaya->no_ring_kontrak, $biaya->tgl_ring_kontrak);
-                    $upload->uploadFile2("", $nama);
-                    $biaya->file_ring_kontrak = $upload->getFileTo();
-                }
+                    if ($_FILES['file_ring_kon']['name'] != "") {
+                        $upload->init('file_ring_kon');
+                        $upload->setDirTo('files/ringkasan_kontrak/');
+                        $nama = array($biaya->no_ring_kontrak, $biaya->tgl_ring_kontrak);
+                        $upload->uploadFile2("", $nama);
+                        $biaya->file_ring_kontrak = $upload->getFileTo();
+                    }
 
-                if ($_FILES['file_kuitansi']['name'] != "") {
-                    $upload->init('file_kuitansi');
-                    $upload->setDirTo('files/kwitansi/');
-                    $nama = array($biaya->no_kuitansi, $biaya->tgl_kuitansi);
-                    $upload->uploadFile2("", $nama);
-                    $biaya->file_kuitansi = $upload->getFileTo();
-                }
+                    if ($_FILES['file_kuitansi']['name'] != "") {
+                        $upload->init('file_kuitansi');
+                        $upload->setDirTo('files/kwitansi/');
+                        $nama = array($biaya->no_kuitansi, $biaya->tgl_kuitansi);
+                        $upload->uploadFile2("", $nama);
+                        $biaya->file_kuitansi = $upload->getFileTo();
+                    }
 
-                $biaya->updateTagihan($biaya);
-                //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
-                $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
-                header("refresh:1;url=" . $url);
-                echo "Perubahan data tagihan berhasil disimpan.";
+                    $biaya->updateTagihan($biaya);
+                    //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
+                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
+                    header("refresh:1;url=" . $url);
+                    echo "Perubahan data tagihan berhasil disimpan.";
+                } else {
+                    //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
+                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
+                    header("refresh:1;url=" . $url);
+                    echo "Jumlah pegawai yang akan dibayarkan dengan data penerima pada tagihan tidak sama.";
+                }
             } else {
                 //echo "kosong";
                 //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
@@ -549,6 +570,48 @@ class KontrakController extends BaseController {
         header("Location:" . URL . "kontrak/biaya/" . $data->kd_kontrak);
     }
 
+    //menampilkan data penerima_tagihan_pb
+    public function getTagihanPbByBiaya() {
+        if (isset($_POST['kd_biaya'])) {
+            $kd_biaya = $_POST['kd_biaya'];
+            $penerima_biaya_kontrak = new PenerimaBiayaKontrak();
+            $penerima_biaya = $penerima_biaya_kontrak->get_by_biaya($kd_biaya);
+            //var_dump($penerima_biaya);
+            $this->view->penerima_biaya = $penerima_biaya;
+            $penerima = new Penerima($this->registry);
+            $this->view->penerima = $penerima;
+            $this->view->load('kontrak/tabel_tagihan_pb');
+        }
+    }
+
+    //menghapus data biaya berdasarkan id=kd_biaya
+    public function delTagihanPb() {
+        if (isset($_POST['kd_penerima_biaya'])) {
+            $penerima_biaya_kontrak = new PenerimaBiayaKontrak();
+            $penerima_biaya_kontrak->delete($_POST['kd_penerima_biaya']);
+
+            //echo $data->kd_kontrak;
+        }
+    }
+
+    //menambahkan data tagihan ke penerima beasiswa
+    public function addTagihanPb() {
+        if (isset($_POST['penerima']) && isset($_POST['kd_biaya'])) {
+            $penerima = $_POST['penerima'];
+            $penerima_biaya = new PenerimaBiayaKontrak();
+            $penerima_biaya->kd_biaya = $_POST['kd_biaya'];
+            //print_r($penerima);
+            //print_r($_POST['kd_biaya']);
+            foreach ($penerima as $pb) {
+                $penerima_biaya->kd_penerima_beasiswa = $pb;
+                $penerima_biaya->add($penerima_biaya);
+            }
+            //echo "sukses";
+            $hasil = array('respon' => "sukses");
+            echo json_encode($hasil);
+        }
+    }
+
     public function monitoring() {
         $this->view->render('kontrak/mon_pembayaran');
     }
@@ -558,32 +621,32 @@ class KontrakController extends BaseController {
             header("Location:" . URL . "files/" . $file);
         }
     }
-    
-    public function fileBast($file=null){
+
+    public function fileBast($file = null) {
         if ($file != "") {
             header("Location:" . URL . "files/bast/" . $file);
         }
     }
-    
-    public function fileBap($file=null){
+
+    public function fileBap($file = null) {
         if ($file != "") {
             header("Location:" . URL . "files/bap/" . $file);
         }
     }
-    
-    public function fileRingKontrak($file=null){
+
+    public function fileRingKontrak($file = null) {
         if ($file != "") {
             header("Location:" . URL . "files/ringkasan_kontrak/" . $file);
         }
     }
-    
-    public function fileKuitansi($file=null){
+
+    public function fileKuitansi($file = null) {
         if ($file != "") {
             header("Location:" . URL . "files/kwitansi/" . $file);
         }
     }
-    
-    public function fileSp2d($file=null){
+
+    public function fileSp2d($file = null) {
         if ($file != "") {
             header("Location:" . URL . "files/sp2d/" . $file);
         }

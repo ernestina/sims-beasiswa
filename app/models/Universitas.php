@@ -49,7 +49,7 @@ class Universitas {
             $univ->set_kode($val['SINGKAT_UNIV']);
             $user = new User($this->registry);
             $pic = $user->getUser_id($val['KD_USER']);
-            $univ->set_pic($pic->get_nmUser());
+            //$univ->set_pic($pic->get_nmUser());
             $univ->set_nama($val['NM_UNIV']);
             $univ->set_alamat($val['ALMT_UNIV']);
             $univ->set_telepon($val['TELP_UNIV']);
