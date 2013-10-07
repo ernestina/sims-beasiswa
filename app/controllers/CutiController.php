@@ -57,13 +57,18 @@ class CutiController extends BaseController{
                 $this->registry->upload->uploadFile();
                 header('location:'.URL.'cuti/datasc');
             }else{
-                
+                $this->view->d_rekam = $ct;
             }
             
         }
         
         if(!is_null($id)){
-            $this->view->d_ubah = $ct->get_cuti_by_id($pb);
+            $ct->set_kode_cuti($id);
+            $this->view->d_ubah = $ct->get_cuti_by_id($ct);
+//            var_dump($this->view->d_ubah);
+            $pb = new Penerima($this->registry);
+            $pb->set_kd_pb($ct->get_pb());
+            $this->view->d_pb = $pb->get_penerima_by_id($pb);
         }
         $jsc = new JenisSuratCuti($this->registry);
         $univ = new Universitas($this->registry);
@@ -80,12 +85,76 @@ class CutiController extends BaseController{
         $ct->del_ct();
         header('location:'.URL.'cuti/datasc');
     }
+    
+    public function updct(){
+        $kd_ct = $_POST['kd_sc'];
+        $jsc = $_POST['jsc'];
+        $kd_pb = $_POST['kd_pb'];
+        $no_sc = $_POST['no_sc'];
+        $tgl_sc = Tanggal::ubahFormatTanggal($_POST['tgl_sc']);
+        $prd_mul = $_POST['sem_mulai']." ".$_POST['thn_mulai'];
+        $prd_sel = $_POST['sem_sel']." ".$_POST['thn_sel'];
+        $perk_stop = $_POST['bln_stop']." ".$_POST['thn_stop'];
+        $perk_go = $_POST['bln_go']." ".$_POST['thn_go'];
+        $file = $_FILES['fupload']['name'];
+        
+        $ct = new Cuti($this->registry);
+        echo $kd_ct."-".$jsc."-".$kd_pb."-".$no_sc."-".$tgl_sc."-".$prd_mul."-".$prd_sel."-".$perk_stop."-".$perk_go."-".$file;
+        /*
+         * cek eksistensi file
+         */
+        $d_ct = $ct->get_cuti_by_id($ct);
+        if($file!=''){
+            $this->registry->upload('fupload');
+            $this->registry->upload->setDirTo('files/cuti/');
+            $pb = new Penerima($this->registry);
+            $pb->set_kd_pb($kd_pb);
+            $d_pb = $pb->get_penerima_by_id($pb);
+            $cname = array('CUTI',$d_pb->get_nip(),end(explode(" ",$prd_mul)));
+            $this->registry->upload->changeFileName($this->registry->upload->getFileName(),$cname);
+            $file = $this->registry->upload->getFileTo();
+            $this->registry->upload->uploadFile;
+        }else{
+            $file = $d_ct->get_file();
+        }
+        /*
+         * set cuti
+         */
+        $ct->set_kode_cuti($kd_ct);
+        $ct->set_jenis_cuti($jsc);
+        $ct->set_pb($kd_pb);
+        $ct->set_no_surat_cuti($no_sc);
+        $ct->set_tgl_surat_cuti($tgl_sc);
+        $ct->set_prd_mulai($prd_mul);
+        $ct->set_prd_selesai($prd_sel);
+        $ct->set_perk_stop($perk_stop);
+        $ct->set_perk_go($perk_go);
+        $ct->set_file($file);
+        if($ct->update_cuti()){
+            header('location:'.URL.'cuti/datasc');
+        }else{
+            $this->view->d_ubah = $ct;
+            $this->view->render('riwayat_tb/data_cuti');
+        }
+    }
 
 
     public function dialog_add_pb(){
         $pb = new Penerima($this->registry);
         $this->view->d_pb = $pb->get_penerima();
         $this->view->load('riwayat_tb/dialog_add_pb_sc');
+    }
+    
+    public function cekfile(){
+        $kd_sc = $_POST['kd_ct'];
+        $ct = new Cuti($this->registry);
+        $ct->set_kode_cuti($kd_sc);
+        $d_ct = $ct->get_cuti_by_id($ct);
+        if($d_ct->get_file()!='' && file_exists('files/cuti/'.$d_ct->get_file())){
+            echo 1;
+        }else{
+            echo 0;
+        }
     }
     
     public function __destruct() {

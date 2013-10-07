@@ -409,9 +409,9 @@ function cek(){
 //                $('#cek_skl').val(data);
                 if(data==0){
                     var wskl = "file SKL harus dipilih!";
-                $('#wskl').fadeIn(200);
-                $('#wskl').html(wskl);
-                jml++;
+                    $('#wskl').fadeIn(200);
+                    $('#wskl').html(wskl);
+                    jml++;
                 }
             });
         }

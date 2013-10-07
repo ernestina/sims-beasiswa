@@ -16,14 +16,16 @@
                 $no=1;
                 foreach($this->d_ct as $val){
                     $d_pb = explode("-",$val->get_pb());
+                    $perk_go = explode(" ", $val->get_perk_go());
+                    $perk_stop = explode(" ", $val->get_perk_stop());;
                     echo "<tr>";
                     echo "<td>".$no."</td>";
                     echo "<td>".$val->get_no_surat_cuti()."</br>".Tanggal::tgl_indo($val->get_tgl_surat_cuti())."</td>";
                     echo "<td>".$val->get_jenis_cuti()."</td>";
                     echo "<td>".$d_pb[0]."</br>".$d_pb[1]."</td>";
-                    echo "<td>".$val->get_prd_mulai()."</td>";
-                    echo "<td>".$val->get_perk_stop()."</td>";
-                    echo "<td>".$val->get_perk_go()."</td>";
+                    echo "<td>".(($val->get_prd_mulai()==1)?'ganjil':'genap')."</td>";
+                    echo "<td>".Tanggal::bulan_indo($perk_stop[0])." ".$perk_stop[1]."</td>";
+                    echo "<td>".Tanggal::bulan_indo($perk_go[0])." ".$perk_go[1]."</td>";
                     echo "<td>".$d_pb[2]."</td>";
                     echo "<td><a href=".URL."cuti/del_sc/".$val->get_kode_cuti()."><i class=\"icon-trash\"></i></a> &nbsp &nbsp
                         <a href=".URL."cuti/datasc/".$val->get_kode_cuti()."><i class=\"icon-pencil\"></i></a></td>";

@@ -77,8 +77,22 @@ class Cuti{
         return $data;
     }
     
-    public function get_cuti_by_id(Penerima $pb){
-        
+    public function get_cuti_by_id(Cuti $ct){
+        $sql = "SELECT * FROM ".$this->t_cuti. " WHERE KD_CUTI=".$ct->get_kode_cuti();
+        $result = $this->_db->select($sql);
+        foreach ($result as $v){
+            $this->set_kode_cuti($v['KD_CUTI']);
+            $this->set_jenis_cuti($v['KD_JNS_SRT_CUTI']);
+            $this->set_no_surat_cuti($v['NO_CUTI']);
+            $this->set_tgl_surat_cuti($v['TGL_CUTI']);
+            $this->set_pb($v['KD_PB']);
+            $this->set_prd_mulai($v['PRD_MUL_CUTI']);
+            $this->set_prd_selesai($v['PRD_SEL_CUTI']);
+            $this->set_perk_stop($v['PERK_STOP']);
+            $this->set_perk_go($v['PERK_GO']);
+            $this->set_file($v['FILE_CUTI']);
+        }
+        return $this;
     }
     
     public function add_cuti(){
@@ -97,6 +111,24 @@ class Cuti{
         return $this->_db->insert($this->t_cuti,$data);
     }
     
+    public function update_cuti(){
+        $where = " KD_CUTI=".$this->get_kode_cuti();
+        $data = array(
+            'KD_JNS_SRT_CUTI'=>$this->get_jenis_cuti(),
+            'KD_PB'=>$this->get_pb(),
+            'NO_CUTI'=>$this->get_no_surat_cuti(),
+            'TGL_CUTI'=>$this->get_tgl_surat_cuti(),
+            'PRD_MUL_CUTI'=>$this->get_prd_mulai(),
+            'PRD_SEL_CUTI'=>$this->get_prd_selesai(),
+            'PERK_STOP'=>$this->get_perk_stop(),
+            'PERK_GO'=>$this->get_perk_go(),
+            'FILE_CUTI'=>$this->get_file()
+        );
+        
+        return $this->_db->update($this->t_cuti,$data,$where);
+    }
+
+
     public function del_ct(){
         $where = " KD_CUTI=".$this->get_kode_cuti();
         return $this->_db->delete($this->t_cuti,$where);

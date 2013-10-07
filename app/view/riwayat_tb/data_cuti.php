@@ -11,26 +11,38 @@
                 }?>" enctype="multipart/form-data">
             <?php 
                 if(isset($this->d_ubah)){
-                    echo "<input type=hidden name=kd_sc value=".$this->d_ubah->get_kd_sc().">";
+                    echo "<input type=hidden name=kd_sc id=kd_sc value=".$this->d_ubah->get_kode_cuti().">";
+                    $prd_mul = explode(" ", $this->d_ubah->get_prd_mulai());
+                    $prd_sel = explode(" ", $this->d_ubah->get_prd_selesai());
+                    $perk_stop = explode(" ", $this->d_ubah->get_perk_stop());
+                    $perk_go = explode(" ", $this->d_ubah->get_perk_go());
                 }
             ?>
             <div id="wnosc" class="error"></div>
-            <label>no. Surat Cuti</label><input type="text" name="no_sc" id="no_sc" size="30" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nomor():'';?>">
+            <label>no. Surat Cuti</label><input type="text" name="no_sc" id="no_sc" size="30" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_no_surat_cuti():'';?>">
             <div id="wjsc" class="error"></div>
             <label>Jenis Cuti</label><select name="jsc" id="jsc" >
                 <?php 
                     foreach($this->d_jsc as $v){
-                        echo "<option value=".$v->get_kode().">".$v->get_nama()."</option>";
+                        if(isset($this->d_ubah)){
+                            if($this->d_ubah->get_jenis_cuti()==$v->get_kode()){
+                                echo "<option value=".$v->get_kode()." selected>".$v->get_nama()."</option>";
+                            }else{
+                                echo "<option value=".$v->get_kode().">".$v->get_nama()."</option>";
+                            }
+                        }else{
+                            echo "<option value=".$v->get_kode().">".$v->get_nama()."</option>";
+                        }
                     }
                 ?>
             </select>
             <div id="wtglsc" class="error"></div>
-            <label>Tanggal SC</label><input type="text" name="tgl_sc" id="datepicker" value="" readonly>
+            <label>Tanggal SC</label><input type="text" name="tgl_sc" id="datepicker" value="<?php echo isset($this->d_ubah)?  Tanggal::ubahFormatToDatePicker($this->d_ubah->get_tgl_surat_cuti()):'';?>" readonly>
             <div id="wpb" class="error"></div>
             <label>Penerima Beasiswa</label><input type="button" id="bt_pb" value="+" onClick="showDialog();">
-            <input style="display:none" type="text" name="nip_pb" id="nip_pb" value="<?php echo Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly>
-            <input style="display:none" type="text" name="nama_pb" id="nama_pb" value="<?php echo Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly>
-            <input type="hidden" name="kd_pb" id="kd_pb" value="">
+            <input style="<?php echo isset($this->d_ubah)?'':'display:none';?>" type="text" name="nip_pb" id="nip_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb->get_nip():'';?>" readonly>
+            <input style="<?php echo isset($this->d_ubah)?'':'display:none';?>" type="text" name="nama_pb" id="nama_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb->get_nama():'';?>" readonly>
+            <input type="hidden" name="kd_pb" id="kd_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb->get_kd_pb():'';?>">
             </br><label>Universitas</label><select id="univ" name="univ" onChange="get_jurusan(this.value);">
                 <option value="0">-Pilih Universitas-</option>
                 <?php 
@@ -40,54 +52,70 @@
                 ?>
             </select>
             <div id="wjur" class="error"></div>
-            <div style="display:none"id="div_jur">
+            <div style="display:none"id="div_jur">d
             <label>Jurusan</label><select name="jur" id="jur"></select>
             </div>
             <div id="wprdmulai" class="error"></div>
             <label>Periode Mulai Cuti</label>
             <select name="sem_mulai" id="sem_mulai">
-                <option value="1">Ganjil</option>
-                <option value="2">Genap</option>
+                <option value="1" <?php echo isset($this->d_ubah)?($prd_mul[0]==1)?'selected':'':'';?>>Ganjil</option>
+                <option value="2" <?php echo isset($this->d_ubah)?($prd_mul[0]==2)?'selected':'':'';?>>Genap</option>
             </select>
             <select name="thn_mulai" id="thn_mulai">
-                <option value="<?php echo $this->curr_year;?>"><?php echo $this->curr_year;?></option>
-                <option value="<?php echo (int) $this->curr_year+1;?>"><?php echo (int) $this->curr_year+1;?></option>
+                <option value="<?php echo $this->curr_year;?>" <?php echo isset($this->d_ubah)?($prd_mul[1]==$this->curr_year)?'selected':'':'';?>><?php echo $this->curr_year;?></option>
+                <option value="<?php echo (int) $this->curr_year+1;?>" <?php echo isset($this->d_ubah)?($prd_mul[1]==(int)$this->curr_year+1)?'selected':'':'';?>><?php echo (int) $this->curr_year+1;?></option>
             </select>
             <div id="wprdselesai" class="error"></div>
             <label>Periode Selesai Cuti</label>
             <select name="sem_sel" id="sem_sel">
-                <option value="1">Ganjil</option>
-                <option value="2">Genap</option>
+                <option value="1" <?php echo isset($this->d_ubah)?($prd_sel[0]==1)?'selected':'':'';?>>Ganjil</option>
+                <option value="2" <?php echo isset($this->d_ubah)?($prd_mul[0]==2)?'selected':'':'';?>>Genap</option>
             </select>
             <select name="thn_sel" id="thn_sel">
-                <option value="<?php echo $this->curr_year;?>"><?php echo $this->curr_year;?></option>
-                <option value="<?php echo (int) $this->curr_year+1;?>"><?php echo (int) $this->curr_year+1;?></option>
+                <option value="<?php echo $this->curr_year;?>" <?php echo isset($this->d_ubah)?($prd_sel[1]==$this->curr_year)?'selected':'':'';?>><?php echo $this->curr_year;?></option>
+                <option value="<?php echo (int) $this->curr_year+1;?>" <?php echo isset($this->d_ubah)?($prd_sel[1]==(int)$this->curr_year+1)?'selected':'':'';?>><?php echo (int) $this->curr_year+1;?></option>
             </select>
             <div id="wperkstop" class="error"></div>
             <label>Perkiraan Stop</label>
             <select name="bln_stop" id="bln_stop">
                 <?php 
                     for($i=1;$i<=12;$i++){
-                        echo "<option value=$i>".Tanggal::bulan_indo($i)."</option>";
+                        if(isset($this->d_ubah)){
+                            if($perk_stop[0]==$i){
+                                echo "<option value=$i selected>".Tanggal::bulan_indo($i)."</option>";
+                            }else{
+                                echo "<option value=$i>".Tanggal::bulan_indo($i)."</option>";
+                            }
+                        }else{
+                            echo "<option value=$i>".Tanggal::bulan_indo($i)."</option>";
+                        }
                     }
                 ?>
             </select>
             <select name="thn_stop" id="thn_stop">
-                <option value="<?php echo $this->curr_year;?>"><?php echo $this->curr_year;?></option>
-                <option value="<?php echo (int) $this->curr_year+1;?>"><?php echo (int) $this->curr_year+1;?></option>
+                <option value="<?php echo $this->curr_year;?>" <?php echo isset($this->d_ubah)?($perk_stop[1]==$this->curr_year)?'selected':'':'';?>><?php echo $this->curr_year;?></option>
+                <option value="<?php echo (int) $this->curr_year+1;?>" <?php echo isset($this->d_ubah)?($perk_stop[1]==(int)$this->curr_year+1)?'selected':'':'';?>><?php echo (int) $this->curr_year+1;?></option>
             </select>
             <div id="wperkgo" class="error"></div>
             <label>Perkiraan Go</label>
             <select name="bln_go" id="bln_go">
                 <?php 
                     for($i=1;$i<=12;$i++){
-                        echo "<option value=$i>".Tanggal::bulan_indo($i)."</option>";
+                        if(isset($this->d_ubah)){
+                            if($perk_go[0]==$i){
+                                echo "<option value=$i selected>".Tanggal::bulan_indo($i)."</option>";
+                            }else{
+                                echo "<option value=$i>".Tanggal::bulan_indo($i)."</option>";
+                            }
+                        }else{
+                            echo "<option value=$i>".Tanggal::bulan_indo($i)."</option>";
+                        }
                     }
                 ?>
             </select>
             <select name="thn_go" id="thn_go">
-                <option value="<?php echo $this->curr_year;?>"><?php echo $this->curr_year;?></option>
-                <option value="<?php echo (int) $this->curr_year+1;?>"><?php echo (int) $this->curr_year+1;?></option>
+                <option value="<?php echo $this->curr_year;?>" <?php echo isset($this->d_ubah)?($perk_go[1]==$this->curr_year)?'selected':'':'';?>><?php echo $this->curr_year;?></option>
+                <option value="<?php echo (int) $this->curr_year+1;?>" <?php echo isset($this->d_ubah)?($perk_go[1]==(int)$this->curr_year+1)?'selected':'':'';?>><?php echo (int) $this->curr_year+1;?></option>
             </select>
             <div id="wfile" class="error"></div>
             <label>Unggah SC</label><input type="file" name="fupload" id="file">
@@ -263,11 +291,24 @@
         }
         
         if(sfile==''){
-            jml++;
-            var wfile = '<div id=warning>File surat belum dipilih!</div>'
-            $('#wfile').fadeIn(200);
-            $('#wfile').html(wfile);
-            return false;
+            if(typeof document.getElementById('kd_sc').value!='undefined'){
+                $.post('<?php echo URL.'cuti/cekfile';?>',{kd_ct:''+document.getElementById('kd_sc').value+''},function(data){
+//                $('#cek_skl').val(data);
+                    if(data==0){
+                        jml++;
+                        var wfile = '<div id=warning>File surat belum dipilih!</div>'
+                        $('#wfile').fadeIn(200);
+                        $('#wfile').html(wfile);
+                        return false;
+                    }
+                });
+            }else{
+                jml++;
+                var wfile = '<div id=warning>File surat belum dipilih!</div>'
+                $('#wfile').fadeIn(200);
+                $('#wfile').html(wfile);
+                return false;
+            }
         }else{
             var csplit = sfile.split(".");
             var ext = csplit[csplit.length-1];
