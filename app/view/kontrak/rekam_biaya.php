@@ -76,6 +76,9 @@
                 viewError('wjml_peg','Jumlah pegawai harus diinput angka.');
             } else {
                 removeError('wjml_peg');  
+                if($('#biaya_per_peg').val!=""){
+                removeError('wjml_biaya');
+            }
             }         
         });
         
@@ -84,7 +87,10 @@
         });
         
         $('#biaya_per_peg').keyup(function() {   
-            removeError('wbiaya_per_peg');         
+            removeError('wbiaya_per_peg');  
+            if($('#jml_peg').val!=""){
+                removeError('wjml_biaya');
+            }
         });
         
         $('#jml_biaya').keyup(function() {   

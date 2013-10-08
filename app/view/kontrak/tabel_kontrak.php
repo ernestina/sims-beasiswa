@@ -28,12 +28,12 @@
                         ?>
                         <a href="<?php echo URL . "kontrak/file/" . $kontrak_lama->file_kontrak; ?>" target="_blank"><?php echo $kontrak_lama->no_kontrak; ?></a>
                         <?php
-                        echo " )";
+                        echo ")";
                     }
                     ?>
                 </td>
                 <td><?php
-                    echo $val->tgl_kontrak;
+                echo $val->tgl_kontrak;
                     ?></td>
                 <td><?php
                 if ($val->kd_jurusan != "") {
@@ -46,12 +46,23 @@
                 } else {
                     echo "";
                 }
-                ?></td>
+                    ?></td>
                 <td><?php echo $val->thn_masuk_kontrak; ?></td>
                 <td><?php echo $val->jml_pegawai_kontrak; ?></td>
                 <td><?php echo $val->lama_semester_kontrak; ?></td>
-                <td><?php echo number_format($val->nilai_kontrak); ?></td>
-                <td><?php ?></td>
+                <td>
+                    <?php 
+                    echo number_format($val->nilai_kontrak); 
+                    if($this->biaya->get_biaya_by_kontrak($val->kd_kontrak) != $val->nilai_kontrak){
+                        echo "*";
+                    }
+                    ?>
+                </td>
+                <td>
+                    <?php 
+                    echo number_format($this->biaya->get_biaya_by_kontrak_dibayar($val->kd_kontrak));
+                    ?>
+                </td>
                 <td><?php
                 echo "<a href=" . URL . "kontrak/delKontrak/" . $val->kd_kontrak . " onClick=\"return del();\"><i class=\"icon-trash\"></i></a> &nbsp &nbsp
                      <a href=" . URL . "kontrak/editKontrak/" . $val->kd_kontrak . "><i class=\"icon-pencil\"></i></a> &nbsp &nbsp

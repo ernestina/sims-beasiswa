@@ -72,7 +72,7 @@
                         <a href="<?php echo URL . 'kontrak/display'; ?>">KONTRAK</a>
                         <ul>
                             <li><a href="<?php echo URL . 'kontrak/display'; ?>"><i class="icon-folder-open icon-white"></i>  Data Kontrak</a></li>
-                            <li><a href="<?php echo URL . '#'; ?>"><i class="icon-eye-open icon-white"></i>  Monitoring Kontrak</a></li>
+                            <li><a href="<?php echo URL . 'kontrak/monitoring'; ?>"><i class="icon-eye-open icon-white"></i>  Monitoring Kontrak</a></li>
                         </ul>
                     </li>
                     <li class="subnav">

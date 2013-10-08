@@ -133,7 +133,7 @@ class Kontrak extends BaseModel {
             'FILE_KON' => $kontrak->file_kontrak,
             'KONTRAK_LAMA' => $kontrak->kontrak_lama
         );
-        var_dump($data);
+        //var_dump($data);
         $this->db->insert($table, $data);
        
     }

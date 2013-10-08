@@ -38,7 +38,7 @@
                     <label>Tahun Masuk</label>
                     <select name="tahun_masuk" id="tahun_masuk">
                         <?php
-                        for ($i = 2007; $i <= date('Y') + 3; $i++) {
+                        for ($i = 2007; $i <= date('Y') + 2; $i++) {
                             ?>
                             <option value="<?php echo $i; ?>" <?php if ($i == date('Y')) {
                             echo "selected";

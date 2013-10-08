@@ -62,7 +62,10 @@ class KontrakController extends BaseController {
                     if (Validasi::validate_number($kontrak->nilai_kontrak) == TRUE) {
                         $kontrak->add($kontrak);
                         $upload->uploadFile();
-                        header('location:' . URL . 'kontrak/display');
+                        //header('location:' . URL . 'kontrak/display');
+                        $url = URL . 'kontrak/display';
+                        header("refresh:1;url=" . $url);
+                        echo "Kontrak berhasil disimpan.";
                     } else {
                         $url = URL . 'kontrak/rekamKontrak';
                         header("refresh:1;url=" . $url);
@@ -175,6 +178,7 @@ class KontrakController extends BaseController {
     public function get_data_kontrak() {
         $kontrak = new Kontrak();
         $univ = $_POST['univ'];
+        $biaya = new Biaya();
         $jurusan = new Jurusan($this->registry);
         $universitas = new Universitas($this->registry);
 
@@ -185,6 +189,7 @@ class KontrakController extends BaseController {
         } else {
             $this->view->data = $kontrak->get_by_univ($univ);
         }
+        $this->view->biaya = $biaya;
         $this->view->jurusan = $jurusan;
         $this->view->kontrak = $kontrak;
         $this->view->universitas = $universitas;
@@ -613,7 +618,86 @@ class KontrakController extends BaseController {
     }
 
     public function monitoring() {
+        $universitas = new Universitas($this->registry);
+        $univ = $universitas->get_univ();
+        //var_dump($univ);
+        $this->view->univ = $univ;
         $this->view->render('kontrak/mon_pembayaran');
+    }
+
+    //menampilkan tabel biaya kontrak
+    public function dataBiayaKontrak() {
+        if (isset($_POST['univ']) && isset($_POST['status'])) {
+            $univ = $_POST['univ'];
+            //print_r ($univ);
+            $status = $_POST['status'];
+            //print_r ($status);
+            $biaya = new Biaya();
+            if ($univ == "" && $status == "") {
+                $data_biaya = $biaya->get_All();
+            }
+            if ($univ != "" && $status == "") {
+                $data_biaya = $biaya->get_by_univ($univ);
+            }
+            if ($univ == "" && $status != "") {
+                $data_biaya = $biaya->get_by_status($status);
+            }
+
+            if ($univ != "" && $status != "") {
+                $data_biaya = $biaya->get_by_univ_status($univ, $status);
+            }
+
+            $universitas = new Universitas($this->registry);
+            $jurusan = new Jurusan($this->registry);
+            $kontrak = new Kontrak();
+            $this->view->universitas = $universitas;
+            $this->view->jurusan = $jurusan;
+            $this->view->kontrak = $kontrak;
+            $this->view->biaya = $biaya;
+            //var_dump($biaya);
+            $this->view->data_biaya = $data_biaya;
+            $this->view->load('kontrak/tabel_biaya');
+        }
+    }
+
+    //menampilkan cetak biaya kontrak
+    public function cetakBiayaKontrak() {
+        if (isset($_POST['univ']) && isset($_POST['status'])) {
+            $univ = $_POST['univ'];
+            //print_r ($univ);
+            $status = $_POST['status'];
+            //print_r ($status);
+            $biaya = new Biaya();
+            if ($univ == "" && $status == "") {
+                $data_biaya = $biaya->get_All();
+            }
+            if ($univ != "" && $status == "") {
+                $data_biaya = $biaya->get_by_univ($univ);
+            }
+            if ($univ == "" && $status != "") {
+                $data_biaya = $biaya->get_by_status($status);
+            }
+
+            if ($univ != "" && $status != "") {
+                $data_biaya = $biaya->get_by_univ_status($univ, $status);
+            }
+
+            $universitas = new Universitas($this->registry);
+            $universitas->set_kode_in($univ);
+            $data_univ = $universitas->get_univ_by_id($universitas);
+            $jurusan = new Jurusan($this->registry);
+            $kontrak = new Kontrak();
+            $this->view->universitas = $universitas;
+            $this->view->jurusan = $jurusan;
+            $this->view->kontrak = $kontrak;
+            $this->view->biaya = $biaya;
+            $this->view->univ = $univ;
+            $this->view->data_univ = $data_univ;
+            $this->view->status = $status;
+            //var_dump($biaya);
+            $this->view->data_biaya = $data_biaya;
+            $this->view->load('kontrak/cetak_biaya_kontrak');
+        }
     }
 
     public function file($file = null) {
