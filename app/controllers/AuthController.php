@@ -24,6 +24,7 @@ class AuthController extends BaseController {
         $res = $cuser->login($user, $pwd);
         if((int)$res[0]==1){
             Session::createSession();
+            Session::set('loggedin',TRUE);
             Session::set('user', $user);
             Session::set('role', $res[1]);
             header('location:'.URL);

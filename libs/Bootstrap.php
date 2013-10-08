@@ -7,10 +7,14 @@ class Bootstrap {
     private $method;
     private $param;
     private $file;
+    private $role;
     private $url = array();
 
     public function __construct($registry) {
         $this->registry = $registry;
+        Session::createSession();
+        $logged = Session::get('loggedin');
+        $this->role = ($logged)?(Session::get('role')==1?'admin':'pic'):'guest';
     }
     
     /*
@@ -20,7 +24,6 @@ class Bootstrap {
         $page = ($_GET['page']) ? $_GET['page'] : 'index';
         $page = rtrim($page, '/');
         $this->url = explode('/', $page);
-
         if (isset($this->url[0])) {
             $this->file = ROOT . '/app/controllers/' . ucfirst($this->url[0]) . 'Controller.php';
             if (is_readable($this->file)) {
@@ -59,7 +62,13 @@ class Bootstrap {
         
         $loggedin = $this->cek_session();
         if(!$loggedin && !($this->controller instanceof AuthController) && $this->method!='login'){
-            header('location:'.URL.'auth/login');
+            $this->controller = new AuthController($this->registry);
+            $this->method = 'index';
+        }
+//        var_dump($this->registry->auth->is_allowed($this->role,$this->url[0],$this->method));
+        if(!$this->registry->auth->is_allowed($this->role,$this->url[0],$this->method)){
+            $this->controller = new Index($this->registry);
+            $this->method = 'index';
         }
         
         /*         * * check if the action is callable ** */

@@ -33,10 +33,22 @@ class Auth{
     }
     
     public function add_access($resource, $role, $action){
+//        if(!array_key_exists($role, $this->_access)){
+//            $this->_access[$role]=array();
+//            if(!array_key_exists($resource, $this->_access[$role])){
+//                $this->_access[$role][$resource] = null;
+//            }
+//        }
+//        
+//        if(!is_array($action)){
+//            $action = array($action);
+//        }
+//        $this->_access[$role][$resource] = $action;
         if(!array_key_exists($role, $this->_access)){
             $this->_access[$role] = array();
         }
         if(!array_key_exists($resource, $this->_access[$role])){
+            $this->_access[$role][$resource] = array();
             if(!is_array($action)) {
                 $action = array($action);
             }
@@ -54,12 +66,21 @@ class Auth{
         return false;
     }
     
-    public function is_allowed(){
+    public function is_allowed($role,$resource,$action){
+        if(array_key_exists($role, $this->_access)){
+            if(array_key_exists($resource, $this->_access[$role])){
+                if(in_array($action, $this->_access[$role][$resource])){
+                    return true;
+                }
+            }
+        }
+        
+        return false;
         
     }
 
     public function get_roles(){
-        
+        return $this->_roles;
     }
     
     public function get_redirect($role){
