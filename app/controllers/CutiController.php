@@ -157,6 +157,13 @@ class CutiController extends BaseController{
         }
     }
     
+    public function get_method(){
+        $method = get_class_methods($this);
+        foreach ($method as $method){
+            print_r("\$akses['pic']['".  get_class($this)."']['".$method."'];</br>");
+        }
+    }
+    
     public function __destruct() {
         parent::__destruct();
     }

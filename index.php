@@ -32,6 +32,7 @@ $path = array(
 //include ROOT.'/config/config.php';
 include ROOT.'/libs/Autoloader.php';
 include ROOT.'/libs/config.php';
+include ROOT.'/app/akses.php';
 
 Autoloader::setCacheFilePath(ROOT.'/libs/cache.txt');
 Autoloader::setClassPaths($path);

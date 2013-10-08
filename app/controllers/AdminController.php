@@ -933,6 +933,15 @@ class AdminController extends BaseController {
     public function restore() {
         $this->view->render('admin/restore_db');
     }
+    
+    public function get_method(){
+        $method = get_class_methods($this);
+//        $no = 1;
+        foreach ($method as $method){
+            print_r("\$akses[\'admin\'][\'".  get_class($this)."\'][\'".$method."\'];</br>");
+//            $no++;
+        }
+    }
 
     /*
      * destruktor

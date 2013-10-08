@@ -1,0 +1,173 @@
+<?php
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+$akses = array();
+$akses['guest'] = array();
+
+/*
+ * akses admin
+ */
+$akses['Admin']['__construct'];
+$akses['Admin']['index'];
+$akses['Admin']['addUniversitas'];
+$akses['Admin']['updUniversitas'];
+$akses['Admin']['delUniversitas'];
+$akses['Admin']['addFakultas'];
+$akses['Admin']['updFakultas'];
+$akses['Admin']['delFakultas'];
+$akses['Admin']['addJurusan'];
+$akses['Admin']['updJurusan'];
+$akses['Admin']['delJurusan'];
+$akses['Admin']['addStrata'];
+$akses['Admin']['editStrata'];
+$akses['Admin']['updStrata'];
+$akses['Admin']['delStrata'];
+$akses['Admin']['addPemberi'];
+$akses['Admin']['editPemberi'];
+$akses['Admin']['updPemberi'];
+$akses['Admin']['delPemberi'];
+$akses['Admin']['addPejabat'];
+$akses['Admin']['editPejabat'];
+$akses['Admin']['updPejabat'];
+$akses['Admin']['delPejabat'];
+$akses['Admin']['addST'];
+$akses['Admin']['updST'];
+$akses['Admin']['delST'];
+$akses['Admin']['addCuti'];
+$akses['Admin']['updCuti'];
+$akses['Admin']['delCuti'];
+$akses['Admin']['list_bank'];
+$akses['Admin']['addBank'];
+$akses['Admin']['editBank'];
+$akses['Admin']['updateBank'];
+$akses['Admin']['deleteBank'];
+$akses['Admin']['listUser'];
+$akses['Admin']['addUser'];
+$akses['Admin']['editUser'];
+$akses['Admin']['updateUser'];
+$akses['Admin']['deleteUser'];
+$akses['Admin']['get_jur_by_univ'];
+$akses['Admin']['cekJabatan'];
+$akses['Admin']['config'];
+$akses['Admin']['backup'];
+$akses['Admin']['restore'];
+$akses['Admin']['get_method'];
+$akses['Admin']['__destruct'];
+$akses['Admin']['load_model'];
+
+/*
+ * akses modul cuti
+ */
+$akses['Cuti']['__construct'];
+$akses['Cuti']['index'];
+$akses['Cuti']['datasc'];
+$akses['Cuti']['del_sc'];
+$akses['Cuti']['updct'];
+$akses['Cuti']['dialog_add_pb'];
+$akses['Cuti']['cekfile'];
+$akses['Cuti']['get_method'];
+$akses['Cuti']['__destruct'];
+$akses['Cuti']['load_model'];
+/*
+ * akses modul surat tugas
+ */
+$akses['Surattugas']['__construct'];
+$akses['Surattugas']['datast'];
+$akses['Surattugas']['updst'];
+$akses['Surattugas']['del_st'];
+$akses['Surattugas']['get_data_st'];
+$akses['Surattugas']['dialog_add_pb'];
+$akses['Surattugas']['addpb'];
+$akses['Surattugas']['del_pb_from_st'];
+$akses['Surattugas']['cek_pb_on_st'];
+$akses['Surattugas']['view_st'];
+$akses['Surattugas']['get_method'];
+$akses['Surattugas']['load_model'];
+$akses['Surattugas']['__destruct'];
+/*
+ * akses modul Elemen beasiswa
+ */
+$akses['ElemenBeasiswa']['__construct'];
+$akses['ElemenBeasiswa']['index'];
+$akses['ElemenBeasiswa']['viewJadup'];
+$akses['ElemenBeasiswa']['addJadup'];
+$akses['ElemenBeasiswa']['delJadup'];
+$akses['ElemenBeasiswa']['viewUangBuku'];
+$akses['ElemenBeasiswa']['addUangBuku'];
+$akses['ElemenBeasiswa']['delUangBuku'];
+$akses['ElemenBeasiswa']['viewSkripsi'];
+$akses['ElemenBeasiswa']['addSkripsi'];
+$akses['ElemenBeasiswa']['delSkripsi'];
+$akses['ElemenBeasiswa']['get_method'];
+$akses['ElemenBeasiswa']['load_model'];
+$akses['ElemenBeasiswa']['__destruct'];
+/*
+ * akses modul kontrak
+ */
+$akses['Kontrak']['__construct'];
+$akses['Kontrak']['index'];
+$akses['Kontrak']['display'];
+$akses['Kontrak']['rekamKontrak'];
+$akses['Kontrak']['get_jur_by_univ'];
+$akses['Kontrak']['editKontrak'];
+$akses['Kontrak']['updateKontrak'];
+$akses['Kontrak']['get_data_kontrak'];
+$akses['Kontrak']['biaya'];
+$akses['Kontrak']['delKontrak'];
+$akses['Kontrak']['rekamBiaya'];
+$akses['Kontrak']['editBiaya'];
+$akses['Kontrak']['updateBiaya'];
+$akses['Kontrak']['updateBiaya2'];
+$akses['Kontrak']['updateTagihan'];
+$akses['Kontrak']['updatePembayaran'];
+$akses['Kontrak']['delBiaya'];
+$akses['Kontrak']['monitoring'];
+$akses['Kontrak']['file'];
+$akses['Kontrak']['fileBast'];
+$akses['Kontrak']['fileBap'];
+$akses['Kontrak']['fileRingKontrak'];
+$akses['Kontrak']['fileKuitansi'];
+$akses['Kontrak']['fileSp2d'];
+$akses['Kontrak']['get_method'];
+$akses['Kontrak']['load_model'];
+$akses['Kontrak']['__destruct'];
+/*
+ * akses modul penerima
+ */
+$akses['Penerima']['__construct'];
+$akses['Penerima']['profil'];
+$akses['Penerima']['datapb'];
+$akses['Penerima']['penerima'];
+$akses['Penerima']['pb_by_st'];
+$akses['Penerima']['find_pb'];
+$akses['Penerima']['add_from_dialog_to_st'];
+$akses['Penerima']['updpenerima'];
+$akses['Penerima']['updprofil'];
+$akses['Penerima']['delpb'];
+$akses['Penerima']['get_nama_peg'];
+$akses['Penerima']['editpb'];
+$akses['Penerima']['for_edit_pb'];
+$akses['Penerima']['dialog_masalah'];
+$akses['Penerima']['add_problem'];
+$akses['Penerima']['get_masalah'];
+$akses['Penerima']['dialog_nilai'];
+$akses['Penerima']['add_nilai'];
+$akses['Penerima']['get_nilai'];
+$akses['Penerima']['view_transkrip'];
+$akses['Penerima']['view_foto'];
+$akses['Penerima']['view_skl'];
+$akses['Penerima']['view_spmt'];
+$akses['Penerima']['delnilai'];
+$akses['Penerima']['delmas'];
+$akses['Penerima']['cekfile'];
+$akses['Penerima']['get_data_pb'];
+$akses['Penerima']['get_tabel_peg'];
+$akses['Penerima']['get_method'];
+$akses['Penerima']['__destruct'];
+$akses['Penerima']['load_model'];
+
+?>

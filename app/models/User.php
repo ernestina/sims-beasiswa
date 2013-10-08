@@ -127,6 +127,19 @@ class User {
             );
             $this->_db->update($this->_table, $data, $where);
     }
+    
+    public function login($username,$password){
+        $sql = "SELECT * FROM ".$this->_table." WHERE NM_USER='".$username."' AND PASS_USER='".$password."'";
+        $result = $this->_db->select($sql);
+        $role = 0;
+        $return = array();
+        foreach ($result as $v){
+            $role = $v['AKSES_USER'];
+        }
+        $return[] = count($result);
+        $return[] = $role;
+        return $return;
+    }
     public function delUser($id) {
         $where = "KD_USER=" . $id;
 

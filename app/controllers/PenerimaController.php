@@ -645,6 +645,13 @@ class PenerimaController extends BaseController{
         $this->view->d_pb = $pb->get_penerima_by_name($pb);
         $this->view->load('riwayat_tb/tabel_pb_sc');
     }
+    
+    public function get_method(){
+        $method = get_class_methods($this);
+        foreach ($method as $method){
+            print_r("\$akses['pic']['".  get_class($this)."']['".$method."'];</br>");
+        }
+    }
 
     public function __destruct() {
         parent::__destruct();

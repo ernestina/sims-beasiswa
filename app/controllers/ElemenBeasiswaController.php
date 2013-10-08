@@ -315,6 +315,13 @@ class elemenBeasiswaController extends BaseController{
         $elem->delete_elem();
         header('location:' . URL . 'elemenBeasiswa/viewSkripsi');
     }
+    
+    public function get_method(){
+        $method = get_class_methods($this);
+        foreach ($method as $method){
+            print_r("\$akses['pic']['".  get_class($this)."']['".$method."'];</br>");
+        }
+    }
 }
 
 ?>

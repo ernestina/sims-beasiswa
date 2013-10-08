@@ -57,6 +57,11 @@ class Bootstrap {
         
         $this->getAction();
         
+        $loggedin = $this->cek_session();
+        if(!$loggedin && !($this->controller instanceof AuthController) && $this->method!='login'){
+            header('location:'.URL.'auth/login');
+        }
+        
         /*         * * check if the action is callable ** */
         if (is_callable(array($this->controller, $this->method)) == false) {
             $action = 'index';
@@ -80,6 +85,22 @@ class Bootstrap {
             call_user_func_array(array($this->controller, $action), $arguments);
         else
             call_user_func(array($this->controller, $action), $arguments);
+    }
+    
+    private function cek_session(){
+        @Session::createSession();
+        if(isset($_SESSION) && Session::get('user')!='' && Session::get('role')!=''){
+            return true;
+        }
+        return false;
+    }
+    
+    public function get_controller(){
+        return $this->controller;
+    }
+    
+    public function get_method(){
+        return $this->controller;
     }
 
     public function __destruct() {

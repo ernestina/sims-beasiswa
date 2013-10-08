@@ -199,6 +199,13 @@ class SurattugasController extends BaseController{
         $this->view->file = $file;
         $this->view->load('riwayat_tb/display_st');
     }
+    
+    public function get_method(){
+        $method = get_class_methods($this);
+        foreach ($method as $method){
+            print_r("\$akses['pic']['".  get_class($this)."']['".$method."'];</br>");
+        }
+    }
 
 }
 ?>
