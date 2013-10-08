@@ -143,6 +143,7 @@ $akses['Kontrak'] = array(
                 'fileSp2d',
                 'get_method',
                 'load_model',
+                'dataBiayaKontrak',
                 '__destruct'
                 );
 /*

@@ -654,6 +654,7 @@ class KontrakController extends BaseController {
             $this->view->jurusan = $jurusan;
             $this->view->kontrak = $kontrak;
             $this->view->biaya = $biaya;
+            //echo "aaaa";
             //var_dump($biaya);
             $this->view->data_biaya = $data_biaya;
             $this->view->load('kontrak/tabel_biaya');
