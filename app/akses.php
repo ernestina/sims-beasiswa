@@ -6,7 +6,10 @@
  */
 
 $akses = array();
-$akses['guest'] = array();
+$akses['Auth'] = array(
+                'login',
+                'logout'
+                );
 
 /*
  * akses admin

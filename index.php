@@ -44,12 +44,15 @@ $registry->db = new Database();
 $registry->auth = new Auth();
 $registry->auth->add_roles('admin');
 $registry->auth->add_access('admin','admin',$akses['Admin']);
+$registry->auth->add_access('auth','admin','logout');
 $registry->auth->add_roles('pic');
 $registry->auth->add_access('cuti','pic',$akses['Cuti']);
 $registry->auth->add_access('surattugas','pic',$akses['Surattugas']);
 $registry->auth->add_access('elemenBeasiswa','pic',$akses['ElemenBeasiswa']);
 $registry->auth->add_access('kontrak','pic',$akses['Kontrak']);
 $registry->auth->add_access('penerima','pic',$akses['Penerima']);
+$registry->auth->add_access('auth','pic','logout');
+$registry->auth->add_access('auth','guest',$akses['Auth']);
 $registry->exception = new ClassException();
 $registry->bootstrap = new Bootstrap($registry);
 
