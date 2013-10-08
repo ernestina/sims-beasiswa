@@ -135,9 +135,11 @@ class User {
         $return = array();
         foreach ($result as $v){
             $role = $v['AKSES_USER'];
+            $kd = $v['NM_USER'];
         }
         $return[] = count($result);
         $return[] = $role;
+        $return[] = $kd;
         return $return;
     }
     public function delUser($id) {

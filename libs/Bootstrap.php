@@ -61,13 +61,16 @@ class Bootstrap {
         $this->getAction();
         
         $loggedin = $this->cek_session();
-        if(!$loggedin && !($this->controller instanceof AuthController) && $this->method!='login'){
+        if((!$loggedin && !($this->controller instanceof AuthController) && $this->method!='index')){
             $this->controller = new AuthController($this->registry);
             $this->method = 'index';
         }
 //        var_dump($this->registry->auth->is_allowed($this->role,$this->url[0],$this->method));
-        if(!$this->registry->auth->is_allowed($this->role,$this->url[0],$this->method)){
+        if(!$this->registry->auth->is_allowed($this->role,$this->url[0],$this->method) && $this->role!='guest'){
             $this->controller = new Index($this->registry);
+            $this->method = 'index';
+        }else if(!$this->registry->auth->is_allowed($this->role,$this->url[0],$this->method) && $this->role=='guest'){
+            $this->controller = new AuthController($this->registry);
             $this->method = 'index';
         }
         
@@ -98,7 +101,7 @@ class Bootstrap {
     
     private function cek_session(){
         @Session::createSession();
-        if(isset($_SESSION) && Session::get('user')!='' && Session::get('role')!=''){
+        if(isset($_SESSION) && Session::get('loggedin')==TRUE && Session::get('user')!='' && Session::get('role')!=''){
             return true;
         }
         return false;
