@@ -144,6 +144,7 @@ $akses['Kontrak'] = array(
                 'get_method',
                 'load_model',
                 'dataBiayaKontrak',
+                'cetakBiayaKontrak',
                 '__destruct'
                 );
 /*
