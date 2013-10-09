@@ -77,6 +77,8 @@ $akses['Cuti'] = array(
                 'get_method',
                 '__destruct',
                 'load_model',
+                'get_data_sc',
+                'get_sc_by_name'
                 );
 /*
  * akses modul surat tugas
@@ -181,7 +183,8 @@ $akses['Penerima'] = array(
                 'get_tabel_peg',
                 'get_method',
                 '__destruct',
-                'load_model'
+                'load_model',
+                'get_nip_data'
                 );
 
 ?>

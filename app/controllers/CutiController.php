@@ -72,9 +72,11 @@ class CutiController extends BaseController{
         }
         $jsc = new JenisSuratCuti($this->registry);
         $univ = new Universitas($this->registry);
+        $st = new SuratTugas($this->registry);
         $this->view->d_ct = $ct->get_cuti();
         $this->view->d_univ = $univ->get_univ();
         $this->view->d_jsc = $jsc->get_jsc();
+        $this->view->d_th_masuk = $st->get_list_th_masuk();
         $this->view->curr_year = date('Y');
         $this->view->render('riwayat_tb/data_cuti');
     }
@@ -157,6 +159,30 @@ class CutiController extends BaseController{
         }
     }
     
+    public function get_data_sc(){
+        $sc = new Cuti($this->registry);
+        $param = $_POST['param'];
+        $param = explode(",", $param);
+        $univ = $param[0];
+        $thn_masuk = $param[1];
+        $this->view->d_ct=array();
+        if($univ==0 AND $thn_masuk==0){
+            $this->view->d_ct = $sc->get_cuti();
+        }else{
+            $this->view->d_ct = $sc->get_cuti_by_univ_thn_masuk($univ, $thn_masuk);
+        }
+        $this->view->load('riwayat_tb/tabel_sc');
+    }
+    
+    public function get_sc_by_name(){
+        $sc = new Cuti($this->registry);
+        $pb_name = $_POST['param'];
+        $this->view->d_ct=$sc->get_cuti_by_pb_name($pb_name);
+        
+        $this->view->load('riwayat_tb/tabel_sc');
+    }
+
+
     public function get_method(){
         $method = get_class_methods($this);
         foreach ($method as $method){

@@ -104,15 +104,15 @@ class SuratTugas {
         if ($univ == 0 AND $thn != 0) {
             $sql .=" WHERE a.THN_MASUK=" . $thn;
         } else if ($univ != 0 AND $thn == 0) {
-            $sql .=" JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+            $sql .=" LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV
                 WHERE d.KD_UNIV=" . $univ;
         } else {
-            $sql .=" JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+            $sql .=" LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV
-                WHERE a.THN_MASUK=" . $thn . " AND d.KD_UNIV=" . $univ;
+                WHERE d.KD_UNIV=" . $univ . " AND a.THN_MASUK=" . $thn;
         }
         $result = $this->db->select($sql);
         $data = array();
@@ -178,12 +178,17 @@ class SuratTugas {
      * param 
      */
     public function get_list_th_masuk() {
-        $this_year = (int) date('Y');
-        $begin_list = $this_year - 6;
+        $sql = "SELECT DISTINCT(THN_MASUK) as THN FROM ".$this->_tb_st." ORDER BY THN DESC";
+        $d_thn = $this->db->select($sql);
+//        $this_year = (int) date('Y');
+//        $begin_list = $this_year - 6;
         $data = array();
-        for ($begin_list; $begin_list <= $this_year; $begin_list++) {
-            $data[$begin_list] = $begin_list;
+        foreach ($d_thn as $v){
+            $data[$v['THN']] = $v['THN'];
         }
+//        for ($begin_list; $begin_list <= $this_year; $begin_list++) {
+//            $data[$begin_list] = $begin_list;
+//        }
 
         return $data;
     }

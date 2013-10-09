@@ -24,7 +24,7 @@
                 <div id="wuser" class="error"></div>
                 <label>username</label><input type="text" name="user" id="nuser" placeholder="username">
                 <div id="wpass" class="error"></div>
-                <label>username</label><input type="password" name="pass" id="pass">
+                <label>password</label><input type="password" name="pass" id="pass">
                 <input type="reset" value="KESET"><input type="submit" value="LOGIN" onclick="return cek();">
             </form>
             </div>

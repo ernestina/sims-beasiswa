@@ -22,7 +22,7 @@ class Nilai{
     }
     
     public function get_nilai($pb = Penerima){
-        $sql = "SELECT * FROM ".$this->_tb_nilai." WHERE KD_PB=".$pb->get_kd_pb();
+        $sql = "SELECT * FROM ".$this->_tb_nilai." WHERE KD_PB=".$pb->get_kd_pb()." ORDER BY SEM_NIL_PB DESC";
         $result = $this->_db->select($sql);
         $data = array();
         foreach ($result as $v){

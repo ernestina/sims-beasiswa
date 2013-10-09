@@ -81,7 +81,7 @@
 			
 			<label class="isian">Tanggal Lapor Selesai TB :</label>
 			<ul class="inline">
-				<li><input class="unggah" type="text" id="tgl_lapor" disabled /></li>
+                            <li><input class="unggah" type="text" id="tgl_lapor" disabled value="<?php echo ($this->d_pb->get_tgl_lapor()=='0000-00-00' OR $this->d_pb->get_tgl_lapor()=='')?'':(Tanggal::tgl_indo($this->d_pb->get_tgl_lapor()))?>"/></li>
 				<li><input type="button" value="Lihat" id="fileSPMT" class="lihat"/><!--View file SPMT-->
 				</li>
 			</ul>
@@ -130,7 +130,8 @@
 		<div class="kolom5">
 		
 			<label class="isian2">Judul Skripsi :</label>
-			<textarea class="midi" type="text"><?php echo $this->d_pb->get_skripsi();?></textarea>
+<!--			<textarea class="midi" type="text" readonly><?php echo $this->d_pb->get_skripsi();?></textarea>-->
+                        <?php echo $this->d_pb->get_skripsi()."</br><hr>";?>
 			<label class="isian2">Permasalahan Tugas Belajar :</label>
 <!--			<textarea class="midi" type="text" rows="8"></textarea>-->
                         <?php 

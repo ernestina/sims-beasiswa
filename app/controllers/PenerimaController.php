@@ -144,7 +144,7 @@ class PenerimaController extends BaseController{
         $pb = new Penerima($this->registry);
         $pb->set_nama($nama);
         $pb->set_st($st);
-        $this->view->d_pb = $pb->get_penerima_by_name($pb);
+        $this->view->d_pb = $pb->get_penerima_by_name($pb,true);
         $this->view->load('riwayat_tb/tabel_pb');
         
     }
@@ -487,7 +487,7 @@ class PenerimaController extends BaseController{
     public function get_masalah($kd_pb){
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($kd_pb);
-        
+        $this->view->d_pb = $pb->get_penerima_by_id($pb);
         $mas = new MasalahPenerima($this->registry);
         $this->view->d_mas = $mas->get_masalah($pb);
         
@@ -537,6 +537,7 @@ class PenerimaController extends BaseController{
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($kd_pb);
         $nil = new Nilai($this->registry);
+        $this->view->d_pb = $pb->get_penerima_by_id($pb);
         $this->view->d_nil= $nil->get_nilai($pb);
         
         $this->view->load('profil/tabel_nilai');
@@ -651,6 +652,21 @@ class PenerimaController extends BaseController{
         foreach ($method as $method){
             print_r("\$akses['pic']['".  get_class($this)."']['".$method."'];</br>");
         }
+    }
+    
+    /*
+     * bukan dari penerima tapi dari tabel sik
+     */
+    public function get_nip_data(){
+        $nip = $_POST['param'];
+        $pb= new Pegawai($this->registry);
+        $pb->set_kd_peg($nip);
+        $d_pb = $pb->get_penerima_by_nip($pb,true);
+        echo "<ul>";
+        foreach ($d_pb as $v){
+            echo "<li onClick=\"fill('".$v->get_kd_peg()."')\">".$v->get_kd_peg()."</br>".$v->get_nama()."</li>";
+        }
+        echo "</ul>";
     }
 
     public function __destruct() {

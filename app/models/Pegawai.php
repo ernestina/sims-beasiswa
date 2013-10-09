@@ -44,6 +44,31 @@ class Pegawai{
         return $this;
     }
     
+     public function get_penerima_by_nip($peg = Pegawai,$filter=false){
+        $sql = "SELECT 
+            DISTINCT(a.nip) as nip,
+            a.nama as nama,
+            a.sex as sex,
+            a.gol as gol
+            FROM ".$this->_tb_peg." a ";
+        if($filter){
+            $sql .= " LEFT JOIN d_pb b ON a.nip<>b.NIP_PB ";
+        }
+        $sql .= "WHERE a.nip LIKE '".$peg->get_kd_peg()."%'";
+        $result = $this->db->select($sql);
+        $data = array();
+        foreach ($result as $val){
+            $tmp = new Pegawai($this->registry);
+            $tmp->set_kd_peg($val['nip']);
+            $tmp->set_nama($val['nama']);
+            $tmp->set_jkel($val['sex']);
+            $tmp->set_golongan($val['gol']);
+            $tmp->set_unit_asal($val['unit']);
+            $data[] = $tmp;
+        }
+        return $data;
+    }
+    
     public function set_kd_peg($kode){
         $this->_kd_peg = $kode;
     }

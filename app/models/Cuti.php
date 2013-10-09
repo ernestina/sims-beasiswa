@@ -95,6 +95,102 @@ class Cuti{
         return $this;
     }
     
+    public function get_cuti_by_univ_thn_masuk($univ,$thn){
+        $sql = "SELECT a.KD_CUTI as KD_CUTI,
+                a.KD_JNS_SRT_CUTI as KD_JNS_SRT_CUTI,
+                a.KD_PB as KD_PB,
+                a.NO_CUTI as NO_CUTI,
+                a.TGL_CUTI AS TGL_CUTI,
+                a.PRD_MUL_CUTI as PRD_MUL_CUTI,
+                a.PRD_SEL_CUTI as PRD_SEL_CUTI,
+                a.PERK_STOP as PERK_STOP,
+                a.PERK_GO as PERK_GO,
+                a.FILE_CUTI as FILE_CUTI
+                FROM ".$this->t_cuti." a ";
+               if($univ==0 && $thn!=0){
+                    $sql .= " LEFT JOIN d_pb b ON a.KD_PB=b.KD_PB
+                            LEFT JOIN d_srt_tugas c ON b.KD_ST=c.KD_ST
+                            WHERE c.THN_MASUK=".$thn;
+               }else if($univ!=0 && $thn==0){
+                    $sql .= " LEFT JOIN d_pb b ON a.KD_PB=b.KD_PB
+                            LEFT JOIN r_jur d ON b.KD_JUR=d.KD_JUR
+                            LEFT JOIN r_fakul e ON d.KD_FAKUL=e.KD_FAKUL
+                            LEFT JOIN r_univ f ON e.KD_UNIV=f.KD_UNIV
+                            WHERE f.KD_UNIV=".$univ;
+               }else{
+                    $sql .= " LEFT JOIN d_pb b ON a.KD_PB=b.KD_PB
+                            LEFT JOIN d_srt_tugas c ON b.KD_ST=c.KD_ST
+                            LEFT JOIN r_jur d ON b.KD_JUR=d.KD_JUR
+                            LEFT JOIN r_fakul e ON d.KD_FAKUL=e.KD_FAKUL
+                            LEFT JOIN r_univ f ON e.KD_UNIV=f.KD_UNIV
+                            WHERE f.KD_UNIV=".$univ." AND c.THN_MASUK=".$thn;
+               }
+        $result = $this->_db->select($sql);
+        $data = array();
+        foreach ($result as $v){
+            $cuti = new $this($this->registry);
+            $cuti->set_kode_cuti($v['KD_CUTI']);
+            $cuti->set_jenis_cuti($v['KD_JNS_SRT_CUTI']);
+            $pb = new Penerima($this->registry);
+            $pb->set_kd_pb($v['KD_PB']);
+            $d_pb = $pb->get_penerima_by_id($pb);
+            $jur = new Jurusan($this->registry);
+            $jur->set_kode_jur($d_pb->get_jur());
+            $d_jur = $jur->get_jur_by_id($jur);
+            $cuti->set_pb($d_pb->get_nama()."-".$d_pb->get_nip()."-".$d_jur->get_nama());
+            $cuti->set_no_surat_cuti($v['NO_CUTI']);
+            $cuti->set_tgl_surat_cuti($v['TGL_CUTI']);
+            $cuti->set_prd_mulai($v['PRD_MUL_CUTI']);
+            $cuti->set_prd_selesai($v['PRD_SEL_CUTI']);
+            $cuti->set_perk_stop($v['PERK_STOP']);
+            $cuti->set_perk_go($v['PERK_GO']);
+            unset($pb);
+            unset($jur);
+            $data[] = $cuti;
+        }
+        return $data;
+    }
+    
+    public function get_cuti_by_pb_name($name){
+        $sql = "SELECT a.KD_CUTI as KD_CUTI,
+                a.KD_JNS_SRT_CUTI as KD_JNS_SRT_CUTI,
+                a.KD_PB as KD_PB,
+                a.NO_CUTI as NO_CUTI,
+                a.TGL_CUTI AS TGL_CUTI,
+                a.PRD_MUL_CUTI as PRD_MUL_CUTI,
+                a.PRD_SEL_CUTI as PRD_SEL_CUTI,
+                a.PERK_STOP as PERK_STOP,
+                a.PERK_GO as PERK_GO,
+                a.FILE_CUTI as FILE_CUTI
+                FROM ".$this->t_cuti." a 
+                LEFT JOIN d_pb b ON a.KD_PB=b.KD_PB
+                WHERE b.NM_PB LIKE '%".$name."%'";
+        $result = $this->_db->select($sql);
+        $data = array();
+        foreach ($result as $v){
+            $cuti = new $this($this->registry);
+            $cuti->set_kode_cuti($v['KD_CUTI']);
+            $cuti->set_jenis_cuti($v['KD_JNS_SRT_CUTI']);
+            $pb = new Penerima($this->registry);
+            $pb->set_kd_pb($v['KD_PB']);
+            $d_pb = $pb->get_penerima_by_id($pb);
+            $jur = new Jurusan($this->registry);
+            $jur->set_kode_jur($d_pb->get_jur());
+            $d_jur = $jur->get_jur_by_id($jur);
+            $cuti->set_pb($d_pb->get_nama()."-".$d_pb->get_nip()."-".$d_jur->get_nama());
+            $cuti->set_no_surat_cuti($v['NO_CUTI']);
+            $cuti->set_tgl_surat_cuti($v['TGL_CUTI']);
+            $cuti->set_prd_mulai($v['PRD_MUL_CUTI']);
+            $cuti->set_prd_selesai($v['PRD_SEL_CUTI']);
+            $cuti->set_perk_stop($v['PERK_STOP']);
+            $cuti->set_perk_go($v['PERK_GO']);
+            unset($pb);
+            unset($jur);
+            $data[] = $cuti;
+        }
+        return $data;
+    }
+
     public function add_cuti(){
         $data = array(
             'KD_JNS_SRT_CUTI'=>$this->get_jenis_cuti(),

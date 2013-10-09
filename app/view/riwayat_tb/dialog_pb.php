@@ -4,6 +4,7 @@
         <title>rekam penerima beasiswa</title>
         <script src="<?php echo URL; ?>public/js/jquery-2.0.3.min.js"></script>
         <link href="<?php echo URL; ?>public/css/style.css" rel="stylesheet">
+        <link href="<?php echo URL; ?>public/css/autocomplete.css" rel="stylesheet">
     </head>
     <body style="max-width: 370px;max-height: 500px; text-align: center; overflow:no-content;">
 <div id="dialog_pb" style="text-align: left;">
@@ -14,6 +15,7 @@
             <input type="hidden" id="kd_st" name="st" value="<?php echo $this->id;?>">
             <div id="winput" class="error"></div>
             <tr><td><label>NIP</label></td><td><input type="text" id="t_nip" name="nip" onkeyup="getNama(this.value);"></td></tr>
+            <div id="suggestions" style="display:none"><div class="suggestionList"></div></div>
             <tr><td><label>Nama</label></td><td><input type="text" id="t_nm" name="nama" readonly></td></tr>
             <tr><td><label>Jenis Kelamin</label></td><td><input type="text" id="t_jk" name="jkel" readonly></td></tr>
             <tr><td><label>Golongan</label></td><td><input type="text" id="t_gol" name="gol" readonly></td></tr>
@@ -40,8 +42,16 @@
 <script>
     $(function(){
         $('.error').fadeOut(0);
+//        $('#atc_nip').fadeOut(0);
         hideError();
         $('#t_nip').focus();
+        $('#t_nip').keyup(function(){
+           if($('#t_nip').val()==''){
+                $('#suggestions').fadeOut(0);
+           }else{
+               auto_nip(this.value);
+           } 
+        });
     });
     
     function hideError(){
@@ -49,6 +59,22 @@
             $('.error').fadeOut(100);
         })
     }
+    
+    function auto_nip(nip){
+        $.post('<?php echo URL;?>penerima/get_nip_data',{param:""+nip+""},
+            function(data){
+                $('#suggestions').fadeIn(10);
+                $('.suggestionList').html(data);
+            }
+        );
+    }
+    
+    function fill(nip){
+        $('#t_nip').val(nip);
+        getNama(nip);
+        $('#suggestions').fadeOut(100);
+    }
+    
     function getNama(nip){
 //        $.post("<?php echo URL; ?>penerima/get_nama_peg", {param:""+nip+""},
 //        function(data){

@@ -37,6 +37,7 @@
                     <p id="jam" onload="jam()"></p>
 
                 </div>
+                <div style="float: top">Willkomnen <?php echo Session::get('user').'</br>anda login sebagai '.  strtoupper((Session::get('role')==1)?'admin':'pic');?></div>
             </div>
 
             <div id="menu">
@@ -93,7 +94,7 @@
                         </ul>
                     </li>
                     <li class="nav">
-                        <a class="blok" href="#"><img class="profil" src="<?php echo URL; ?>public/img/pic.jpg" /></a>
+                        <a class="blok" href="<?php echo URL.'auth/logout';?>" title="logout"><img class="profil" src="<?php echo URL; ?>public/img/pic.jpg" /></a>
                     </li>
                 </ul>
             </div>

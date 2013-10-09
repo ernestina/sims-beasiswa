@@ -135,7 +135,7 @@
     <div>
         <table>
             <tr align="left">
-                <td><label>Universitas</label><select id="univ" onchange="get_surat_tugas(this.value,document.getElementById('thn').value)" type="text">
+                <td><label>Universitas</label><select id="cuniv" onchange="get_data_cuti(this.value,document.getElementById('thn').value)" type="text">
                         <option value=0>semua</option>
                     <?php 
                         foreach($this->d_univ as $val){
@@ -143,7 +143,7 @@
                         }
                     ?>
                     </select></td>
-                <td><label>Tahun Masuk</label><select id="thn" onchange="get_surat_tugas(document.getElementById('univ').value,this.value)" type="text">
+                <td><label>Tahun Masuk</label><select id="thn" onchange="get_data_cuti(document.getElementById('cuniv').value,this.value)" type="text">
                         <option value=0>semua</option>
                         <?php
                             foreach ($this->d_th_masuk as $key=>$val){
@@ -155,7 +155,7 @@
             </tr>
         </table>
     </div>
-    <div id="tb_st">
+    <div id="tb_sc">
         <?php 
             $this->load('riwayat_tb/tabel_sc');
         ?>
@@ -171,6 +171,9 @@
         $('#div_jur').fadeOut(0);
         hideErrorId();
         hideWarning();
+        $('#cari').keyup(function(){
+            cari(document.getElementById('cari').value);
+        })
     });
     
     function hideErrorId(){
@@ -237,12 +240,19 @@
         window.open(URL, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
     }
     
+    function cari(key){
+        $.post("<?php echo URL; ?>cuti/get_sc_by_name", {param:""+key+""},
+        function(data){                
+            $('#tb_sc').fadeIn(100);
+            $('#tb_sc').html(data);
+        });
+    }
     
-    function get_data_sc(univ,th_masuk){
+    function get_data_cuti(univ,th_masuk){
         $.post("<?php echo URL; ?>cuti/get_data_sc", {param:""+univ+","+th_masuk+""},
         function(data){                
-            $('#tb_st').fadeIn(100);
-            $('#tb_st').html(data);
+            $('#tb_sc').fadeIn(100);
+            $('#tb_sc').html(data);
         });
     }
     

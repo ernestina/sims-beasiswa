@@ -88,7 +88,7 @@
     <div>
         <table>
             <tr align="left">
-                <td><label>Universitas</label><select id="univ" onchange="get_surat_tugas(this.value,document.getElementById('thn').value)" type="text">
+                <td><label>Universitas</label><select id="cuniv" onchange="get_surat_tugas(this.value,document.getElementById('thn').value)" type="text">
                         <option value=0>semua</option>
                     <?php 
                         foreach($this->d_univ as $val){
@@ -96,7 +96,7 @@
                         }
                     ?>
                     </select></td>
-                <td><label>Tahun Masuk</label><select id="thn" onchange="get_surat_tugas(document.getElementById('univ').value,this.value)" type="text">
+                <td><label>Tahun Masuk</label><select id="thn" onchange="get_surat_tugas(document.getElementById('cuniv').value,this.value)" type="text">
                         <option value=0>semua</option>
                         <?php
                             foreach ($this->d_th_masuk as $key=>$val){
@@ -159,6 +159,7 @@
     }
     
     function get_surat_tugas(univ,th_masuk){
+//        alert(document.getElementById('cuniv').value);
         $.post("<?php echo URL; ?>surattugas/get_data_st", {param:""+univ+","+th_masuk+""},
         function(data){                
             $('#tb_st').fadeIn(100);
@@ -171,6 +172,11 @@
         function(data){
             $('#jur').html(data);
         });
+    }
+    
+    
+    function cari_st(){
+        
     }
     
     function cek(){
