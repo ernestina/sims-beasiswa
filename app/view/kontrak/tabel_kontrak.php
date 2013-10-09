@@ -1,5 +1,5 @@
 <div id="table-content" >
-    <table class="table-bordered zebra scroll" id="table">
+    <table class="table-bordered zebra scroll">
         <thead>
         <th width="5%">No</th>
         <th width="10%">No. Kontrak</th>
@@ -63,9 +63,11 @@
                     echo number_format($this->biaya->get_biaya_by_kontrak_dibayar($val->kd_kontrak));
                     ?>
                 </td>
-                <td><?php
+                <td>
+                    <a href="#" onClick="edit(<?php echo $val->kd_kontrak; ?>); return false;"><i class=\"icon-pencil\"></i></a>
+                <?php
                 echo "<a href=" . URL . "kontrak/delKontrak/" . $val->kd_kontrak . " onClick=\"return del();\"><i class=\"icon-trash\"></i></a> &nbsp &nbsp
-                     <a href=" . URL . "kontrak/editKontrak/" . $val->kd_kontrak . "><i class=\"icon-pencil\"></i></a> &nbsp &nbsp
+                     <a href=\"#\" onClick=\"edit(".$val->kd_kontrak."); return false;\"><i class=\"icon-pencil\"></i></a> &nbsp &nbsp
                      <a href=" . URL . "kontrak/biaya/" . $val->kd_kontrak . "><i class=\"icon-tag\"></i></a>";
                 //echo $val->kd_kontrak;
                     ?>   
@@ -80,10 +82,14 @@
 
     </table>
 </div>
+
+</div>
 <script>
     function del(){
         if(confirm('Apakah Anda yakin akan menghapus data ini?'))
             return true;
         else return false
     }
+    
+    
 </script>

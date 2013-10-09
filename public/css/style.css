@@ -476,6 +476,7 @@ th, td {
     padding-left: 5px;
     padding-left: 5px;
     text-align: center;
+    
 }
 
 /*icon by bootstrap twitter and glyphicon*/
@@ -1062,3 +1063,22 @@ th, td {
   background-position: -456px -144px;
 }
 
+.ui-dialog {
+    z-index:1000;
+}
+
+.loading {
+    position: absolute;
+    top: 30%;
+    left: 0;
+    width: 100%;
+    margin-top: -10px;
+    line-height: 20px;
+    text-align: center;
+    z-index:1001;
+}
+
+.blinkytext {
+     text-decoration: blink;
+     font-style: normal;
+ }

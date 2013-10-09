@@ -21,7 +21,7 @@ class KontrakController extends BaseController {
         $universitas = new Universitas($this->registry);
         $univ = $universitas->get_univ();
         //var_dump($univ);
-        $this->view->univ = $univ;
+        $this->view->kd_univ = $univ;
         //$this->view->data = $data;
         $this->view->render('kontrak/data_kontrak');
     }
@@ -87,6 +87,72 @@ class KontrakController extends BaseController {
         }
     }
 
+    //menampilkan modal rekam kontrak
+    public function viewRekamKontrak() {
+
+        $universitas = new Universitas($this->registry);
+        $univ = $universitas->get_univ();
+        $kontrak = new Kontrak();
+        $kon = $kontrak->get_All();
+        $this->view->univ = $univ;
+        $this->view->kon = $kon;
+        $this->view->load('kontrak/rekam_kontrak_dialog');
+    }
+
+    //melakukan proses rekam kontrak dengan ajax
+    public function rekamKontrak2() {
+        if (isset($_POST['rekam_kontrak'])) {
+            $kontrak = new Kontrak();
+            //sleep(5);
+            //$kontrak->kd_kontrak =$_POST[''];
+            $kontrak->no_kontrak = $_POST['nomor'];
+            $kontrak->kd_jurusan = $_POST['jur'];
+            $kontrak->tgl_kontrak = date('Y-m-d', strtotime($_POST['tanggal']));
+            $kontrak->thn_masuk_kontrak = $_POST['tahun_masuk'];
+            $kontrak->jml_pegawai_kontrak = $_POST['jml_peg'];
+            $kontrak->nilai_kontrak = str_replace(',', '', $_POST['nilai_kontrak']);
+            $kontrak->lama_semester_kontrak = $_POST['lama_semester'];
+            $kontrak->kontrak_lama = $_POST['kontrak_lama'];
+
+            //print_r($_POST['nomor']);
+            //print_r($_POST['tanggal']);
+            //print_r($_POST['jur']);
+            //print_r($_POST['jml_peg']);
+//            print_r($_POST['lama_semester']);
+//            print_r($_POST['tahun_masuk']);
+//            print_r($_POST['nilai_kontrak']);
+//            print_r($_POST['kontrak_lama']);
+//            print_r($_FILES['fupload']);
+
+            $upload = new Upload();
+            $upload->init('fupload');
+            $upload->setDirTo('files/kontrak/');
+            $nama = array($kontrak->no_kontrak, $kontrak->tgl_kontrak);
+            $upload->uploadFile2("", $nama);
+            $kontrak->file_kontrak = $upload->getFileTo();
+            //var_dump($kontrak);
+            $kontrak->add($kontrak);
+        }
+    }
+
+    //menampilkan modal rekam kontrak
+    public function viewEditKontrak($id = null) {
+
+        if ($id != "") {
+            $kontrak = new Kontrak();
+            $data = $kontrak->get_by_id($id);
+            //var_dump($kontrak);
+            $universitas = new Universitas($this->registry);
+            $this->view->universitas = $universitas;
+            $univ = $universitas->get_univ();
+            $kon = $kontrak->get_All();
+            $this->view->univ = $univ;
+            $this->view->data = $data;
+            $this->view->kon = $kon;
+            $this->view->load('kontrak/edit_kontrak_dialog');
+        }
+    }
+
     public function get_jur_by_univ() {
         if (isset($_POST['univ']) && $_POST['univ'] != "") {
             $univ = $_POST['univ'];
@@ -110,6 +176,7 @@ class KontrakController extends BaseController {
         }
     }
 
+    //menampilkan halaman edit kontrak
     public function editKontrak($id = null) {
         if ($id != "") {
             $kontrak = new Kontrak();
@@ -128,6 +195,7 @@ class KontrakController extends BaseController {
         }
     }
 
+    //melakukan update kontrak  
     public function updateKontrak() {
         if (isset($_POST['update_kontrak'])) {
             $kontrak = new Kontrak();
@@ -172,6 +240,35 @@ class KontrakController extends BaseController {
             }
         } else {
             header('location:' . URL . 'kontrak/display');
+        }
+    }
+
+    //melakukan update kontrak via ajax
+    public function updateKontrak2() {
+        if (isset($_POST['update_kontrak'])) {
+            $kontrak = new Kontrak();
+            $kontrak->kd_kontrak = $_POST['kd_kontrak'];
+            $kontrak->no_kontrak = $_POST['nomor'];
+            $kontrak->kd_jurusan = $_POST['jur'];
+            $kontrak->tgl_kontrak = date('Y-m-d', strtotime($_POST['tanggal']));
+            $kontrak->thn_masuk_kontrak = $_POST['tahun_masuk'];
+            $kontrak->jml_pegawai_kontrak = $_POST['jml_peg'];
+            $kontrak->lama_semester_kontrak = $_POST['lama_semester'];
+            $kontrak->nilai_kontrak = str_replace(',', '', $_POST['nilai_kontrak']);
+            $kontrak->kontrak_lama = $_POST['kontrak_lama'];
+
+            if ($_FILES['fupload']['name'] != "") {
+                $upload = new Upload();
+                $upload->init('fupload');
+                $upload->setDirTo('files/kontrak/');
+                $nama = array($kontrak->no_kontrak, $kontrak->tgl_kontrak);
+                $upload->uploadFile2("", $nama);
+                $kontrak->file_kontrak = $upload->getFileTo();
+            } else {
+                $kontrak->file_kontrak = $_POST['fupload_lama'];
+            }
+            //print_r($kontrak->kd_kontrak);
+            $kontrak->update($kontrak);
         }
     }
 
@@ -703,7 +800,7 @@ class KontrakController extends BaseController {
 
     public function file($file = null) {
         if ($file != "") {
-            header("Location:" . URL . "files/" . $file);
+            header("Location:" . URL . "files/kontrak/" . $file);
         }
     }
 
@@ -736,11 +833,11 @@ class KontrakController extends BaseController {
             header("Location:" . URL . "files/sp2d/" . $file);
         }
     }
-    
-    public function get_method(){
+
+    public function get_method() {
         $method = get_class_methods($this);
-        foreach ($method as $method){
-            print_r("\$akses['pic']['".  get_class($this)."']['".$method."'];</br>");
+        foreach ($method as $method) {
+            print_r("\$akses['pic']['" . get_class($this) . "']['" . $method . "'];</br>");
         }
     }
 

@@ -147,6 +147,12 @@ $akses['Kontrak'] = array(
                 'load_model',
                 'dataBiayaKontrak',
                 'cetakBiayaKontrak',
+                'viewRekamKontrak',
+                'addTagihanPb',
+                'getTagihanPbByBiaya',
+                'rekamKontrak2',
+                'viewEditKontrak',
+                'updateKontrak2',
                 '__destruct'
                 );
 /*

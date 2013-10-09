@@ -80,8 +80,8 @@ class Upload {
         $this->fileTo = $nama;
         return $this->fileTo;
     }
-
-    /*
+    
+     /*
      * param tipe dokumen, misal foto harus jpg, surat tugas harus pdf
      * 
      */
