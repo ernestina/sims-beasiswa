@@ -120,7 +120,7 @@
             <div id="wfile" class="error"></div>
             <label>Unggah SC</label><input type="file" name="fupload" id="file">
             <ul class="inline tengah">
-			<li><input class="normal" type="submit" onclick="" value="BATAL"></li>
+			<li><input class="normal" type="button" onclick="" value="BATAL"></li>
 			<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'sb_upd':'sb_add';?>" value="SIMPAN" onClick="return cek();"></li>
 		</ul>
 <!--            <label></label><input type="reset" value="RESET"><input type="submit" name="<?php echo isset($this->d_ubah)?'sb_upd':'sb_add';?>" value="SIMPAN" onClick="return cek();">-->
@@ -301,7 +301,9 @@
         }
         
         if(sfile==''){
-            if(typeof document.getElementById('kd_sc').value!='undefined'){
+            var cek_id = document.getElementById('kd_sc');
+//            if((typeof document.getElementById('kd_sc').value)!='undefined'){
+            if(cek_id!=null){
                 $.post('<?php echo URL.'cuti/cekfile';?>',{kd_ct:''+document.getElementById('kd_sc').value+''},function(data){
 //                $('#cek_skl').val(data);
                     if(data==0){

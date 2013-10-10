@@ -68,9 +68,11 @@ class PenerimaController extends BaseController{
         $pb = new Penerima($this->registry);
         $univ = new Universitas($this->registry);
         $st = new SuratTugas($this->registry);
+        $sts = new Status();
         $this->view->th_masuk = $st->get_list_th_masuk();
         $this->view->univ = $univ->get_univ();
         $this->view->d_pb = $pb->get_penerima();
+        $this->view->d_sts = $sts->get_status();
         $this->view->render('riwayat_tb/data_pb');
     }
     
@@ -667,6 +669,32 @@ class PenerimaController extends BaseController{
             echo "<li onClick=\"fill('".$v->get_kd_peg()."')\">".$v->get_kd_peg()."</br>".$v->get_nama()."</li>";
         }
         echo "</ul>";
+    }
+    
+    /*
+     * filter di hal daftar pb
+     */
+    
+    public function filter_pb(){
+        $param = $_POST['param'];
+        $atr = explode(",", $param);
+        $univ = $atr[0];
+        $thn_masuk = $atr[1];
+        $status = $atr[2];
+        $pb = new Penerima($this->registry);
+        $this->view->d_pb = $pb->get_penerima_filter($univ, $thn_masuk, $status);
+        $this->view->load('riwayat_tb/tabel_d_pb');
+    }
+    
+    /*
+     * cari berdasarkan nama
+     */
+    public function cari(){
+        $name = $_POST['name'];
+        $pb = new Penerima($this->registry);
+        $pb->set_nama($name);
+        $this->view->d_pb = $pb->get_penerima_by_name($pb);
+        $this->view->load('riwayat_tb/tabel_d_pb');
     }
 
     public function __destruct() {

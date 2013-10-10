@@ -190,7 +190,9 @@ $akses['Penerima'] = array(
                 'get_method',
                 '__destruct',
                 'load_model',
-                'get_nip_data'
+                'get_nip_data',
+                'filter_pb',
+                'cari'
                 );
 
 ?>

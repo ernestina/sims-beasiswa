@@ -4,54 +4,81 @@
 <div>
     <table style="margin-left:10px; margin-right: 10px" width="100%" >
         <tr>
-            <td><label>Universitas</label><select type="text">
+            <td><label>Universitas</label><select type="text" id="univ">
+                    <option value="0">-semua-</option>
                     <?php 
                         foreach ($this->univ as $val){
-                            echo "<option value=".$val->get_kode().">".$val->get_nama()."</option>";
+                            echo "<option value=".$val->get_kode_in().">".$val->get_nama()."</option>";
                         }
                     ?>
                 </select></td>
-            <td><label>Tahun Masuk</label><select type="text">
+            <td><label>Tahun Masuk</label><select type="text" id="thn">
+                    <option value="0">-semua-</option>
                     <?php 
                        foreach ($this->th_masuk as $key=>$val){
                             echo "<option value=".$key.">".$val."</option>";
                         }
                     ?>
                 </select></td>
-            <td><label>Status</label><select type="text"></select></td>
+            <td><label>Status</label><select type="text" id="status">
+                    <option value="0">-semua-</option>
+                    <?php 
+                       foreach ($this->d_sts as $val){
+                            echo "<option value=".$val->kd_status.">".$val->nm_status."</option>";
+                        }
+                    ?>
+                </select></td>
             <td><input type="search" name="cari" id="cari" size="30"></td>
         </tr>
         <!--tr><td colspan="3"></td><td style="padding-right: 45px; padding-top: 0px"><input type="button" value="TAMBAH" onclick="location.href='<?php echo URL.'penerima/penerima'?>'"></td></tr-->
     </table>
 </div>
-<div>
-    <table class="table-bordered zebra scroll" >
-        <thead >
-        <th>no</th>
-        <th width="15%">NIP</th>
-        <th width="30%">Nama</th>
-        <th width="10%">Gol</th>
-        <th width="30%">Unit Asal</th>
-        <th width="10%">Jurusan</th>
-        <th width="20%">Jenis Beasiswa</th>
-        </thead>
-        <?php 
-            $no=1;
-            foreach($this->d_pb as $v){
-                echo "<tr>";
-                echo "<td>".$no."</td>";
-                echo "<td><a href=".URL."penerima/profil/".$v->get_kd_pb().">".$v->get_nip()."</a></td>";
-                echo "<td>".$v->get_nama()."</td>";
-                echo "<td>".Golongan::golongan_int_string($v->get_gol())."</td>";
-                echo "<td>".$v->get_unit_asal()."</td>";
-                echo "<td>".$v->get_jur()."</td>";
-                echo "<td><a href=".URL."penerima/delpb/".$v->get_kd_pb()."><i class=\"icon-trash\"></i></a> &nbsp &nbsp
-				<a href=".URL."penerima/profil/".$v->get_kd_pb()."><i class=\"icon-pencil\"></i></a>
-				</td>";
-                echo "</tr>";
-                $no++;
-            }
-        ?>
-    </table>
+<div id="tb_pb">
+    <?php 
+        $this->load('riwayat_tb/tabel_d_pb');
+    ?>
 </div>
 </div>
+
+<script type="text/javascript">
+$(function(){
+    var univ = 0;
+    var thn_masuk = 0;
+    var status = 0;
+    
+    $('#cari').keyup(function(){
+        cari($('#cari').val());
+    })
+    $('#univ').change(function(){
+        univ = $('#univ').val();
+        filter(univ,document.getElementById('thn').value,document.getElementById('status').value);
+    })
+    $('#thn').change(function(){
+        thn_masuk = $('#thn').val();
+        alert(thn_masuk);
+        filter(document.getElementById('univ').value,thn_masuk,document.getElementById('status').value);
+    })
+    $('#status').change(function(){
+        status = $('#status').val();
+        filter(document.getElementById('univ').value,document.getElementById('thn').value,status);
+    })
+    
+    filter(univ,thn_masuk,status);
+    
+})
+
+function cari(key){
+    $.post('<?php echo URL;?>penerima/cari',{name:""+key+""},function(data){
+        $('#tb_pb').fadeIn(200);
+        $('#tb_pb').html(data);
+    })
+}
+
+function filter(univ,thn_masuk,status){
+    $.post('<?php echo URL;?>penerima/filter_pb',{param:""+univ+","+thn_masuk+","+status+""},
+        function(data){
+            $('#tb_pb').fadeIn(200);
+            $('#tb_pb').html(data);
+    })
+}
+</script>

@@ -374,6 +374,78 @@ class Penerima {
         }
         return $data;
     }
+    
+    public function get_penerima_filter($univ, $thn_masuk, $status){
+        $sql = "SELECT a.KD_PB as KD_PB,";
+        $sql .= "a.KD_ST as KD_ST,
+            a.KD_JUR as KD_JUR,
+            a.KD_STS_TB as KD_STS_TB,
+            a.KD_BANK as KD_BANK,";
+        $sql .= "
+            a.KD_GOL as KD_GOL,
+            a.NIP_PB as NIP_PB,
+            a.NM_PB as NM_PB,
+            a.JK_PB as JK_PB,
+            a.UNIT_ASAL_PB as UNIT_ASAL_PB,
+            a.EMAIL_PB as EMAIL_PB,
+            a.TELP_PB as TELP_PB,
+            a.ALMT_PB as ALMT_PB,
+            a.NO_REKENING_PB as NO_REKENING_PB,
+            a.FOTO_PB as FOTO_PB,
+            a.TGL_LAPOR_PB as TGL_LAPOR_PB,
+            a.NO_SKL_PB as NO_SKL_PB,
+            a.NO_SPMT_PB as NO_SPMT_PB,
+            a.JUDUL_SKRIPSI_PB as JUDUL_SKRIPSI_PB
+            FROM ".$this->_tb_penerima." a ";
+        $sql .= "LEFT JOIN d_srt_tugas b ON a.KD_ST=b.KD_ST
+            LEFT JOIN r_jur c ON a.KD_JUR=c.KD_JUR
+            LEFT JOIN r_stb d ON a.KD_STS_TB=d.KD_STS_TB
+            LEFT JOIN r_bank e ON a.KD_BANK=e.KD_BANK 
+            LEFT JOIN r_fakul f ON c.KD_FAKUL=f.KD_FAKUL
+            LEFT JOIN r_univ g ON f.KD_UNIV=g.KD_UNIV
+            LEFT JOIN r_strata h ON c.KD_STRATA=h.KD_STRATA ";
+        if($univ==0 && $thn_masuk==0 &&$status!=0){
+            $sql .= "WHERE a.KD_STS_TB=".$status;
+        }else if($univ==0 && $thn_masuk!=0 &&$status!=0){
+            $sql .= "WHERE b.THN_MASUK=".$thn_masuk." AND a.KD_STS_TB=".$status;
+        }else if($univ!=0 && $thn_masuk!=0 &&$status!=0){
+            $sql .= "WHERE g.KD_UNIV=".$univ." AND b.THN_MASUK=".$thn_masuk." AND a.KD_STS_TB=".$status;
+        }else if($univ!=0 && $thn_masuk!=0 &&$status==0){
+            $sql .= "WHERE g.KD_UNIV=".$univ." AND b.THN_MASUK=".$thn_masuk;
+        }else if($univ!=0 && $thn_masuk==0 &&$status==0){
+            $sql .= "WHERE g.KD_UNIV=".$univ;
+        }else if($univ==0 && $thn_masuk!=0 &&$status==0){
+            $sql .= "WHERE b.THN_MASUK=".$thn_masuk;
+        }else if($univ!=0 && $thn_masuk==0 &&$status!=0){
+            $sql .= "WHERE g.KD_UNIV=".$univ."  AND a.KD_STS_TB=".$status;
+        }
+        $result = $this->db->select($sql);
+        $data = array();
+        foreach($result as $val){
+            $penerima = new $this($this->registry);
+            $penerima->set_kd_pb($val['KD_PB']);
+            $penerima->set_st($val['KD_ST']);
+            $penerima->set_jur($val['KD_JUR']);
+            $penerima->set_bank($val['KD_BANK']);
+            $penerima->set_status($val['KD_STS_TB']);
+            $penerima->set_nip($val['NIP_PB']);
+            $penerima->set_nama($val['NM_PB']);
+            $penerima->set_jkel($val['JK_PB']);
+            $penerima->set_gol($val['KD_GOL']);
+            $penerima->set_unit_asal($val['UNIT_ASAL_PB']);
+            $penerima->set_email($val['EMAIL_PB']);
+            $penerima->set_telp($val['TELP_PB']);
+            $penerima->set_alamat($val['ALMT_PB']);
+            $penerima->set_no_rek($val['NO_REKENING_PB']);
+            $penerima->set_foto($val['FOTO_PB']);
+            $penerima->set_tgl_lapor($val['TGL_LAPOR_PB']);
+            $penerima->set_skl($val['NO_SKL_PB']);
+            $penerima->set_spmt($val['NO_SPMT_PB']);
+            $penerima->set_skripsi($val['JUDUL_SKRIPSI_PB']);
+            $data[] = $penerima;
+        }
+        return $data;
+    }
 
     /*
      * setter

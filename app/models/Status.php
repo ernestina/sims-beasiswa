@@ -24,4 +24,20 @@ class Status extends BaseModel{
         //var_dump($data);
         return $status;
     }
+    
+    function get_status(){
+        $table = "r_stb";
+        $sql = "SELECT * FROM $table";
+        $result = $this->db->select($sql);
+        //var_dump($result);
+        $data = array();
+        foreach ($result as $val) {
+            $status = new Status();
+            $status->kd_status = $val["KD_STS_TB"];
+            $status->nm_status = $val["NM_STS_TB"];
+            $data[] = $status;
+        }
+        //var_dump($data);
+        return $data;
+    }
 }
