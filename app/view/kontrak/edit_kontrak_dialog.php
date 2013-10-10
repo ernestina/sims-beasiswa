@@ -116,7 +116,8 @@
         //agar ketika universitas berubah karena dipilih, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
         $("#univ").change(function(){
             $.post("<?php echo URL; ?>kontrak/get_jur_by_univ", {univ:$("#univ").val()},
-            function(data){                
+            function(data){  
+                $('#jur').empty();
                 $('#jur').html(data);
             });  
         });
