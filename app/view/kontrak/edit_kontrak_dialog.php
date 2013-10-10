@@ -1,3 +1,4 @@
+
 <fieldset>
     <form id="form_edit_kontrak2" method="POST" enctype="multipart/form-data" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/updateKontrak' ?>">
         <input type="hidden" name="update_kontrak">
@@ -21,15 +22,27 @@
             </select><div id="wuniv"></div>
             <label>Jurusan* </label>
             <select name="jur" id="jur" type="text">
-<!--                <option value="">Pilih Jurusan</option>-->
-            </select><div id="wjur"></div>
+                <!--                <option value="">Pilih Jurusan</option>-->
+                <?php
+                foreach ($this->jur as $jur) {
+                    if ($jur->get_kode_jur() == $this->data->kd_jurusan) {
+                        $select = "selected";
+                    } else {
+                        $select = "";
+                    }
+                    echo "oke";
+                ?>
+                <option value="<?php echo $jur->get_kode_jur(); ?>" <?php echo $select; ?>><?php echo $jur->get_nama(); ?></option>
+                <?php } ?>
+            </select>
+            <div id="wjur"></div>
             <label>Jumlah Pegawai*</label><input type="text" name="jml_peg" id="jml_peg" size="4" value="<?php echo $this->data->jml_pegawai_kontrak; ?>">
             <div id="wjml_peg"></div>
         </div>
         <div class="kolom2">
 
             <label>Lama Semester*</label><select name="lama_semester" id="lama_semester" type="text">
-<!--                <option value="">Pilih Lama Semester</option>-->
+                <!--                <option value="">Pilih Lama Semester</option>-->
                 <?php
                 for ($i = 1; $i <= 10; $i++) {
                     if ($i == $this->data->lama_semester_kontrak) {
@@ -43,7 +56,7 @@
             </select><div id="wlama_semester"></div>
 
             <label>Tahun Masuk*</label><select name="tahun_masuk" id="tahun_masuk" type="text">
-<!--                <option value="">Pilih Tahun Masuk</option>-->
+                <!--                <option value="">Pilih Tahun Masuk</option>-->
                 <?php
                 for ($i = 2007; $i <= date('Y') + 5; $i++) {
                     if ($i == $this->data->thn_masuk_kontrak) {
@@ -75,7 +88,7 @@
                 <input type="hidden" name="jur_def" id="jur_def" value="<?php echo $this->data->kd_jurusan; ?>">
                 <input type="hidden" name="kd_kontrak" id="kd_kontrak" value="<?php echo $this->data->kd_kontrak; ?>">
                 <input type="hidden" name="fupload_lama" id="fupload_lama" value="<?php echo $this->data->file_kontrak; ?>">
-                
+
             </div>
     </form>
 </fieldset>
@@ -83,20 +96,23 @@
 
 <script>
     
+    //menampilkan jurusan sesuai dengan data didatabase ketika form pertama kali ditampilkan
+    // jur_def merupakan jurusan pada data kontrak yang akan diedit
+//    univ = $("#univ").val();
+//    jur_def = $("#jur_def").val();
+    
+    
+//    $.post("<?php echo URL; ?>kontrak/get_jur_by_univ", {univ:univ,jur_def:jur_def},
+//    function(data){                
+//        $('#jur').html(data);
+//    });
+    
+    
     $(document).ready(function(){ 
         
         //mengubah inputan nilai kontrak dengan memunculkan separator ribuan
         $('#nilai_kontrak').number(true,0);
-        
-        //menampilkan jurusan sesuai dengan data didatabase ketika form pertama kali ditampilkan
-        // jur_def merupakan jurusan pada data kontrak yang akan diedit
-        univ = $("#univ").val();
-        jur_def = $("#jur_def").val();
-        $.post("<?php echo URL; ?>kontrak/get_jur_by_univ", {univ:univ,jur_def:jur_def},
-        function(data){                
-            $('#jur').html(data);
-        });
-        
+               
         //agar ketika universitas berubah karena dipilih, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
         $("#univ").change(function(){
             $.post("<?php echo URL; ?>kontrak/get_jur_by_univ", {univ:$("#univ").val()},

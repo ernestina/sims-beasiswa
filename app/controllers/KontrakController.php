@@ -143,9 +143,15 @@ class KontrakController extends BaseController {
             $data = $kontrak->get_by_id($id);
             //var_dump($kontrak);
             $universitas = new Universitas($this->registry);
+            $current_univ = $universitas->get_univ_by_jur($data->kd_jurusan);
+            $jurusan = new Jurusan($this->registry);
+            $jur = $jurusan->get_jur_by_univ($current_univ->get_kode_in());
+            //echo $data->kd_jurusan;
+            //var_dump($jur);
             $this->view->universitas = $universitas;
             $univ = $universitas->get_univ();
             $kon = $kontrak->get_All();
+            $this->view->jur = $jur;
             $this->view->univ = $univ;
             $this->view->data = $data;
             $this->view->kon = $kon;
