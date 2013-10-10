@@ -64,7 +64,8 @@ $akses['Admin'] = array(
                     'load_model',
                     'backup_db',
                     'del_backup',
-                    'list_backup'
+                    'list_backup',
+                    'restore_db'
                 );
 
 /*

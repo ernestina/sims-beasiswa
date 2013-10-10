@@ -971,6 +971,51 @@ class AdminController extends BaseController {
         $this->view->render('admin/restore_db');
     }
     
+    public function restore_db(){
+        $db = new Backuprestore();
+        $db->connect(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+        var_dump($_FILES['file']);
+//        echo $_FILES['file']['name'];
+//        echo $_POST['sb_restore'];
+//        if (isset($_POST['sb_restore'])) {
+            if (!empty($_FILES['file']['name'])) {
+                if ($db->getlast($_FILES['file']['name']) == 'sql') {
+                    echo $db->getlast($_FILES['file']['name']);
+                    $tempFile = $_FILES['file']['tmp_name'];
+                    $targetFile = 'public/temp/' . $_FILES['file']['name'];
+                    move_uploaded_file($tempFile, $targetFile);
+                    $db->restoreDatabaseSql($targetFile);
+                } elseif ($db->getlast($_FILES['file']['name']) == 'zip') {
+                    $tempFile = $_FILES['file']['tmp_name']; echo $tempFile;
+                    $targetFile = 'public/temp/' . $_FILES['file']['name']; //echo $targetFile;
+                    move_uploaded_file($tempFile, $targetFile);
+                    $db->restoreDatabaseZip($targetFile);
+                } else {
+                    echo "Invalid Database File Type";
+                }
+            }
+//        }
+        /*
+         * ubah nama admin dan password admin, 
+         * mengantisipasi lupa password setelah restore
+         */
+        $sql = "SELECT KD_USER FROM d_user WHERE AKSES_USER=1";
+        $data = $this->registry->db->select($sql);
+        $id=0;
+        foreach ($data as $val){
+            $id = $val['KD_USER'];
+        }
+        $data_admin = array('NM_USER'=>  'admin',
+                        'PASS_USER'=>Hash::create('sha1', 'admin', HASH_SALT_KEY));
+        $where = ' id_user='.$id;
+        $this->registry->db->update('d_user',$data_admin,$where);
+        
+        echo "<div id=success>restore data telah berhasil dilakukan, ".$_SESSION['ttlQuery']." query dieksekusi pada ".date('Y-m-d H:i:s', $_SESSION['timeQuery'])."</div>"; 
+    
+//        $this->view->render('admin/restore_db');
+    }
+
+
     public function get_method(){
         $method = get_class_methods($this);
 //        $no = 1;
