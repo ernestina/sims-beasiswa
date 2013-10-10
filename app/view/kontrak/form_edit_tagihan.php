@@ -1,6 +1,6 @@
 <form method="POST" id="form_tagihan" action="<?php echo URL . 'kontrak/updateTagihan' ?>" enctype="multipart/form-data">
     <input type="hidden" name="update_tagihan">
-    <h2>Data Tagihan Biaya</h2>
+    <h1>Data Tagihan Biaya</h1>
     <div id="proses_tagihan" title="Informasi" style="display:none" align="center">
         <p> Sistem sedang melakukan proses update data tagihan biaya.....</p>
     </div>
@@ -19,7 +19,7 @@
             $tgl_bast_ = "";
         }
         ?>
-        <input type="text" size="20" name="tgl_bast" id="tgl_bast" value="<?php echo $tgl_bast_ ?>">
+        <input type="text" size="20" name="tgl_bast" id="tgl_bast" value="<?php echo $tgl_bast_ ?>" readonly>
         <div id="wtgl_bast"></div>
         <label class="isian">File BAST</label>
         <?php
@@ -32,7 +32,7 @@
         ?>
         <ul class="inline">
             <li><input type="file" name="file_bast" id="file_bast"/></li>
-            <li><a href="<?php echo URL . "kontrak/fileBast/" . $file_bast_; ?>"target="_blank"><?php echo $file_bast_; ?></a></li>
+            <li><a href="<?php echo URL . "kontrak/fileBast/" . $file_bast_; ?>"target="_blank"><?php if($file_bast_ !="") echo "lihat file"; ?></a></li>
         </ul>
         <div id="wfile_bast"></div>
 
@@ -48,7 +48,7 @@
             $tgl_bap_ = "";
         }
         ?>
-        <input type="text" size="20" name="tgl_bap" id="tgl_bap" value="<?php echo $tgl_bap_; ?>">            
+        <input type="text" size="20" name="tgl_bap" id="tgl_bap" value="<?php echo $tgl_bap_; ?>" readonly>            
         <div id="wtgl_bap"></div>
         <label class="isian">File BAP</label>
         <?php
@@ -61,7 +61,7 @@
         ?>
         <ul class="inline">
             <li><input type="file" name="file_bap" id="file_bap"/></li>
-            <li><a href="<?php echo URL . "kontrak/fileBap/" . $file_bap_; ?>"target="_blank"><?php echo $file_bap_; ?></a></li>
+            <li><a href="<?php echo URL . "kontrak/fileBap/" . $file_bap_; ?>"target="_blank"><?php if($file_bap_ !="") echo "lihat file"; ?></a></li>
         </ul>
         <div id="wfile_bap"></div>
     </div>
@@ -79,8 +79,7 @@
             $tgl_ring_kontrak_ = "";
         }
         ?>
-        <input type="text"name="tgl_ring_kon" id="tgl_ring_kon" 
-               value="<?php echo $tgl_ring_kontrak_; ?>">
+        <input type="text"name="tgl_ring_kon" id="tgl_ring_kon" value="<?php echo $tgl_ring_kontrak_; ?>" readonly>
         <div id="wtgl_ring_kon"></div>
         <label class="isian">File. Ringkasan Kontrak</label>
         <?php
@@ -93,7 +92,7 @@
         ?>
         <ul class="inline">
             <li><input type="file"size="30" name="file_ring_kon" id="file_ring_kon"></li>
-            <li><a href="<?php echo URL . "kontrak/fileRingKontrak/" . $file_ring_kontrak_; ?>"target="_blank"><?php echo $file_ring_kontrak_; ?></a></li>
+            <li><a href="<?php echo URL . "kontrak/fileRingKontrak/" . $file_ring_kontrak_; ?>"target="_blank"><?php if($file_ring_kontrak_!="") echo "lihat file"; ?></a></li>
         </ul>
         <div id="wfile_ring_kon"></div>
 
@@ -110,7 +109,7 @@
         }
         ?>
         <input type="text" size="30" name="tgl_kuitansi" id="tgl_kuitansi" 
-               value="<?php echo $tgl_kuitansi_; ?>">
+               value="<?php echo $tgl_kuitansi_; ?>" readonly>
         <div id="wtgl_kuitansi"></div>
         <label class="isian">File Kuitansi</label>
         <?php
@@ -123,7 +122,7 @@
         ?>
         <ul class="inline">
             <li><input type="file" name="file_kuitansi" id="file_kuitansi"></li>
-            <li><a href="<?php echo URL . "kontrak/fileKuitansi/" . $file_kuitansi_; ?>"target="_blank"><?php echo $file_kuitansi_; ?></a></li>
+            <li><a href="<?php echo URL . "kontrak/fileKuitansi/" . $file_kuitansi_; ?>"target="_blank"><?php if($file_kuitansi_ !="") echo "lihat file"; ?></a></li>
         </ul>
         <div id="wfile_kuitansi"></div>
     </div>
@@ -136,6 +135,7 @@
 
     <div>
         <input type="hidden" id="jml_peg" name="jml_peg" value="<?php echo $this->biaya->jml_pegawai_bayar; ?>">
+        <input type="hidden" id="kd_kontrak" name="kd_kontrak" value="<?php echo $this->biaya->kd_kontrak; ?>">
         <input type="hidden" id="kd_biaya" name="kd_biaya" value="<?php echo $this->biaya->kd_biaya; ?>">
         <input type="hidden" name="file_bast_lama" id="file_bast_lama" value="<?php echo $this->biaya->file_bast; ?>">
         <input type="hidden" name="file_bap_lama" id="file_bap_lama" value="<?php echo $this->biaya->file_bap; ?>">
@@ -146,45 +146,6 @@
 </form>
 
 <div id="dialog_form" title="Menambahkan Penerima Beasiswa ke Tagihan">
-    <form id="form_pb">
-        <table >
-            <thead>
-            <th>NO</th>
-            <th>NIP</th>
-            <th>Nama</th>
-            <th>Status</th>
-            <th>Pilihan</th>
-            </thead>
-            <?php
-            $i = 1;
-            foreach ($this->penerima_pb as $val) {
-                $penerima_biaya_kontrak = new PenerimaBiayaKontrak();
-                $penerima_biaya = $penerima_biaya_kontrak->get_by_biaya_pb($this->biaya->kd_biaya, $val->get_kd_pb());
-                $status = new Status();
-                $status_pb = $status->get_by_id($val->get_status());
-                //var_dump($penerima_biaya);
-                //echo $this->biaya->kd_biaya;
-                //echo $val->get_kd_pb();
-                if($penerima_biaya!=false){
-                    $disable = " disabled";
-                } else {
-                    $disable = "";
-                }
-                        ?>
-                <tr>
-                    <td><?php echo $i; ?></td>
-                    <td><?php echo $val->get_nip(); ?></td>
-                    <td><?php echo $val->get_nama(); ?></td>
-                    <td><?php echo $status_pb->nm_status; ?></td>
-                    <td><input type="checkbox" value="<?php echo $val->get_kd_pb(); ?>" name="<?php echo "penerima[]"; ?>" id="<?php echo "penerima[]"; ?>" <?php echo $disable; ?>/></td>
-                </tr> 
-                <?php
-                $i++;
-            }
-            ?>
-        </table>
-        <input type="hidden" id="kd_biaya" name="kd_biaya" value="<?php echo $this->biaya->kd_biaya; ?>">
-    </form>
 
 </div>
 
@@ -192,6 +153,53 @@
     //****
     // memproses update data tagihan
     //****
+       
+    $('#no_bast').keyup(function() {   
+        removeError('wno_bast');         
+    });  
+    
+    $('#tgl_bast').click(function() {   
+        removeError('wtgl_bast');         
+    });
+    
+    $('#file_bast').click(function() {   
+        removeError('wfile_bast');         
+    });
+        
+    $('#no_bap').keyup(function() {   
+        removeError('wno_bap');         
+    });
+    
+    $('#tgl_bap').click(function() {   
+        removeError('wtgl_bap');         
+    });
+    
+    $('#file_bap').click(function() {   
+        removeError('wfile_bap');         
+    });
+    
+    $('#no_ring_kon').keyup(function() {   
+        removeError('wno_ring_kon');         
+    });
+    
+    $('#tgl_ring_kon').click(function() {   
+        removeError('wtgl_ring_kon');         
+    });
+    
+    $('#file_ring_kon').click(function() {   
+        removeError('wfile_ring_kon');         
+    });
+    
+    $('#no_kuitansi').keyup(function() {   
+        removeError('wno_kuitansi');         
+    });
+    $('#tgl_kuitansi').click(function() {   
+        removeError('wtgl_kuitansi');         
+    });
+    
+    $('#file_kuitansi').click(function() {   
+        removeError('wfile_kuitansi');         
+    });
     
     $(document).ready(function(){  //mulai jquery
         
@@ -234,6 +242,16 @@
         
         
         $("#tambah_penerima").click(function() {
+            $.ajax({
+                type:"POST",
+                url: "<?php echo URL; ?>kontrak/viewAddTagihanPb",
+                data: {kd_kontrak:$("#kd_kontrak").val(),kd_biaya:$("#kd_biaya").val()},
+                cache: false,
+                success: function(penerima){
+                    $('#dialog_form').fadeIn(100);
+                    $('#dialog_form').html(penerima);
+                }
+            });
             $( "#dialog_form" ).dialog( "open" );
         });  
         
@@ -316,9 +334,91 @@
     
     //konfirmasi update tagihan
     function konfirmasi_tagihan(){
-        if(confirm('Simpan perubahan data tagihan?')){
-            $('#proses_tagihan').show();
-            return true;
+        if(confirm('Simpan data tagihan?')){
+            if(cekFieldTagihan()!=false){
+                $('#proses_tagihan').show();
+                return true;
+            } else {
+                return false;
+            }
         } else {return false;}
+    }
+    
+    //mengecek field input tidak boleh kosong pada form biaya utama
+    //mengecek field input tidak boleh kosong
+    function cekFieldTagihan(){
+        var jml = 0;
+        if($('#no_bast').val()==''){
+            viewError('wno_bast','Nomor BAST harus diisi harus diisi.');
+            jml++;
+        }
+            
+        if($('#tgl_bast').val()==''){
+            viewError('wtgl_bast','Tanggal BAST harus diisi.');
+            jml++;
+        }
+            
+        if($('#file_bast').val()==''){
+            if($('#file_bast_lama').val()==''){
+                viewError('wfile_bast','File BAST harus diisi.');
+                jml++;
+            }
+        }
+        
+        if($('#no_bap').val()==''){
+            viewError('wno_bap','Nomor BAP harus diisi harus diisi.');
+            jml++;
+        }
+            
+        if($('#tgl_bap').val()==''){
+            viewError('wtgl_bap','Tanggal BAP harus diisi.');
+            jml++;
+        }
+            
+        if($('#file_bap').val()==''){
+            if($('#file_bap_lama').val()==''){
+                viewError('wfile_bap','File BAP harus diisi.');
+                jml++;
+            }
+        }
+        
+        if($('#no_ring_kon').val()==''){
+            viewError('wno_ring_kon','Nomor ringkasan kontrak harus diisi.');
+            jml++;
+        }
+            
+        if($('#tgl_no_ring_kon').val()==''){
+            viewError('wtgl_no_ring_kon','Tanggal ringkasan kontrak harus diisi.');
+            jml++;
+        }
+            
+        if($('#file_no_ring_kon').val()==''){
+            if($('#file_no_ring_kon_lama').val()==''){
+                viewError('wfile_no_ring_kon','File ringkasan kontrak harus diisi.');
+                jml++;
+            }
+        }
+        
+        if($('#no_kuitansi').val()==''){
+            viewError('wno_kuitansi','Nomor kuitansi harus diisi harus diisi.');
+            jml++;
+        }
+            
+        if($('#tgl_kuitansi').val()==''){
+            viewError('wtgl_kuitansi','Tanggal kuitansi harus diisi.');
+            jml++;
+        }
+            
+        if($('#file_kuitansi').val()==''){
+            if($('#file_kuitansi_lama').val()==''){
+                viewError('wfile_kuitansi','File kuitansi harus diisi.');
+                jml++;
+            }
+        }
+            
+        if(jml>0){
+            return false;
+        }
+            
     }
 </script>

@@ -1,4 +1,4 @@
-<table >
+<table>
     <thead>
     <th>NO</th>
     <th>NIP</th>
@@ -24,7 +24,7 @@ foreach ($this->penerima_biaya as $val) {
         <td><?php echo $penerima->get_nama(); ?></td>
         <td><?php echo $status_pb->nm_status; ?></td>
         <td>
-            <a href="#" onClick="del(<?php echo $val->kd_penerima_biaya; ?>); return false;"><i class="icon-trash"></i></a>
+            <a href="#" onClick="del_tagihan_pb(<?php echo $val->kd_penerima_biaya; ?>); return false;"><i class="icon-trash"></i></a>
         </td>
     </tr> 
     <?php
@@ -35,19 +35,29 @@ foreach ($this->penerima_biaya as $val) {
 
 <script>
     
-    function del(id){
+    function del_tagihan_pb(id){
         if(confirm('Apakah Anda yakin akan menghapus data ini?')){
-            $.post("<?php echo URL; ?>kontrak/delTagihanPb", {kd_penerima_biaya: id} );
-            displayTabelBiayaPb();
-            $("<div>Data berhasil dihapus.</div>").dialog({
-                modal: true,
-                buttons: {
-                    Ok: function() {
-                        $( this ).dialog( "close" );
-                    }
+            $.ajax({
+                type:"POST",
+                url: "<?php echo URL; ?>kontrak/delTagihanPb",
+                data: {kd_penerima_biaya: id},
+                cache: false,
+                success: function(){
+                    displayTabelBiayaPb();
+                    $("<div>Data berhasil dihapus.</div>").dialog({
+                        modal: true,
+                        buttons: {
+                            Ok: function() {
+                                $( this ).dialog( "close" );
+                            }
+                        }
+                    }); 
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {                          
+                    alert('tidak dapat memproses saat ini.');
                 }
-            }); 
-            
+            });
+                       
         } else {return false}  
     }
     

@@ -12,7 +12,13 @@
             <label class="isian">Nilai Kontrak</label><input type="text" size="14" readonly value="<?php echo number_format($this->data_kontrak->nilai_kontrak); ?>" disabled>
             <label class="isian">Kontrak Lama</label><input type="text" size="40" readonly value="<?php echo $this->kon_lama; ?>" disabled>
         </div>
-        <div><input type="button" value="TAMBAH" onClick="location.href='<?php echo URL . 'kontrak/rekamBiaya/' . $this->data_kontrak->kd_kontrak; ?>'"></div>
+        <div>
+<!--            <input type="button" value="TAMBAH" onClick="location.href='<?php echo URL . 'kontrak/viewRekamBiaya/' . $this->data_kontrak->kd_kontrak; ?>'">-->
+            <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/viewRekamBiaya' ?>">
+            <input type="hidden" id="kd_kontrak" name="kd_kontrak" value="<?php echo $this->data_kontrak->kd_kontrak; ?>">
+            <input class="sukses" type="submit" value="Tambah">
+            </form>
+        </div>
     </div>
 
     <div id="table-content">
@@ -22,7 +28,7 @@
             <th>Nama Biaya</th>
             <th>Biaya per Pegawai</th>
             <th>Jumlah Pegawai <br/>dibayarkan</th>
-            <th>Jumlah Biaya</th>
+            <th>Total Biaya</th>
             <th>Jadwal <br />dibayarkan</th>
             <th>No SP2D</th>
             <th>Tgl SP2D</th>
@@ -41,10 +47,12 @@
                     <td><?php echo $val->jml_pegawai_bayar; ?></td>
                     <td><?php echo number_format($val->jml_biaya); ?></td>
                     <td><?php echo $val->jadwal_bayar; ?></td>
-                    <td><?php echo $val->no_sp2d; ?></td>
+                    <td><?php $x = ($val->no_sp2d != "") ? $val->no_sp2d : "-"; echo $x; ?></td>
                     <td><?php
-            if ($val->tgl_sp2d != "01-01-1970") {
+            if ($val->tgl_sp2d != "01-01-1970" && $val->tgl_sp2d != "00-00-0000") {
                 echo $val->tgl_sp2d;
+            } else {
+                echo "-";
             }
                 ?></td>
                     <td><?php echo $val->status_bayar; ?></td>
@@ -58,9 +66,8 @@
             }
             if (!empty($this->data_biaya)) {
                 echo "<tr>
-                <td colspan=7></td>
-                <td colspan=1>Total biaya:</td>
-                <td colspan=2>" . number_format($this->total_biaya) . "</td>
+                <td colspan=8 align=\"right\"><strong>Total biaya:</strong></td>
+                <td colspan=2 align=\"right\"><strong>" . number_format($this->total_biaya) . "</strong></td>
                 </tr>";
             } else {
                 echo "<tr><td colspan=10>Biaya tidak ditemukan.</td></tr>";

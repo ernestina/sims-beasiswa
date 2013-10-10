@@ -58,6 +58,7 @@
     
     //fungsi untuk menampilkan data kontrak
     function displayKontrak(){
+        $("#loading").show();
         if($("#kd_univ").val() == ""){
             univ = "";
             $.post("<?php echo URL; ?>kontrak/get_data_kontrak", {univ:""+univ},
@@ -71,7 +72,8 @@
                 $('#tb_kontrak').fadeIn(100);
                 $('#tb_kontrak').html(data);
             });
-        }  
+        } 
+        $("#loading").hide();
     }
     
     //ketika link edit diklik pada halaman tabel_kontrak.php
@@ -88,6 +90,7 @@
         //jika ada event onchange ambil data dari database
         $("#kd_univ").change(function(){
             //ambil nilai univ dan url dari form
+            $("#loading").show();
             univ = $("#kd_univ").val();
             //url = $("#url").val();
             $.post("<?php echo URL; ?>kontrak/get_data_kontrak", {univ:""+univ},
@@ -95,6 +98,7 @@
                 $('#tb_kontrak').fadeIn(100);
                 $('#tb_kontrak').html(data);
             });
+            $("#loading").hide();
             
         });
         

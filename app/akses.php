@@ -157,6 +157,10 @@ $akses['Kontrak'] = array(
                 'rekamKontrak2',
                 'viewEditKontrak',
                 'updateKontrak2',
+                'viewRekamBiaya',
+                'rekamBiaya2',
+                'delTagihanPb',
+                'viewAddTagihanPb',
                 '__destruct'
                 );
 /*
