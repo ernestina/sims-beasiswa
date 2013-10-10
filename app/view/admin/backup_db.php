@@ -5,11 +5,10 @@
                 <form method="POST" action="<?php
 $_SERVER['PHP_SELF']; //echo URL.'admin/addUniversitas'
 ?>">
-                    <div id="whost" class="error"></div>
                     <input type="file" name="fupload" id="fupload">
                     <ul class="inline tengah">
                         <li><input class="normal" type="submit" onclick="" value="BATAL"></li>
-                        <li><input class="sukses" type="submit" name="add_conf" value="BACKUP" onClick="return cek();"></li>
+                        <li><input class="sukses" type="button" name="add_conf" value="BACKUP" onClick="backup();"></li>
                     </ul>
                 </form>
 
@@ -24,69 +23,44 @@ $_SERVER['PHP_SELF']; //echo URL.'admin/addUniversitas'
                 + Pada komputer selain komputer server aplikasi, misalnya CD, flashdisk, komputer pribadi, dsb. <br>
 
             </p>
+            <div id="message"></div>
         </fieldset>
     </div> <!--kolom4-->
 </div>
+<fieldset><legend>File Backup</legend>
+    <div id="file_backup"></div>
+</fieldset>
+<div class="preload">
+                    <img src="<?php echo URL; ?>public/icon/loading.gif">
+                </div>
 
 <script type="text/javascript">
 
     $(function(){
-        $('.error').fadeOut(0);
-    
-        hideWarning('whost','host','keyup');
+        $('#preload').fadeOut(0);
+        $('#message').fadeOut(0);
+        list_backup();
     })
-
-    function hideWarning(id_error,id_input,action){
-        switch (action){
-            case 'keyup':
-                $('#'+id_input).keyup(function(){
-                    $('#'+id_error).fadeOut(200);
-                });
-                break;
-        }
-    
+    function preload(){
+        $('.preload').fadeIn(500);
     }
-
-    function cek(){
-        var host = document.getElementById('host').value;
-        var db = document.getElementById('db').value;
-        var uname = document.getElementById('username').value;
-        var pass = document.getElementById('pass').value;
-        var pass_u = document.getElementById('pass_u').value;
-        var jml=0;
-        if(host==''){
-            var whost = "host harus diisi!";
-            $('#whost').html(whost);
-            $('#whost').fadeIn(100);
-            jml++;
-        }
     
-        if(db==''){
-            var wdb = "nama database harus diisi!";
-            $('#wdb').html(wdb);
-            $('#wdb').fadeIn(100);
-            jml++;
-        }
-    
-        if(uname==''){
-            var wusername = "username harus diisi!";
-            $('#wusername').html(wusername);
-            $('#wusername').fadeIn(100);
-            jml++;
-        }
-    
-        if(pass != pass_u){
-            var wpass = "password tidak sama!";
-            $('#wpass').html(wpass);
-            $('#wpass').fadeIn(100);
-            jml++;
-        }
-    
-        if(jml>0){
-            return false;
-        }else{
-            return true;
-        }
-    
+    function list_backup(){
+        $.post("<?php echo URL;?>admin/list_backup",{},
+            function(data){
+                $('#file_backup').html(data);
+            });
     }
+    
+    function backup(){
+        $('#message').fadeOut();
+        $('.preload').fadeIn(500);
+        $.post("<?php echo URL;?>admin/backup_db",{},
+            function(data){
+                $('.preload').fadeOut(500);
+                $('#message').fadeIn(500);
+                $('#message').html(data);
+                list_backup();
+            });
+    }   
 </script>

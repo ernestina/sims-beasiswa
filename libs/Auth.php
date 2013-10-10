@@ -78,6 +78,12 @@ class Auth{
         return false;
         
     }
+    
+    public static function is_role($role){
+        $is_roled = (Session::get('role')==$role);
+        
+        return $is_roled;
+    }
 
     public function get_roles(){
         return $this->_roles;

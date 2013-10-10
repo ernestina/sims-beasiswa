@@ -1082,3 +1082,13 @@ th, td {
      text-decoration: blink;
      font-style: normal;
  }
+ 
+/* // bagian ini ntar bisa dihapus pa diganti, untuk tes aja*/
+.preload { 
+    display: none;
+    width:100px;
+    height: 100px;
+    position: relative;
+    top: 45%;
+    left: 45%;
+}

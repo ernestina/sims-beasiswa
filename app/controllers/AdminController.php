@@ -921,9 +921,46 @@ class AdminController extends BaseController {
     /*
      * melakukan backup database
      */
-
+    /*
+     * halaman backup
+     */
     public function backup() {
         $this->view->render('admin/backup_db');
+    }
+    
+    public function list_backup(){
+        $this->view->d_files = array();
+        $entry = opendir('public/backup');
+        while($res = readdir($entry)){
+//            echo $res."</br>";
+            if(strlen($res)>10){
+                $this->view->d_files[] = $res;
+            }
+            
+        }
+        $this->view->load('admin/list_backup');
+    }
+
+
+    public function backup_db(){
+        $db = new Backuprestore();
+        
+        $db->connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+        
+        $db->backupDatabase('beasiswa');        
+        
+        echo "<div id=success>Backup data berhasil dilakukan</div>";
+    }
+    
+    public function del_backup($filename){
+        $filename = 'public/backup/'.$filename;
+        $file_exist = file_exists($filename);
+        if($file_exist){
+            unlink($filename);
+//            return true;
+        }
+//        return false;
+        header('location:'.URL.'admin/backup');
     }
 
     /*

@@ -61,7 +61,11 @@ $akses['Admin'] = array(
                     'restore',
                     'get_method',
                     '__destruct',
-                    'load_model');
+                    'load_model',
+                    'backup_db',
+                    'del_backup',
+                    'list_backup'
+                );
 
 /*
  * akses modul cuti

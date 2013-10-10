@@ -45,6 +45,7 @@
                     <li class="nav">
                         <a href="<?php echo URL; ?>index">BERANDA</a>
                     </li>
+                    <?php if(Auth::is_role('1')) { ?>
                     <li class="subnav">
                         <a href="<?php echo URL; ?>admin/addUniversitas">ADMIN</a>
                         <ul>
@@ -69,6 +70,9 @@
                             <li><a href="<?php echo URL; ?>admin/restore"><i class="icon-repeat icon-white"></i>  Restore</a></li>
                         </ul>
                     </li>
+                    <?php } 
+                    
+                    if(Auth::is_role('2')){ ?>
                     <li class="subnav">
                         <a href="<?php echo URL . 'kontrak/display'; ?>">KONTRAK</a>
                         <ul>
@@ -92,6 +96,10 @@
                             <li><a href="<?php echo URL . 'elemenBeasiswa/viewBuku'; ?>"><i class="icon-book icon-white"></i>  Tunjangan Buku</a></li>
                             <li><a href="<?php echo URL . 'elemenBeasiswa/viewSkripsi'; ?>" style="font-size: 70%"><i class="icon-certificate icon-white"></i>  Tunjangan Skripsi/TA/Tesis</a></li>
                         </ul>
+                    </li>
+                    <?php } ?>
+                    <li class="subnav">
+                        <a href="<?php echo URL . 'auth/logout' ?>">LOGOUT</a>
                     </li>
                     <li class="nav">
                         <a class="blok" href="<?php echo URL.'auth/logout';?>" title="logout"><img class="profil" src="<?php echo URL; ?>public/img/pic.jpg" /></a>
