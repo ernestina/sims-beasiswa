@@ -789,7 +789,7 @@ class AdminController extends BaseController {
                 }
             }
         }
-        header('location:' . URL . 'admin/listuser');
+        header('location:' . URL . 'admin/listUser');
     }
 
     /*
