@@ -1,4 +1,6 @@
 RewriteEngine On
+
+php_value upload_max_filesize 30M
  
 RewriteCond %{REQUEST_URI} =""
 RewriteRule ^.*$ /index.php [NC,L]

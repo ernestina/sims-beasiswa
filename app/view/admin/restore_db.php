@@ -2,10 +2,11 @@
 <div class="kolom3" align="centre">
     <fieldset><legend>Restore Database</legend>
         <div id="form-input"><div class="kiri">
+<!--                <form id="form-restore" method ="POST" action ="<?php echo URL;?>admin/restore_db" enctype="multipart/form-data">-->
                 <form id="form-restore" enctype="multipart/form-data">
                     <label></label><input type="file" name="file" id="fupload">
                     <ul class="inline tengah">
-                        <li><input class="normal" type="submit" onclick="" value="BATAL"></li>
+<!--                        <li><input class="normal" type="submit" onclick="" value="BATAL"></li>-->
                         <li><input class="sukses" type="button" name="sb_restore" value="RESTORE" onClick="restore_db();"></li>
                     </ul>
                 </form>

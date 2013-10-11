@@ -974,9 +974,22 @@ class AdminController extends BaseController {
     public function restore_db(){
         $db = new Backuprestore();
         $db->connect(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-        var_dump($_FILES['file']);
-//        echo $_FILES['file']['name'];
-//        echo $_POST['sb_restore'];
+//        if(!move_uploaded_file($_FILES['file']['tmp_name'])){
+//            switch($_FILES['file']['error']){
+//                case 1:
+//                    echo "file to large";
+//                    break;
+//                case 2:
+//                    echo "file larger than set in form (MAX_FILE_SIZE)";
+//                    break;
+//                case 3:
+//                    echo "partial upload";
+//                    break;
+//                case 4:
+//                default:
+//                    echo "file not uploaded (unknown)";
+//            }
+//        }
 //        if (isset($_POST['sb_restore'])) {
             if (!empty($_FILES['file']['name'])) {
                 if ($db->getlast($_FILES['file']['name']) == 'sql') {
@@ -986,7 +999,7 @@ class AdminController extends BaseController {
                     move_uploaded_file($tempFile, $targetFile);
                     $db->restoreDatabaseSql($targetFile);
                 } elseif ($db->getlast($_FILES['file']['name']) == 'zip') {
-                    $tempFile = $_FILES['file']['tmp_name']; echo $tempFile;
+                    $tempFile = $_FILES['file']['tmp_name']; //echo $tempFile;
                     $targetFile = 'public/temp/' . $_FILES['file']['name']; //echo $targetFile;
                     move_uploaded_file($tempFile, $targetFile);
                     $db->restoreDatabaseZip($targetFile);

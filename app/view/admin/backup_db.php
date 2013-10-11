@@ -7,7 +7,7 @@ $_SERVER['PHP_SELF']; //echo URL.'admin/addUniversitas'
 ?>">
                     <input type="file" name="fupload" id="fupload">
                     <ul class="inline tengah">
-                        <li><input class="normal" type="submit" onclick="" value="BATAL"></li>
+<!--                        <li><input class="normal" type="submit" onclick="" value="BATAL"></li>-->
                         <li><input class="sukses" type="button" name="add_conf" value="BACKUP" onClick="backup();"></li>
                     </ul>
                 </form>
