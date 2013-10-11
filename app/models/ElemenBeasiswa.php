@@ -29,7 +29,7 @@ class ElemenBeasiswa {
      * konstruktor
      */
     public function __construct($registry = Registry) {
-        $this->db = $registry->db;
+        $this->db = new Database();
         $this->registry = $registry;
     }
     
@@ -75,7 +75,7 @@ class ElemenBeasiswa {
         if(is_null($elem->get_kd_d())){
             return false;
         }
-        $sql = "SELECT * FROM ".$elem->_table." WHERE KD_D_ELEM_BEASISWA=".$elem->get_kd_d();
+        $sql = "SELECT * FROM ".$elem->_table." WHERE KD_D_ELEM_BEASISWA=".$elem->get_kd_d()."";
 //        var_dump($sql);
         $result = $this->db->select($sql);
         foreach ($result as $val){
@@ -97,8 +97,20 @@ class ElemenBeasiswa {
      * tambah data universitas
      * param array data array key=>value, nama kolom=>data
      */
-    public function add_elem($data=array()){
-        if(!is_array($data)) return false;
+    public function add_elem(ElemenBeasiswa $elem){
+//        if(!is_array($data)) return false;
+        $data = array (
+            'KD_R_ELEM_BEASISWA' =>$elem->get_kd_r(),
+            'KD_JUR' =>$elem->get_kd_jur(),
+            'JML_PEG_D_ELEM_BEASISWA' =>$elem->get_jml_peg(),
+            'BLN_D_ELEM_BEASISWA' => $elem->get_bln(),
+            'THN_D_ELEM_BEASISWA' => $elem->get_thn(),
+            'TOTAL_BAYAR_D_ELEM_BEASISWA' => $elem->get_total_bayar(),
+            'NO_SP2D_D_ELEM_BEASISWA' =>$elem->get_no_sp2d(),
+            'TGL_SP2D_D_ELEM_BEASISWA' =>$elem->get_tgl_sp2d(),
+            'FILE_SP2D_D_ELEM_BEASISWA' =>$elem->get_file_sp2d()
+                );
+            
         $this->db->insert($this->_table,$data);
     }
     
