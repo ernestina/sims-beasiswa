@@ -4,7 +4,7 @@
         <fieldset><legend>Ubah User</legend>
 
             <div id="form-input">           
-                <form method="POST" enctype="multipart/form-data" name="myform" onsubmit="return (validate());" action=" <?php echo URL . 'Admin/updateUser' ?>">
+                <form method="POST" enctype="multipart/form-data" name="myform" onsubmit="return (validate());" action=" <?php echo URL . 'admin/updateUser' ?>">
 
                     <div class="kiri">
                         <input type="hidden" name="id" id="id" value="<?php echo $this->data->get_id(); ?>" size="30">
