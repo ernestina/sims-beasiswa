@@ -775,6 +775,27 @@ class KontrakController extends BaseController {
             $this->view->load('kontrak/tabel_tagihan_pb');
         }
     }
+    
+    //melakukan validasi jumlah penerima biaya dengan jml pegawai yang dibayarkan
+    public function cekTagihanPbByBiaya() {
+        if (isset($_POST['kd_biaya'])) {
+            $kd_biaya = $_POST['kd_biaya'];
+            $penerima_biaya_kontrak = new PenerimaBiayaKontrak();
+            $penerima_biaya = $penerima_biaya_kontrak->get_by_biaya($kd_biaya);
+ 
+            $biaya = new Biaya();
+            $data_biaya = $biaya->get_by_id($kd_biaya);
+            //var_dump($penerima_biaya);
+            if(count($penerima_biaya) == $data_biaya->jml_pegawai_bayar){
+                $hasil = true;
+            } else {
+                $hasil = false;
+            }
+            echo json_encode(array('respon' => $hasil));
+            
+        }
+    }
+
 
     //menghapus data tagihan pb yang telah masuk ke tagihan kontrak pada tabel_tagihan_pb
     public function delTagihanPb() {
@@ -800,8 +821,10 @@ class KontrakController extends BaseController {
             $this->view->load('kontrak/add_pb_to_tagihan_dialog');
         }
     }
+    
+    
 
-    //mekalakukan proses penambahan pb ke dalam data tagihan biaya kontrak
+    //melakukan proses penambahan pb ke dalam data tagihan biaya kontrak
     public function addTagihanPb() {
         if (isset($_POST['penerima']) && isset($_POST['kd_biaya'])) {
             $penerima = $_POST['penerima'];

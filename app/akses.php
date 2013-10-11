@@ -162,6 +162,7 @@ $akses['Kontrak'] = array(
                 'rekamBiaya2',
                 'delTagihanPb',
                 'viewAddTagihanPb',
+                'cekTagihanPbByBiaya',
                 '__destruct'
                 );
 /*

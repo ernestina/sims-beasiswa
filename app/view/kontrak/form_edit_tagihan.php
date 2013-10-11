@@ -32,7 +32,7 @@
         ?>
         <ul class="inline">
             <li><input type="file" name="file_bast" id="file_bast"/></li>
-            <li><a href="<?php echo URL . "kontrak/fileBast/" . $file_bast_; ?>"target="_blank"><?php if($file_bast_ !="") echo "lihat file"; ?></a></li>
+            <li><a href="<?php echo URL . "kontrak/fileBast/" . $file_bast_; ?>"target="_blank"><?php if ($file_bast_ != "") echo "lihat file"; ?></a></li>
         </ul>
         <div id="wfile_bast"></div>
 
@@ -61,7 +61,7 @@
         ?>
         <ul class="inline">
             <li><input type="file" name="file_bap" id="file_bap"/></li>
-            <li><a href="<?php echo URL . "kontrak/fileBap/" . $file_bap_; ?>"target="_blank"><?php if($file_bap_ !="") echo "lihat file"; ?></a></li>
+            <li><a href="<?php echo URL . "kontrak/fileBap/" . $file_bap_; ?>"target="_blank"><?php if ($file_bap_ != "") echo "lihat file"; ?></a></li>
         </ul>
         <div id="wfile_bap"></div>
     </div>
@@ -92,7 +92,7 @@
         ?>
         <ul class="inline">
             <li><input type="file"size="30" name="file_ring_kon" id="file_ring_kon"></li>
-            <li><a href="<?php echo URL . "kontrak/fileRingKontrak/" . $file_ring_kontrak_; ?>"target="_blank"><?php if($file_ring_kontrak_!="") echo "lihat file"; ?></a></li>
+            <li><a href="<?php echo URL . "kontrak/fileRingKontrak/" . $file_ring_kontrak_; ?>"target="_blank"><?php if ($file_ring_kontrak_ != "") echo "lihat file"; ?></a></li>
         </ul>
         <div id="wfile_ring_kon"></div>
 
@@ -122,14 +122,17 @@
         ?>
         <ul class="inline">
             <li><input type="file" name="file_kuitansi" id="file_kuitansi"></li>
-            <li><a href="<?php echo URL . "kontrak/fileKuitansi/" . $file_kuitansi_; ?>"target="_blank"><?php if($file_kuitansi_ !="") echo "lihat file"; ?></a></li>
+            <li><a href="<?php echo URL . "kontrak/fileKuitansi/" . $file_kuitansi_; ?>"target="_blank"><?php if ($file_kuitansi_ != "") echo "lihat file"; ?></a></li>
         </ul>
         <div id="wfile_kuitansi"></div>
     </div>
     <ul class="inline">
-        <li>Data Penerima Pembayaran :</li> 
+        <li>Data Penerima :</li> 
         <li id="tambah_penerima">(tambah)</li>
+        <li id="wjml_penerima"></li>
+
     </ul>
+    
     <div class="kolom4" id="tabel_penerima_biaya">
     </div>
 
@@ -314,8 +317,7 @@
                 }
             }
         });
-  
-
+          
     })
     
     //menampilkan data penerima biaya
@@ -415,10 +417,30 @@
                 jml++;
             }
         }
-            
+        
+        var cek = "";
+        $.ajax({
+            type:"POST",
+            url: "<?php echo URL; ?>kontrak/cekTagihanPbByBiaya",
+            data: {kd_biaya:$("#kd_biaya").val()},
+            dataType: 'json',
+            async: false,
+            success: function(hasil){                 
+                cek = hasil.respon; 
+            }
+        });
+        if(cek == false){
+            viewError('wjml_penerima','Jumlah data penerima tagihan tidak cocok dengan biaya utama.');
+            jml++;
+        }
+        
         if(jml>0){
             return false;
         }
             
     }
+    
+   
+    
+    
 </script>
