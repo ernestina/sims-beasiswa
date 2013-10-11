@@ -706,7 +706,7 @@ class AdminController extends BaseController {
                 }
             }
         }
-        header('location:' . URL . 'Admin/list_bank');
+        header('location:' . URL . 'admin/list_bank');
     }
 
     /*
@@ -739,7 +739,7 @@ class AdminController extends BaseController {
                 $bank->updateBank($bank);
             }
         }
-        header('location:' . URL . 'Admin/list_bank');
+        header('location:' . URL . 'admin/list_bank');
     }
 
     /*
@@ -751,7 +751,7 @@ class AdminController extends BaseController {
         $bank = new Bank($this->registry);
         $bank->set_id($id);
         $bank->deleteBank();
-        header('location:' . URL . 'Admin/list_bank');
+        header('location:' . URL . 'admin/list_bank');
     }
 
     /*
