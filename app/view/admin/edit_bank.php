@@ -3,7 +3,7 @@
     <div class="kolom3">
         <fieldset><legend>Ubah Data Bank</legend>
             <div id="form-input">           
-                <form method="POST" name="myform" action="<?php echo URL . 'Admin/updateBank'; ?>" onsubmit="return validate()">
+                <form method="POST" name="myform" action="<?php echo URL . 'admin/updateBank'; ?>" onsubmit="return validate()">
                     <label></label><input type="hidden" name="id" id="id" value="<?php echo $this->data->get_id(); ?>" size="30">
                     <div class="kiri">
                         <label>Nama</label><input type="text" name="nama" id="nama" value="<?php echo $this->data->get_nama(); ?>" size="30"><div id="warningnama"></div>

@@ -3,7 +3,7 @@
     <div class="kolom3">
         <fieldset><legend>Tambah Data Bank</legend>
             <div id="form-input">
-                <form method="POST" action="<?php echo URL . 'Admin/addBank' ?>" name="myform" onsubmit="return(validate())">
+                <form method="POST" action="<?php echo URL . 'admin/addBank' ?>" name="myform" onsubmit="return(validate())">
                     <div class="kiri">
                         <label>Nama</label><input type="text" name="nama" id="nama" size="30"><div id="warningnama"></div>
                         <label>Keterangan</label><textarea type="text" name="keterangan" id="keterangan" rows="8"></textarea>
@@ -37,8 +37,8 @@
                             echo '<td>' . $value->get_keterangan() . '</td>';
                             echo
                             '<td>
-                            <a href="' . URL . 'Admin/deleteBank/' . $value->get_id() . '"><i class="icon-trash"></i></a>
-                            <a href="' . URL . 'Admin/editBank/' . $value->get_id() . '"><i class="icon-pencil"></i></a>
+                            <a href="' . URL . 'admin/deleteBank/' . $value->get_id() . '"><i class="icon-trash"></i></a>
+                            <a href="' . URL . 'admin/editBank/' . $value->get_id() . '"><i class="icon-pencil"></i></a>
                             </td>';
                             echo '</tr>';
                             $i++;
