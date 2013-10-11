@@ -4,7 +4,7 @@
         <fieldset><legend>Tambah User</legend>
             <div id="form-input">           
 
-                <form method="POST" enctype="multipart/form-data" name="myform" onsubmit="return (validate());" action=" <?php echo URL . 'Admin/addUser' ?>">
+                <form method="POST" enctype="multipart/form-data" name="myform" onsubmit="return (validate());" action=" <?php echo URL . 'admin/addUser' ?>">
 
                     <div class= "kiri">
                         <input type="hidden" name="id" id="id" value="" size="30">
@@ -53,8 +53,8 @@
                             echo '<td>' . $value->get_nmUser() . '</td>';
                             echo '<td>' . $value->get_akses() . '</td>';
                             echo '<td>
-                        <a href="' . URL . 'Admin/deleteUser/' . $value->get_id() . '"><i class="icon-trash"></i></a>
-			<a href="' . URL . 'Admin/editUser/' . $value->get_id() . '"><i class="icon-pencil"></i></a>
+                        <a href="' . URL . 'admin/deleteUser/' . $value->get_id() . '"><i class="icon-trash"></i></a>
+			<a href="' . URL . 'admin/editUser/' . $value->get_id() . '"><i class="icon-pencil"></i></a>
                         </td>';
                             echo '</tr>';
                             $i++;
