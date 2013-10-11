@@ -31,7 +31,7 @@
             </div>
         </div>-->
         <div class="login-container">
-            <a class="logo" href="/index.php"><img title="SIMS" height="64" src="<?php echo URL; ?>public/img/logo.png" alt="SIMS" /></a><div class="form login">
+            <a class="logo" href="<?php echo URL;?>"><img title="SIMS" height="64" src="<?php echo URL; ?>public/img/logo.png" alt="SIMS" /></a><div class="form login">
             <?php 
                 if(isset($this->error)){
                     echo "<div style='color:red' id=notfound><h2>".$this->error."<h2></div>";

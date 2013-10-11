@@ -307,6 +307,7 @@ class Backuprestore {
                 }
             }
             $this->xcopy('public/temp/files', 'files'); //memindahkan isi file backup ke dir arsip
+            $this->remove('public/temp/'.$this->getRealFileName($sourceDB).'sql');
             $this->remove($sourceDB);
             $this->remove('public/temp/files');
             return 'restore data telah berhasil dilakukan, ' . $_SESSION['ttlQuery'] . ' query dieksekusi pada ' . date('Y-m-d H:i:s', $_SESSION['timeQuery']);
