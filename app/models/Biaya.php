@@ -29,7 +29,7 @@ class Biaya extends BaseModel {
     public function __construct() {
         parent::__construct();
     }
-    
+
     //GET all data biaya
     // return object biaya
     public function get_All() {
@@ -75,7 +75,7 @@ class Biaya extends BaseModel {
         //$table = "d_tagihan";
         $sql = "SELECT * FROM d_tagihan a, d_kontrak b, r_jur c, r_fakul d, r_univ e";
         $sql .= " WHERE a.KD_KON = b.KD_KON AND b.KD_JUR = c.KD_JUR AND c.KD_FAKUL = d.KD_FAKUL";
-        $sql .= " AND d.KD_UNIV = e.KD_UNIV AND e.KD_UNIV='".$kd_univ."' order by JADWAL_BAYAR_TAGIHAN asc";
+        $sql .= " AND d.KD_UNIV = e.KD_UNIV AND e.KD_UNIV='" . $kd_univ . "' order by JADWAL_BAYAR_TAGIHAN asc";
         $result = $this->db->select($sql);
         //var_dump($result);
         $data = array();
@@ -109,7 +109,7 @@ class Biaya extends BaseModel {
         //var_dump($data);
         return $data;
     }
-    
+
     //GET data biaya berdasarkan status
     // return object biaya
     public function get_by_status($status) {
@@ -149,15 +149,13 @@ class Biaya extends BaseModel {
         //var_dump($data);
         return $data;
     }
-    
-    
-    //GET data biaya berdasarkan universitas dan stats
+
+    //GET data biaya berdasarkan tahun jadwal
     // return object biaya
-    public function get_by_univ_status($kd_univ,$status) {
-        //$table = "d_tagihan";
-        $sql = "SELECT * FROM d_tagihan a, d_kontrak b, r_jur c, r_fakul d, r_univ e";
-        $sql .= " WHERE a.KD_KON = b.KD_KON AND b.KD_JUR = c.KD_JUR AND c.KD_FAKUL = d.KD_FAKUL AND d.KD_UNIV = e.KD_UNIV";
-        $sql .= " AND e.KD_UNIV='".$kd_univ."' AND STS_TAGIHAN ='".$status."' order by JADWAL_BAYAR_TAGIHAN asc";
+    public function get_by_jadwal($jadwal) {
+        $table = "d_tagihan";
+        $where = "YEAR(JADWAL_BAYAR_TAGIHAN)='" . $jadwal . "'";
+        $sql = "SELECT * FROM $table where $where order by JADWAL_BAYAR_TAGIHAN asc";
         $result = $this->db->select($sql);
         //var_dump($result);
         $data = array();
@@ -191,7 +189,114 @@ class Biaya extends BaseModel {
         //var_dump($data);
         return $data;
     }
-    
+
+    //GET data biaya berdasarkan universitas dan stats
+    // return object biaya
+    public function get_by_univ_status($kd_univ, $status) {
+        //$table = "d_tagihan";
+        $sql = "SELECT * FROM d_tagihan a, d_kontrak b, r_jur c, r_fakul d, r_univ e";
+        $sql .= " WHERE a.KD_KON = b.KD_KON AND b.KD_JUR = c.KD_JUR AND c.KD_FAKUL = d.KD_FAKUL AND d.KD_UNIV = e.KD_UNIV";
+        $sql .= " AND e.KD_UNIV='" . $kd_univ . "' AND STS_TAGIHAN ='" . $status . "' order by JADWAL_BAYAR_TAGIHAN asc";
+        $result = $this->db->select($sql);
+        //var_dump($result);
+        $data = array();
+        foreach ($result as $val) {
+            $biaya = new $this();
+            $biaya->kd_biaya = $val['KD_TAGIHAN'];
+            $biaya->kd_kontrak = $val['KD_KON'];
+            $biaya->nama_biaya = $val['NM_TAGIHAN'];
+            $biaya->biaya_per_pegawai = $val['BIAYA_PER_PEG_TAGIHAN'];
+            $biaya->jml_pegawai_bayar = $val['JML_PEG_BAYAR_TAGIHAN'];
+            $biaya->jadwal_bayar = date('d-m-Y', strtotime($val['JADWAL_BAYAR_TAGIHAN'])); //$val['TGL_KON']; 
+            $biaya->jml_biaya = $val['JML_SUDAH_BAYAR_TAGIHAN'];
+            $biaya->no_bast = $val['NO_BAST_TAGIHAN'];
+            $biaya->tgl_bast = date('d-m-Y', strtotime($val['TGL_BAST_TAGIHAN']));
+            $biaya->file_bast = $val['FILE_BAST_TAGIHAN'];
+            $biaya->no_bap = $val['NO_BAP_TAGIHAN'];
+            $biaya->tgl_bap = date('d-m-Y', strtotime($val['TGL_BAP_TAGIHAN']));
+            $biaya->file_bap = $val['FILE_BAP_TAGIHAN'];
+            $biaya->no_ring_kontrak = $val['NO_RING_KONTRAK_TAGIHAN'];
+            $biaya->tgl_ring_kontrak = date('d-m-Y', strtotime($val['TGL_RING_KONTRAK_TAGIHAN']));
+            $biaya->file_ring_kontrak = $val['FILE_RING_KONTRAK_TAGIHAN'];
+            $biaya->no_kuitansi = $val['NO_KUITANSI_TAGIHAN'];
+            $biaya->file_kuitansi = $val['FILE_KUITANSI_TAGIHAN'];
+            $biaya->tgl_kuitansi = date('d-m-Y', strtotime($val['TGL_KUITANSI_TAGIHAN']));
+            $biaya->no_sp2d = $val['NO_SP2D_TAGIHAN'];
+            $biaya->file_sp2d = $val['FILE_SP2D_TAGIHAN'];
+            $biaya->tgl_sp2d = date('d-m-Y', strtotime($val['TGL_SP2D_TAGIHAN']));
+            $biaya->status_bayar = $val['STS_TAGIHAN'];
+            $data[] = $biaya;
+        }
+        //var_dump($data);
+        return $data;
+    }
+
+    //GET data biaya berdasarkan universitas, status, jadwal pembayaran
+    // return object biaya
+    public function get_by_filter($kd_univ = null, $status = null, $jadwal = null) {
+        $table = "d_tagihan";
+
+        if ($kd_univ != "" && $status == "" && $jadwal == "") {
+            $sql = "SELECT * FROM $table a, d_kontrak b, r_jur c, r_fakul d, r_univ e";
+            $sql .= " WHERE a.KD_KON = b.KD_KON AND b.KD_JUR = c.KD_JUR AND c.KD_FAKUL = d.KD_FAKUL";
+            $sql .= " AND d.KD_UNIV = e.KD_UNIV AND e.KD_UNIV='" . $kd_univ . "' order by JADWAL_BAYAR_TAGIHAN asc";
+        } else if ($kd_univ == "" && $status != "" && $jadwal == "") {
+            $sql = "SELECT * FROM $table where STS_TAGIHAN='" . $status . "' order by JADWAL_BAYAR_TAGIHAN asc";
+        } else if ($kd_univ == "" && $status == "" && $jadwal != "") {
+            $sql = "SELECT * FROM $table where YEAR(JADWAL_BAYAR_TAGIHAN)='" . $jadwal . "' order by JADWAL_BAYAR_TAGIHAN asc";
+        } else if ($kd_univ != "" && $status != "" && $jadwal == "") {
+            $sql = "SELECT * FROM d_tagihan a, d_kontrak b, r_jur c, r_fakul d, r_univ e";
+            $sql .= " WHERE a.KD_KON = b.KD_KON AND b.KD_JUR = c.KD_JUR AND c.KD_FAKUL = d.KD_FAKUL AND d.KD_UNIV = e.KD_UNIV";
+            $sql .= " AND e.KD_UNIV='" . $kd_univ . "' AND STS_TAGIHAN ='" . $status . "' order by JADWAL_BAYAR_TAGIHAN asc";
+        } else if ($kd_univ != "" && $status == "" && $jadwal != "") {
+            $sql = "SELECT * FROM d_tagihan a, d_kontrak b, r_jur c, r_fakul d, r_univ e";
+            $sql .= " WHERE a.KD_KON = b.KD_KON AND b.KD_JUR = c.KD_JUR AND c.KD_FAKUL = d.KD_FAKUL AND d.KD_UNIV = e.KD_UNIV";
+            $sql .= " AND e.KD_UNIV='" . $kd_univ . "' AND YEAR(JADWAL_BAYAR_TAGIHAN)='" . $jadwal . "' order by JADWAL_BAYAR_TAGIHAN asc";
+        } else if ($kd_univ == "" && $status != "" && $jadwal != "") {
+            $sql = "SELECT * FROM $table where STS_TAGIHAN='" . $status . "' AND YEAR(JADWAL_BAYAR_TAGIHAN)='" . $jadwal . "' order by JADWAL_BAYAR_TAGIHAN asc";
+        } else if ($kd_univ != "" && $status != "" && $jadwal != "") {
+            $sql = "SELECT * FROM d_tagihan a, d_kontrak b, r_jur c, r_fakul d, r_univ e";
+            $sql .= " WHERE a.KD_KON = b.KD_KON AND b.KD_JUR = c.KD_JUR AND c.KD_FAKUL = d.KD_FAKUL AND d.KD_UNIV = e.KD_UNIV";
+            $sql .= " AND e.KD_UNIV='" . $kd_univ . "' AND STS_TAGIHAN ='" . $status . "' AND YEAR(JADWAL_BAYAR_TAGIHAN)='" . $jadwal . "' order by JADWAL_BAYAR_TAGIHAN asc";
+        } else {
+            $sql = "SELECT * FROM $table order by JADWAL_BAYAR_TAGIHAN asc";
+        }
+
+
+        $result = $this->db->select($sql);
+        //var_dump($result);
+        $data = array();
+        foreach ($result as $val) {
+            $biaya = new $this();
+            $biaya->kd_biaya = $val['KD_TAGIHAN'];
+            $biaya->kd_kontrak = $val['KD_KON'];
+            $biaya->nama_biaya = $val['NM_TAGIHAN'];
+            $biaya->biaya_per_pegawai = $val['BIAYA_PER_PEG_TAGIHAN'];
+            $biaya->jml_pegawai_bayar = $val['JML_PEG_BAYAR_TAGIHAN'];
+            $biaya->jadwal_bayar = date('d-m-Y', strtotime($val['JADWAL_BAYAR_TAGIHAN'])); //$val['TGL_KON']; 
+            $biaya->jml_biaya = $val['JML_SUDAH_BAYAR_TAGIHAN'];
+            $biaya->no_bast = $val['NO_BAST_TAGIHAN'];
+            $biaya->tgl_bast = date('d-m-Y', strtotime($val['TGL_BAST_TAGIHAN']));
+            $biaya->file_bast = $val['FILE_BAST_TAGIHAN'];
+            $biaya->no_bap = $val['NO_BAP_TAGIHAN'];
+            $biaya->tgl_bap = date('d-m-Y', strtotime($val['TGL_BAP_TAGIHAN']));
+            $biaya->file_bap = $val['FILE_BAP_TAGIHAN'];
+            $biaya->no_ring_kontrak = $val['NO_RING_KONTRAK_TAGIHAN'];
+            $biaya->tgl_ring_kontrak = date('d-m-Y', strtotime($val['TGL_RING_KONTRAK_TAGIHAN']));
+            $biaya->file_ring_kontrak = $val['FILE_RING_KONTRAK_TAGIHAN'];
+            $biaya->no_kuitansi = $val['NO_KUITANSI_TAGIHAN'];
+            $biaya->file_kuitansi = $val['FILE_KUITANSI_TAGIHAN'];
+            $biaya->tgl_kuitansi = date('d-m-Y', strtotime($val['TGL_KUITANSI_TAGIHAN']));
+            $biaya->no_sp2d = $val['NO_SP2D_TAGIHAN'];
+            $biaya->file_sp2d = $val['FILE_SP2D_TAGIHAN'];
+            $biaya->tgl_sp2d = date('d-m-Y', strtotime($val['TGL_SP2D_TAGIHAN']));
+            $biaya->status_bayar = $val['STS_TAGIHAN'];
+            $data[] = $biaya;
+        }
+        //var_dump($data);
+        return $data;
+    }
+
     public function get_by_kontrak($id) {
         $table = "d_tagihan";
         $where = "KD_KON='" . $id . "'";
@@ -377,7 +482,7 @@ class Biaya extends BaseModel {
         }
         return $total_biaya;
     }
-    
+
     public function get_biaya_by_kontrak_dibayar($id) {
         $table = "d_tagihan";
         $where = "KD_KON='" . $id . "' AND STS_TAGIHAN='selesai'";
@@ -389,7 +494,6 @@ class Biaya extends BaseModel {
         }
         return $total_biaya;
     }
-
 
     public function isEmptyBiaya(Biaya $biaya) {
         $cek = true;

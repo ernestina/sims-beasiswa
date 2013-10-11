@@ -6,7 +6,7 @@
     <th>Nama Biaya</th>
     <th>Jumlah Biaya</th>
     <th>Jadwal <br />dibayarkan</th>
-    <th>Jumlah dibayarkan</th>
+<!--    <th>Jumlah dibayarkan</th>-->
     <th>Status <br />Pembayaran</th>
     <th>No dan Tgl SP2D</th>
 </thead>
@@ -28,7 +28,7 @@ foreach ($this->data_biaya as $val) {
         <td><?php echo $val->nama_biaya; ?></td>
         <td><?php echo number_format($val->jml_biaya); ?></td>
         <td><?php echo $val->jadwal_bayar; ?></td>
-        <td><?php echo number_format($this->biaya->get_biaya_by_kontrak_dibayar($val->kd_kontrak)); ?></td>
+<!--        <td><?php echo number_format($this->biaya->get_biaya_by_kontrak_dibayar($val->kd_kontrak)); ?></td>-->
         <td><?php echo $val->status_bayar; ?></td>
         <td>
             <?php

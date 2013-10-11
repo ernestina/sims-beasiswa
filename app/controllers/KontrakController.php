@@ -775,27 +775,25 @@ class KontrakController extends BaseController {
             $this->view->load('kontrak/tabel_tagihan_pb');
         }
     }
-    
+
     //melakukan validasi jumlah penerima biaya dengan jml pegawai yang dibayarkan
     public function cekTagihanPbByBiaya() {
         if (isset($_POST['kd_biaya'])) {
             $kd_biaya = $_POST['kd_biaya'];
             $penerima_biaya_kontrak = new PenerimaBiayaKontrak();
             $penerima_biaya = $penerima_biaya_kontrak->get_by_biaya($kd_biaya);
- 
+
             $biaya = new Biaya();
             $data_biaya = $biaya->get_by_id($kd_biaya);
             //var_dump($penerima_biaya);
-            if(count($penerima_biaya) == $data_biaya->jml_pegawai_bayar){
+            if (count($penerima_biaya) == $data_biaya->jml_pegawai_bayar) {
                 $hasil = true;
             } else {
                 $hasil = false;
             }
             echo json_encode(array('respon' => $hasil));
-            
         }
     }
-
 
     //menghapus data tagihan pb yang telah masuk ke tagihan kontrak pada tabel_tagihan_pb
     public function delTagihanPb() {
@@ -821,8 +819,6 @@ class KontrakController extends BaseController {
             $this->view->load('kontrak/add_pb_to_tagihan_dialog');
         }
     }
-    
-    
 
     //melakukan proses penambahan pb ke dalam data tagihan biaya kontrak
     public function addTagihanPb() {
@@ -852,24 +848,36 @@ class KontrakController extends BaseController {
 
     //menampilkan tabel biaya kontrak
     public function dataBiayaKontrak() {
-        if (isset($_POST['univ']) && isset($_POST['status'])) {
+        if (isset($_POST['univ']) && isset($_POST['status']) && isset($_POST['jadwal'])) {
             $univ = $_POST['univ'];
             //print_r ($univ);
             $status = $_POST['status'];
-            //print_r ($status);
+            $tahun = $_POST['jadwal'];
+            //print_r ($tahun);
             $biaya = new Biaya();
-            if ($univ == "" && $status == "") {
-                $data_biaya = $biaya->get_All();
+            if ($univ == "" && $status == "" && $tahun == "") {
+                $data_biaya = $biaya->get_by_filter();
             }
-            if ($univ != "" && $status == "") {
-                $data_biaya = $biaya->get_by_univ($univ);
+            if ($univ != "" && $status == "" && $tahun == "") {
+                $data_biaya = $biaya->get_by_filter($univ,"","");
             }
-            if ($univ == "" && $status != "") {
-                $data_biaya = $biaya->get_by_status($status);
+            if ($univ == "" && $status != "" && $tahun == "") {
+                $data_biaya = $biaya->get_by_filter("",$status,"");
             }
-
-            if ($univ != "" && $status != "") {
-                $data_biaya = $biaya->get_by_univ_status($univ, $status);
+            if ($univ == "" && $status == "" && $tahun != "") {
+                $data_biaya = $biaya->get_by_filter("","",$tahun);
+            }
+            if ($univ != "" && $status != "" && $tahun == "") {
+                $data_biaya = $biaya->get_by_filter($univ,$status,"");
+            }
+            if ($univ != "" && $status == "" && $tahun != "") {
+                $data_biaya = $biaya->get_by_filter($univ,"",$tahun);
+            }
+            if ($univ == "" && $status != "" && $tahun != "") {
+                $data_biaya = $biaya->get_by_filter("",$status,$tahun);
+            }
+            if ($univ != "" && $status != "" && $tahun != "") {
+                $data_biaya = $biaya->get_by_filter($univ,$status,$tahun);
             }
 
             $universitas = new Universitas($this->registry);
@@ -888,24 +896,36 @@ class KontrakController extends BaseController {
 
     //menampilkan cetak biaya kontrak
     public function cetakBiayaKontrak() {
-        if (isset($_POST['univ']) && isset($_POST['status'])) {
-            $univ = $_POST['univ'];
+        if (isset($_POST['univ']) && isset($_POST['status']) && isset($_POST['jadwal'])) {
+             $univ = $_POST['univ'];
             //print_r ($univ);
             $status = $_POST['status'];
-            //print_r ($status);
+            $tahun = $_POST['jadwal'];
+            //print_r ($tahun);
             $biaya = new Biaya();
-            if ($univ == "" && $status == "") {
-                $data_biaya = $biaya->get_All();
+            if ($univ == "" && $status == "" && $tahun == "") {
+                $data_biaya = $biaya->get_by_filter();
             }
-            if ($univ != "" && $status == "") {
-                $data_biaya = $biaya->get_by_univ($univ);
+            if ($univ != "" && $status == "" && $tahun == "") {
+                $data_biaya = $biaya->get_by_filter($univ,"","");
             }
-            if ($univ == "" && $status != "") {
-                $data_biaya = $biaya->get_by_status($status);
+            if ($univ == "" && $status != "" && $tahun == "") {
+                $data_biaya = $biaya->get_by_filter("",$status,"");
             }
-
-            if ($univ != "" && $status != "") {
-                $data_biaya = $biaya->get_by_univ_status($univ, $status);
+            if ($univ == "" && $status == "" && $tahun != "") {
+                $data_biaya = $biaya->get_by_filter("","",$tahun);
+            }
+            if ($univ != "" && $status != "" && $tahun == "") {
+                $data_biaya = $biaya->get_by_filter($univ,$status,"");
+            }
+            if ($univ != "" && $status == "" && $tahun != "") {
+                $data_biaya = $biaya->get_by_filter($univ,"",$tahun);
+            }
+            if ($univ == "" && $status != "" && $tahun != "") {
+                $data_biaya = $biaya->get_by_filter("",$status,$tahun);
+            }
+            if ($univ != "" && $status != "" && $tahun != "") {
+                $data_biaya = $biaya->get_by_filter($univ,$status,$tahun);
             }
 
             $universitas = new Universitas($this->registry);
@@ -920,6 +940,7 @@ class KontrakController extends BaseController {
             $this->view->univ = $univ;
             $this->view->data_univ = $data_univ;
             $this->view->status = $status;
+            $this->view->jadwal = $tahun;
             //var_dump($biaya);
             $this->view->data_biaya = $data_biaya;
             $this->view->load('kontrak/cetak_biaya_kontrak');

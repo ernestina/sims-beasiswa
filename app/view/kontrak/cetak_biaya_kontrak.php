@@ -14,13 +14,17 @@
     <body style="font-family:arial;color:black;font-size:12px;">
         <p align="center" style="font-weight: bold; font-size:16px;">
             MONITORING KONTRAK KERJASAMA <br />
-            DIREKTORAT JENDERAL PERBENDAHARAAN <br />
+            BEASISWA INTERNAL DIREKTORAT JENDERAL PERBENDAHARAAN <br />
             <?php
             if ($this->univ != "") {
                 echo "UNIVERSITAS : " . strtoupper($this->data_univ->get_nama()) . "<br />";
             }
             if ($this->status != "") {
-                echo "UNIVERSITAS :" . strtoupper($this->status) . "<br />";
+                echo "STATUS PEMBAYARAN:" . strtoupper($this->status) . "<br />";
+            }
+            
+            if ($this->jadwal != "") {
+                echo "JADWAL PEMBAYARAN : TAHUN" . strtoupper($this->jadwal) . "<br />";
             }
             ?>
 
@@ -34,7 +38,7 @@
             <th>Nama Biaya</th>
             <th>Jumlah Biaya</th>
             <th>Jadwal <br />dibayarkan</th>
-            <th>Jumlah dibayarkan</th>
+<!--            <th>Jumlah dibayarkan</th>-->
             <th>Status <br />Pembayaran</th>
             <th>No dan Tgl SP2D</th>
         </thead>
@@ -56,7 +60,7 @@
                 <td><?php echo $val->nama_biaya; ?></td>
                 <td><?php echo number_format($val->jml_biaya); ?></td>
                 <td><?php echo $val->jadwal_bayar; ?></td>
-                <td><?php echo number_format($this->biaya->get_biaya_by_kontrak_dibayar($val->kd_kontrak)); ?></td>
+<!--                <td><?php echo number_format($this->biaya->get_biaya_by_kontrak_dibayar($val->kd_kontrak)); ?></td>-->
                 <td>
                     <?php echo $val->status_bayar; ?>
                 </td>

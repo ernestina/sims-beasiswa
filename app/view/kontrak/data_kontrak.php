@@ -170,24 +170,27 @@
                 "Simpan": function() {
                     //fungsi cek update untuk validasi form edit_kontrak pada edit_kontrak_dialog.php
                     if(cekEdit()!=false){
-                    $("#loading").show();
-                    var formData = new FormData($('#form_edit_kontrak2')[0]);
-                    //alert(formData);
-                    $.ajax({
-                        url: '<?php echo URL; ?>kontrak/updateKontrak2',
-                        type: 'POST',
-                        data: formData,
-                        cache: false,
-                        //dataType: 'json',
-                        processData: false,
-                        contentType: false,
-                        success: function () {
-                            displayKontrak();
-                            $("#loading").hide();
-                            alert('Perubahan data berhasil disimpan');   
-                        }                       
-                    });
-                    //$( this ).dialog( "close" );
+                        $("#loading").show();
+                        var formData = new FormData($('#form_edit_kontrak2')[0]);
+                        //alert(formData);
+                        $.ajax({
+                            url: '<?php echo URL; ?>kontrak/updateKontrak2',
+                            type: 'POST',
+                            data: formData,
+                            cache: false,
+                            //dataType: 'json',
+                            processData: false,
+                            contentType: false,
+                            success: function () {
+                                displayKontrak();
+                                $("#loading").hide();
+                                alert('Perubahan data berhasil disimpan');   
+                            },
+                            error: function(jq,status,message) {
+                                alert('Jquery error. Status: ' + status + ' - Message: ' + message);
+                            }
+                        });
+                        //$( this ).dialog( "close" );
                     }
                 },
                 Batal: function() {
