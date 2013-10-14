@@ -4,13 +4,13 @@
     <form method="POST" action="<?php echo URL; ?>elemenBeasiswa/saveJadup" enctype="multipart/form-data">
 
         
-        <input hidden type="text" name="r_elem" value="1"/>       
+        <input  type="hidden" name="r_elem" value="1"/>       
         <fieldset>
             <legend>Rekam Biaya Hidup</legend>
             <div class="kolom1">
 
                 <label class="isian">Universitas : </label>
-                <select id="universitas" name="universitas" type="text">
+                <select id="kode_univ" name="kode_univ" type="text">
                     <?php
                     foreach ($this->univ as $val) {
                         echo "<option value=" . $val->get_kode_in() . ">" . $val->get_nama() . "</option>";
@@ -90,6 +90,13 @@
         
     </div>
 </div>
-<scrip type="text/javascript">
+<script type="text/javascript">
     
-</scrip>
+    $.post("<?php echo URL;?>elemenBeasiswa/tabel_penerima_jadup", { univ:$('#kode_univ').val(),jurusan:$('#kd_jur').val(),tahun:$('#tahun_masuk').val()}, 
+    function (data){
+        $('#tabel_penerima_jadup').fadeIn(100);
+        $('#tabel_penerima_jadup').html(data);
+    })
+    
+    
+</script>
