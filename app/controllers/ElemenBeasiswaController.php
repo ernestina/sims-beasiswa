@@ -25,93 +25,77 @@ class elemenBeasiswaController extends BaseController{
     }
     
     public function viewJadup(){
-        $elem = new ElemenBeasiswa($this->registry);
+       
         $univ = new Universitas($this->registry);
-        $this->view->univ = $univ;
-        $fakul = new Fakultas($this->registry);
-        $this->view->fakul = $fakul->get_fakul();
+        $this->view->univ = $univ->get_univ();
+        
         $jur = new Jurusan($this->registry);
         $this->view->jur = $jur->get_jurusan();
-        $jur2 = new Jurusan($this->registry);
-        $this->view->jur2 = $jur2;
+        
         $kon = new Kontrak($this->registry);
         $this->view->kon = $kon->get_All();
-        if (isset($_POST['add_elem'])) {
-            $kode_r = $_POST['kode_r'];
-            $kode_jur = $_POST['kode_jur'];
-            $jml_peg = $_POST['jml_peg'];
-            $bln = $_POST['bln'];
-            $thn = $_POST['thn'];
-            $total_bayar = $_POST['total_bayar'];
-            $no_sp2d = $_POST['no_sp2d'];
-            $tgl_sp2d = $_POST['tgl_sp2d'];
-            $file_sp2d = $_POST['file_sp2d'];
-            
-            $data = array(
-                'KD_R_ELEM_BEASISWA' => $kode_r,
-                'KD_JUR' => $kode_jur,
-                'JML_PEG_D_ELEM_BEASISWA' => $jml_peg,
-                'BLN_D_ELEM_BEASISWA' => $bln,
-                'THN_D_ELEM_BEASISWA' => $thn,
-                'TOTAL_BAYAR_D_ELEM_BEASISWA' => $total_bayar,
-                'NO_SP2D_D_ELEM_BEASISWA' => $no_sp2d,
-                'TGL_SP2D_D_ELEM_BEASISWA' => $tgl_sp2d,
-                'FILE_SP2D_D_ELEM_BEASISWA' => $file_sp2d
-            );
-            $elem->add_elem($data);
-        }
         
-        if (isset($_POST['update_elem'])) {
-            $kode_d = $_POST['kode_d'];
-            $kode_r = $_POST['kode_r'];
-            $kode_jur = $_POST['kode_jur'];
-            $jml_peg = $_POST['jml_peg'];
-            $bln = $_POST['bln'];
-            $thn = $_POST['thn'];
-            $total_bayar = $_POST['total_bayar'];
-            $no_sp2d = $_POST['no_sp2d'];
-            $tgl_sp2d = $_POST['tgl_sp2d'];
-            $file_sp2d = $_POST['file_sp2d'];
-            
-            $data = array(
-                'KD_D_ELEM_BEASISWA' => $kode_d,
-                'KD_R_ELEM_BEASISWA' => $kode_r,
-                'KD_JUR' => $kode_jur,
-                'JML_PEG_D_ELEM_BEASISWA' => $jml_peg,
-                'BLN_D_ELEM_BEASISWA' => $bln,
-                'THN_D_ELEM_BEASISWA' => $thn,
-                'TOTAL_BAYAR_D_ELEM_BEASISWA' => $total_bayar,
-                'NO_SP2D_D_ELEM_BEASISWA' => $no_sp2d,
-                'TGL_SP2D_D_ELEM_BEASISWA' => $tgl_sp2d,
-                'FILE_SP2D_D_ELEM_BEASISWA' => $file_sp2d
-            );
-            $elem->set_kd_d($kode_d);
-            $elem->update_elem($data);
-        }
+        $elem = new ElemenBeasiswa();
+        $this->view->elem = $elem->get_elem_jadup();
         
-        $this->view->data = $elem->get_elem(1);
+//        var_dump($elem->get_elem_jadup());
         $this->view->render('bantuan/jadup');
+                
+    }
+    public function data_index_jadup(){
+        
+//        if(isset($_POST['univ']) && isset($_POST['jurusan']) && isset($_POST['tahun'])){
+
+        //tinggal nambahin filter di get_elem_jadup
+            $elem = new ElemenBeasiswa();
+            $this->view->elem = $elem->get_elem_jadup();
+            
+            $this->view->load('bantuan/tabel_index_jadup');
+//        }
     }
     
-    public function addJadup($id = null){
-        $elem = new ElemenBeasiswa($this->registry);
-        $fakul = new Fakultas($this->registry);
-        $this->view->fakul = $fakul->get_fakul();
+    public function addJadup(){
+        $univ = new Universitas($this->registry);
+        $this->view->univ = $univ->get_univ();
+        
         $jur = new Jurusan($this->registry);
         $this->view->jur = $jur->get_jurusan();
+        
         $kon = new Kontrak($this->registry);
         $this->view->kon = $kon->get_All();
+        
         $pb = new Penerima($this->registry);
         $this->view->pb = $pb->get_penerima();
-        $elem = new ElemenBeasiswa($this->registry);
         
-        if (!is_null($id)) {
-            $elem->set_kd_d($id);
-            $this->view->d_ubah = $elem->get_elem_by_id($elem);
-        }
+        $ref_elem = new ReferensiElemenBeasiswa();
+        $this->view->jadup = $ref_elem->jadup();
+        
         $this->view->render('bantuan/rekam_jadup');
     }
     
+    public function saveJadup () {
+        $elem = new ElemenBeasiswa();
+        $elem->set_kd_r($_POST['r_elem']);
+        $elem->set_kd_jur($_POST['kode_jur']);
+        $elem->set_jml_peg($_POST['JML_PEG_D_ELEM_BEASISWA']);
+        $elem->set_bln($_POST['bln']);
+        $elem->set_thn($_POST['tahun_masuk']);
+        $elem->set_total_bayar($_POST['total_bayar']);
+        $elem->set_no_sp2d($_POST['no_sp2d']);
+        $elem->set_tgl_sp2d($_POST['tgl_sp2d']);
+        $elem->set_file_sp2d($_POST['fupload']);
+        
+//        var_dump($elem);
+        $elem->add_elem($elem);
+//        
+        header('location:'.URL.'elemenBeasiswa/viewJadup');
+    }
+    
+    public function updatejadup ($id) {
+        
+        
+    }
+            
     public function delJadup($id) {
         $elem = new ElemenBeasiswa($this->registry);
         if (is_null($id)) {

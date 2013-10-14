@@ -1,10 +1,10 @@
 <div id="top">
     <h2><a href="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'elemenBeasiswa/viewJadup' ?>">BIAYA TUNJANGAN HIDUP</a> > TAMBAH</h2> <!-- memakai breadcrumb -->
 
-    <form method="POST" action="<?php echo URL . 'elemenBeasiswa/saveJadup' ?>" enctype="multipart/form-data">
+    <form method="POST" action="<?php echo URL; ?>elemenBeasiswa/saveJadup" enctype="multipart/form-data">
 
-        <input type="hidden" id="kode_r" name="kode_r" size="12" value="<?php echo isset($this->d_ubah) ? $this->d_ubah->get_kd_r() : '1'; ?>">
-        <input type="hidden" id="jml_peg" name="jml_peg" size="12" value="<?php echo isset($this->d_ubah) ? $this->d_ubah->get_jml_peg() : ''; ?>">
+        
+        <input hidden type="text" name="r_elem" value="1"/>       
         <fieldset>
             <legend>Rekam Biaya Hidup</legend>
             <div class="kolom1">
@@ -86,27 +86,10 @@
             </div>
         </fieldset>
     </form>
-        <fieldset>
-            <table class="table-bordered zebra">
-                <thead>
-                    <th width= '3%'>No</th>
-                    <th width= '20%'>Nama</th>
-                    <th width= '15%'>Gol</th>
-                    <th width= '15%'>Status</th>
-                    <th width= '5%'>Jumlah Kehadiran</th>
-                    <th width= '10%'>Jumlah Kotor</th>
-                    <th width= '10%'>Pajak</th>
-                    <th width= '10%'>Jumlah Bersih</th>
-                    <th width= '5%'>Bank Penerima</th>
-                    <th width= '5%'>No. Rekening</th>
-                    <th width= '5%'>Pilih</th>
-                </thead>
-                <tbody style="text-align: center">
-                    <?php
-                    $no = 1;
-                    
-                    ?>
-                </tbody>
-            </table>
-        </fieldset>    
+    <div id="tabel_penerima_jadup">
+        
+    </div>
 </div>
+<scrip type="text/javascript">
+    
+</scrip>

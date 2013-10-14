@@ -25,6 +25,11 @@ class ElemenBeasiswa {
     private $_table_gol = 'r_gol';
     public $registry;
     
+    /**    
+     *  attribut tambahan 
+     */
+    private $_univ;
+    private $_jadup=1;
     /*
      * konstruktor
      */
@@ -167,7 +172,63 @@ class ElemenBeasiswa {
         
         return $data;
     }
-
+    
+    public function get_elem_jadup ($univ=null,$jurusan=null,$tahun=null){
+        
+        $sql = "SELECT 
+            a.KD_D_ELEM_BEASISWA AS KD_D_ELEM_BEASISWA,
+            a.KD_R_ELEM_BEASISWA AS KD_R_ELEM_BEASISWA,
+            b.NM_JUR as NM_JUR,
+            c.KD_FAKUL AS KD_FAKUL,
+            d.NM_UNIV as NM_UNIV,
+            a.NO_SP2D_D_ELEM_BEASISWA as NO_SP2D_D_ELEM_BEASISWA,
+            a.JML_PEG_D_ELEM_BEASISWA as JML_PEG_D_ELEM_BEASISWA,
+            a.BLN_D_ELEM_BEASISWA as BLN_D_ELEM_BEASISWA,
+            a.THN_D_ELEM_BEASISWA as THN_D_ELEM_BEASISWA,
+            a.TOTAL_BAYAR_D_ELEM_BEASISWA as TOTAL_BAYAR_D_ELEM_BEASISWA
+            FROM ".$this->_table." a
+                LEFT JOIN r_jur b ON a.KD_JUR = b.KD_JUR
+                LEFT JOIN r_fakul c ON b.KD_FAKUL = c.KD_FAKUL
+                LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV
+                WHERE KD_R_ELEM_BEASISWA=".$this->_jadup."
+                ";
+       //dalam kode 
+        
+//        if($univ!='' || $jurusan=='' || $tahun==''){
+////            echo '1';
+////            $sql .="WHERE NM_UNIV = ".$univ."";
+//        } 
+//        if ($univ!='' || $jurusan!='' || $tahun==''){
+////            echo '1 dan 2';
+////            $sql .="WHERE NM_UNIV = ".$univ." AND NM_JUR=".$tahun."";
+//        }
+//        if ($univ!='' || $jurusan!='' || $tahun!=''){
+////            echo '123';
+////            $sql .="WHERE NM_UNIV = ".$univ." AND THN_D_ELEM_BEASISWA=".$tahun." AND ";
+//        }
+            
+        $result = $this->db->select($sql);
+        
+//        return $result;
+        $data=array();
+        foreach ($result as $key => $value){
+            
+            $elem = new ElemenBeasiswa();
+            $elem->set_no_sp2d($value['NO_SP2D_D_ELEM_BEASISWA']);
+            $elem->set_univ($value['NM_UNIV']);
+            $elem->set_kd_jur($value['NM_JUR']);
+            $elem->set_jml_peg($value['JML_PEG_D_ELEM_BEASISWA']);
+            $elem->set_bln($value['BLN_D_ELEM_BEASISWA']);
+            $elem->set_thn($value['THN_D_ELEM_BEASISWA']);
+            $elem->set_total_bayar($value['TOTAL_BAYAR_D_ELEM_BEASISWA']);
+            $data []= $elem;
+        }     
+        return $data;
+    }
+    
+    public function filter ($univ=null,$jurusan=null,$tahun=null){
+        
+    }
 
     /*
      * setter
@@ -214,6 +275,14 @@ class ElemenBeasiswa {
     
     public function set_table($table){
         $this->_table = $table;
+    }
+    
+    /**
+     *  Setter tambahan untuk menggabungkan dengan tabel universitas
+     */
+    
+    public function set_univ ($univ){
+        $this->_univ = $univ;
     }
     
     /*
@@ -266,6 +335,13 @@ class ElemenBeasiswa {
         return $this->_file_sp2d;
     }
     
+    /**
+     * getter tambahan univ 
+     */
+    
+    public function get_univ (){
+        return $this->_univ;
+    }
     /*
      * destruktor
      */
