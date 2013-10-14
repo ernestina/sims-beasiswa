@@ -446,6 +446,39 @@ class Penerima {
         }
         return $data;
     }
+    
+    public function get_pb_jadup (){
+        $sql = "SELECT 
+            a.KD_PB AS KD_PB,
+            a.NM_PB AS NM_PB,
+            a.KD_GOL AS KD_GOL,
+            b.NM_STS_TB AS NM_STS_TB,
+            c.NM_BANK AS NM_BANK,
+            a.NO_REKENING_PB AS NO_REKENING_PB
+            FROM d_pb a
+            LEFT JOIN 
+            r_stb b ON a.KD_STS_TB = b.KD_STS_TB
+            LEFT JOIN
+            r_bank c ON a.KD_BANK = c.KD_BANK
+            ";
+        
+        $result = $this->db->select($sql);
+        
+        $data = array();
+        foreach ($result as $value){
+            $pb = new Penerima($this->registry);
+            
+            $pb->set_kd_pb($value['KD_PB']);
+            $pb->set_nama($value['NM_PB']);
+            $pb->set_status($value['NM_STS_TB']);
+            $pb->set_bank($value['NM_BANK']);
+            $pb->set_no_rek($value['NO_REKENING_PB']);
+
+            $data[]=$pb;
+        }
+        
+        return $data;
+    }
 
     /*
      * setter
