@@ -54,6 +54,14 @@ class elemenBeasiswaController extends BaseController{
 //        }
     }
     
+    public function tabel_penerima_jadup(){
+        $pb = new Penerima($this->registry);
+        
+        $this->view->pb = $pb->get_pb_jadup();
+        
+        $this->view->load('bantuan/tabel_penerima_jadup');
+    }
+    
     public function addJadup(){
         $univ = new Universitas($this->registry);
         $this->view->univ = $univ->get_univ();
@@ -109,86 +117,44 @@ class elemenBeasiswaController extends BaseController{
     }
     
     public function viewUangBuku(){
-        $elem = new ElemenBeasiswa($this->registry);
-        $fakul = new Fakultas($this->registry);
-        $this->view->fakul = $fakul->get_fakul();
+       
+        $univ = new Universitas($this->registry);
+        $this->view->univ = $univ->get_univ();
+        
         $jur = new Jurusan($this->registry);
         $this->view->jur = $jur->get_jurusan();
+        
         $kon = new Kontrak($this->registry);
         $this->view->kon = $kon->get_All();
-        if (isset($_POST['add_elem'])) {
-            $kode_r = $_POST['kode_r'];
-            $kode_jur = $_POST['kode_jur'];
-            $jml_peg = $_POST['jml_peg'];
-            $bln = $_POST['bln'];
-            $thn = $_POST['thn'];
-            $total_bayar = $_POST['total_bayar'];
-            $no_sp2d = $_POST['no_sp2d'];
-            $tgl_sp2d = $_POST['tgl_sp2d'];
-            $file_sp2d = $_POST['file_sp2d'];
-            
-            $data = array(
-                'KD_R_ELEM_BEASISWA' => $kode_r,
-                'KD_JUR' => $kode_jur,
-                'JML_PEG_D_ELEM_BEASISWA' => $jml_peg,
-                'BLN_D_ELEM_BEASISWA' => $bln,
-                'THN_D_ELEM_BEASISWA' => $thn,
-                'TOTAL_BAYAR_D_ELEM_BEASISWA' => $total_bayar,
-                'NO_SP2D_D_ELEM_BEASISWA' => $no_sp2d,
-                'TGL_SP2D_D_ELEM_BEASISWA' => $tgl_sp2d,
-                'FILE_SP2D_D_ELEM_BEASISWA' => $file_sp2d
-            );
-            $elem->add_elem($data);
-        }
         
-        if (isset($_POST['update_elem'])) {
-            $kode_d = $_POST['kode_d'];
-            $kode_r = $_POST['kode_r'];
-            $kode_jur = $_POST['kode_jur'];
-            $jml_peg = $_POST['jml_peg'];
-            $bln = $_POST['bln'];
-            $thn = $_POST['thn'];
-            $total_bayar = $_POST['total_bayar'];
-            $no_sp2d = $_POST['no_sp2d'];
-            $tgl_sp2d = $_POST['tgl_sp2d'];
-            $file_sp2d = $_POST['file_sp2d'];
-            
-            $data = array(
-                'KD_D_ELEM_BEASISWA' => $kode_d,
-                'KD_R_ELEM_BEASISWA' => $kode_r,
-                'KD_JUR' => $kode_jur,
-                'JML_PEG_D_ELEM_BEASISWA' => $jml_peg,
-                'BLN_D_ELEM_BEASISWA' => $bln,
-                'THN_D_ELEM_BEASISWA' => $thn,
-                'TOTAL_BAYAR_D_ELEM_BEASISWA' => $total_bayar,
-                'NO_SP2D_D_ELEM_BEASISWA' => $no_sp2d,
-                'TGL_SP2D_D_ELEM_BEASISWA' => $tgl_sp2d,
-                'FILE_SP2D_D_ELEM_BEASISWA' => $file_sp2d
-            );
-            $elem->set_kd_d($kode_d);
-            $elem->update_elem($data);
-        }
+        $elem = new ElemenBeasiswa();
+        $this->view->elem = $elem->get_elem_buku();
         
-        $this->view->data = $elem->get_elem(2);
         $this->view->render('bantuan/buku');
     }
     
+    public function data_index_buku (){
+        $elem = new ElemenBeasiswa();
+        
+        $this->view->buku = $elem->get_elem_buku();
+        $this->view->load('bantuan/tabel_index_buku');
+    }
+    
+    public function tabel_penerima_buku (){
+        
+    }
+    
     public function addUangBuku($id = null){
-        $elem = new ElemenBeasiswa($this->registry);
-        $fakul = new Fakultas($this->registry);
-        $this->view->fakul = $fakul->get_fakul();
+        
+        $univ = new Universitas($this->registry);
+        $this->view->univ = $univ->get_univ();
         $jur = new Jurusan($this->registry);
         $this->view->jur = $jur->get_jurusan();
         $kon = new Kontrak($this->registry);
         $this->view->kon = $kon->get_All();
-        $pb = new Penerima($this->registry);
-        $this->view->pb = $pb->get_penerima();
-        $elem = new ElemenBeasiswa($this->registry);
+        $ref_elem = new ReferensiElemenBeasiswa();
+        $this->view->buku = $ref_elem->buku();
         
-        if (!is_null($id)) {
-            $elem->set_kd_d($id);
-            $this->view->d_ubah = $elem->get_elem_by_id($elem);
-        }
         $this->view->render('bantuan/rekam_buku');
     }
     
@@ -267,6 +233,11 @@ class elemenBeasiswaController extends BaseController{
         
         $this->view->data = $elem->get_elem(3);
         $this->view->render('bantuan/biaya_skripsi');
+    }
+    
+    public function data_index_skripsi () {
+        $elem = new ElemenBeasiswa();
+        $this->view->skripsi = $elem->get_elem_skripsi();
     }
     
     public function addSkripsi($id = null){
