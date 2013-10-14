@@ -93,7 +93,7 @@
                         <ul>
                             <li><a href="<?php echo URL . 'elemenBeasiswa/mon_pembayaran' ?>"><i class="icon-tags icon-white"></i>  Monitoring Pembayaran</a></li>
                             <li><a href="<?php echo URL . 'elemenBeasiswa/viewJadup'; ?>"><i class="icon-leaf icon-white"></i>  Tunjangan Hidup</a></li>
-                            <li><a href="<?php echo URL . 'elemenBeasiswa/viewBuku'; ?>"><i class="icon-book icon-white"></i>  Tunjangan Buku</a></li>
+                            <li><a href="<?php echo URL . 'elemenBeasiswa/viewUangBuku'; ?>"><i class="icon-book icon-white"></i>  Tunjangan Buku</a></li>
                             <li><a href="<?php echo URL . 'elemenBeasiswa/viewSkripsi'; ?>" style="font-size: 70%"><i class="icon-certificate icon-white"></i>  Tunjangan Skripsi/TA/Tesis</a></li>
                         </ul>
                     </li>
