@@ -29,7 +29,7 @@ class User {
                 ".$this->_table2.".nama as AKSES_USER, ".$this->_table.".FOTO_USER FROM ".$this->_table." LEFT JOIN ".$this->_table2."
                 on ".$this->_table.".AKSES_USER = ".$this->_table2.".id ";
         if ($level) {
-            $sql .=" WHERE AKSES_USER= 'user'";
+            $sql .=" WHERE AKSES_USER= '2'";
         }
 
         $result = $this->_db->select($sql);
