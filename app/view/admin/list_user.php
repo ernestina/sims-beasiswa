@@ -8,9 +8,12 @@
 
                     <div class= "kiri">
                         <input type="hidden" name="id" id="id" value="" size="30">
-                        <label>NIP</label><input type="text" name="nip" id="nip" value="" size="30"/><div id="warningnip" ></div>
-                        <label>Nama</label><input type="text" name="nama" id="nama" value="" size="30"/><div id="warningnama"></div>
-                        <label>PASS</label><input type="password" name="pass" id="pass" value="" size="30"/><div id="warningpass"></div>
+                        <div id="warningnip" ></div>
+                        <label>NIP</label><input type="text" name="nip" id="nip" value="" size="30"/>
+                        <div id="warningnama"></div>
+                        <label>Nama</label><input type="text" name="nama" id="nama" value="" size="30"/>
+                        <div id="warningpass"></div>
+                        <label>PASS</label><input type="password" name="pass" id="pass" value="" size="30"/>
                         <label>CONFIRM PASS</label><input type="password" name="cpass" id="cpass" value="" size="30"/>
                         <label>AKSES</label>
                         <select type="text" name="akses">

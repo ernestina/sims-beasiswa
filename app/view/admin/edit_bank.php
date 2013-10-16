@@ -6,10 +6,9 @@
                 <form method="POST" name="myform" action="<?php echo URL . 'admin/updateBank'; ?>" onsubmit="return validate()">
                     <label></label><input type="hidden" name="id" id="id" value="<?php echo $this->data->get_id(); ?>" size="30">
                     <div class="kiri">
-                        <label>Nama</label><input type="text" name="nama" id="nama" value="<?php echo $this->data->get_nama(); ?>" size="30"><div id="warningnama"></div>
-
+                        <div id="warningnama"></div>
+                        <label>Nama</label><input type="text" name="nama" id="nama_bank" value="<?php echo $this->data->get_nama(); ?>" size="30">
                         <label>Keterangan</label><textarea type="text" rows="8" name="keterangan" id="keterangan" value="" size="50"><?php echo $this->data->get_keterangan(); ?></textarea>
-
                         <ul class="inline tengah">
                             <li><input class="normal" type="reset" onclick="window.location.href='<?php echo URL . "admin/list_bank"; ?>'" value="BATAL"></li>
                             <li><input class="sukses" type="submit" name="submit" value="SIMPAN"></li>
@@ -49,6 +48,11 @@
     </div>
 </div> <!--end top-->
 <script type="text/javascript">
+    
+    $('#nama_bank').keyup(function() {
+        if(document.getElementById('nama_bank').value !=''){$('#warningnama').fadeOut(200);}                 
+    })
+    
     function validate (){
         if( document.myform.nama.value == "" )
         {

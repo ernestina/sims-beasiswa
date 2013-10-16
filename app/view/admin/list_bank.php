@@ -5,7 +5,8 @@
             <div id="form-input">
                 <form method="POST" action="<?php echo URL . 'admin/addBank' ?>" name="myform" onsubmit="return(validate())">
                     <div class="kiri">
-                        <label>Nama</label><input type="text" name="nama" id="nama" size="30"><div id="warningnama"></div>
+                        <div id="warningnama"></div>
+                        <label>Nama</label><input type="text" name="nama" id="nama" size="30">
                         <label>Keterangan</label><textarea type="text" name="keterangan" id="keterangan" rows="8"></textarea>
                         <ul class="inline tengah">
                             <li><input class="normal" type="submit" onclick="window.location.href='<?php echo URL . "admin/list_bank"; ?>'" value="BATAL"></li>
