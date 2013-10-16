@@ -535,13 +535,13 @@ class PenerimaController extends BaseController{
         $nilai->add_nilai();
     }
     
-    public function get_nilai($kd_pb){
+    public function get_nilai($kd_pb,$url=null){
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($kd_pb);
         $nil = new Nilai($this->registry);
         $this->view->d_pb = $pb->get_penerima_by_id($pb);
         $this->view->d_nil= $nil->get_nilai($pb);
-        
+        if(!is_null($url)) $this->view->url = $url;
         $this->view->load('profil/tabel_nilai');
     }
     

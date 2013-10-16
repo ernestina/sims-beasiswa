@@ -291,7 +291,7 @@ function callFromDialog(id_pb,kategori){
         case 'problem':
             $.ajax({
                 type:'POST',
-                url:'<?php echo URL;?>penerima/get_masalah/'+id_pb,
+                url:'<?php echo URL;?>penerima/get_masalah/'+id_pb+'/editpb',
                 data:'',
                 success:function(data){
                     $('#t_masalah').fadeIn(200);
@@ -302,7 +302,7 @@ function callFromDialog(id_pb,kategori){
         case 'nilai':
             $.ajax({
                 type:'POST',
-                url:'<?php echo URL;?>penerima/get_nilai/'+id_pb,
+                url:'<?php echo URL;?>penerima/get_nilai/'+id_pb+'/editpb',
                 data:'',
                 success:function(data){
                     $('#t_nilai').fadeIn(200);
