@@ -6,7 +6,7 @@
                 <form method="POST" action="<?php echo URL . 'admin/addBank' ?>" name="myform" onsubmit="return(validate())">
                     <div class="kiri">
                         <div id="warningnama"></div>
-                        <label>Nama</label><input type="text" name="nama" id="nama" size="30">
+                        <label>Nama</label><input type="text" name="nama" id="nama_bank" size="30">
                         <label>Keterangan</label><textarea type="text" name="keterangan" id="keterangan" rows="8"></textarea>
                         <ul class="inline tengah">
                             <li><input class="normal" type="submit" onclick="window.location.href='<?php echo URL . "admin/list_bank"; ?>'" value="BATAL"></li>
@@ -53,6 +53,11 @@
 </div>
 
 <script type="text/javascript">
+    
+    $('#nama_bank').keyup(function() {
+        if(document.getElementById('nama_bank').value !=''){$('#warningnama').fadeOut(200);}                 
+    })
+    
     function validate (){
         if( document.myform.nama.value == "" )
         {
