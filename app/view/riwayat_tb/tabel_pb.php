@@ -21,3 +21,14 @@
                 }
             ?>
         </table>
+
+<script type="text/javascript">
+function del_pb(nomor){
+    var answer = "Data surat tugas nomor "+nomor+" akan dihapus?";
+    if(confirm(answer)){
+        return true;
+    }else{
+        return false;
+    }
+}
+</script>

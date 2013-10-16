@@ -299,8 +299,9 @@ class Jurusan {
 
     public function get_jur_by_univ($kd_univ) {
         $table = "r_jur a, r_fakul b";
-        $where = "a.KD_FAKUL = b.KD_FAKUL and b.KD_UNIV = '" . $kd_univ . "'";
+        $where = "a.KD_FAKUL = b.KD_FAKUL and b.KD_UNIV = " . $kd_univ ;
         $sql = "SELECT * FROM $table where $where";
+        echo $sql;
         $result = $this->db->select($sql);
         //var_dump($result);
         $data = array();

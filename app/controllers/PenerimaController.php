@@ -377,7 +377,7 @@ class PenerimaController extends BaseController{
         $file = 'files/'.$pb->get_foto();
         $pb->delete_penerima();
         if(file_exists($file)) unlink($file);
-        header('location:'.URL.'penerima/penerima');
+        header('location:'.URL.'penerima/datapb');
     }
     
     public function get_nama_peg(){

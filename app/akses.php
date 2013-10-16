@@ -178,7 +178,6 @@ $akses['Penerima'] = array(
                 '__construct',
                 'profil',
                 'datapb',
-                'penerima',
                 'pb_by_st',
                 'find_pb',
                 'add_from_dialog_to_st',

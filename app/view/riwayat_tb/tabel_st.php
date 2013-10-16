@@ -24,7 +24,7 @@
                         echo "<td>".$val->get_jenis_st()."</td>";
                         echo "<td>".$val->get_jur()."</td>";
                         echo "<td><a href=".URL."surattugas/addpb/".$val->get_kd_st()."><i class=\"icon-user\"></i></a>  &nbsp &nbsp
-                            <a href=".URL."surattugas/del_st/".$val->get_kd_st()."><i class=\"icon-trash\"></i></a> &nbsp &nbsp
+                            <a href=".URL."surattugas/del_st/".$val->get_kd_st()." onClick='return del(\"".$val->get_nomor()."\")'><i class=\"icon-trash\"></i></a> &nbsp &nbsp
                             <a href=".URL."surattugas/datast/".$val->get_kd_st()."><i class=\"icon-pencil\"></i></a></td>";
                         echo "</tr>";
                         $no++;
@@ -47,6 +47,15 @@ function view(file){
     var top = (screen.height/2)-(h/2);
     var title = "tampilan surat tugas";
     window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+}
+
+function del(nomor){
+    var answer = "Data surat tugas nomor "+nomor+" akan dihapus?";
+    if(confirm(answer)){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 </script>

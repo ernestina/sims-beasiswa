@@ -27,7 +27,7 @@
                     echo "<td>".Tanggal::bulan_indo($perk_stop[0])." ".$perk_stop[1]."</td>";
                     echo "<td>".Tanggal::bulan_indo($perk_go[0])." ".$perk_go[1]."</td>";
                     echo "<td>".$d_pb[2]."</td>";
-                    echo "<td><a href=".URL."cuti/del_sc/".$val->get_kode_cuti()."><i class=\"icon-trash\"></i></a> &nbsp &nbsp
+                    echo "<td><a href=".URL."cuti/del_sc/".$val->get_kode_cuti()." onClick='return del(\"$d_pb[0]\",\"".$val->get_no_surat_cuti()."\")'><i class=\"icon-trash\"></i></a> &nbsp &nbsp
                         <a href=".URL."cuti/datasc/".$val->get_kode_cuti()."><i class=\"icon-pencil\"></i></a></td>";
                     echo "</tr>";
                     $no++;
@@ -46,6 +46,15 @@ function view(file){
     var top = (screen.height/2)-(h/2);
     var title = "tampilan surat tugas";
     window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+}
+
+function del(name,nomor){
+    var answer = "Data surat cuti nomor "+nomor+" an."+name+" akan dihapus?";
+    if(confirm(answer)){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 </script>

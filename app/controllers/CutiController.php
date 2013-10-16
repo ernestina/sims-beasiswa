@@ -22,7 +22,7 @@ class CutiController extends BaseController{
             $jsc = $_POST['jsc'];
             $tgl_sc = $_POST['tgl_sc'];
             $kd_pb = $_POST['kd_pb'];
-            $jur = $_POST['jur'];
+//            $jur = $_POST['jur'];
             $sem_mul = $_POST['sem_mulai'];
             $thn_mul = $_POST['thn_mulai'];
             $sem_sel = $_POST['sem_sel'];

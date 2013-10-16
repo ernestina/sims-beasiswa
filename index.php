@@ -51,6 +51,7 @@ $registry->auth->add_access('surattugas','pic',$akses['Surattugas']);
 $registry->auth->add_access('elemenBeasiswa','pic',$akses['ElemenBeasiswa']);
 $registry->auth->add_access('kontrak','pic',$akses['Kontrak']);
 $registry->auth->add_access('penerima','pic',$akses['Penerima']);
+$registry->auth->add_access('admin','pic','get_jur_by_univ');
 $registry->auth->add_access('auth','pic','logout');
 $registry->auth->add_access('auth','guest',$akses['Auth']);
 $registry->exception = new ClassException();

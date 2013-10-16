@@ -18,7 +18,7 @@
                 echo "<td>".Golongan::golongan_int_string($v->get_gol())."</td>";
                 echo "<td>".$v->get_unit_asal()."</td>";
                 echo "<td>".$v->get_jur()."</td>";
-                echo "<td><a href=".URL."penerima/delpb/".$v->get_kd_pb()."><i class=\"icon-trash\"></i></a> &nbsp &nbsp
+                echo "<td><a href=".URL."penerima/delpb/".$v->get_kd_pb()." onClick='return del(\"".$v->get_nama()."\")'><i class=\"icon-trash\"></i></a> &nbsp &nbsp
 				<a href=".URL."penerima/profil/".$v->get_kd_pb()."><i class=\"icon-pencil\"></i></a>
 				</td>";
                 echo "</tr>";
@@ -26,3 +26,14 @@
             }
         ?>
     </table>
+
+<script type="text/javascript">
+function del(nama){
+    var answer = "Data penerima beasiswa an. "+nama+" akan dihapus?";
+    if(confirm(answer)){
+        return true;
+    }else{
+        return false;
+    }
+}
+</script>

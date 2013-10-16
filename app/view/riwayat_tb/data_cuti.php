@@ -43,7 +43,7 @@
             <input style="<?php echo isset($this->d_ubah)?'':'display:none';?>" type="text" name="nip_pb" id="nip_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb->get_nip():'';?>" readonly>
             <input style="<?php echo isset($this->d_ubah)?'':'display:none';?>" type="text" name="nama_pb" id="nama_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb->get_nama():'';?>" readonly>
             <input type="hidden" name="kd_pb" id="kd_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb->get_kd_pb():'';?>">
-            </br><label>Universitas</label><select id="univ" name="univ" onChange="get_jurusan(this.value);">
+<!--            </br><label>Universitas</label><select id="univ" name="univ" onChange="get_jurusan(this.value);">
                 <option value="0">-Pilih Universitas-</option>
                 <?php 
                     foreach($this->d_univ as $v){
@@ -54,7 +54,7 @@
             <div id="wjur" class="error"></div>
             <div style="display:none"id="div_jur">d
             <label>Jurusan</label><select name="jur" id="jur"></select>
-            </div>
+            </div>-->
             <div id="wprdmulai" class="error"></div>
             <label>Periode Mulai Cuti</label>
             <select name="sem_mulai" id="sem_mulai">
@@ -198,11 +198,11 @@
 //            }
         })
         
-        $('#jur').change(function(){
-            if($('#jur').val()!=''){
-                $('#wjur').fadeOut(200);
-            }
-        })
+//        $('#jur').change(function(){
+//            if($('#jur').val()!=''){
+//                $('#wjur').fadeOut(200);
+//            }
+//        })
         
         
         $('#file').change(function(){
@@ -256,20 +256,20 @@
         });
     }
     
-    function get_jurusan(univ){
-        $.post("<?php echo URL; ?>admin/get_jur_by_univ", {param:""+univ+""},
-        function(data){
-            $('#div_jur').fadeIn(200);
-            $('#jur').html(data);
-        });
-    }
+//    function get_jurusan(univ){
+//        $.post("<?php echo URL; ?>admin/get_jur_by_univ", {param:""+univ+""},
+//        function(data){
+//            $('#div_jur').fadeIn(200);
+//            $('#jur').html(data);
+//        });
+//    }
     
     function cek(){
         var string_pattern = '/^[a-zA-Z\s0-9]*$';
         var no_sc = document.getElementById('no_sc').value;
         var tgl_sc = document.getElementById('datepicker').value;
         var pb = document.getElementById('kd_pb').value;
-        var jur = document.getElementById('jur').value;
+//        var jur = document.getElementById('jur').value;
         var sfile = document.getElementById('file').value;
         var jml =0;
         if(no_sc==''){
@@ -293,12 +293,12 @@
             jml++;
         }
         
-        if(jur==''){
-            var wjur = 'Jurusan belum dipilih!';
-            $('#wjur').fadeIn(0);
-            $('#wjur').html(wjur);
-            jml++;
-        }
+//        if(jur==''){
+//            var wjur = 'Jurusan belum dipilih!';
+//            $('#wjur').fadeIn(0);
+//            $('#wjur').html(wjur);
+//            jml++;
+//        }
         
         if(sfile==''){
             var cek_id = document.getElementById('kd_sc');

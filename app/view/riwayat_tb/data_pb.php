@@ -55,7 +55,6 @@ $(function(){
     })
     $('#thn').change(function(){
         thn_masuk = $('#thn').val();
-        alert(thn_masuk);
         filter(document.getElementById('univ').value,thn_masuk,document.getElementById('status').value);
     })
     $('#status').change(function(){
