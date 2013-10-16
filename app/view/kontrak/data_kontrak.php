@@ -7,7 +7,7 @@
             <td style="padding-top:15px;">
                 <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/display' ?>">
 <!--            <input type="hidden" name="pilih_univ">-->
-                    <select name="universitas" id="kd_univ">
+                    <select name="universitas" id="kd_univ" type="text">
                         <option value="">Semua</option>
                         <?php
                         foreach ($this->kd_univ as $univ) {
@@ -39,8 +39,8 @@
 </div>
 <div id="tb_kontrak">
 </div>
-<div class="kolom1">
-    <p>
+<div class="fitur">
+    <p style="margin-left: 30px">
         Keterangan:
         * Nilai kontrak dengan nilai total biaya kontrak tidak sama.
     </p>

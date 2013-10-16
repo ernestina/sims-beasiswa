@@ -1,7 +1,7 @@
 <div id="top">
     <h2>DATA KONTRAK KERJASAMA > BIAYA > TAMBAH <!-- entar pake breadcrumb--></h2>
     <input type="button" value="KEMBALI" onClick="location.href='<?php echo URL . 'kontrak/biaya/' . $this->kontrak->kd_kontrak; ?>'">
-</div>
+
 
 <div>
     <label class="isian">Nomor / Tanggal Kontrak</label><input type="text" size="50" readonly value="<?php echo $this->kontrak->no_kontrak . " / " . $this->kontrak->tgl_kontrak; ?>" disabled>
@@ -11,6 +11,7 @@
 <!--    <label class="isian">Nilai Kontrak</label><input type="text" size="14" readonly value="<?php echo number_format($this->kontrak->nilai_kontrak); ?>" disabled>
     <label class="isian">Kontrak Lama</label><input type="text" size="40" readonly value="<?php echo $this->kon_lama; ?>" disabled>-->
 </div>
+<br>
     <div>
         <div >
             <fieldset>
@@ -29,16 +30,16 @@
                     <div id="wjadwal_bayar"></div>
                     <label class="isian">Total Biaya*</label><input type="text" size="14" name="jml_biaya" id="jml_biaya" maxlength="14" readonly>
                     <div id="wjml_biaya"></div>
-                    <input type="submit" class="sukses" value="simpan" onClick="return simpan();">
+                    <input type="submit" class="sukses" value="Simpan" onClick="return simpan();">
                 </form>
             </fieldset>
         </div>
-        <br />
+        <br>
         <div>
             <fieldset>
                 <form method="POST" action="" enctype="multipart/form-data">
                     <div>
-                        <h2>Data Tagihan Biaya</h2>
+                        <h1>Data Tagihan Biaya</h1>
                         <div class="kolom1">
                             <label class="isian">No. BAST*</label><input type="text" size="30" disabled>
                             <label class="isian">Tgl. BAST*</label><input type="text" size="20" disabled>
@@ -56,7 +57,7 @@
                             <label class="isian">File Kuitansi*</label><input type="file" disabled>
                         </div>
                     </div>
-                    <input type="button" class="sukses" value="simpan">
+                    <input type="button" class="sukses" value="Simpan">
                 </form>
             </fieldset>
 
@@ -65,13 +66,13 @@
                 <fieldset>
                     <form method="POST" action="" enctype="multipart/form-data">
 
-                        <h2>Data Pembayaran Tagihan Biaya</h2>
-                        <label class="isian">No. SP2D*</label><input type="text" size="30" disabled></br>
-                        <label class="isian">Tgl. SP2D*</label><input type="text" size="20" disabled></br>
-                        <label class="isian">File SP2D*</label><input type="file" disabled></br>
+                        <h1>Data Pembayaran Tagihan Biaya</h1>
+                        <label class="isian">No. SP2D*</label><input type="text" size="30" disabled>
+                        <label class="isian">Tgl. SP2D*</label><input type="text" size="20" disabled>
+                        <label class="isian">File SP2D*</label><input type="file" disabled>
 <!--                            <label>Jumlah dibayar</label><input type="text" size="14" disabled></br>-->
 
-                        <input type="button" class="sukses" value="simpan">
+                        <input type="button" class="sukses" value="Simpan">
 
                     </form>
                 </fieldset>
@@ -81,6 +82,7 @@
         <div>Keterangan : *harus diisi</div>
     </div>
     <div id="loading" class="loading" style="display: none"><img src="<?php echo URL . 'public/icon/loading.gif'; ?>" /></div>
+</div>
     <script>
         $(document).ready(function(){ 
      

@@ -175,8 +175,8 @@ h2, legend {
 	}			
 	
 .kiri {
-	padding-left: 20px;
-	padding-bottom: 7px;}
+	padding: 0px 20px 7px 20px;
+	}
 
 .kanan {
 	float: right;
@@ -191,6 +191,7 @@ h2, legend {
 	width: 50%;
 	float: left;
 	margin: 20px 0px 0px 0px;
+	/*border: 1px solid red;*/
 }
 
 .kolom2 {
@@ -474,9 +475,8 @@ th, td {
     color: white;
     border-radius: 5px;
     padding-left: 5px;
-    padding-left: 5px;
     text-align: center;
-    
+    /*font-weight: bold;*/
 }
 
 /*icon by bootstrap twitter and glyphicon*/
@@ -1065,6 +1065,11 @@ th, td {
 
 .ui-dialog {
     z-index:1000;
+}
+
+.ui-widget{
+	font-family: "Nexa";
+	font-size: 97%;
 }
 
 .loading {

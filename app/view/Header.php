@@ -98,7 +98,7 @@
                         </ul>
                     </li>
                     <?php } ?>
-                    <li class="subnav">
+                    <li class="nav">
                         <a href="<?php echo URL . 'auth/logout' ?>">LOGOUT</a>
                     </li>
                     <li class="nav">

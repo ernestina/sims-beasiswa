@@ -208,6 +208,6 @@ $akses['Penerima'] = array(
                 'get_nip_data',
                 'filter_pb',
                 'cari'
-                );
+                );			
 
 ?>

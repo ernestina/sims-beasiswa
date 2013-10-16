@@ -2,7 +2,8 @@
 <fieldset>
     <form id="form_edit_kontrak2" method="POST" enctype="multipart/form-data" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/updateKontrak' ?>">
         <input type="hidden" name="update_kontrak">
-        <div class="kolom2">
+        <div class="kolom1">
+		<div class="kiri">
             <label>Nomor* </label><input type="text" name="nomor" id="nomor" size="30" value="<?php echo $this->data->no_kontrak; ?>">
             <div id="wnomor"></div>
             <label>Tanggal* </label><input type="text" name="tanggal" id="tanggal" size="30" readonly="readonly" value="<?php echo $this->data->tgl_kontrak; ?>">
@@ -39,7 +40,9 @@
             <label>Jumlah Pegawai*</label><input type="text" name="jml_peg" id="jml_peg" size="4" value="<?php echo $this->data->jml_pegawai_kontrak; ?>">
             <div id="wjml_peg"></div>
         </div>
+		</div>
         <div class="kolom2">
+		<div class="kiri">
 
             <label>Lama Semester*</label><select name="lama_semester" id="lama_semester" type="text">
                 <!--                <option value="">Pilih Lama Semester</option>-->
@@ -88,7 +91,7 @@
                 <input type="hidden" name="jur_def" id="jur_def" value="<?php echo $this->data->kd_jurusan; ?>">
                 <input type="hidden" name="kd_kontrak" id="kd_kontrak" value="<?php echo $this->data->kd_kontrak; ?>">
                 <input type="hidden" name="fupload_lama" id="fupload_lama" value="<?php echo $this->data->file_kontrak; ?>">
-
+			</div>
             </div>
     </form>
 </fieldset>

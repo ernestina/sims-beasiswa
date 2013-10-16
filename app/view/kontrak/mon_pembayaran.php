@@ -1,44 +1,43 @@
-<div>
-    MONITORING PEMBAYARAN KONTRAK
-</div>
-<div>
-    <div>
+<div id="top">
+    <h2>MONITORING PEMBAYARAN KONTRAK</h2>
+
+    
         <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/cetakBiayaKontrak' ?>" target="_blank">
-            <label>Universitas</label>
-            <select name="univ" id="univ">
+		<ul class="inline">
+            <li><label>Universitas</label></li>
+            <li><select name="univ" id="univ" type="text">
                 <option value="">Semua</option>
                 <?php foreach ($this->univ as $univ) { ?>
                     <option value="<?php echo $univ->get_kode_in(); ?>"><?php echo $univ->get_nama(); ?></option>
                 <?php } ?>
-            </select>
-            <label>Status pembayaran</label>
-            <select id="status" name="status">
-                <option value="">semua</option>
+            </select></li> &nbsp &nbsp 
+            <li><label>Status pembayaran</label></li>
+            <li><select id="status" name="status" type="text">
+                <option value="">Semua</option>
                 <option value="belum">belum</option>
                 <option value="proses">proses</option>
                 <option value="selesai">selesai</option>
-            </select>
-            <label>Jadwal Pembayaran</label>
-            <select id="jadwal" name="jadwal">
+            </select></li>
+            <li><label>Jadwal Pembayaran</label></li>
+            <li><select id="jadwal" name="jadwal" type="text">
                 <option value="">Semua</option>
                 <?php
                 for ($i = 2007; $i <= date('Y') + 1; $i++) {
                     ?>
                     <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
                 <?php } ?>
-            </select>
-
-            <div>
-                <input class="sukses" type="submit" value="CETAK">
-            </div>
+            </select></li>
+		</ul>
+            <table width="97%">
+                <tr><td><input class="sukses" type="submit" value="CETAK"></td></tr>
+            </table>
         </form>
-    </div>
+    
 
-</div>
 <div id="tb_biaya">
 
 </div>
-
+</div>
 <script>
     
     //menampilkan data biaya kontrak ketika halaman direfresh

@@ -3,23 +3,21 @@
     <h2><a href="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/display' ?>">DATA KONTRAK KERJASAMA</a> > BIAYA</h2> <!-- ntar pake breadcrumb -->
     <input type="button" value="KEMBALI" onClick="location.href='<?php echo URL . 'kontrak/display'; ?>'">
 
-    <div>
-        <div>
             <label class="isian">Nomor / Tanggal Kontrak</label><input type="text" size="50" readonly value="<?php echo $this->data_kontrak->no_kontrak . " / " . $this->data_kontrak->tgl_kontrak; ?>" disabled>
             <label class="isian">Program Studi</label><textarea type="text" rows="1" disabled><?php echo $this->nama_jur . " " . $this->nama_univ . " " . $this->data_kontrak->thn_masuk_kontrak; ?></textarea>
             <label class="isian">Jumlah Pegawai</label><input type="text" size="4" readonly value="<?php echo $this->data_kontrak->jml_pegawai_kontrak; ?>" disabled>
             <label class="isian">Lama Semester</label><input type="text" size="4" readonly value="<?php echo $this->data_kontrak->lama_semester_kontrak; ?>" disabled>
             <label class="isian">Nilai Kontrak</label><input type="text" size="14" readonly value="<?php echo number_format($this->data_kontrak->nilai_kontrak); ?>" disabled>
             <label class="isian">Kontrak Lama</label><input type="text" size="40" readonly value="<?php echo $this->kon_lama; ?>" disabled>
-        </div>
-        <div>
+       
 <!--            <input type="button" value="TAMBAH" onClick="location.href='<?php echo URL . 'kontrak/viewRekamBiaya/' . $this->data_kontrak->kd_kontrak; ?>'">-->
             <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/viewRekamBiaya' ?>">
             <input type="hidden" id="kd_kontrak" name="kd_kontrak" value="<?php echo $this->data_kontrak->kd_kontrak; ?>">
-            <input class="sukses" type="submit" value="Tambah">
+		<table width="95%">
+			<tr><td><input class="sukses" type="submit" value="Tambah"></td></tr>
+		</table>
             </form>
-        </div>
-    </div>
+       
 
     <div id="table-content">
         <table class="table-bordered zebra scroll" id="table">
