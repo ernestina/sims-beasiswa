@@ -1,6 +1,6 @@
-<div>
-    DAFTAR BIAYA BUKU
-</div>
+<div id="top">
+    <h2>DAFTAR BIAYA BUKU</h2>
+
 <form method="POST">
     <div id="dropdown-menu">
 
@@ -56,7 +56,7 @@
 <div id="tabel_index_buku">
     
 </div>
-
+</div>
 <script type="text/javascript">
     
     $.post("<?php echo URL;?>elemenBeasiswa/data_index_buku", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()}, 

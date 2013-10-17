@@ -2,8 +2,8 @@
     <h2>DAFTAR BIAYA TUGAS AKHIR/SKRIPSI/TESIS/DESERTASI</h2>
 
 <div id="dropdown-menu">
-    
-        <table style="margin-left: 10px" width="98%" >
+
+		<table style="margin-left: 10px" width="98%">
             <tr>
                 <td>
                     <label>Universitas</label>

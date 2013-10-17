@@ -125,7 +125,8 @@
 			<!--row berikut hanya muncul jika status TB: lulus dan/atau tidak lulus -->
 			
 			<label class="isian">Tanggal Akhir TB :</label>
-			<input type="text" id="tgl_akhir_TB" name="tgl_akhir_TB" disabled/>
+			<input type="text" id="tgl_akhir_TB" name="tgl_akhir_TB" disabled     />
+			<input type="text" id="tgl_akhir_TB" name="tgl_akhir_TB" disabled     />
                         <label class="isian">Tanggal Lapor Selesai TB :</label>
 
                         <input type="text" id="datepicker" name="tgl_lapor" value="<?php echo isset($this->tgl_lapor)?$this->tgl_lapor:(($this->d_pb->get_tgl_lapor()=='0000-00-00' OR $this->d_pb->get_tgl_lapor()=='')?'':(Tanggal::ubahFormatToDatePicker($this->d_pb->get_tgl_lapor())));?>"/>

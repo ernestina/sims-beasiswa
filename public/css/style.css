@@ -272,7 +272,7 @@ select.utama,
 textarea.utama {
 	width: 450px;
 }
-input.unggah {
+input.unggah, select.unggah {
 	width: 140px;
 	margin-top: 0px;
 	margin-bottom: 0px;}
@@ -281,7 +281,7 @@ input.keterangan{
 	width: 210px;
 	}
 
-input.mini {
+input.mini, select.mini {
 	width: 50px;}
 
 textarea.midi {
@@ -324,9 +324,7 @@ input[type="search"] {
 }
 
 input[type="checkbox"] {
-	margin-left: 0px;
-	margin-top: 0px;
-	
+	margin: 0px;
 }
 
 input[type="button"], button{
@@ -369,6 +367,21 @@ button :focus, button:hover, input[type="button"] :focus, input[type="button"] :
 input[disabled]{
 	cursor: not-allowed;
 	background-color: #eeeeee;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 4px 0 0;
+  margin-top: 1px \9;
+  *margin-top: 0;
+  line-height: normal;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:focus {
+  outline: thin dotted #333;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
 }
 
 textarea :focus, textarea:hover {

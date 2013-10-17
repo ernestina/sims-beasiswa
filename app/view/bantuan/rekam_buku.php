@@ -1,7 +1,7 @@
-<div>
-    BIAYA BUKU > TAMBAH <!-- memakai breadcrumb -->
-</div>
-<div>
+<div id="top">
+    <h2>BIAYA BUKU > TAMBAH</h2> <!-- memakai breadcrumb -->
+
+
     <form method="POST" action="<?php
 echo URL;
 'elemenBeasiswa/viewUangBuku'
@@ -15,13 +15,73 @@ echo URL;
             <input type="hidden" id="kode_r" name="kode_r" size="12" value="<?php echo isset($this->d_ubah) ? $this->d_ubah->get_kd_r() : '2'; ?>">
             <input type="hidden" id="jml_peg" name="jml_peg" size="12" value="<?php echo isset($this->d_ubah) ? $this->d_ubah->get_jml_peg() : ''; ?>">
             <fieldset>
-                <table>
+                <!--div class="tigakolom"-->
+					<div class="kolom1">
+						<label class="isian">Universitas : </label>
+                            <select type="text" id="universitas" name="universitas">
+                                <?php
+                                foreach ($this->univ as $val) {
+                                    echo "<option value=" . $val->get_kode_in() . " >" . $val->get_nama() . "</option>";
+                                }
+                                ?> 
+                            </select>
+                            <label class="isian">Jurusan/Prodi : </label>
+                            <select type="text" id="jurusan" name="jurusan">
+                                <?php
+                                foreach ($this->jur as $val2) {
+                                    echo "<option value=" . $val2->get_kode_jur() . " >" . $val2->get_nama() . "</option>";
+                                }
+                                ?>
+                            </select>
+                            <label class="isian">Tahun Masuk : </label>
+                            <select type="text" name="tahun_masuk">
+                                <?php
+                                foreach ($this->kon as $val3) {
+                                    echo "<option value=" . $val3->thn_masuk_kontrak . " >" . $val3->thn_masuk_kontrak . "</option>";
+                                }
+                                ?>
+                            </select>
+					
+						<label class="isian">Semester dan Tahun : </label>
+					<ul class="inline" style="margin-bottom: 0px">
+                            <li><select type="text" id="bln" name="bln" class="unggah">
+                                <option value="1">Semester I</option>
+                                <option value="2">Semester II</option>
+                            </select></li>
+                            <li><select type="text" id="thn" name="thn" style="width: 67px">
+                                <option value="2012">2012</option>
+                                <option value="2013">2013</option>
+                                <option value="2014">2014</option>
+                                <option value="2015">2015</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                            </select></li>
+					</ul>
+					</div>
+					
+					<div class="kolom2" style="margin-left: -40px">
+							<label class="isian">Biaya Per Pegawai : </label>
+                            <input disabled type="text" id="biaya_buku" name="biaya_buku" size="12" value="<?php echo $this->buku ?>"/>
+                            <label class="isian">Total Biaya : </label>
+                            <input type="text" id="total_bayar" name="total_bayar" size="12" value="<?php echo isset($this->d_ubah) ? $this->d_ubah->get_total_bayar() : ''; ?>">
+					
+					
+						<label class="isian">No. SP2D : </label>
+                            <input type="text" id="no_sp2d" name="no_sp2d" size="20" value="<?php echo isset($this->d_ubah) ? $this->d_ubah->get_no_sp2d() : ''; ?>"/>
+                            <label class="isian">Tgl SP2D : </label>
+                            <input type="text" id="tgl_sp2d" name="tgl_sp2d" size="20" value="<?php echo isset($this->d_ubah) ? $this->d_ubah->get_tgl_sp2d() : ''; ?>"/>
+                            <label class="isian">File SP2D : </label>
+                            <input type="file" id="fupload" name="fupload" size="20" />
+					</div>
+				
+				
+				<!--table border="1" width="100%" valign="top">
                     <tr>
                         <td>
                             <label>Universitas : </label>
                             <select type="text" id="universitas" name="universitas">
                                 <?php
-                                foreach ($this->univ as $val) {
+                                /*foreach ($this->univ as $val) {
                                     echo "<option value=" . $val->get_kode_in() . " >" . $val->get_nama() . "</option>";
                                 }
                                 ?> 
@@ -66,16 +126,16 @@ echo URL;
                             <label>No. SP2D : </label>
                             <input type="text" id="no_sp2d" name="no_sp2d" size="20" value="<?php echo isset($this->d_ubah) ? $this->d_ubah->get_no_sp2d() : ''; ?>"/>
                             <label>Tgl SP2D : </label>
-                            <input type="text" id="tgl_sp2d" name="tgl_sp2d" size="20" value="<?php echo isset($this->d_ubah) ? $this->d_ubah->get_tgl_sp2d() : ''; ?>"/>
+                            <input type="text" id="tgl_sp2d" name="tgl_sp2d" size="20" value="<?php echo isset($this->d_ubah) ? $this->d_ubah->get_tgl_sp2d() : ''; */?>"/>
                             <label>File SP2D : </label>
                             <input type="file" id="fupload" name="fupload" size="20" />
                         </td>
                     </tr>
-                </table>
-                <div>
-                    <input type="submit" name="simpan" value="simpan" class="sukses"/>
-                    <input type="reset" name="baral" value="batal" class="normal">
-                </div>
+                </table-->
+                <ul class="inline" style="float: right; margin-right: 20px">
+                    <li><button type="submit" name="simpan" class="sukses"/><i class="icon-ok icon-white"></i>Simpan</button></li>
+                    <li><button type="reset" name="baral" class="normal"><i class="icon-remove icon-white"></i>Batal</li>
+                </ul>
             </fieldset>
         </div>
 
@@ -86,7 +146,8 @@ echo URL;
 
 
     </form>
-</div>
+
 <div id="tabel_penerima_buku">
     
+</div>
 </div>
