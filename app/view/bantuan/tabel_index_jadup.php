@@ -24,13 +24,13 @@
 //                    $this->jur->set_kode_jur($val->get_kd_jur());
 //                    $jur = $this->jur2->get_jur_by_id($this->jur2);
         echo "<td>" . $val->get_kd_jur() . "</td>";
-        echo "<td>". $val->get_thn_masuk()."</td>";
+        echo "<td>" . $val->get_thn_masuk() . "</td>";
         echo "<td>" . $val->get_jml_peg() . "</td>";
         $bulan = $val->get_bln();
         echo "<td>" . Tanggal::bulan_indo($bulan) . "</td>";
         echo "<td>" . $val->get_thn() . "</td>";
         echo "<td>" . $val->get_total_bayar() . "</td>";
-        echo "<td><a href=" . URL . "elemenBeasiswa/delJadup/" . $val->get_kd_d() . "><i class=\"icon-trash\"></i></a> &nbsp &nbsp 
+        echo "<td><a href=" . URL . "elemenBeasiswa/delJadup/" . $val->get_kd_d() . " onClick=\"return del();\"><i class=\"icon-trash\"></i></a> &nbsp &nbsp 
                         <a href=" . URL . "elemenBeasiswa/updateJadup/" . $val->get_kd_d() . "><i class=\"icon-pencil\"></i></a></td>";
         echo "</tr>";
         $no++;
@@ -38,3 +38,11 @@
     ?>
 </tbody>
 </table>
+
+<script>
+    function del(){
+        if(confirm('yakin akan menghapus data ini?'))
+            return true;
+        else return false
+    }
+</script>

@@ -131,15 +131,16 @@ class elemenBeasiswaController extends BaseController {
         
     }
 
-    public function delJadup($id) {
-        $elem = new ElemenBeasiswa($this->registry);
-        if (is_null($id)) {
-            throw new Exception;
-            echo "id belum dimasukkan!";
-            return;
+    //menghapus data jadup
+    public function delJadup($id = null) {
+        if ($id != "") {
+            $elem = new ElemenBeasiswa($this->registry);
+            //echo $id;
+            $elem->delete_elem($id);
+            
+            $penerima_elemen = new PenerimaElemenBeasiswa();
+            $penerima_elemen->delete($id);
         }
-        $elem->set_kd_d($id);
-        $elem->delete_elem();
         header('location:' . URL . 'elemenBeasiswa/viewJadup');
     }
 

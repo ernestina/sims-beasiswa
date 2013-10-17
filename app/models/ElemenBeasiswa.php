@@ -142,10 +142,10 @@ class ElemenBeasiswa {
     }
     
     /*
-     * hapus universitas, id harus di set terlebih dahulu
+     * hapus elemen beasiswa, id harus di set terlebih dahulu
      */
-    public function delete_elem(){
-        $where = ' KD_D_ELEM_BEASISWA='.$this->get_kd_d();
+    public function delete_elem($id){
+        $where = 'KD_D_ELEM_BEASISWA='.$id;
         $this->db->delete($this->_table,$where);
     }
     
@@ -230,6 +230,7 @@ class ElemenBeasiswa {
         foreach ($result as $key => $value){
             
             $elem = new ElemenBeasiswa();
+            $elem->set_kd_d($value['KD_D_ELEM_BEASISWA']);
             $elem->set_no_sp2d($value['NO_SP2D_D_ELEM_BEASISWA']);
             $elem->set_univ($value['NM_UNIV']);
             $elem->set_thn_masuk($value['TAHUN_MASUK']);
