@@ -1,5 +1,5 @@
 <div id="top">
-    <h2>DAFTAR BIAYA TUGAS AKHRI/SKRIPSI/TESIS</h2>
+    <h2>DAFTAR BIAYA TUGAS AKHIR/SKRIPSI/TESIS/DESERTASI</h2>
 
 <div id="dropdown-menu">
     

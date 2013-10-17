@@ -340,7 +340,7 @@ input[type="button"], button{
 	border: 1px solid #49afcd
 }
 
-input[type="button"].lihat {
+input[type="button"].lihat, button.lihat {
 	width: 65px;
 }
 

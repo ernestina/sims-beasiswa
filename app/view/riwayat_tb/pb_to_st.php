@@ -1,4 +1,5 @@
-<div><h2>DATA PENERIMA SURAT TUGAS</h2></div>
+<div id="top">
+	<h2>DATA PENERIMA SURAT TUGAS</h2>
     <div class="kolom3">
         <fieldset><legend>Detil Surat Tugas</legend>
         <input type="hidden" name="kd_st" id="kd_st" value="<?php echo $this->d_st->get_kd_st();?>">
@@ -22,7 +23,7 @@
             </tr>
         </table>
     </div>
-    <input type="button" id="bt_dialog" value="+ PB" onClick="choose(document.getElementById('kd_st').value);">
+    <button id="bt_dialog" onClick="choose(document.getElementById('kd_st').value);" style="margin-right: 20px"><i class="icon-plus icon-white"></i>Penerima</button>
     <div id="tb_pb">
         <?php 
             $this->load('riwayat_tb/tabel_pb');
@@ -31,7 +32,7 @@
     </fieldset>
 </div>
 <div id="result"></div>
-
+</div>
 
 <script type="text/javascript">
     

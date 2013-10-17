@@ -45,7 +45,7 @@
 			
 			<label class="isian">Bank Penerima</label>
 <!--			<input type="text" id="bank" name="bank" value="<?php echo isset($this->bank)?$this->bank:$this->d_bank->get_id();?>"/>-->
-                        <select id="bank" name="bank">
+                        <select id="bank" name="bank" type="text">
                             <?php 
                                 foreach ($this->t_bank as $v){
                                     if($v->get_id()==$this->d_bank){
@@ -64,10 +64,11 @@
 			<ul class="inline">
 				<li><input type="file" id="foto" name="fotoinput" style="display: none" onChange="FotoChange();"/>
 				<input class="unggah" type="text" id="filefoto" disabled /></li>
-				<li><input type="button" value="Pilih..." id="fakeBrowse" onclick="BrowseFoto();"/>
+				<li><input type="button" class="lihat" value="Pilih..." id="fakeBrowse" onclick="BrowseFoto();"/>
 				</li>
+				<li><input type="button" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_foto();?>','foto');" value="Lihat Foto"></li>
 			</ul>
-                        <input type="button" value="liat foto" id="" onclick="view_file('<?php echo $this->d_pb->get_foto();?>','foto');"/>
+                        
 
 	</fieldset>
 </div>	
@@ -135,20 +136,23 @@
 			<ul class="inline">
 				<li><input type="file" id="SKL" name="sklinput" style="display: none" onChange="Handlechange();"/>
 				<input class="unggah" type="text" id="filename" disabled /></li>
-				<li><input type="button" value="Pilih..." id="fakeBrowse" onclick="HandleBrowseClick();"/>
+				<li><input class="lihat" type="button" value="Pilih..." id="fakeBrowse" onclick="HandleBrowseClick();"/>
 				</li>
+				<li><input type="button" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');" value="Lihat SKL"></li>
                         </ul>
-                        <input type="button" value="liat skl" id="" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');"/>
+                        
 			<div class="error" id="wspmt"></div>
 			<label class="isian">Unggah SPMT :</label>
 <!--                        <input type="file" id="SPMT" name="spmtinput">-->
 			<ul class="inline">
 				<li><input type="file" id="SPMT" name="spmtinput" style="display: none" onChange="Change();"/>
 				<input class="unggah" type="text" id="namafile" disabled /></li>
-				<li><input type="button" value="Pilih..." id="fakeBrowse" onclick="BrowseClick();"/>
+				<li><input class="lihat" type="button" value="Pilih..." id="fakeBrowse" onclick="BrowseClick();"/>
 				</li>
+				<!--li><input class="lihat" type="button" value="Lihat SPMT" id="" onclick="view_file('<?php //echo $this->d_pb->get_spmt();?>','skl');"/></li-->
+				<li><input type="button" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','spmt');" value="Lihat SPMT"></li>
 			</ul>
-                        <input type="button" value="liat spmt" id="" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','skl');"/>
+                        
 	</fieldset>
 </div>
 	
@@ -160,8 +164,10 @@
                         <div class="error" id="wskripsi"></div>
 			<label class="isian2">Judul Tugas Akhir/Skripsi/Thesis/Desertasi :</label>
 			<textarea class="midi" type="text" rows="4" name="skripsi" id="skripsi"><?php echo isset($this->skripsi)?$this->skripsi:$this->d_pb->get_skripsi();?></textarea>
-			<label class="isian2">Permasalahan Tugas Belajar :</label>
-                        <input type="button" value="+" id="add_problem">
+			<label class="isian2" style="margin-right: -135px">Permasalahan Tugas Belajar :</label>
+			<ul class="inline">
+                        <li><input type="button" value="+" id="add_problem" class="lihat"></li>
+					</ul>
 <!--			<textarea class="midi" type="text" rows="8"></textarea>-->
                         <div id="t_masalah">
                         <?php 
@@ -174,6 +180,9 @@
 			<input type="text" id="IPK" name="IPK" disabled value="<?php echo $this->d_cur_ipk->get_ipk();?>"/>
 			
 			<label class="isian">Unggah Transkrip:</label>
+			<ul class="inline">
+				<li><input type="button" class="lihat" id="add_nilai" value="+"></li>
+			</ul>
 <!--                        <input type="file" id="IPK" name="fileipk">-->
 <!--                        <ul class="inline">
 				<li><input type="file" id="IPK" name="fileipk" style="display: none" onChange="IPKchange();"/>
@@ -181,7 +190,7 @@
 				<li><input type="button" value="Pilih..." id="fakeBrowse" onclick="Pilih();"/>
 				</li>
 			</ul>-->
-			<input type="button" value="+" id="add_nilai">
+			
                         <div id="t_nilai">
                         <?php 
                             $this->load("profil/tabel_nilai");

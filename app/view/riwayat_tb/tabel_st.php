@@ -23,9 +23,9 @@
                         echo "<td>".$val->get_tgl_selesai()."</td>";
                         echo "<td>".$val->get_jenis_st()."</td>";
                         echo "<td>".$val->get_jur()."</td>";
-                        echo "<td><a href=".URL."surattugas/addpb/".$val->get_kd_st()."><i class=\"icon-user\"></i></a>  &nbsp &nbsp
-                            <a href=".URL."surattugas/del_st/".$val->get_kd_st()." onClick='return del(\"".$val->get_nomor()."\")'><i class=\"icon-trash\"></i></a> &nbsp &nbsp
-                            <a href=".URL."surattugas/datast/".$val->get_kd_st()."><i class=\"icon-pencil\"></i></a></td>";
+                        echo "<td><center><a href=".URL."surattugas/addpb/".$val->get_kd_st()."><i class=\"icon-user\"></i></a>  &nbsp 
+                            <a href=".URL."surattugas/del_st/".$val->get_kd_st()." onClick='return del(\"".$val->get_nomor()."\")'><i class=\"icon-trash\"></i></a> &nbsp 
+                            <a href=".URL."surattugas/datast/".$val->get_kd_st()."><i class=\"icon-pencil\"></i></a></td></center>";
                         echo "</tr>";
                         $no++;
                     }
