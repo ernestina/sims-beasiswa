@@ -94,14 +94,14 @@
                     echo "<td>".$val4->get_nama()." / ".$val4->get_nip()."</td>";
                     echo "<td>".$val4->get_gol()."</td>";
             ?>
-                    <td><input type="text" id="jdl_teliti" name="jdl_teliti" size="4" value=""></td>>
+                    <td><input type="text" id="jdl_teliti" name="jdl_teliti" size="4" value=""></td>
             <?php
                     echo "<td>".$val4->get_status()."</td>";
                     echo "<td>".$val4->get_bank()."</td>";
                     echo "<td>".$val4->get_no_rek()."</td>";
             ?>
                     <td><input type="checkbox" name="cek" value="cek" class="mini">
-					</td>
+					</td></tr>
             <?php
                     $no++;
                 }
