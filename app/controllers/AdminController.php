@@ -869,7 +869,8 @@ class AdminController extends BaseController {
             echo "<option value=" . $val->get_kode_jur() . ">" . $val->get_nama() . "</option>";
         }
     }
-
+    
+    
     /*
      * mengecek ketersediaan jenis jabatan
      */

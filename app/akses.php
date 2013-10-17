@@ -125,6 +125,7 @@ $akses['ElemenBeasiswa'] = array(
                 'delSkripsi',
                 'get_method',
                 'load_model',
+                'get_jur_by_univ',
                 '__destruct'
                 );
 /*

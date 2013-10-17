@@ -14,6 +14,7 @@
 <tbody style="text-align: center">
     <?php
     $no = 1;
+    //var_dump($this->elem);
     foreach ($this->elem as $val) {
         echo "<tr>";
         echo "<td>$no</td>";
@@ -23,7 +24,7 @@
 //                    $this->jur->set_kode_jur($val->get_kd_jur());
 //                    $jur = $this->jur2->get_jur_by_id($this->jur2);
         echo "<td>" . $val->get_kd_jur() . "</td>";
-        echo "<td></td>";
+        echo "<td>". $val->get_thn_masuk()."</td>";
         echo "<td>" . $val->get_jml_peg() . "</td>";
         $bulan = $val->get_bln();
         echo "<td>" . Tanggal::bulan_indo($bulan) . "</td>";

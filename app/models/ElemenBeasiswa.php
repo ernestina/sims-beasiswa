@@ -11,7 +11,9 @@ class ElemenBeasiswa {
     private $_kd_d;
     private $_kd_r;
     private $_kd_jur;
+    private $_thn_masuk;
     private $_jml_peg;
+    private $_biaya_per_peg;
     private $_bln;
     private $_thn;
     private $_total_bayar;
@@ -49,10 +51,10 @@ class ElemenBeasiswa {
     public function get_elem($r_elem=null,$limit=null,$batas=null){
         $sql = "SELECT * FROM ".$this->_table;
         if(!is_null($r_elem)){
-            $sql .= " WHERE KD_R_ELEM_BEASISWA =".$r_elem;
+            $sql .= " WHERE KD_R_ELEM_BEASISWA =".$r_elem." order by KD_D_ELEM_BEASISWA desc";
         }
         if(!is_null($limit) AND !is_null($batas)){
-            $sql .= " LIMIT ".$limit.",".$batas;
+            $sql .= " order by KD_D_ELEM_BEASISWA desc LIMIT ".$limit.",".$batas;
         }
         $result = $this->db->select($sql);
         $data=array();
@@ -61,7 +63,9 @@ class ElemenBeasiswa {
             $elem->set_kd_d($val['KD_D_ELEM_BEASISWA']);
             $elem->set_kd_r($val['KD_R_ELEM_BEASISWA']);
             $elem->set_kd_jur($val['KD_JUR']);
+            $elem->set_thn_masuk($val['TAHUN_MASUK']);
             $elem->set_jml_peg($val['JML_PEG_D_ELEM_BEASISWA']);
+            $elem->set_biaya_per_peg($val['BIAYA_PER_PEG_D_ELEM_BEASISWA']);
             $elem->set_bln($val['BLN_D_ELEM_BEASISWA']);
             $elem->set_thn($val['THN_D_ELEM_BEASISWA']);
             $elem->set_total_bayar($val['TOTAL_BAYAR_D_ELEM_BEASISWA']);
@@ -90,7 +94,9 @@ class ElemenBeasiswa {
             $this->set_kd_d($val['KD_D_ELEM_BEASISWA']);
             $this->set_kd_r($val['KD_R_ELEM_BEASISWA']);
             $elem->set_kd_jur($val['KD_JUR']);
+            $elem->set_thn_masuk($val['TAHUN_MASUK']);
             $this->set_jml_peg($val['JML_PEG_D_ELEM_BEASISWA']);
+            $elem->set_biaya_per_peg($val['BIAYA_PER_PEG_D_ELEM_BEASISWA']);
             $this->set_bln($val['BLN_D_ELEM_BEASISWA']);
             $this->set_thn($val['THN_D_ELEM_BEASISWA']);
             $this->set_total_bayar($val['TOTAL_BAYAR_D_ELEM_BEASISWA']);
@@ -110,7 +116,9 @@ class ElemenBeasiswa {
         $data = array (
             'KD_R_ELEM_BEASISWA' =>$elem->get_kd_r(),
             'KD_JUR' =>$elem->get_kd_jur(),
+            'TAHUN_MASUK' =>$elem->get_thn_masuk(),
             'JML_PEG_D_ELEM_BEASISWA' =>$elem->get_jml_peg(),
+            'BIAYA_PER_PEG_D_ELEM_BEASISWA' =>$elem->get_biaya_per_peg(),
             'BLN_D_ELEM_BEASISWA' => $elem->get_bln(),
             'THN_D_ELEM_BEASISWA' => $elem->get_thn(),
             'TOTAL_BAYAR_D_ELEM_BEASISWA' => $elem->get_total_bayar(),
@@ -120,6 +128,7 @@ class ElemenBeasiswa {
                 );
             
         $this->db->insert($this->_table,$data);
+        return $this->db->lastInsertId();
     }
     
     /*
@@ -162,10 +171,13 @@ class ElemenBeasiswa {
             $elem = new $this($this->registry);
             $elem->set_kd_d($v['KD_D_ELEM_BEASISWA']);
             $elem->set_kd_r($v['KD_R_ELEM_BEASISWA']);
+            
             $jml_peg = (int) $v['JML_PEG_D_ELEM_BEASISWA'];
             $total_bayar = (int) $v['TOTAL_BAYAR_D_ELEM_BEASISWA'];
             $by_per_peg = ($total_bayar/$jml_peg);
+            $elem->set_biaya_per_peg($v['BIAYA_PER_PEG_D_ELEM_BEASISWA']);
             $elem->set_total_bayar($by_per_peg);
+            $elem->set_thn_masuk($val['TAHUN_MASUK']);
             $elem->set_bln(Tanggal::bulan_indo($v['BLN_D_ELEM_BEASISWA']));
             $elem->set_thn($v['THN_D_ELEM_BEASISWA']);
             $elem->set_no_sp2d($v['NO_SP2D_KD_D_ELEM_BEASISWA']);
@@ -181,6 +193,7 @@ class ElemenBeasiswa {
         $sql = "SELECT 
             a.KD_D_ELEM_BEASISWA AS KD_D_ELEM_BEASISWA,
             a.KD_R_ELEM_BEASISWA AS KD_R_ELEM_BEASISWA,
+            a.TAHUN_MASUK AS TAHUN_MASUK,
             b.NM_JUR as NM_JUR,
             c.KD_FAKUL AS KD_FAKUL,
             d.NM_UNIV as NM_UNIV,
@@ -193,7 +206,7 @@ class ElemenBeasiswa {
                 LEFT JOIN r_jur b ON a.KD_JUR = b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL = c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV
-                WHERE KD_R_ELEM_BEASISWA=".$this->_jadup."
+                WHERE KD_R_ELEM_BEASISWA=".$this->_jadup." order by KD_D_ELEM_BEASISWA desc
                 ";
        //dalam kode 
         
@@ -219,13 +232,16 @@ class ElemenBeasiswa {
             $elem = new ElemenBeasiswa();
             $elem->set_no_sp2d($value['NO_SP2D_D_ELEM_BEASISWA']);
             $elem->set_univ($value['NM_UNIV']);
+            $elem->set_thn_masuk($value['TAHUN_MASUK']);
             $elem->set_kd_jur($value['NM_JUR']);
             $elem->set_jml_peg($value['JML_PEG_D_ELEM_BEASISWA']);
             $elem->set_bln($value['BLN_D_ELEM_BEASISWA']);
+            $elem->set_biaya_per_peg($v['BIAYA_PER_PEG_D_ELEM_BEASISWA']);
             $elem->set_thn($value['THN_D_ELEM_BEASISWA']);
             $elem->set_total_bayar($value['TOTAL_BAYAR_D_ELEM_BEASISWA']);
             $data []= $elem;
-        }     
+        } 
+        //var_dump($data);
         return $data;
     }
     
@@ -258,7 +274,9 @@ class ElemenBeasiswa {
             $elem->set_no_sp2d($value['NO_SP2D_D_ELEM_BEASISWA']);
             $elem->set_univ($value['NM_UNIV']);
             $elem->set_kd_jur($value['NM_JUR']);
+            $elem->set_thn_masuk($val['TAHUN_MASUK']);
             $elem->set_jml_peg($value['JML_PEG_D_ELEM_BEASISWA']);
+            $elem->set_biaya_per_peg($v['BIAYA_PER_PEG_D_ELEM_BEASISWA']);
             $elem->set_bln($value['BLN_D_ELEM_BEASISWA']);
             $elem->set_thn($value['THN_D_ELEM_BEASISWA']);
             $elem->set_total_bayar($value['TOTAL_BAYAR_D_ELEM_BEASISWA']);
@@ -296,7 +314,9 @@ class ElemenBeasiswa {
             $elem->set_no_sp2d($value['NO_SP2D_D_ELEM_BEASISWA']);
             $elem->set_univ($value['NM_UNIV']);
             $elem->set_kd_jur($value['NM_JUR']);
+            $elem->set_thn_masuk($val['TAHUN_MASUK']);
             $elem->set_jml_peg($value['JML_PEG_D_ELEM_BEASISWA']);
+            $elem->set_biaya_per_peg($v['BIAYA_PER_PEG_D_ELEM_BEASISWA']);
             $elem->set_bln($value['BLN_D_ELEM_BEASISWA']);
             $elem->set_thn($value['THN_D_ELEM_BEASISWA']);
             $elem->set_total_bayar($value['TOTAL_BAYAR_D_ELEM_BEASISWA']);
@@ -318,6 +338,14 @@ class ElemenBeasiswa {
     
     public function set_kd_jur($kd_jur){
         $this->_kd_jur = $kd_jur;
+    }
+    
+    public function set_thn_masuk($thn_masuk){
+        $this->_thn_masuk = $thn_masuk;
+    }
+    
+    public function set_biaya_per_peg($biaya_per_peg){
+        $this->_biaya_per_peg = $biaya_per_peg;
     }
     
     public function set_jml_peg($jml_peg){
@@ -382,8 +410,16 @@ class ElemenBeasiswa {
         return $this->_kd_jur;
     }
     
+     public function get_thn_masuk(){
+        return $this->_thn_masuk;
+    }
+    
     public function get_jml_peg(){
         return $this->_jml_peg;
+    }
+    
+    public function get_biaya_per_peg(){
+        return $this->_biaya_per_peg;
     }
     
     public function get_bln(){
