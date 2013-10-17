@@ -126,6 +126,8 @@ $akses['ElemenBeasiswa'] = array(
                 'get_method',
                 'load_model',
                 'get_jur_by_univ',
+                'editJadup',
+                'filesp2d',
                 '__destruct'
                 );
 /*

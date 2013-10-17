@@ -72,20 +72,23 @@
                 <input readonly type="text" id="total_bayar" name="total_bayar" size="12" value="<?php echo isset($this->d_ubah) ? $this->d_ubah->get_total_bayar() : ''; ?>"/>
 
                 <label class="isian">No. SP2D : </label>
-                <input type="text" id="no_sp2d" name="no_sp2d" size="20" value="<?php echo isset($this->d_ubah) ? $this->d_ubah->get_no_sp2d() : ''; ?>"/>
+                <input type="text" disabled />
+                <input type="hidden" id="no_sp2d" name="no_sp2d" size="20" />
 
                 <label class="isian">Tgl SP2D : </label>
-                <input type="text" id="tgl_sp2d" name="tgl_sp2d" size="20" value="<?php echo isset($this->d_ubah) ? $this->d_ubah->get_tgl_sp2d() : ''; ?>"/>
+                <input type="text" disabled />
+                <input type="hidden" id="tgl_sp2d" name="tgl_sp2d" size="20"/>
 
                 <label class="isian">File SP2D : </label>
-                <input type="file" id="fupload" name="fupload" size="20" />
+                <input type="file" disabled />
+                <input type="hidden" id="fupload" name="fupload" size="20" />
 
             </div> <!--end kolom2--> 
             <br/>
             <div id="tabel_penerima_jadup"> </div>
             <div>
                 <input name="simpan" class="sukses" type="submit" value="simpan"/>
-                <input name="batal" class="normal" type="reset" value="batal"/>
+                <input name="batal" class="normal" type="reset" value="batal" onclick="location.href='<?php echo URL."elemenBeasiswa/viewJadup"; ?>';"/>
             </div>
         </form>
     </fieldset>

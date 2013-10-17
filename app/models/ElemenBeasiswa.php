@@ -135,10 +135,22 @@ class ElemenBeasiswa {
      * update universitas, id harus di set terlebih dahulu
      * param data array
      */
-    public function update_elem($data=array()){
-        if(!is_array($data)) return false;
-        $where = 'KD_D_ELEM_BEASISWA='.$this->get_kd_d();
-        $this->db->update($this->_table,$data, $where);
+    public function update_elem(ElemenBeasiswa $elem){
+         $data = array (
+            'KD_R_ELEM_BEASISWA' =>$elem->get_kd_r(),
+            'KD_JUR' =>$elem->get_kd_jur(),
+            'TAHUN_MASUK' =>$elem->get_thn_masuk(),
+            'JML_PEG_D_ELEM_BEASISWA' =>$elem->get_jml_peg(),
+            'BIAYA_PER_PEG_D_ELEM_BEASISWA' =>$elem->get_biaya_per_peg(),
+            'BLN_D_ELEM_BEASISWA' => $elem->get_bln(),
+            'THN_D_ELEM_BEASISWA' => $elem->get_thn(),
+            'TOTAL_BAYAR_D_ELEM_BEASISWA' => $elem->get_total_bayar(),
+            'NO_SP2D_D_ELEM_BEASISWA' =>$elem->get_no_sp2d(),
+            'TGL_SP2D_D_ELEM_BEASISWA' =>$elem->get_tgl_sp2d(),
+            'FILE_SP2D_D_ELEM_BEASISWA' =>$elem->get_file_sp2d()
+                );
+        $where = "KD_D_ELEM_BEASISWA='" . $elem->get_kd_d() . "'";
+        $this->db->update($this->_table, $data, $where);
     }
     
     /*

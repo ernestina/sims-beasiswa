@@ -31,7 +31,7 @@
             <td><?php echo StatusPB::status_int_string($value->get_status()); ?></td>
             <td><input class="mini" type="text"  id="<?php echo 'jml_hadir' . $i; ?>" name="<?php echo 'jml_hadir' . $i; ?>" value="0">%</td>
     <!--            <td><input class="mini" type="text" id="<?php echo 'jml_kotor' . $i; ?>" name="jml_kotor" value="0"></td>-->
-            <td><input class="mini" type="text" id="<?php echo 'pajak' . $i; ?>" name="<?php echo 'pajak' . $i; ?>" value="0">%</td>
+            <td><input class="mini" type="text" id="<?php echo 'pajak' . $i; ?>" name="<?php echo 'pajak' . $i; ?>" value="<?php if($value->get_gol()>30){ echo '5';} else { echo '0';} ?>">%</td>
     <!--            <td><input class="mini" type="text" id="<?php echo 'jml_bersih' . $i; ?>" name="jml_bersih" value="0"></td>-->
             <td><?php echo $bank->get_nama(); ?></td>
             <td><?php echo $value->get_no_rek(); ?></td>
