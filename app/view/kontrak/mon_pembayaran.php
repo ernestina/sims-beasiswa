@@ -17,7 +17,7 @@
                 <option value="belum">belum</option>
                 <option value="proses">proses</option>
                 <option value="selesai">selesai</option>
-            </select></li>
+            </select></li> &nbsp &nbsp
             <li><label>Jadwal Pembayaran</label></li>
             <li><select id="jadwal" name="jadwal" type="text">
                 <option value="">Semua</option>

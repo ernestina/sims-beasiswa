@@ -10,7 +10,7 @@
             <th>Perk.Stop Elemen Beasiswa</th>
             <th>Perk. Pembayaran Kembali</th>
             <th>Jurusan/ Prodi</th>
-            <th width="88">Aksi</th>
+            <th width="20%">Aksi</th>
             </thead>
             <?php 
                 $no=1;
@@ -27,7 +27,7 @@
                     echo "<td>".Tanggal::bulan_indo($perk_stop[0])." ".$perk_stop[1]."</td>";
                     echo "<td>".Tanggal::bulan_indo($perk_go[0])." ".$perk_go[1]."</td>";
                     echo "<td>".$d_pb[2]."</td>";
-                    echo "<td><a href=".URL."cuti/del_sc/".$val->get_kode_cuti()." onClick='return del(\"$d_pb[0]\",\"".$val->get_no_surat_cuti()."\")'><i class=\"icon-trash\"></i></a> &nbsp &nbsp
+                    echo "<td><a href=".URL."cuti/del_sc/".$val->get_kode_cuti()." onClick='return del(\"$d_pb[0]\",\"".$val->get_no_surat_cuti()."\")'><i class=\"icon-trash\"></i></a> &nbsp
                         <a href=".URL."cuti/datasc/".$val->get_kode_cuti()."><i class=\"icon-pencil\"></i></a></td>";
                     echo "</tr>";
                     $no++;

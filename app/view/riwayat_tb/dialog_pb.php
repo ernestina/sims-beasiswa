@@ -23,7 +23,7 @@
             <tr><td><label>Email</label></td><td><input type="text" id="t_email" name="email"></td></tr>
             <tr><td><label>No. HP</label></td><td><input type="text" id="t_hp" name="telp"></td></tr>
             <tr><td><label>Bank Penerima</label></td><td>
-                    <select id="t_bank" name="bank" >
+                    <select id="t_bank" name="bank" type="text">
                         <?php 
                             foreach($this->d_bank as $val){
                                 echo "<option value=".$val->get_id().">".$val->get_nama()."</option>";
@@ -33,7 +33,7 @@
                 </td></tr>
 <!--            <tr><td><label>Cabang</label></td><td><input type="text" id="t_cb" name="t_cb"></td></tr>-->
             <tr><td><label>No. Rekening</label></td><td><input type="text" id="t_rek" name="no_rek"></td></tr>
-            <tr><td colspan="2"><input type="button" id="bt_ok" value="simpan" onclick="return goSelect();"></td></tr>
+            <tr><td colspan="2"><input type="button" id="bt_ok" value="Simpan" onclick="return goSelect();"></td></tr>
         </table>
     </form>
 </div>

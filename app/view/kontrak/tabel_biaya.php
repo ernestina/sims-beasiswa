@@ -1,14 +1,14 @@
 <table class="table-bordered zebra scroll" id="table">
     <thead>
-    <th>No</th>
-    <th>No & Tgl Kontrak</th>
-    <th>Jurusan</th>
-    <th>Nama Biaya</th>
-    <th>Jumlah Biaya</th>
-    <th>Jadwal <br />dibayarkan</th>
+    <th width="5%">No</th>
+    <th width="10%">No & Tgl Kontrak</th>
+    <th width="20%">Jurusan</th>
+    <th width="25%">Nama Biaya</th>
+    <th width="10%">Jumlah Biaya</th>
+    <th width="10%">Jadwal <br />dibayarkan</th>
 <!--    <th>Jumlah dibayarkan</th>-->
-    <th>Status <br />Pembayaran</th>
-    <th>No dan Tgl SP2D</th>
+    <th width="10%">Status <br />Pembayaran</th>
+    <th width="10%">No dan Tgl SP2D</th>
 </thead>
 
 <?php

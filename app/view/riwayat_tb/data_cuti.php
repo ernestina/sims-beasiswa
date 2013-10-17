@@ -1,7 +1,7 @@
 <div id="top"> <!-- FORM -->
-    <h2>DATA SURAT TUGAS</h2>
+    <h2>DATA SURAT CUTI</h2>
     <div class="kolom3">
-        <fieldset><legend>Tambah Surat Tugas</legend>
+        <fieldset><legend>Tambah Surat Cuti</legend>
 		<div class="kiri">
         <form method="POST" action="<?php 
                 if(isset($this->d_ubah)){
@@ -19,9 +19,9 @@
                 }
             ?>
             <div id="wnosc" class="error"></div>
-            <label>no. Surat Cuti</label><input type="text" name="no_sc" id="no_sc" size="30" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_no_surat_cuti():'';?>">
+            <label>No. Surat Cuti</label><input type="text" name="no_sc" id="no_sc" size="30" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_no_surat_cuti():'';?>">
             <div id="wjsc" class="error"></div>
-            <label>Jenis Cuti</label><select name="jsc" id="jsc" >
+            <label>Jenis Cuti</label><select name="jsc" id="jsc" type="text">
                 <?php 
                     foreach($this->d_jsc as $v){
                         if(isset($this->d_ubah)){
@@ -39,7 +39,7 @@
             <div id="wtglsc" class="error"></div>
             <label>Tanggal SC</label><input type="text" name="tgl_sc" id="datepicker" value="<?php echo isset($this->d_ubah)?  Tanggal::ubahFormatToDatePicker($this->d_ubah->get_tgl_surat_cuti()):'';?>" readonly>
             <div id="wpb" class="error"></div>
-            <label>Penerima Beasiswa</label><input type="button" id="bt_pb" value="+" onClick="showDialog();">
+            <label>Penerima Beasiswa</label><input type="button" id="bt_pb" value="+" onClick="showDialog();" class="lihat">
             <input style="<?php echo isset($this->d_ubah)?'':'display:none';?>" type="text" name="nip_pb" id="nip_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb->get_nip():'';?>" readonly>
             <input style="<?php echo isset($this->d_ubah)?'':'display:none';?>" type="text" name="nama_pb" id="nama_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb->get_nama():'';?>" readonly>
             <input type="hidden" name="kd_pb" id="kd_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb->get_kd_pb():'';?>">
@@ -55,29 +55,30 @@
             <div style="display:none"id="div_jur">d
             <label>Jurusan</label><select name="jur" id="jur"></select>
             </div>-->
+			<br><br>
             <div id="wprdmulai" class="error"></div>
             <label>Periode Mulai Cuti</label>
-            <select name="sem_mulai" id="sem_mulai">
+            <select name="sem_mulai" id="sem_mulai" type="text">
                 <option value="1" <?php echo isset($this->d_ubah)?($prd_mul[0]==1)?'selected':'':'';?>>Ganjil</option>
                 <option value="2" <?php echo isset($this->d_ubah)?($prd_mul[0]==2)?'selected':'':'';?>>Genap</option>
             </select>
-            <select name="thn_mulai" id="thn_mulai">
+            <select name="thn_mulai" id="thn_mulai" type="text">
                 <option value="<?php echo $this->curr_year;?>" <?php echo isset($this->d_ubah)?($prd_mul[1]==$this->curr_year)?'selected':'':'';?>><?php echo $this->curr_year;?></option>
                 <option value="<?php echo (int) $this->curr_year+1;?>" <?php echo isset($this->d_ubah)?($prd_mul[1]==(int)$this->curr_year+1)?'selected':'':'';?>><?php echo (int) $this->curr_year+1;?></option>
             </select>
             <div id="wprdselesai" class="error"></div>
             <label>Periode Selesai Cuti</label>
-            <select name="sem_sel" id="sem_sel">
+            <select name="sem_sel" id="sem_sel" type="text">
                 <option value="1" <?php echo isset($this->d_ubah)?($prd_sel[0]==1)?'selected':'':'';?>>Ganjil</option>
                 <option value="2" <?php echo isset($this->d_ubah)?($prd_mul[0]==2)?'selected':'':'';?>>Genap</option>
             </select>
-            <select name="thn_sel" id="thn_sel">
+            <select name="thn_sel" id="thn_sel" type="text">
                 <option value="<?php echo $this->curr_year;?>" <?php echo isset($this->d_ubah)?($prd_sel[1]==$this->curr_year)?'selected':'':'';?>><?php echo $this->curr_year;?></option>
                 <option value="<?php echo (int) $this->curr_year+1;?>" <?php echo isset($this->d_ubah)?($prd_sel[1]==(int)$this->curr_year+1)?'selected':'':'';?>><?php echo (int) $this->curr_year+1;?></option>
             </select>
             <div id="wperkstop" class="error"></div>
             <label>Perkiraan Stop</label>
-            <select name="bln_stop" id="bln_stop">
+            <select name="bln_stop" id="bln_stop" type="text">
                 <?php 
                     for($i=1;$i<=12;$i++){
                         if(isset($this->d_ubah)){
@@ -92,13 +93,13 @@
                     }
                 ?>
             </select>
-            <select name="thn_stop" id="thn_stop">
+            <select name="thn_stop" id="thn_stop" type="text">
                 <option value="<?php echo $this->curr_year;?>" <?php echo isset($this->d_ubah)?($perk_stop[1]==$this->curr_year)?'selected':'':'';?>><?php echo $this->curr_year;?></option>
                 <option value="<?php echo (int) $this->curr_year+1;?>" <?php echo isset($this->d_ubah)?($perk_stop[1]==(int)$this->curr_year+1)?'selected':'':'';?>><?php echo (int) $this->curr_year+1;?></option>
             </select>
             <div id="wperkgo" class="error"></div>
             <label>Perkiraan Go</label>
-            <select name="bln_go" id="bln_go">
+            <select name="bln_go" id="bln_go" type="text">
                 <?php 
                     for($i=1;$i<=12;$i++){
                         if(isset($this->d_ubah)){
@@ -113,14 +114,15 @@
                     }
                 ?>
             </select>
-            <select name="thn_go" id="thn_go">
+            <select name="thn_go" id="thn_go" type="text">
                 <option value="<?php echo $this->curr_year;?>" <?php echo isset($this->d_ubah)?($perk_go[1]==$this->curr_year)?'selected':'':'';?>><?php echo $this->curr_year;?></option>
                 <option value="<?php echo (int) $this->curr_year+1;?>" <?php echo isset($this->d_ubah)?($perk_go[1]==(int)$this->curr_year+1)?'selected':'':'';?>><?php echo (int) $this->curr_year+1;?></option>
             </select>
             <div id="wfile" class="error"></div>
             <label>Unggah SC</label><input type="file" name="fupload" id="file">
-            <ul class="inline tengah">
-			<li><input class="normal" type="button" onclick="" value="BATAL"></li>
+        
+		<ul class="inline tengah">
+			<li><input class="normal" type="submit" onclick="" value="BATAL"></li>
 			<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'sb_upd':'sb_add';?>" value="SIMPAN" onClick="return cek();"></li>
 		</ul>
 <!--            <label></label><input type="reset" value="RESET"><input type="submit" name="<?php echo isset($this->d_ubah)?'sb_upd':'sb_add';?>" value="SIMPAN" onClick="return cek();">-->
