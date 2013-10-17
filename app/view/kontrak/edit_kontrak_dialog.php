@@ -1,4 +1,3 @@
-
 <fieldset>
     <form id="form_edit_kontrak2" method="POST" enctype="multipart/form-data" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/updateKontrak' ?>">
         <input type="hidden" name="update_kontrak">

@@ -81,7 +81,7 @@
         $("#loading").show();
         $("#dialog_edit_kontrak").empty();
         $("#dialog_edit_kontrak").load("<?php echo URL; ?>kontrak/viewEditKontrak/"+id);
-        $("#dialog_edit_kontrak").hide();
+        //$("#dialog_edit_kontrak").hide();
         $("#dialog_edit_kontrak").dialog( "open" );
         $("#loading").hide();
     }
