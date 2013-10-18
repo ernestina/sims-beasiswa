@@ -42,13 +42,16 @@ class elemenBeasiswaController extends BaseController {
 
     public function data_index_jadup() {
 
-//        if(isset($_POST['univ']) && isset($_POST['jurusan']) && isset($_POST['tahun'])){
-        //tinggal nambahin filter di get_elem_jadup
-        $elem = new ElemenBeasiswa();
-        $this->view->elem = $elem->get_elem_jadup();
+        if (isset($_POST['univ']) && isset($_POST['jurusan']) && isset($_POST['tahun'])) {
+            //tinggal nambahin filter di get_elem_jadup
+            $univ = $_POST['univ'];
+            $jurusan = $_POST['jurusan'];
+            $tahun = $_POST['tahun'];
+            $elem = new ElemenBeasiswa();
+            $this->view->elem = $elem->get_elem_jadup($univ,$jurusan,$tahun);
 
-        $this->view->load('bantuan/tabel_index_jadup');
-//        }
+            $this->view->load('bantuan/tabel_index_jadup');
+        }
     }
 
     public function tabel_penerima_jadup() {
