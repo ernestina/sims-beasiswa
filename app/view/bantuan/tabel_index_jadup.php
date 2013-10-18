@@ -18,7 +18,11 @@
     foreach ($this->elem as $val) {
         echo "<tr>";
         echo "<td>$no</td>";
-        echo "<td>" . $val->get_no_sp2d() . "</td>";
+        $tgl="";
+        if(date('d-m-Y', strtotime($val->get_tgl_sp2d())) != "01-01-1970" && date('d-m-Y', strtotime($val->get_tgl_sp2d())) != "00-00-0000"){
+            $tgl = date('d-m-Y', strtotime($val->get_tgl_sp2d()));
+        }
+        echo "<td>" . $val->get_no_sp2d() . " / ".$tgl."</td>";
 
         echo "<td>" . $val->get_univ() . "</td>";
 //                    $this->jur->set_kode_jur($val->get_kd_jur());

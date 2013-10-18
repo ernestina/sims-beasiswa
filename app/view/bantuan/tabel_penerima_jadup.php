@@ -53,6 +53,8 @@ Keterangan: untuk penulisan desimal gunakan tanda titik (.).
     //        $('#jml_bersih'+i).number(true,0);
     //    }
     
+    $('.mini').number(true,2);
+    
     $(".mini").keyup(function(){
         jumlah_biaya();
     });

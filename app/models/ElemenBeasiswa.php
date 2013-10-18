@@ -210,6 +210,7 @@ class ElemenBeasiswa {
             c.KD_FAKUL AS KD_FAKUL,
             d.NM_UNIV as NM_UNIV,
             a.NO_SP2D_D_ELEM_BEASISWA as NO_SP2D_D_ELEM_BEASISWA,
+            a.TGL_SP2D_D_ELEM_BEASISWA as TGL_SP2D_D_ELEM_BEASISWA,
             a.JML_PEG_D_ELEM_BEASISWA as JML_PEG_D_ELEM_BEASISWA,
             a.BLN_D_ELEM_BEASISWA as BLN_D_ELEM_BEASISWA,
             a.THN_D_ELEM_BEASISWA as THN_D_ELEM_BEASISWA,
@@ -244,6 +245,7 @@ class ElemenBeasiswa {
             $elem = new ElemenBeasiswa();
             $elem->set_kd_d($value['KD_D_ELEM_BEASISWA']);
             $elem->set_no_sp2d($value['NO_SP2D_D_ELEM_BEASISWA']);
+            $elem->set_tgl_sp2d(date('d-m-Y', strtotime($value['TGL_SP2D_D_ELEM_BEASISWA'])));
             $elem->set_univ($value['NM_UNIV']);
             $elem->set_thn_masuk($value['TAHUN_MASUK']);
             $elem->set_kd_jur($value['NM_JUR']);
