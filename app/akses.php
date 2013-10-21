@@ -101,6 +101,7 @@ $akses['Surattugas'] = array(
                 'view_st',
                 'get_method',
                 'load_model',
+                'get_thn_masuk_by_jur',
                 '__destruct'
                 );
 /*
@@ -129,6 +130,13 @@ $akses['ElemenBeasiswa'] = array(
                 'editJadup',
                 'filesp2d',
                 'get_jur_by_univ',
+                'tabel_penerima_buku',
+                'saveUangBuku',
+                'editUangBuku',
+                'tabel_penerima_buku2',
+                'delPenerimaElemen',
+                'updateUangBuku',
+                'et_by_r_elemen_pb',
                 '__destruct'
                 );
 /*

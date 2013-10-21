@@ -9,7 +9,7 @@
                 <td>
                     <label>Universitas</label>
                     <select name="universitas" id="universitas" type="text">
-                        <option value="0">Semua</option>>
+                        <option value="">Semua</option>>
                         <?php
                         foreach ($this->univ as $val) {
                             echo "<option value=" . $val->get_kode_in() . " >" . $val->get_nama() . "</option>";
@@ -20,7 +20,7 @@
                 <td>
                     <label>Jurusan/Prodi</label>
                     <select name="jurusan" id="jurusan" type="text">
-                        <option value="0">Semua</option>>
+                        <option value="">Semua</option>>
                         <?php
                         foreach ($this->jur as $val2) {
                             echo "<option value=" . $val2->get_kode_jur() . " >" . $val2->get_nama() . "</option>";

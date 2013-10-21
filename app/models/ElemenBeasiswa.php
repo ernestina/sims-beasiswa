@@ -267,14 +267,17 @@ class ElemenBeasiswa {
         return $data;
     }
 
-    public function get_elem_buku() {
+    public function get_elem_buku($univ = null, $jurusan = null, $tahun = null) {
+
         $sql = "SELECT 
             a.KD_D_ELEM_BEASISWA AS KD_D_ELEM_BEASISWA,
             a.KD_R_ELEM_BEASISWA AS KD_R_ELEM_BEASISWA,
+            a.TAHUN_MASUK AS TAHUN_MASUK,
             b.NM_JUR as NM_JUR,
             c.KD_FAKUL AS KD_FAKUL,
             d.NM_UNIV as NM_UNIV,
             a.NO_SP2D_D_ELEM_BEASISWA as NO_SP2D_D_ELEM_BEASISWA,
+            a.TGL_SP2D_D_ELEM_BEASISWA as TGL_SP2D_D_ELEM_BEASISWA,
             a.JML_PEG_D_ELEM_BEASISWA as JML_PEG_D_ELEM_BEASISWA,
             a.BLN_D_ELEM_BEASISWA as BLN_D_ELEM_BEASISWA,
             a.THN_D_ELEM_BEASISWA as THN_D_ELEM_BEASISWA,
@@ -283,38 +286,59 @@ class ElemenBeasiswa {
                 LEFT JOIN r_jur b ON a.KD_JUR = b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL = c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV
-                WHERE KD_R_ELEM_BEASISWA=" . $this->_buku . "
-                ";
+                WHERE KD_R_ELEM_BEASISWA='" . $this->_buku . "'";
 
+        if ($univ != "") {
+            $sql .=" AND d.KD_UNIV ='" . $univ . "'";
+        }
+
+        if ($jurusan != "") {
+            if ($univ == "") {
+                $sql .=" b.KD_JUR ='" . $jurusan . "'";
+            } else {
+                $sql .=" AND b.KD_JUR ='" . $jurusan . "'";
+            }
+        }
+
+        if ($tahun != "") {
+               $sql .=" AND a.TAHUN_MASUK ='" . $tahun . "'";
+        }
+
+        $sql .=" order by a.KD_D_ELEM_BEASISWA desc";
         $result = $this->db->select($sql);
 
-//        return $result;
         $data = array();
         foreach ($result as $key => $value) {
 
             $elem = new ElemenBeasiswa();
+            $elem->set_kd_d($value['KD_D_ELEM_BEASISWA']);
             $elem->set_no_sp2d($value['NO_SP2D_D_ELEM_BEASISWA']);
+            $elem->set_tgl_sp2d(date('d-m-Y', strtotime($value['TGL_SP2D_D_ELEM_BEASISWA'])));
             $elem->set_univ($value['NM_UNIV']);
+            $elem->set_thn_masuk($value['TAHUN_MASUK']);
             $elem->set_kd_jur($value['NM_JUR']);
-            $elem->set_thn_masuk($val['TAHUN_MASUK']);
             $elem->set_jml_peg($value['JML_PEG_D_ELEM_BEASISWA']);
-            $elem->set_biaya_per_peg($v['BIAYA_PER_PEG_D_ELEM_BEASISWA']);
             $elem->set_bln($value['BLN_D_ELEM_BEASISWA']);
+            $elem->set_biaya_per_peg($v['BIAYA_PER_PEG_D_ELEM_BEASISWA']);
             $elem->set_thn($value['THN_D_ELEM_BEASISWA']);
             $elem->set_total_bayar($value['TOTAL_BAYAR_D_ELEM_BEASISWA']);
             $data [] = $elem;
         }
+        //var_dump($data);
         return $data;
     }
 
-    public function get_elem_skripsi() {
+    public function get_elem_skripsi($univ = null, $jurusan = null, $tahun = null) {
+
         $sql = "SELECT 
             a.KD_D_ELEM_BEASISWA AS KD_D_ELEM_BEASISWA,
             a.KD_R_ELEM_BEASISWA AS KD_R_ELEM_BEASISWA,
+            a.TAHUN_MASUK AS TAHUN_MASUK,
             b.NM_JUR as NM_JUR,
             c.KD_FAKUL AS KD_FAKUL,
             d.NM_UNIV as NM_UNIV,
             a.NO_SP2D_D_ELEM_BEASISWA as NO_SP2D_D_ELEM_BEASISWA,
+            a.TGL_SP2D_D_ELEM_BEASISWA as TGL_SP2D_D_ELEM_BEASISWA,
             a.JML_PEG_D_ELEM_BEASISWA as JML_PEG_D_ELEM_BEASISWA,
             a.BLN_D_ELEM_BEASISWA as BLN_D_ELEM_BEASISWA,
             a.THN_D_ELEM_BEASISWA as THN_D_ELEM_BEASISWA,
@@ -323,27 +347,45 @@ class ElemenBeasiswa {
                 LEFT JOIN r_jur b ON a.KD_JUR = b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL = c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV
-                WHERE KD_R_ELEM_BEASISWA=" . $this->_skripsi . "
-                ";
+                WHERE KD_R_ELEM_BEASISWA='" . $this->_skripsi . "'";
 
+        if ($univ != "") {
+            $sql .=" AND d.KD_UNIV ='" . $univ . "'";
+        }
+
+        if ($jurusan != "") {
+            if ($univ == "") {
+                $sql .=" b.KD_JUR ='" . $jurusan . "'";
+            } else {
+                $sql .=" AND b.KD_JUR ='" . $jurusan . "'";
+            }
+        }
+
+        if ($tahun != "") {
+               $sql .=" AND a.TAHUN_MASUK ='" . $tahun . "'";
+        }
+
+        $sql .=" order by a.KD_D_ELEM_BEASISWA desc";
         $result = $this->db->select($sql);
 
-//        return $result;
         $data = array();
         foreach ($result as $key => $value) {
 
             $elem = new ElemenBeasiswa();
+            $elem->set_kd_d($value['KD_D_ELEM_BEASISWA']);
             $elem->set_no_sp2d($value['NO_SP2D_D_ELEM_BEASISWA']);
+            $elem->set_tgl_sp2d(date('d-m-Y', strtotime($value['TGL_SP2D_D_ELEM_BEASISWA'])));
             $elem->set_univ($value['NM_UNIV']);
+            $elem->set_thn_masuk($value['TAHUN_MASUK']);
             $elem->set_kd_jur($value['NM_JUR']);
-            $elem->set_thn_masuk($val['TAHUN_MASUK']);
             $elem->set_jml_peg($value['JML_PEG_D_ELEM_BEASISWA']);
-            $elem->set_biaya_per_peg($v['BIAYA_PER_PEG_D_ELEM_BEASISWA']);
             $elem->set_bln($value['BLN_D_ELEM_BEASISWA']);
+            $elem->set_biaya_per_peg($v['BIAYA_PER_PEG_D_ELEM_BEASISWA']);
             $elem->set_thn($value['THN_D_ELEM_BEASISWA']);
             $elem->set_total_bayar($value['TOTAL_BAYAR_D_ELEM_BEASISWA']);
             $data [] = $elem;
         }
+        //var_dump($data);
         return $data;
     }
 

@@ -86,6 +86,18 @@ class SuratTugas {
         }
         return $this;
     }
+    
+    
+    public function get_thn_masuk_by_jur($kd_jur) {
+        $sql = "SELECT distinct THN_MASUK as TAHUN_MASUK  FROM " . $this->_tb_st . " WHERE KD_JUR=" . $kd_jur. " order by TAHUN_MASUK desc";
+        $result = $this->db->select($sql);
+        $data = array();    
+        foreach ($result as $val) {
+            $data[] = $val['TAHUN_MASUK'];
+            
+        }
+        return $data;
+    }
 
     public function get_surat_tugas_by_univ_thn_masuk($univ, $thn) {
         $sql = "SELECT 

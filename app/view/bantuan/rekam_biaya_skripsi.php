@@ -1,122 +1,259 @@
 <div id="top">
-    <h2>BIAYA TUGAS AKHIR > TAMBAH</h2> <!-- memakai breadcrumb -->
+    <h2>BIAYA TA/SKRIPSI/TESIS > TAMBAH</h2> <!-- memakai breadcrumb -->
 
+    <div class="kolom3">
 
-    <form method="POST" action="
-          <?php
-                echo URL.'elemenBeasiswa/viewSkripsi'
-          ?>
-          " enctype="multipart/form-data">
-        <?php 
-            if(isset($this->d_ubah)){
-                echo "<input type='hidden' name='kode_d' id='kode_d' value=".$this->d_ubah->get_kd_d().">";
-            }
-        ?>
-    
-        <input type="hidden" id="kode_r" name="kode_r" size="12" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_kd_r():'3';?>">
-        <input type="hidden" id="jml_peg" name="jml_peg" size="12" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_jml_peg():'';?>">
-       
-<fieldset><legend>Parameter Biaya</legend>		
-	<div class="kolom1">
-		<label class="isian">Universitas : </label>
-                        <select id="universitas" name="universitas" type="text">
-                        <?php 
-                            foreach ($this->fakul as $val){
-                            echo "<option value=".$val->get_kode_fakul()." >".$val->get_kode_univ()." - ".$val->get_nama()."</option>";
+    </div>
+    <div class="kolom4">
+
+        <form method="POST" onSubmit="return cekField();" action="<?php echo URL . 'elemenBeasiswa/saveUangBuku' ?> " enctype="multipart/form-data">
+            <div>
+                <input  type="hidden" name="r_elem" value="2"/>
+                <fieldset>
+                    <!--div class="tigakolom"-->
+                    <div class="kolom1">
+                        <div id="wkode_univ"></div>
+                        <label class="isian">Universitas : </label>
+                        <select type="text" id="kode_univ" name="kode_univ">
+                            <option value="">Pilih Universitas</option>
+                            <?php
+                            foreach ($this->univ as $val) {
+                                echo "<option value=" . $val->get_kode_in() . " >" . $val->get_nama() . "</option>";
                             }
-                        ?> 
+                            ?> 
                         </select>
+                        <div id="wkode_jur"></div>
                         <label class="isian">Jurusan/Prodi : </label>
-                        <select type="text">
-                        <?php 
-                            foreach ($this->jur as $val2){
-                                echo "<option value=".$val2->get_kode_jur()." >".$val2->get_nama()."</option>";
-                            }
-                        ?>
+                        <select type="text" id="kode_jur" name="kode_jur">
+                            <option value="">Pilih Jurusan</option>
                         </select>
+                        <div id="wtahun_masuk"></div>
                         <label class="isian">Tahun Masuk : </label>
-                        <select type="text">
-                        <?php 
-                            foreach ($this->kon as $val3){
-                                echo "<option value=".$val3->thn_masuk_kontrak." >".$val3->thn_masuk_kontrak."</option>";
+                        <select type="text" name="tahun_masuk" id="tahun_masuk">
+                            <option value="">Pilih Tahun masuk</option>
+                            <?php
+                            for ($i = 2007; $i < date('Y') + 2; $i++) {
+
+                                if ($i == date('Y') - 3) {
+                                    echo "<option value=" . $i . " selected>" . $i . "</option>";
+                                } else {
+                                    echo "<option value=" . $i . " >" . $i . "</option>";
+                                }
                             }
-                        ?>
+                            ?>
                         </select>
-					<label class="isian">Tahun : </label>
-                        <label id="bln" name="bln" value="0"></label>
-                        <select id="thn" name="thn" type="text">
-                            <option value="2012">2012</option>
-                            <option value="2013">2013</option>
-                            <option value="2014">2014</option>
-                            <option value="2015">2015</option>
-                            <option value="2016">2016</option>
-                            <option value="2017">2017</option>
-                        </select>
-                        
-	</div>
-	
-	<div class="kolom2" style="margin-left: -40px">
-		<label class="isian">Biaya Per Pegawai : </label>
-                        <input disable type="text" id="biaya_peg" name="biaya_peg" size="12" value="500.000">
+                        <div id="wsemester"></div>
+                        <div id="wthn"></div>
+                        <label class="isian">Semester dan Tahun : </label>
+                        <ul class="inline" style="margin-bottom: 0px">
+                            <li><select type="text" id="semester" name="semester" class="unggah">
+                                    <option value="1">Semester I</option>
+                                    <option value="2">Semester II</option>
+                                </select></li>
+                            <li><select class="mini" type="text" id="thn" name="thn">
+                                    <?php
+                                    for ($i = 2007; $i < date('Y') + 2; $i++) {
+                                        if ($i == date('Y')) {
+                                            echo "<option value=" . $i . " selected>" . $i . "</option>";
+                                        } else {
+                                            echo "<option value=" . $i . " >" . $i . "</option>";
+                                        }
+                                    }
+                                    ?>
+                                </select></li>
+                        </ul>
+                    </div>
+
+                    <div class="kolom2" style="margin-left: -40px">
+                        <div id="wbiaya_buku"></div>
+                        <label class="isian">Biaya Per Pegawai : </label>
+                        <input type="text" maxlength=11 id="biaya_buku" name="biaya_buku" size="12"/>
+                        <div id="wtotal_biaya"></div>
                         <label class="isian">Total Biaya : </label>
-                        <input type="text" id="total_bayar" name="total_bayar" size="12" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_total_bayar():'';?>">
-		<label class="isian">No. SP2D : </label>
-                        <input type="text" id="no_sp2d" name="no_sp2d" size="20" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_no_sp2d():'';?>">
+                        <input readonly type="text" id="total_bayar" name="total_bayar" size="12" value="0" />
+
+
+                        <label class="isian">No. SP2D : </label>
+                        <input type="text" disabled />
+                        <input type="hidden" id="no_sp2d" name="no_sp2d" size="20" />
                         <label class="isian">Tgl SP2D : </label>
-                        <input type="text" id="tgl_sp2d" name="tgl_sp2d" size="20" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_tgl_sp2d():'';?>">
+                        <input type="text" disabled />
+                        <input type="hidden" id="tgl_sp2d" name="tgl_sp2d" size="20" />
                         <label class="isian">File SP2D : </label>
-                        <input type="file" id="fupload" name="fupload" size="20" >
-		
-</div>
-</fieldset>
-<br>
-<fieldset>
-    <legend>Data Penerima Biaya Skripsi</legend>
-    <div>file link print</div>
+                        <input type="text" disabled />
+                        <input type="hidden" id="fupload" name="fupload" size="20" />
+                    </div>
 
-    <table class="table-bordered zebra scroll">
-        <thead>
-        <th width="3%">No</th>
-        <th width="10%">NIP / Nama</th>
-        <th width="10%">Gol</th>
-        <th width="30%">Judul Penelitian</th>
-        <th width="10%">Status</th>
-        <th width="10%">Bank Penerima</th>
-        <th width="10%">No. Rekening</th>
-        <th width="5%">Pilih</th>
-        </thead>
-        <tbody>
-            <?php
-                $no = 1;
-                foreach ($this->pb as $val4){
-                    echo "<tr>";
-                    echo "<td>$no</td>";
-                    echo "<td>".$val4->get_nama()." / ".$val4->get_nip()."</td>";
-                    echo "<td>".$val4->get_gol()."</td>";
-            ?>
-                    <td><input type="text" id="jdl_teliti" name="jdl_teliti" size="4" value=""></td>
-            <?php
-                    echo "<td>".$val4->get_status()."</td>";
-                    echo "<td>".$val4->get_bank()."</td>";
-                    echo "<td>".$val4->get_no_rek()."</td>";
-            ?>
-                    <td><input type="checkbox" name="cek" value="cek" class="mini">
-					</td></tr>
-            <?php
-                    $no++;
-                }
-            ?>         
-        </tbody>
-    </table>
 
-</fieldset>
-<div>
-    <div>Keterangan : *Data harus diisi</div>
-    <div>
-        <input class="normal" type="submit" onclick="" value="BATAL">
-        <input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'update_elem':'add_elem';?>" value="SIMPAN" onClick="return cek();">
+
+                    <ul class="inline" style="float: right; margin-right: 20px">
+                        <li><button type="submit" name="simpan" class="sukses" onClick="formSubmit();"/><i class="icon-ok icon-white"></i>Simpan</button></li>
+                        <li><button type="reset" name="batal" class="normal" onClick="location.href='<?php echo URL . "elemenBeasiswa/viewUangBuku"; ?>'"><i class="icon-remove icon-white"></i>Batal</li>
+                    </ul>
+
+            </div>
+
+            <!--        <div>
+                        <div>Data Penerima Biaya Buku</div>
+                        <div>file link print</div>
+                    </div>-->
+            <div id="wtabel_penerima_buku"></div>
+            <div id="tabel_penerima_buku">
+                <table class="table-bordered zebra">
+                    <thead>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Gol</th>
+                    <th>Status</th>
+                    <th>Bank Penerima</th>
+                    <th>No. Rekening</th>
+                    <th>Pilih</th>
+                    </thead>
+                </table>
+            </div>
+            </fieldset>
+        </form>
     </div>
 </div>
-    </form>
-</div>
-</div>
+<script type="text/javascript">
+    
+       
+    //mengubah inputan  dengan memunculkan separator ribuan
+    $('#biaya_peg').number(true,0);
+    $('#total_bayar').number(true,0);
+    $('#biaya_buku').number(true,0);
+        
+    $(document).ready(function(){ 
+                
+        //menampilkan data jurusan berdasarkan universitas
+        $('#kode_univ').change(function(){
+            //alert ($('#kode_univ').val());
+            $.ajax({
+                type:"POST",
+                url: "<?php echo URL; ?>elemenBeasiswa/get_jur_by_univ",
+                data: {univ:$('#kode_univ').val()},
+                success: function(jurusan){
+                    $('#kode_jur').html(jurusan);
+                }
+            });
+            
+            $('#tabel_penerima_buku').empty();
+            $("#total_bayar").val('0');
+        })
+        
+        //menampilkan data penerima jadup
+        $('#kode_jur').change(function(){
+            //alert ($('#kode_univ').val());
+            $.ajax({
+                type:"POST",
+                url: "<?php echo URL; ?>elemenBeasiswa/tabel_penerima_buku",
+                data: {kd_jurusan:$('#kode_jur').val(),thn_masuk:$('#tahun_masuk').val()},
+                success: function(jadup){
+                    $('#tabel_penerima_buku').html(jadup);
+                }
+            });
+            
+            $("#total_bayar").val('0');
+        })
+        
+        $('#tahun_masuk').change(function(){
+            //alert ($('#kode_univ').val());
+            $.ajax({
+                type:"POST",
+                url: "<?php echo URL; ?>elemenBeasiswa/tabel_penerima_buku",
+                data: {kd_jurusan:$('#kode_jur').val(),thn_masuk:$('#tahun_masuk').val()},
+                success: function(jadup){
+                    $('#tabel_penerima_buku').html(jadup);
+                }
+            });
+            $("#total_bayar").val('0');
+        })
+                           
+    })
+    
+    function cekField(){
+        $jml=0;
+     
+        if($('#biaya_buku').val()==0 || $('#biaya_buku').val()=="" ){
+            viewError("wbiaya_buku","biaya per pegawai harus diisi");
+            $jml++;
+        }
+        if($('#kode_univ').val()==""){
+            viewError("wkode_univ","Universitas harus diisi");
+            $jml++;
+        }
+     
+        if($('#kode_jur').val()==""){
+            viewError("wkode_jur","Jurusan harus diisi");
+            $jml++;
+        }
+     
+        if($('#tahun_masuk').val()==""){
+            viewError("wtahun_masuk","Tahun masuk harus diisi.");
+            $jml++;
+        }
+     
+        if($('#semester').val()==""){
+            viewError("wsemester","Semester harus diisi.");
+            $jml++;
+        }
+     
+        if($('#thn').val()==""){
+            viewError("wthn","Tahun harus diisi.");
+            $jml++;
+        }
+     
+        if($('#tahun_masuk').val()==""){
+            viewError("wtahun_masuk","Tahun masuk harus diisi.");
+            $jml++;
+        }
+        if($('#total_bayar').val()=="" || $('#total_bayar').val()==0){
+            viewError("wtotal_biaya","Total biaya harus diisi.");
+            $jml++;
+        }
+        
+        var chks = document.getElementsByName('setuju[]');
+        var hasChecked = false;
+        for (var i = 0; i < chks.length; i++){
+            if (chks[i].checked){
+                hasChecked = true;
+                break;
+            }
+        }
+        
+        if(hasChecked==false){
+            viewError("wtabel_penerima_buku", "Penerima biaya buku belum dipilih.")
+            $jml++;
+        }
+     
+        if($jml>0){
+            return false;
+        } else{
+            return true;
+        }
+    }
+    
+    $("#biaya_buku").focusout(function(){
+        if($("#biaya_buku").val() ==""){
+            $("#biaya_buku").val("0");
+        }
+    })
+    
+    
+    $('#kode_univ').click(function(){
+        removeError('wkode_univ');
+    })
+    
+    $('#kode_jur').click(function(){
+        removeError('wkode_jur');
+    })
+    
+    $('#tahun_masuk').click(function(){
+        removeError('wtahun_masuk');
+    })
+    
+    $('#biaya_buku').keyup(function(){
+        removeError('wbiaya_buku');
+    })
+        
+</script>

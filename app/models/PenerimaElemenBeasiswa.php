@@ -51,6 +51,13 @@ class PenerimaElemenBeasiswa extends BaseModel {
         $where = 'KD_D_ELEM_BEASISWA=' . $id;
         $this->db->delete($table, $where);
     }
+    
+    //menghapus penerima elemen beasiswa berdasarkan KD_D_ELEM_BEASISWA
+    public function delete2($kd_el,$kd_pb) {
+        $table = "t_elem_beasiswa";
+        $where = "KD_D_ELEM_BEASISWA='".$kd_el."' AND KD_PB='".$kd_pb."'";
+        $this->db->delete($table, $where);
+    }
 
     public function get_by_elemen($id) {
         $table = "t_elem_beasiswa";
@@ -68,6 +75,34 @@ class PenerimaElemenBeasiswa extends BaseModel {
             $data[] = $penerima_elemen;
         }
         //var_dump($data);
+        return $data;
+    }
+    
+    public function get_by_elemen_pb($id, $pb) {
+               
+        $cek = FALSE; //belum ada pb dalam tabel penerima elemen beasiswa
+        $table = "t_elem_beasiswa";
+        $where = "KD_D_ELEM_BEASISWA='" . $id."' AND KD_PB='".$pb."'";
+        $sql = "SELECT * FROM $table where $where";
+        $result = $this->db->select($sql);
+        //var_dump($result);
+        if (!empty($result)) {
+            $cek = TRUE;   //jika ditemukan pb dalam tabel penerima pb 
+        }
+        return $cek;
+    }
+    
+    public function get_elemen_dibayar($r, $jur,$thn_masuk) {
+               
+        $cek = FALSE; //belum ada pb dalam tabel penerima elemen beasiswa
+        $table = "t_elem_beasiswa a, d_elem_beasiswa b";
+        $where = "a.KD_D_ELEM_BEASISWA = b.KD_D_ELEM_BEASISWA AND b.KD_R_ELEM_BEASISWA='" . $r."' AND b.KD_JUR='".$jur."' AND AND b.TAHUN_MASUK='".$thn_masuk."'";
+        $sql = "SELECT count(*) as JML FROM $table where $where";
+        $result = $this->db->select($sql);
+        $data=0;
+        foreach ($result as $val){
+            $data=$val['JML'];
+        }
         return $data;
     }
 
