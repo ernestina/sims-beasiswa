@@ -31,7 +31,6 @@ class User {
         if ($level) {
             $sql .=" WHERE AKSES_USER= '2'";
         }
-
         $result = $this->_db->select($sql);
 
         $data = array();
