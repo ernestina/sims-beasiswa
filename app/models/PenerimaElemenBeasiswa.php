@@ -95,8 +95,8 @@ class PenerimaElemenBeasiswa extends BaseModel {
     public function get_elemen_dibayar($r, $jur,$thn_masuk) {
                
         $cek = FALSE; //belum ada pb dalam tabel penerima elemen beasiswa
-        $table = "t_elem_beasiswa a, d_elem_beasiswa b";
-        $where = "a.KD_D_ELEM_BEASISWA = b.KD_D_ELEM_BEASISWA AND b.KD_R_ELEM_BEASISWA='" . $r."' AND b.KD_JUR='".$jur."' AND AND b.TAHUN_MASUK='".$thn_masuk."'";
+        $table = "t_elem_beasiswa a, d_elemen_beasiswa b";
+        $where = "a.KD_D_ELEM_BEASISWA = b.KD_D_ELEM_BEASISWA AND b.KD_R_ELEM_BEASISWA='" . $r."' AND b.KD_JUR='".$jur."' AND b.TAHUN_MASUK='".$thn_masuk."' AND b.NO_SP2D_D_ELEM_BEASISWA >''";
         $sql = "SELECT count(*) as JML FROM $table where $where";
         $result = $this->db->select($sql);
         $data=0;
@@ -105,6 +105,49 @@ class PenerimaElemenBeasiswa extends BaseModel {
         }
         return $data;
     }
+    
+    public function get_elemen_proses_dibayar($r,$jur,$thn_masuk) {
+               
+        $cek = FALSE; //belum ada pb dalam tabel penerima elemen beasiswa
+        $table = "t_elem_beasiswa a, d_elemen_beasiswa b";
+        $where = "a.KD_D_ELEM_BEASISWA = b.KD_D_ELEM_BEASISWA AND b.KD_R_ELEM_BEASISWA='" .$r."' AND b.KD_JUR='".$jur."' AND b.TAHUN_MASUK='".$thn_masuk."' AND (b.NO_SP2D_D_ELEM_BEASISWA ='' OR b.NO_SP2D_D_ELEM_BEASISWA IS NULL)";
+        $sql = "SELECT count(*) as JML FROM $table where $where";
+        $result = $this->db->select($sql);
+        $data=0;
+        foreach ($result as $val){
+            $data=$val['JML'];
+        }
+        return $data;
+    }
+    
+    public function cek_skripsi_by_pb($pb) {
+               
+        $cek = FALSE; //belum ada pb dalam tabel penerima elemen beasiswa
+        $table = "t_elem_beasiswa a, d_elemen_beasiswa b";
+        $where = "a.KD_PB='".$pb."' AND a.KD_D_ELEM_BEASISWA=B.KD_D_ELEM_BEASISWA AND b.KD_R_ELEM_BEASISWA='3'";
+        $sql = "SELECT * FROM $table where $where";
+        $result = $this->db->select($sql);
+        //var_dump($result);
+        if (!empty($result)) {
+            $cek = TRUE;   //jika ditemukan pb dalam tabel penerima pb 
+        }
+        return $cek;
+    }
+    
+    public function cek_skripsi_dibayar_by_pb($pb) {
+               
+        $cek = FALSE; 
+        $table = "t_elem_beasiswa a, d_elemen_beasiswa b";
+        $where = "a.KD_PB='".$pb."' AND a.KD_D_ELEM_BEASISWA=B.KD_D_ELEM_BEASISWA AND b.KD_R_ELEM_BEASISWA='3' AND b.NO_SP2D_D_ELEM_BEASISWA >''";
+        $sql = "SELECT * FROM $table where $where";
+        $result = $this->db->select($sql);
+        //var_dump($result);
+        if (!empty($result)) {
+            $cek = TRUE;    
+        }
+        return $cek;
+    }
+    
 
 }
 

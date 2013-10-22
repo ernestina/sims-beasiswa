@@ -12,8 +12,8 @@ class Index extends BaseController{
     }
     
     public function index(){
-        $notif = new Notifikasi($this->registry);
-        $notif->get_notifikasi();
+        //$notif = new Notifikasi($this->registry);
+        //$notif->get_notifikasi();
         $this->view->render('index');
     }
 }

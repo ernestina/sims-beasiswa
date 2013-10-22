@@ -427,7 +427,7 @@ class elemenBeasiswaController extends BaseController {
 
             $this->view->render('bantuan/ubah_buku');
         } else {
-            header('location:' . URL . 'elemenBeasiswa/viewJUangBuku');
+            header('location:' . URL . 'elemenBeasiswa/viewUangBuku');
         }
     }
 
@@ -518,19 +518,26 @@ class elemenBeasiswaController extends BaseController {
         $jur = new Jurusan($this->registry);
         $jurusan = $jur->get_jurusan();
         $this->view->jur = $jurusan;
-        $st = new SuratTugas($this->registry);
-        $penerima = new Penerima($this->registry);
-        $penerima_elemen = new PenerimaElemenBeasiswa();
+        
+       
         $myArray = array();
         foreach ($jurusan as $val2) {
+            $st = new SuratTugas($this->registry);
             $thn = $st->get_thn_masuk_by_jur($val2->get_kode_jur());
             //var_dump($thn);
             foreach ($thn as $th) {
-                $pb = $penerima->get_penerima_by_skripsi($val2->get_kode_jur(), $th); 
+                $penerima = new Penerima($this->registry);
+                $pb = $penerima->get_penerima_by_skripsi($val2->get_kode_jur(), $th);
                 $jml = count($pb);
                 //echo $jml;
-                $byr = $penerima_elemen->get_elemen_dibayar("3",$val2->get_kode_jur(),$th);
-                $arr = array('jur' => $val2->get_nama(), 'thn' => $th, 'jml' => $jml, 'byr' => $byr);
+                $un = new Universitas($this->registry);
+                $c_univ = $un->get_univ_by_jur($val2->get_kode_jur());
+                $penerima_elemen = new PenerimaElemenBeasiswa();
+                $byr = $penerima_elemen->get_elemen_dibayar("3", $val2->get_kode_jur(), $th);
+                //echo $byr;
+                $pros = $penerima_elemen->get_elemen_proses_dibayar("3", $val2->get_kode_jur(), $th);
+                //echo $pros;
+                $arr = array('jur' => $val2->get_nama()." ".$c_univ->get_kode(), 'thn' => $th, 'jml' => $jml, 'byr' => $byr, 'pros' => $pros);
                 array_push($myArray, $arr);
             }
         }
@@ -540,8 +547,9 @@ class elemenBeasiswaController extends BaseController {
             $sort_thn[] = $key['thn'];
             $sort_jml[] = $key['jml'];
             $sort_byr[] = $key['byr'];
+            $sort_pros[] = $key['pros'];
         }
-        
+
         array_multisort($sort_thn, SORT_DESC, $myArray);
         $this->view->arr = $myArray;
 
@@ -549,39 +557,219 @@ class elemenBeasiswaController extends BaseController {
     }
 
     public function data_index_skripsi() {
-        $elem = new ElemenBeasiswa();
-        $this->view->skripsi = $elem->get_elem_skripsi();
-        $this->view->load('bantuan/tabel_index_skripsi');
+        if (isset($_POST['univ']) && isset($_POST['jurusan']) && isset($_POST['tahun'])) {
+            //tinggal nambahin filter di get_elem_jadup
+            $univ = $_POST['univ'];
+            $jurusan = $_POST['jurusan'];
+            $tahun = $_POST['tahun'];
+            $elem = new ElemenBeasiswa();
+            $this->view->skripsi = $elem->get_elem_skripsi($univ, $jurusan, $tahun);
+
+            $this->view->load('bantuan/tabel_index_skripsi');
+        }
     }
+    
+    public function data_index_skripsi2() {
+        if (isset($_POST['sp2d'])) {
+            //tinggal nambahin filter di get_elem_jadup
+            $sp2d = $_POST['sp2d'];
+            
+            $elem = new ElemenBeasiswa();
+            $this->view->skripsi = $elem->get_elem_skripsi_by_sp2d($sp2d);
+
+            $this->view->load('bantuan/tabel_index_skripsi');
+        }
+    }
+    
 
     public function addSkripsi($id = null) {
         $univ = new Universitas($this->registry);
         $this->view->univ = $univ->get_univ();
-
         $jur = new Jurusan($this->registry);
         $this->view->jur = $jur->get_jurusan();
-
-        $pb = new Penerima($this->registry);
-        $this->view->pb = $pb->get_penerima();
-
-        $ref_elem = new ReferensiElemenBeasiswa();
-        $this->view->skripsi = $ref_elem->skripsi();
-
-
-
         $this->view->render('bantuan/rekam_biaya_skripsi');
     }
 
-    public function delSkripsi($id) {
-        $elem = new ElemenBeasiswa($this->registry);
-        if (is_null($id)) {
-            throw new Exception;
-            echo "id belum dimasukkan!";
-            return;
+    public function tabel_penerima_skripsi() {
+        if (isset($_POST['kd_jurusan']) && isset($_POST['thn_masuk']) && $_POST['kd_jurusan'] != "" && $_POST['thn_masuk'] != "") {
+            $kd_jur = $_POST['kd_jurusan'];
+            $thn_masuk = $_POST['thn_masuk'];
+            $pb = new Penerima($this->registry);
+            $data_pb = $pb->get_penerima_by_kd_jur_thn_masuk($kd_jur, $thn_masuk);
+            $bank = new Bank($this->registry);
+            $this->view->penerima_el = new PenerimaElemenBeasiswa();
+            $this->view->bank = $bank;
+            $this->view->pb = $data_pb;
+            $this->view->load('bantuan/tabel_penerima_skripsi');
         }
-        $elem->set_kd_d($id);
-        $elem->delete_elem();
-        header('location:' . URL . 'elemenBeasiswa/viewSkripsi');
+
+        if (isset($_POST['kd_jurusan']) && isset($_POST['thn_masuk']) && $_POST['kd_jurusan'] != "" && $_POST['thn_masuk'] == "") {
+            $kd_jur = $_POST['kd_jurusan'];
+            //$thn_masuk = $_POST['thn_masuk'];
+            $pb = new Penerima($this->registry);
+            $data_pb = $pb->get_penerima_by_kd_jur($kd_jur);
+            $bank = new Bank($this->registry);
+            $this->view->penerima_el = new PenerimaElemenBeasiswa();
+            $this->view->bank = $bank;
+            $this->view->pb = $data_pb;
+            $this->view->load('bantuan/tabel_penerima_skripsi');
+        }
+    }
+
+    public function saveUangSkripsi() {
+        $elem = new ElemenBeasiswa();
+        $pb = $_POST['setuju'];
+        $jml_peg = count($pb);
+        $elem->set_jml_peg($jml_peg);
+        $elem->set_kd_r($_POST['r_elem']);
+        $elem->set_kd_jur($_POST['kode_jur']);
+        $elem->set_thn_masuk($_POST['tahun_masuk']);
+        $elem->set_biaya_per_peg(str_replace(',', '', $_POST['biaya_skripsi']));
+        $elem->set_total_bayar(str_replace(',', '', $_POST['total_bayar']));
+//        $elem->set_no_sp2d($_POST['no_sp2d']);
+//        $elem->set_tgl_sp2d(date('Y-m-d', strtotime($_POST['tgl_sp2d'])));
+//        $elem->set_file_sp2d($_POST['fupload']);
+        //var_dump($elem);
+        //echo $kd_elemen_beasiswa;
+        //exit();     
+        //var_dump($elem);
+        $kd_elemen_beasiswa = $elem->add_elem($elem);
+
+        if ($kd_elemen_beasiswa != "") {
+            foreach ($pb as $val) {
+                $penerima_elemen = new PenerimaElemenBeasiswa();
+                $penerima_elemen->kd_elemen_beasiswa = $kd_elemen_beasiswa;
+                $penerima_elemen->kd_pb = $val;
+                $penerima_elemen->add($penerima_elemen);
+            }
+        }
+
+//        
+        //header('location:' . URL . 'elemenBeasiswa/viewUangBuku');
+        $url = URL . 'elemenBeasiswa/viewSkripsi';
+        echo '<script> alert("Data berhasil disimpan") </script>';
+        echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
+    }
+
+    public function delSkripsi($id = null) {
+        if ($id != "") {
+            $elem = new ElemenBeasiswa($this->registry);
+            //echo $id;
+            $elem->delete_elem($id);
+
+            $penerima_elemen = new PenerimaElemenBeasiswa();
+            $penerima_elemen->delete($id);
+        }
+        $url = URL . 'elemenBeasiswa/viewSkripsi';
+        echo '<script> alert("Data berhasil dihapus") </script>';
+        echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
+    }
+
+    public function editSkripsi($id = null) {
+
+        if ($id != "") {
+
+            $elemen = new ElemenBeasiswa();
+            $elemen->set_kd_d($id);
+            $elemen2 = $elemen->get_elem_by_id($elemen);
+            $this->view->elemen = $elemen2;
+
+            $jur = new Jurusan($this->registry);
+            $jur->set_kode_jur($elemen2->get_kd_jur());
+            $jur2 = $jur->get_jur_by_id($jur);
+            //var_dump($jur2);
+            $this->view->jur = $jur2;
+
+            $univ = new Universitas($this->registry);
+            $univ2 = $univ->get_univ_by_jur($jur2->get_kode_jur());
+            $this->view->univ = $univ2;
+
+            $this->view->render('bantuan/ubah_skripsi');
+        } else {
+            header('location:' . URL . 'elemenBeasiswa/viewSkripsi');
+        }
+    }
+
+    public function tabel_penerima_skripsi2() {
+        if (isset($_POST['kd_jurusan']) && isset($_POST['thn_masuk']) && $_POST['kd_jurusan'] != "" && $_POST['thn_masuk'] != "" && $_POST['kd_el'] != "") {
+            $kd_jur = $_POST['kd_jurusan'];
+            $thn_masuk = $_POST['thn_masuk'];
+            $pb = new Penerima($this->registry);
+            $data_pb = $pb->get_penerima_by_kd_jur_thn_masuk($kd_jur, $thn_masuk);
+            $bank = new Bank($this->registry);
+            $this->view->penerima_el = new PenerimaElemenBeasiswa();
+            $this->view->kd_el = $_POST['kd_el'];
+            $this->view->bank = $bank;
+            $this->view->pb = $data_pb;
+            $this->view->load('bantuan/tabel_penerima_skripsi2');
+        }
+
+        if (isset($_POST['kd_jurusan']) && isset($_POST['thn_masuk']) && $_POST['kd_jurusan'] != "" && $_POST['thn_masuk'] == "") {
+            $kd_jur = $_POST['kd_jurusan'];
+            //$thn_masuk = $_POST['thn_masuk'];
+            $pb = new Penerima($this->registry);
+            $data_pb = $pb->get_penerima_by_kd_jur($kd_jur);
+            $bank = new Bank($this->registry);
+            $this->view->penerima_el = new PenerimaElemenBeasiswa();
+            $this->view->kd_el = $_POST['kd_el'];
+            $this->view->bank = $bank;
+            $this->view->pb = $data_pb;
+            $this->view->load('bantuan/tabel_penerima_skripsi2');
+        }
+    }
+
+    public function updateUangSkripsi() {
+        $elem = new ElemenBeasiswa();
+        $pb = $_POST['setuju'];
+        $jml_peg = count($pb);
+        $elem->set_kd_d($_POST['kd_el']);
+        $elem->set_jml_peg($jml_peg);
+        $elem->set_kd_r($_POST['r_elem']);
+        $elem->set_kd_jur($_POST['kode_jur']);
+        $elem->set_thn_masuk($_POST['tahun_masuk']);
+        $elem->set_biaya_per_peg(str_replace(',', '', $_POST['biaya_skripsi']));
+
+        $elem->set_total_bayar(str_replace(',', '', $_POST['total_bayar']));
+        $elem->set_no_sp2d($_POST['no_sp2d']);
+        $elem->set_tgl_sp2d(date('Y-m-d', strtotime($_POST['tgl_sp2d'])));
+
+        //var_dump($elem);
+        //echo $kd_elemen_beasiswa;
+        //exit();     
+        //var_dump($elem);
+        $upload = new Upload();
+        $upload->init('fupload');
+        if ($upload->getFileName() != "") {
+            $upload->setDirTo("files/sp2d/");
+            $nama = array($elem->get_no_sp2d(), $elem->get_tgl_sp2d());
+            $upload->uploadFile2("", $nama);
+            $elem->set_file_sp2d($upload->getFileTo());
+            //echo $upload->getFileName();
+        } else {
+            if ($_POST['fupload_lama'] != "") {
+                $elem->set_file_sp2d($_POST['fupload_lama']);
+                //echo $_POST['fupload_lama'];
+            } else {
+                $elem->set_file_sp2d("");
+            }
+        }
+        $elem->update_elem($elem);
+
+        $penerima = new PenerimaElemenBeasiswa();
+        $penerima->delete($elem->get_kd_d());
+        foreach ($pb as $val) {
+            $penerima_elemen = new PenerimaElemenBeasiswa();
+            $penerima_elemen->kd_elemen_beasiswa = $elem->get_kd_d();
+            $penerima_elemen->kd_pb = $val;
+            $penerima_elemen->add($penerima_elemen);
+        }
+
+
+//        
+        //header('location:' . URL . 'elemenBeasiswa/viewUangBuku');
+        $url = URL . 'elemenBeasiswa/editSkripsi/' . $elem->get_kd_d();
+        echo '<script> alert("Data berhasil disimpan") </script>';
+        echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
     }
 
     public function get_method() {

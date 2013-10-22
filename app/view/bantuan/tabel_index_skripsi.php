@@ -6,8 +6,6 @@
     <th width="15%">Jurusan/Prodi</th>
     <th width="5%">Th. Masuk</th>
     <th width="5%">Jumlah Pegawai Dibayar</th>
-    <th width="10%">Semester</th>
-    <th width="5%">Tahun</th>
     <th width="10%">Total Bayar</th>
     <th width="7%">Aksi</th>
 </thead>
@@ -29,12 +27,10 @@
         echo "<td>" . $val->get_kd_jur() . "</td>";
         echo "<td>".$val->get_thn_masuk()."</td>";
         echo "<td>" . $val->get_jml_peg() . "</td>";
-        $semester = $val->get_bln();
-        echo "<td>" . $semester . "</td>";
-        echo "<td>" . $val->get_thn() . "</td>";
-        echo "<td>" . $val->get_total_bayar() . "</td>";
-        echo "<td><a href=" . URL . "elemenBeasiswa/delUangBuku/" . $val->get_kd_d() . " onClick=\"return del();\"><i class=\"icon-trash\"></i></a> &nbsp &nbsp 
-                        <a href=" . URL . "elemenBeasiswa/editUangBuku/" . $val->get_kd_d() . "><i class=\"icon-pencil\"></i></a></td>";
+        
+        echo "<td>" . number_format($val->get_total_bayar()) . "</td>";
+        echo "<td><a href=" . URL . "elemenBeasiswa/delSkripsi/" . $val->get_kd_d() . " onClick=\"return del();\"><i class=\"icon-trash\"></i></a> &nbsp &nbsp 
+                        <a href=" . URL . "elemenBeasiswa/editSkripsi/" . $val->get_kd_d() . "><i class=\"icon-pencil\"></i></a></td>";
         echo "</tr>";
         $no++;
     }

@@ -1,13 +1,13 @@
 <div id="top">
-    <h2>BIAYA BUKU > UBAH</h2> <!-- memakai breadcrumb -->
+    <h2>BIAYA TA/SKRIPSI/TESIS > UBAH</h2> <!-- memakai breadcrumb -->
 
 
-    <form method="POST" onSubmit="return cekField();" action="<?php echo URL . 'elemenBeasiswa/updateUangBuku' ?> " enctype="multipart/form-data">
+    <form method="POST" onSubmit="return cekField();" action="<?php echo URL . 'elemenBeasiswa/updateUangSkripsi' ?> " enctype="multipart/form-data">
         <div>
-            <input  type="hidden" name="r_elem" value="2"/>
+            <input  type="hidden" name="r_elem" value="3"/>
             <fieldset>
                 <!--div class="tigakolom"-->
-                <div class="kolom1" style="margin-right: -100px">
+                <div class="kolom1">
                     <div id="wkode_univ"></div>
                     <label class="isian">Universitas : </label>
                     <input type="hidden" id="kode_univ" name="kode_univ" value="<?php echo $this->univ->get_kode_in(); ?>">
@@ -23,30 +23,13 @@
                     <input type="hidden" name="tahun_masuk" id="tahun_masuk" value="<?php echo $this->elemen->get_thn_masuk(); ?>">
                     <input type="text" value="<?php echo $this->elemen->get_thn_masuk(); ?>" disabled>
 
-                    <div id="wsemester"></div>
-                    <div id="wthn"></div>
-                    <label class="isian">Semester dan Tahun : </label>
-                    <?php
-                    if ($this->elemen->get_bln() == "1")
-                        $bln = "Semester 1";
-                    if ($this->elemen->get_bln() == "2")
-                        $bln = "Semester 2";
-                    ?>
-                    <input type="hidden" id="semester" name="semester" value="<?php echo $this->elemen->get_bln(); ?>">
-                    <input type="hidden" id="thn" name="thn" value="<?php echo $this->elemen->get_thn(); ?>">
-                    <ul class="inline" style="margin-bottom: 0px">
-                        <li>
-                            <input type="text" value="<?php echo $bln . " " . $this->elemen->get_thn(); ?>" disabled>
-                        </li>
-
-
-                    </ul>
+                    
                 </div>
 
-                <div class="kolom2" style="margin-right: -60px; margin-left:100px">
-                    <div id="wbiaya_buku"></div>
+                <div class="kolom2" style="margin-left: -40px">
+                    <div id="wbiaya_skripsi"></div>
                     <label class="isian">Biaya Per Pegawai : </label>
-                    <input type="text" id="biaya_buku" name="biaya_buku" size="12" value="<?php echo $this->elemen->get_biaya_per_peg(); ?>"/>
+                    <input type="text" id="biaya_skripsi" name="biaya_skripsi" size="12" value="<?php echo $this->elemen->get_biaya_per_peg(); ?>"/>
 
                     <div id="wtotal_biaya"></div>
                     <label class="isian">Total Biaya : </label>
@@ -86,7 +69,7 @@
                 <input type="hidden" id="kd_el" name="kd_el" value="<?php echo $this->elemen->get_kd_d(); ?>">
                 <ul class="inline" style="float: right; margin-right: 20px">
                     <li><button type="submit" name="simpan" class="sukses" onClick="formSubmit();"/><i class="icon-ok icon-white"></i>Simpan</button></li>
-                    <li><button type="reset" name="batal" class="normal" onClick="location.href='<?php echo URL . "elemenBeasiswa/viewUangBuku"; ?>'"><i class="icon-remove icon-white"></i>Batal</li>
+                    <li><button type="reset" name="batal" class="normal" onClick="location.href='<?php echo URL . "elemenBeasiswa/viewSkripsi"; ?>'"><i class="icon-remove icon-white"></i>Batal</li>
                 </ul>
 
         </div>
@@ -95,8 +78,8 @@
                     <div>Data Penerima Biaya Buku</div>
                     <div>file link print</div>
                 </div>-->
-        <div id="wtabel_penerima_buku"></div>
-        <div id="tabel_penerima_buku">
+        <div id="wtabel_penerima_skripsi"></div>
+        <div id="tabel_penerima_skripsi">
         </div>
         </fieldset>
     </form>
@@ -107,7 +90,7 @@
     //mengubah inputan  dengan memunculkan separator ribuan
     $('#biaya_peg').number(true,0);
     $('#total_bayar').number(true,0);
-    $('#biaya_buku').number(true,0);
+    $('#biaya_skripsi').number(true,0);
     
     //menampilkan datepicker   
     $(function() { 
@@ -123,10 +106,10 @@
     function display_penerima(){
         $.ajax({
             type:"POST",
-            url: "<?php echo URL; ?>elemenBeasiswa/tabel_penerima_buku2",
+            url: "<?php echo URL; ?>elemenBeasiswa/tabel_penerima_skripsi2",
             data: {kd_jurusan:$('#kode_jur').val(),thn_masuk:$('#tahun_masuk').val(),kd_el:$('#kd_el').val()},
             success: function(jadup){
-                $('#tabel_penerima_buku').html(jadup);
+                $('#tabel_penerima_skripsi').html(jadup);
             }
         });    
     }
@@ -136,8 +119,8 @@
     function cekField(){
         $jml=0;
      
-        if($('#biaya_buku').val()==0 || $('#biaya_buku').val()=="" ){
-            viewError("wbiaya_buku","biaya per pegawai harus diisi");
+        if($('#biaya_skripsi').val()==0 || $('#biaya_skripsi').val()=="" ){
+            viewError("wbiaya_skripsi","biaya per pegawai harus diisi");
             $jml++;
         }
         if($('#kode_univ').val()==""){
@@ -155,16 +138,7 @@
             $jml++;
         }
      
-        if($('#semester').val()==""){
-            viewError("wsemester","Semester harus diisi.");
-            $jml++;
-        }
-     
-        if($('#thn').val()==""){
-            viewError("wthn","Tahun harus diisi.");
-            $jml++;
-        }
-     
+             
         if($('#tahun_masuk').val()==""){
             viewError("wtahun_masuk","Tahun masuk harus diisi.");
             $jml++;
@@ -176,7 +150,7 @@
         
         if($('#no_sp2d').val()!=""){
             if($('#tgl_sp2d').val()==""){
-                viewError("wtgl_sp2d","Total biaya harus diisi."); 
+                viewError("wtgl_sp2d","Tanggal SP2D harus diisi."); 
                 $jml++;
             }
              if($('#fupload').val()=="" && $('#fupload_lama').val()=="" ){
@@ -204,7 +178,7 @@
         }
         
         if(hasChecked==false){
-            viewError("wtabel_penerima_buku", "Penerima biaya buku belum dipilih.")
+            viewError("wtabel_penerima_skripsi", "Penerima biaya penelitian belum dipilih.")
             $jml++;
         }
      
@@ -215,9 +189,9 @@
         }
     }
     
-    $("#biaya_buku").focusout(function(){
-        if($("#biaya_buku").val() ==""){
-            $("#biaya_buku").val("0");
+    $("#biaya_skripsi").focusout(function(){
+        if($("#biaya_skripsi").val() ==""){
+            $("#biaya_skripsi").val("0");
         }
     })
     
@@ -234,8 +208,18 @@
         removeError('wtahun_masuk');
     })
     
-    $('#biaya_buku').keyup(function(){
-        removeError('wbiaya_buku');
+    $('#biaya_skripsi').keyup(function(){
+        removeError('wbiaya_skripsi');
+    })
+    
+    $('#no_sp2d').keyup(function(){
+        removeError('wno_sp2d');
+    })
+    $('#tgl_sp2d').click(function(){
+        removeError('wtgl_sp2d');
+    })
+    $('#file_sp2d').click(function(){
+        removeError('wfile_sp2d');
     })
         
 </script>

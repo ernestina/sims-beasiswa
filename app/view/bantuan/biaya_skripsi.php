@@ -32,17 +32,21 @@
                     <select name="tahun_masuk" id="tahun_masuk" type="text">
                         <option value="">Semua</option>>
                         <?php
-                        foreach ($this->kon as $val3) {
-                            echo "<option value=" . $val3->thn_masuk_kontrak . " >" . $val3->thn_masuk_kontrak . "</option>";
+                        for ($i = 2007; $i <= date('Y') + 2; $i++) {
+                            ?>
+                            <option value="<?php echo $i; ?>" <?php
+                        if ($i == date('Y')) {
+                            echo "selected";
                         }
-                        ?>
+                            ?>><?php echo $i; ?></option>
+                                <?php } ?>
                     </select>
                 </td>
-                <td ><input type="search" name="cari" id="cari" value="cari" style="float: right"> </td>
+                <td ><input type="search" name="cari" id="cari" placeholder="cari dengan kata kunci nomor SP2D" style="float: right"> </td>
             </tr>
         </table>
 
-        <button href="<?php echo URL . 'elemenBeasiswa/addSkripsi' ?>" style="margin-right:20px"><i class="icon-plus icon-white"></i>  TAMBAH</button>
+        <button onClick="location.href='<?php echo URL . "elemenBeasiswa/addSkripsi"; ?>'" style="margin-right:20px"><i class="icon-plus icon-white"></i>  TAMBAH</button>
 
         <!--input type="button" id="add" value="TAMBAH" onClick="location.href=''"-->
 
@@ -51,14 +55,15 @@
     <div id="tabel_index_skripsi" class="kolom4"></div>
 
     <div class="kolom3">
+        Jumlah Mahasiswa sedang penelitian:
         <ul>
             <?php
             //var_dump($this->arr);
-            $i=0;
+            $i = 0;
             foreach ($this->arr as $key => $arr) {
                 if ($arr['jml'] > 0 && $arr['byr'] != $arr['jml']) {
-                    echo "<li title=\"telah dibayarkan: ".$arr['byr']." orang\" value=\"".$arr['byr']."\">" . $arr['jur'] . " " . $arr['thn'] . " (" . $arr['jml'] . " orang)</li>";
-     
+                    echo "<li title=\"Telah dibayarkan: " . $arr['byr'] . " orang. Proses dibayar: " . $arr['pros'] . "\">" . $arr['jur'] . " " . $arr['thn'] . " (" . $arr['jml'] . " orang)</li>";
+
                     echo "<br/>";
                     $i++;
                 }
@@ -73,8 +78,59 @@
     
     $.post("<?php echo URL; ?>elemenBeasiswa/data_index_skripsi", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()}, 
     function (data){
-        $('#tabel_index_skripsi').fadeIn(100);
         $('#tabel_index_skripsi').html(data);
+    })
+    
+    $(document).ready(function(){ 
+    
+        //agar ketika universitas berubah karena dipilih, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
+        $("#universitas").change(function(){
+            $.post("<?php echo URL; ?>elemenBeasiswa/get_jur_by_univ", {univ:$("#universitas").val()},
+            function(data){                
+                $('#jurusan').html(data);
+            }); 
+        
+            $.post("<?php echo URL; ?>elemenBeasiswa/data_index_skripsi", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()}, 
+            function (data){
+                $('#tabel_index_skripsi').html(data);
+            })
+        });
+        
+        //agar ketika universitas berubah karena dipilih, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
+        $("#jurusan").change(function(){
+                  
+            $.post("<?php echo URL; ?>elemenBeasiswa/data_index_skripsi", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()}, 
+            function (data){
+                $('#tabel_index_skripsi').html(data);
+            })
+        });
+        
+        //agar ketika universitas berubah karena dipilih, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
+        $("#tahun_masuk").change(function(){
+                  
+            $.post("<?php echo URL; ?>elemenBeasiswa/data_index_skripsi", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()}, 
+            function (data){
+                $('#tabel_index_skripsi').html(data);
+            })
+        });
+        
+        
+        $("#cari").keyup(function(){
+                  
+            $.post("<?php echo URL; ?>elemenBeasiswa/data_index_skripsi2", { sp2d:$('#cari').val()}, 
+            function (data){
+                $('#tabel_index_skripsi').html(data);
+            })
+            
+            if($("#cari").val()==""){
+                $.post("<?php echo URL; ?>elemenBeasiswa/data_index_skripsi", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()}, 
+                function (data){
+                    $('#tabel_index_skripsi').html(data);
+                })
+            }
+        });
+        
+       
     })
     
     

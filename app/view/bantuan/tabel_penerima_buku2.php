@@ -29,7 +29,7 @@ foreach ($this->pb as $pb) {
             <?php if ($this->penerima_elemen->get_by_elemen_pb($this->kd_el, $pb->get_kd_pb()) == true) { ?>
                 <input type="checkbox" id="setuju[]" name="setuju[]" value="<?php echo $pb->get_kd_pb(); ?>" checked />
             <?php } else { ?>
-                <input type="checkbox" id="setuju[]" name="setuju[]" value="<?php echo $pb->get_kd_pb(); ?>"/>
+                <input type="checkbox" id="setuju[]" name="setuju[]" value="<?php echo $pb->get_kd_pb(); ?>" <?php if($this->penerima_el->cek_skripsi_by_pb($val4->get_kd_pb())==TRUE){echo " disabled";} ?>/>
             <?php } ?>
         </td>
 
@@ -57,8 +57,9 @@ foreach ($this->pb as $pb) {
         if(cek>0){
             removeError('wtabel_penerima_buku');
             removeError('wtotal_biaya');
-            $('#total_bayar').val(cek*$('#biaya_buku').val());
+           
         }
+         $('#total_bayar').val(cek*$('#biaya_buku').val());
     })
     
     

@@ -26,28 +26,26 @@
         echo "<td>" . $val4->get_no_rek() . "</td>";
         echo "<td>" . $val4->get_skripsi() . "</td>";
         ?>
-    <td><input type="checkbox" id="setuju[]" name="setuju[]" value="<?php echo $val4->get_kd_pb(); ?>" 
-        <?php
-        if ($val4->get_skripsi() != "" && $this->penerima_el->cek_skripsi_by_pb($val4->get_kd_pb()) == FALSE) {
-            echo "checked";
-        }
-        if ($this->penerima_el->cek_skripsi_by_pb($val4->get_kd_pb()) == TRUE) {
-            echo " disabled";
-            if($this->penerima_el->cek_skripsi_dibayar_by_pb($val4->get_kd_pb())== TRUE){
-                echo " title='Telah dibayar.'";
-            } else{
-                echo " title='Sedang proses bayar.'";
+    <td>
+        <?php if ($this->penerima_el->get_by_elemen_pb($this->kd_el, $val4->get_kd_pb()) == true) { ?>
+            <input type="checkbox" id="setuju[]" name="setuju[]" value="<?php echo $val4->get_kd_pb(); ?>" checked />
+        <?php } else { ?>
+            <input type="checkbox" id="setuju[]" name="setuju[]" value="<?php echo $val4->get_kd_pb(); ?>" 
+            <?php
+            if ($this->penerima_el->cek_skripsi_by_pb($val4->get_kd_pb()) == TRUE) {
+                echo " disabled title='Sedang proses bayar.'";
             }
-        }
-        if ($val4->get_skripsi() == "") {
-            echo " disabled title='belum ada judul penelitian'";
-        }
-        ?>/></td>
-        <?php
-        $no++;
-        $i++;
-    }
-    ?>         
+            if ($val4->get_skripsi() == "") {
+                echo " disabled title='Belum ada judul penelitian.'";
+            } 
+            ?>/>
+               <?php } ?>
+    </td>
+    <?php
+    $no++;
+    $i++;
+}
+?>         
 </tbody>
 </table>
 <input type="hidden" name="jml_peg" id="jml_peg" value="<?php echo count($this->pb); ?>"
@@ -75,8 +73,8 @@
         if(cek>0){
             removeError('wtabel_penerima_skripsi');
             removeError('wtotal_biaya');
-            $('#total_bayar').val(cek*$('#biaya_skripsi').val());
         }
+        $('#total_bayar').val(cek*$('#biaya_skripsi').val());
         
     })
     
