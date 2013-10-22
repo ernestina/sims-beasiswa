@@ -288,7 +288,8 @@ textarea.midi {
 	width: 430px;
 }	
 select {
-	padding: 5px 2px 0px 2px;
+	padding: 0px 2px 0px 2px;
+	width: 220px;
 	}	
 
 input[type="text"],
@@ -325,6 +326,7 @@ input[type="search"] {
 
 input[type="checkbox"] {
 	margin: 0px;
+	width: 70px
 }
 
 input[type="button"], button{
@@ -489,6 +491,7 @@ th, td {
     border-radius: 5px;
     padding-left: 5px;
     text-align: center;
+	margin: 10px
     /*font-weight: bold;*/
 }
 
