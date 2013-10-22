@@ -1,4 +1,4 @@
-<h1>Data Pembayaran Tagihan Biaya</h1>
+<!--h1>Data Pembayaran Tagihan Biaya</h1-->
 <div id="proses_pembayaran" style="display:none" align="left">
     <p> Sistem sedang melakukan proses update pembayaran tagihan biaya.....</p>
 </div>
@@ -32,7 +32,7 @@
 
     <input type="hidden" id="kd_biaya" name="kd_biaya" value="<?php echo $this->biaya->kd_biaya; ?>">
     <input type="hidden" name="file_sp2d_lama" id="file_sp2d_lama" value="<?php echo $this->biaya->file_sp2d; ?>">
-    <input type="submit" class="sukses" value="simpan" onClick="return konfirmasi_pembayaran();">
+    <input type="submit" class="sukses" value="SIMPAN" onClick="return konfirmasi_pembayaran();">
 
 </form>
 

@@ -85,8 +85,22 @@
                     <option value="<?php echo $kon->kd_kontrak; ?>" <?php echo $select; ?>><?php echo $kon->no_kontrak; ?></option>
                 <?php } ?>
             </select><div id="wkontrak_lama" name="wkontrak_lama">
-                <label>File Kontrak </label><input type="file" name="fupload" id="fupload"><div id="wfupload"></div>  
-                <a href="<?php echo URL . "kontrak/file/" . $this->data->file_kontrak; ?>" target="_blank">lihat file</a>
+                
+				<label>File Kontrak </label>
+			<table style="margin-left: -10px">
+				<tr>
+					<td>
+					<div id="wfupload"></div>
+					<input type="file" name="fupload" id="fupload" style="width: 170px">
+					</td>
+					<td><a href="<?php echo URL . "kontrak/file/" . $this->data->file_kontrak; ?>" target="_blank" style="background-color: #49afcd; padding: 12px 10px 7px; border-radius: 3px"><i class="icon-search icon-white"></i></a></td>
+				</tr>
+			</table>
+				<!--input type="file" name="fupload" id="fupload" class="unggah">
+				<div id="wfupload"></div>
+                
+				<a href="<?php //echo URL . "kontrak/file/" . $this->data->file_kontrak; ?>" target="_blank"><i class="icon-search"></i>Lihat file</a-->
+			
                 <input type="hidden" name="jur_def" id="jur_def" value="<?php echo $this->data->kd_jurusan; ?>">
                 <input type="hidden" name="kd_kontrak" id="kd_kontrak" value="<?php echo $this->data->kd_kontrak; ?>">
                 <input type="hidden" name="fupload_lama" id="fupload_lama" value="<?php echo $this->data->file_kontrak; ?>">

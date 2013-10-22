@@ -14,7 +14,7 @@
             <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/viewRekamBiaya' ?>">
             <input type="hidden" id="kd_kontrak" name="kd_kontrak" value="<?php echo $this->data_kontrak->kd_kontrak; ?>">
 		<table width="95%">
-			<tr><td><input class="sukses" type="submit" value="Tambah"></td></tr>
+			<tr><td><input class="sukses" type="submit" value="TAMBAH"></td></tr>
 		</table>
             </form>
        
@@ -22,17 +22,18 @@
     <div id="table-content">
         <table class="table-bordered zebra scroll" id="table">
             <thead>
-            <th>No</th>
-            <th>Nama Biaya</th>
-            <th>Biaya per Pegawai</th>
-            <th>Jumlah Pegawai <br/>dibayarkan</th>
-            <th>Total Biaya</th>
-            <th>Jadwal <br />dibayarkan</th>
-            <th>No SP2D</th>
-            <th>Tgl SP2D</th>
-            <th>Status <br />Pembayaran</th>
-            <th>Aksi</th>
+            <th width="5%">No</th>
+            <th width="20%">Nama Biaya</th>
+            <th width="10%">Biaya per Pegawai</th>
+            <th width="5%">Jumlah Pegawai <br/>dibayarkan</th>
+            <th width="10%">Total Biaya</th>
+            <th width="5%">Jadwal <br />dibayarkan</th>
+            <th width="5%">No SP2D</th>
+            <th width="5%">Tgl SP2D</th>
+            <th width="5%">Status <br />Pembayaran</th>
+            <th width="7%">Aksi</th>
             </thead>
+		<tbody style="text-align: center">
 
             <?php
             $i = 1;
@@ -40,10 +41,10 @@
                 ?>
                 <tr>
                     <td><?php echo $i; ?></td>
-                    <td><?php echo $val->nama_biaya; ?></td>
-                    <td><?php echo number_format($val->biaya_per_pegawai); ?></td>
+                    <td style="text-align: left"><?php echo $val->nama_biaya; ?></td>
+                    <td style="text-align: right"><?php echo number_format($val->biaya_per_pegawai); ?></td>
                     <td><?php echo $val->jml_pegawai_bayar; ?></td>
-                    <td><?php echo number_format($val->jml_biaya); ?></td>
+                    <td style="text-align: right"><?php echo number_format($val->jml_biaya); ?></td>
                     <td><?php echo $val->jadwal_bayar; ?></td>
                     <td><?php $x = ($val->no_sp2d != "") ? $val->no_sp2d : "-"; echo $x; ?></td>
                     <td><?php
@@ -55,15 +56,15 @@
                 ?></td>
                     <td><?php echo $val->status_bayar; ?></td>
                     <td>
-                        <a href="<?php echo URL . "kontrak/delBiaya/" . $val->kd_biaya; ?>" onClick="return del();">X</a> |
-                        <a href="<?php echo URL . "kontrak/editBiaya/" . $val->kd_biaya; ?> ">...</a>
+                        <a href="<?php echo URL . "kontrak/delBiaya/" . $val->kd_biaya; ?>" onClick="return del();" title="hapus"><i class="icon-trash"></i></a> &nbsp
+                        <a href="<?php echo URL . "kontrak/editBiaya/" . $val->kd_biaya; ?> " title="ubah"><i class="icon-pencil"></i></a>
                     </td>
                 </tr>
                 <?php
                 $i++;
             }
             if (!empty($this->data_biaya)) {
-                echo "<tr>
+                echo "<tr style=\"font-size: 120%\">
                 <td colspan=8 align=\"right\"><strong>Total biaya:</strong></td>
                 <td colspan=2 align=\"right\"><strong>" . number_format($this->total_biaya) . "</strong></td>
                 </tr>";
@@ -71,7 +72,8 @@
                 echo "<tr><td colspan=10>Biaya tidak ditemukan.</td></tr>";
             }
             ?>
-        </table>
+        </tbody>
+		</table>
     </div>
 </div>
 

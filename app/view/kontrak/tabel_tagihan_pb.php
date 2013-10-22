@@ -1,10 +1,10 @@
-<table>
+<table width="100%">
     <thead>
     <th>NO</th>
     <th>NIP</th>
     <th>Nama</th>
     <th>Status</th>
-    <th>aksi</th>
+    <th>Aksi</th>
 </thead>
 <?php
 $i = 1;
@@ -24,7 +24,7 @@ foreach ($this->penerima_biaya as $val) {
         <td><?php echo $penerima->get_nama(); ?></td>
         <td><?php echo $status_pb->nm_status; ?></td>
         <td>
-            <a href="#" onClick="del_tagihan_pb(<?php echo $val->kd_penerima_biaya; ?>); return false;"><i class="icon-trash"></i></a>
+            <a href="#" onClick="del_tagihan_pb(<?php echo $val->kd_penerima_biaya; ?>); return false;" title="hapus"><i class="icon-trash"></i></a>
         </td>
     </tr> 
     <?php

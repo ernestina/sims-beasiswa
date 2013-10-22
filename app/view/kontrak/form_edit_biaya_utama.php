@@ -1,5 +1,5 @@
  
-<h1>Data Biaya Utama </h1>
+<!--h1>Data Biaya Utama </h1-->
 <div id="proses_biaya" title="Informasi" style="display:none">
     <p> Sistem sedang melakukan proses update data biaya.....</p>
 </div>
@@ -19,7 +19,7 @@
     <div id="wjadwal_bayar"></div>
     <input type="hidden" id="kd_biaya" name="kd_biaya" value="<?php echo $this->biaya->kd_biaya; ?>">
     <input type="hidden" name="kd_kontrak" id="kd_kontrak" value="<? echo $this->kontrak->kd_kontrak; ?>" readonly>
-    <input type="submit" class="sukses" value="simpan" id="update_biaya" onClick="return konfirmasi_biaya();">
+    <input type="submit" class="sukses" value="SIMPAN" id="update_biaya" onClick="return konfirmasi_biaya();">
 </form>
 
 <script>

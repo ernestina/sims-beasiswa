@@ -329,7 +329,7 @@ input[type="checkbox"] {
 	width: 70px
 }
 
-input[type="button"], button{
+input[type="button"], button, a .btn{
 	color: #ffffff;
 	background-color: #49afcd;
 	width: 100px;
@@ -426,12 +426,14 @@ table.fix {
 .scroll {
 	display: block;
 	border: 1px;
-	height: 370px;
-	overflow-y: scroll;
+	overflow-y: none;
 }
 
 thead {
     display: table-header-group;
+	color: #267890;
+	background-image:url('../img/bg.png');
+	font-family: "Sub";
   }
 
 th, td {

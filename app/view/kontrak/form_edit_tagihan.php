@@ -1,6 +1,6 @@
 <form method="POST" id="form_tagihan" action="<?php echo URL . 'kontrak/updateTagihan' ?>" enctype="multipart/form-data">
     <input type="hidden" name="update_tagihan">
-    <h1>Data Tagihan Biaya</h1>
+    <!--h1>Data Tagihan Biaya</h1-->
     <div id="proses_tagihan" title="Informasi" style="display:none" align="center">
         <p> Sistem sedang melakukan proses update data tagihan biaya.....</p>
     </div>
@@ -144,7 +144,7 @@
         <input type="hidden" name="file_bap_lama" id="file_bap_lama" value="<?php echo $this->biaya->file_bap; ?>">
         <input type="hidden" name="file_ring_kon_lama" id="file_ring_kon_lama" value="<?php echo $this->biaya->file_ring_kontrak; ?>">
         <input type="hidden" name="file_kuitansi_lama" id="file_kuitansi_lama" value="<?php echo $this->biaya->file_kuitansi; ?>">
-        <input type="submit" class="sukses" value="simpan" id="update_tagihan" onClick="return konfirmasi_tagihan();">
+        <input type="submit" class="sukses" value="SIMPAN" id="update_tagihan" onClick="return konfirmasi_tagihan();">
     </div>
 </form>
 
