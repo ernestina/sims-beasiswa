@@ -149,7 +149,7 @@ class Backuprestore {
 
         foreach ($tables as $table) {
             $return .= "--\n";
-            $return .= "--Table structure for table `".$table."`\n";
+            $return .= "-- Table structure for table `".$table."`\n";
             $return .= "--\n\n";
             $result = $this->query('SELECT * FROM ' . $table);
             $num_fields = $this->numfield($result);
@@ -157,7 +157,7 @@ class Backuprestore {
             $row2 = $this->fetchrow($this->query('SHOW CREATE TABLE ' . $table));
             $return.= "\n\n" . $row2[1] . ";\n\n";
             $return .= "--\n";
-            $return .= "--Dumping data for table `".$table."`\n";
+            $return .= "-- Dumping data for table `".$table."`\n";
             $return .= "--\n\n";
             for ($i = 0; $i < $num_fields; $i++) {
                 while ($row = $this->fetchrow($result)) {
