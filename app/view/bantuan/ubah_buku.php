@@ -7,7 +7,7 @@
             <input  type="hidden" name="r_elem" value="2"/>
             <fieldset>
                 <!--div class="tigakolom"-->
-                <div class="kolom1">
+                <div class="kolom1" style="margin-right: -100px">
                     <div id="wkode_univ"></div>
                     <label class="isian">Universitas : </label>
                     <input type="hidden" id="kode_univ" name="kode_univ" value="<?php echo $this->univ->get_kode_in(); ?>">
@@ -43,7 +43,7 @@
                     </ul>
                 </div>
 
-                <div class="kolom2" style="margin-left: -40px">
+                <div class="kolom2" style="margin-right: -60px; margin-left:100px">
                     <div id="wbiaya_buku"></div>
                     <label class="isian">Biaya Per Pegawai : </label>
                     <input type="text" id="biaya_buku" name="biaya_buku" size="12" value="<?php echo $this->elemen->get_biaya_per_peg(); ?>"/>

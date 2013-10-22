@@ -5,9 +5,9 @@
     <form method="POST" onSubmit="return cekField();" action="<?php echo URL . 'elemenBeasiswa/saveUangBuku' ?> " enctype="multipart/form-data">
         <div>
             <input  type="hidden" name="r_elem" value="2"/>
-            <fieldset>
+            <fieldset><legend>Parameter Bantuan Buku</legend>
                 <!--div class="tigakolom"-->
-                <div class="kolom1">
+                <div class="kolom1" style="margin-right: -100px">
                     <div id="wkode_univ"></div>
                     <label class="isian">Universitas : </label>
                     <select type="text" id="kode_univ" name="kode_univ">
@@ -45,8 +45,8 @@
                         <li><select type="text" id="semester" name="semester" class="unggah">
                                 <option value="1">Semester I</option>
                                 <option value="2">Semester II</option>
-                            </select></li>
-                        <li><select class="mini" type="text" id="thn" name="thn">
+                            </select></li> &nbsp
+                        <li><select type="text" id="thn" name="thn" style="width: 68px">
                                 <?php
                                 for ($i = 2007; $i < date('Y') + 2; $i++) {
                                     if ($i == date('Y')) {
@@ -60,7 +60,7 @@
                     </ul>
                 </div>
 
-                <div class="kolom2" style="margin-left: -40px">
+                <div class="kolom2" style="margin-right: -60px; margin-left:100px">
                     <div id="wbiaya_buku"></div>
                     <label class="isian">Biaya Per Pegawai : </label>
                     <input type="text" maxlength=11 id="biaya_buku" name="biaya_buku" size="12"/>
@@ -80,34 +80,36 @@
                     <input type="hidden" id="fupload" name="fupload" size="20" />
                 </div>
 
-
-
                 <ul class="inline" style="float: right; margin-right: 20px">
                     <li><button type="submit" name="simpan" class="sukses" onClick="formSubmit();"/><i class="icon-ok icon-white"></i>Simpan</button></li>
                     <li><button type="reset" name="batal" class="normal" onClick="location.href='<?php echo URL . "elemenBeasiswa/viewUangBuku"; ?>'"><i class="icon-remove icon-white"></i>Batal</li>
                 </ul>
-
+			</fieldset>
         </div>
 
         <!--        <div>
                     <div>Data Penerima Biaya Buku</div>
                     <div>file link print</div>
                 </div>-->
-        <div id="wtabel_penerima_buku"></div>
+		<br>
+        <fieldset><legend>Daftar Penerima Bantuan Buku</legend>
+		<div id="wtabel_penerima_buku"></div>
         <div id="tabel_penerima_buku">
-            <table class="table-bordered zebra">
+           
+			<table class="table-bordered zebra" width="95%">
                 <thead>
-                <th>No</th>
-                <th>Nama</th>
-                <th>Gol</th>
-                <th>Status</th>
-                <th>Bank Penerima</th>
-                <th>No. Rekening</th>
-                <th>Pilih</th>
+                <th width="5%">No</th>
+                <th width="25%">Nama</th>
+                <th width="15%">Gol</th>
+                <th width="10%">Status</th>
+                <th width="15%">Bank Penerima</th>
+                <th width="20%">No. Rekening</th>
+                <th width="10%">Pilih</th>
                 </thead>
             </table>
+			</fieldset>
         </div>
-        </fieldset>
+        
     </form>
 </div>
 <script type="text/javascript">

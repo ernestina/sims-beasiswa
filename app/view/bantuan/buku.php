@@ -39,7 +39,7 @@
                         ?>
                     </select>
                 </td>
-                <td style="float: right"><input type="search" name="cari" id="cari" value="cari" size="30"></td>
+                <td style="float: right"><input type="search" name="cari" id="cari" placeholder="Cari" size="30" title="Cari"></td>
             </tr>
             <tr>
                 <td colspan="4" style="padding-top: 0px">
