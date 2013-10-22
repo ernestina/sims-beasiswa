@@ -139,12 +139,12 @@
         })
         
         //menampilkan data penerima jadup
-        $('#kode_jur').change(function(){
+        $('#kode_jur, #tahun_masuk, #semester, #thn').change(function(){
             //alert ($('#kode_univ').val());
             $.ajax({
                 type:"POST",
                 url: "<?php echo URL; ?>elemenBeasiswa/tabel_penerima_buku",
-                data: {kd_jurusan:$('#kode_jur').val(),thn_masuk:$('#tahun_masuk').val()},
+                data: {kd_jurusan:$('#kode_jur').val(),thn_masuk:$('#tahun_masuk').val(),semester:$('#semester').val(),thn:$('#thn').val()},
                 success: function(jadup){
                     $('#tabel_penerima_buku').html(jadup);
                 }
@@ -153,19 +153,7 @@
             $("#total_bayar").val('0');
         })
         
-        $('#tahun_masuk').change(function(){
-            //alert ($('#kode_univ').val());
-            $.ajax({
-                type:"POST",
-                url: "<?php echo URL; ?>elemenBeasiswa/tabel_penerima_buku",
-                data: {kd_jurusan:$('#kode_jur').val(),thn_masuk:$('#tahun_masuk').val()},
-                success: function(jadup){
-                    $('#tabel_penerima_buku').html(jadup);
-                }
-            });
-            $("#total_bayar").val('0');
-        })
-                           
+                                   
     })
     
     function cekField(){

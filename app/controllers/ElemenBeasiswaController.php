@@ -301,8 +301,7 @@ class elemenBeasiswaController extends BaseController {
         $jur = new Jurusan($this->registry);
         $this->view->jur = $jur->get_jurusan();
 
-        $kon = new Kontrak($this->registry);
-        $this->view->kon = $kon->get_All();
+        
 
 //        $elem = new ElemenBeasiswa();
 //        $this->view->elem = $elem->get_elem_buku();
@@ -311,10 +310,37 @@ class elemenBeasiswaController extends BaseController {
     }
 
     public function data_index_buku() {
-        $elem = new ElemenBeasiswa();
-
-        $this->view->buku = $elem->get_elem_buku();
-        $this->view->load('bantuan/tabel_index_buku');
+       
+        if (isset($_POST['univ']) && isset($_POST['jurusan']) && isset($_POST['tahun'])) {
+            //tinggal nambahin filter di get_elem_jadup
+            $univ = $_POST['univ'];
+            $jurusan = $_POST['jurusan'];
+            $tahun = $_POST['tahun'];
+            $elem = new ElemenBeasiswa();
+            //echo $univ;
+            //echo $jurusan;
+            //echo $tahun;
+            $buku = $elem->get_elem_buku($univ, $jurusan, $tahun);
+            //var_dump($buku);
+            $this->view->buku = $buku;
+            $this->view->load('bantuan/tabel_index_buku');
+        }
+    }
+    
+    public function data_index_buku2() {
+       
+        if (isset($_POST['sp2d'])) {
+            //tinggal nambahin filter di get_elem_jadup
+            $sp2d = $_POST['sp2d'];
+            $elem = new ElemenBeasiswa();
+            //echo $univ;
+            //echo $jurusan;
+            //echo $tahun;
+            $buku = $elem->get_elem_buku_by_sp2d($sp2d);
+            //var_dump($buku);
+            $this->view->buku = $buku;
+            $this->view->load('bantuan/tabel_index_buku');
+        }
     }
 
     public function tabel_penerima_buku() {
@@ -324,21 +350,15 @@ class elemenBeasiswaController extends BaseController {
             $pb = new Penerima($this->registry);
             $data_pb = $pb->get_penerima_by_kd_jur_thn_masuk($kd_jur, $thn_masuk);
             $bank = new Bank($this->registry);
+            $this->view->penerima_elemen = new PenerimaElemenBeasiswa();
+            $this->view->semester = $_POST['semester'];
+            $this->view->thn= $_POST['thn'];
             $this->view->bank = $bank;
             $this->view->pb = $data_pb;
             $this->view->load('bantuan/tabel_penerima_buku');
         }
 
-        if (isset($_POST['kd_jurusan']) && isset($_POST['thn_masuk']) && $_POST['kd_jurusan'] != "" && $_POST['thn_masuk'] == "") {
-            $kd_jur = $_POST['kd_jurusan'];
-            //$thn_masuk = $_POST['thn_masuk'];
-            $pb = new Penerima($this->registry);
-            $data_pb = $pb->get_penerima_by_kd_jur($kd_jur);
-            $bank = new Bank($this->registry);
-            $this->view->bank = $bank;
-            $this->view->pb = $data_pb;
-            $this->view->load('bantuan/tabel_penerima_buku');
-        }
+        
     }
 
     public function addUangBuku($id = null) {
@@ -495,6 +515,8 @@ class elemenBeasiswaController extends BaseController {
             $data_pb = $pb->get_penerima_by_kd_jur_thn_masuk($kd_jur, $thn_masuk);
             $bank = new Bank($this->registry);
             $penerima_elemen = new PenerimaElemenBeasiswa();
+            $this->view->semester = $_POST['semester'];
+            $this->view->thn= $_POST['thn'];
             $this->view->penerima_elemen = $penerima_elemen;
             $this->view->bank = $bank;
             $this->view->pb = $data_pb;

@@ -26,11 +26,18 @@ foreach ($this->pb as $pb) {
         <td><?php echo $bank->get_nama(); ?></td>
         <td><?php echo $pb->get_no_rek(); ?></td>
         <td>
-            <?php if ($this->penerima_elemen->get_by_elemen_pb($this->kd_el, $pb->get_kd_pb()) == true) { ?>
+            <?php if ($this->penerima_elemen->get_by_elemen_pb($this->kd_el, $pb->get_kd_pb()) == true) { //mengecek apakah pb dibayarkan berdasark kd_elemen_beasiswa
+                ?> 
                 <input type="checkbox" id="setuju[]" name="setuju[]" value="<?php echo $pb->get_kd_pb(); ?>" checked />
             <?php } else { ?>
-                <input type="checkbox" id="setuju[]" name="setuju[]" value="<?php echo $pb->get_kd_pb(); ?>" <?php if($this->penerima_el->cek_skripsi_by_pb($val4->get_kd_pb())==TRUE){echo " disabled";} ?>/>
-            <?php } ?>
+                <input type="checkbox" id="setuju[]" name="setuju[]" value="<?php echo $pb->get_kd_pb(); ?>" 
+                <?php
+                if ($this->penerima_elemen->cek_buku_by_pb($pb->get_kd_pb(), $this->semester, $this->thn) == TRUE) { //mengecek apakah ob pernah dibauarkan pada semester dan tahun tertentu
+                    echo " disabled title='Sedang proses/selesai dibayar.'";
+                }
+                ?>
+                       />
+                   <?php } ?>
         </td>
 
 
@@ -59,7 +66,7 @@ foreach ($this->pb as $pb) {
             removeError('wtotal_biaya');
            
         }
-         $('#total_bayar').val(cek*$('#biaya_buku').val());
+        $('#total_bayar').val(cek*$('#biaya_buku').val());
     })
     
     

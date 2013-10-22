@@ -1,40 +1,49 @@
 <!--<fieldset>-->
 <!--table class="table-bordered zebra"-->
-    <table class="table-bordered zebra" width="95%">
-                <thead>
-                <th width="5%">No</th>
-                <th width="25%">Nama</th>
-                <th width="15%">Gol</th>
-                <th width="10%">Status</th>
-                <th width="15%">Bank Penerima</th>
-                <th width="20%">No. Rekening</th>
-                <th width="10%">Pilih</th>
-                </thead>
-            
+<table class="table-bordered zebra" width="95%">
+    <thead>
+    <th width="5%">No</th>
+    <th width="25%">Nama</th>
+    <th width="15%">Gol</th>
+    <th width="10%">Status</th>
+    <th width="15%">Bank Penerima</th>
+    <th width="20%">No. Rekening</th>
+    <th width="10%">Pilih</th>
+</thead>
+
 <tbody>
     <?php
     $no = 0;
-    $i=1;
+    $i = 1;
 
     foreach ($this->pb as $val4) {
         $bank = $this->bank->get_bank_id($val4->get_bank());
         echo "<tr>";
-        echo "<td>".$i."</td>";
+        echo "<td>" . $i . "</td>";
         echo "<td>" . $val4->get_nama() . " / " . $val4->get_nip() . "</td>";
         echo "<td>" . Golongan::golongan_int_string($val4->get_gol()) . "</td>";
         echo "<td>" . StatusPB::status_int_string($val4->get_status()) . "</td>";
         echo "<td>" . $bank->get_nama() . "</td>";
         echo "<td>" . $val4->get_no_rek() . "</td>";
         ?>
-    <td><input type="checkbox" id="setuju[]" name="setuju[]" value="<?php echo $val4->get_kd_pb(); ?>" <?php if($val4->get_status()==1){ echo "checked";} ?>/></td>
-    <?php
-    $no++;
-    $i++;
-}
-?>         
+    <td><input type="checkbox" id="setuju[]" name="setuju[]" value="<?php echo $val4->get_kd_pb(); ?>" 
+        <?php
+        if ($val4->get_status() == 1) { //mengecek status yang bisa dibisa dibayarkan hanya 1=belum lulus
+            if($this->penerima_elemen->cek_buku_by_pb($val4->get_kd_pb(), $this->semester, $this->thn)==TRUE){ //mengecek apakah ob pernah dibauarkan pada semester dan tahun tertentu
+                echo " disabled title='Sedang proses/selesai dibayar.'";
+            } else {
+                echo " checked";
+            }
+        }
+        ?>/></td>
+        <?php
+        $no++;
+        $i++;
+    }
+    ?>         
 </tbody>
 </table>
-<input type="hidden" name="jml_peg" id="jml_peg" value="<?php echo count($this->pb); ?>"
+<!--<input type="text" name="jml_peg" id="jml_peg" value="<?php echo $this->thn; ?>"-->
 
 
        <div>
