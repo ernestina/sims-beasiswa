@@ -78,6 +78,26 @@ class PenerimaElemenBeasiswa extends BaseModel {
         return $data;
     }
     
+    public function get_list_by_elemen_pb($id, $pb) {
+        $table = "t_elem_beasiswa";
+        $where = "KD_D_ELEM_BEASISWA='" . $id."' AND KD_PB='".$pb."'";
+        $sql = "select * from $table where $where";
+        $result = $this->db->select($sql);
+        //$data = array();
+        $penerima_elemen=false;
+        foreach ($result as $val) {
+            $penerima_elemen = new PenerimaElemenBeasiswa();
+            $penerima_elemen->kd_elemen_beasiswa = $val['KD_D_ELEM_BEASISWA'];
+            $penerima_elemen->kd_pb = $val['KD_PB'];
+            $penerima_elemen->kd_penerima_elemen_beasiswa = $val['KD_T_ELEM_BEASISWA'];
+            $penerima_elemen->kehadiran = $val['HADIR_T_ELEM_BEASISWA'];
+            $penerima_elemen->pajak = $val['PAJAK_T_ELEM_BEASISWA'];
+            //$data[] = $penerima_elemen;
+        }
+        //var_dump($data);
+        return $penerima_elemen;
+    }
+    
     public function get_by_elemen_pb($id, $pb) {
                
         $cek = FALSE; //belum ada pb dalam tabel penerima elemen beasiswa berdasarkan kd_elemen_pb dan
@@ -129,6 +149,22 @@ class PenerimaElemenBeasiswa extends BaseModel {
         $where = "
             a.KD_PB='".$pb."' AND a.KD_D_ELEM_BEASISWA=b.KD_D_ELEM_BEASISWA AND b.KD_R_ELEM_BEASISWA='2' 
                 AND b.BLN_D_ELEM_BEASISWA='".$sem."' AND b.THN_D_ELEM_BEASISWA='".$thn."'";
+        $sql = "SELECT * FROM $table where $where";
+        $result = $this->db->select($sql);
+        //var_dump($result);
+        if (!empty($result)) {
+            $cek = TRUE;   //jika ditemukan pb dalam tabel penerima pb 
+        }
+        return $cek;
+    }
+    
+    public function cek_jadup_by_pb($pb, $bln, $thn) {
+               
+        $cek = FALSE; //belum ada pb dalam tabel penerima elemen beasiswa
+        $table = "t_elem_beasiswa a, d_elemen_beasiswa b";
+        $where = "
+            a.KD_PB='".$pb."' AND a.KD_D_ELEM_BEASISWA=b.KD_D_ELEM_BEASISWA AND b.KD_R_ELEM_BEASISWA='1' 
+                AND b.BLN_D_ELEM_BEASISWA='".$bln."' AND b.THN_D_ELEM_BEASISWA='".$thn."'";
         $sql = "SELECT * FROM $table where $where";
         $result = $this->db->select($sql);
         //var_dump($result);

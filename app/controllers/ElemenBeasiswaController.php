@@ -62,17 +62,9 @@ class elemenBeasiswaController extends BaseController {
             $pb = new Penerima($this->registry);
             $data_pb = $pb->get_penerima_by_kd_jur_thn_masuk($kd_jur, $thn_masuk);
             $bank = new Bank($this->registry);
-            $this->view->bank = $bank;
-            $this->view->pb = $data_pb;
-            $this->view->load('bantuan/tabel_penerima_jadup');
-        }
-
-        if (isset($_POST['kd_jurusan']) && isset($_POST['thn_masuk']) && $_POST['kd_jurusan'] != "" && $_POST['thn_masuk'] == "") {
-            $kd_jur = $_POST['kd_jurusan'];
-            //$thn_masuk = $_POST['thn_masuk'];
-            $pb = new Penerima($this->registry);
-            $data_pb = $pb->get_penerima_by_kd_jur($kd_jur);
-            $bank = new Bank($this->registry);
+            $this->view->penerima_elemen = new PenerimaElemenBeasiswa();
+            $this->view->bln = $_POST['bln'];
+            $this->view->thn = $_POST['thn'];
             $this->view->bank = $bank;
             $this->view->pb = $data_pb;
             $this->view->load('bantuan/tabel_penerima_jadup');
@@ -96,45 +88,51 @@ class elemenBeasiswaController extends BaseController {
     }
 
     public function saveJadup() {
-        $elem = new ElemenBeasiswa();
-        $jml_peg = $_POST['jml_peg'];
-        $elem->set_kd_r($_POST['r_elem']);
-        $elem->set_kd_jur($_POST['kode_jur']);
-        $elem->set_thn_masuk($_POST['tahun_masuk']);
-        $elem->set_biaya_per_peg(str_replace(',', '', $_POST['biaya_peg']));
-        $elem->set_bln($_POST['bln']);
-        $elem->set_thn($_POST['thn']);
-        $elem->set_total_bayar(str_replace(',', '', $_POST['total_bayar']));
-//        $elem->set_no_sp2d($_POST['no_sp2d']);
-//        $elem->set_tgl_sp2d(date('Y-m-d', strtotime($_POST['tgl_sp2d'])));
-//        $elem->set_file_sp2d($_POST['fupload']);
-        //var_dump($elem);
-        //echo $kd_elemen_beasiswa;
-        //exit();
-        $jml = 0;
-        for ($j = 1; $j <= $jml_peg; $j++) {
-            if ($_POST['jml_hadir' . $j] > 0) {
-                $jml++;
-            }
-        }
-        $elem->set_jml_peg($jml);
-        $kd_elemen_beasiswa = $elem->add_elem($elem);
+        if (isset($_POST['rekam_jadup'])) { //if 1
+            if ($_POST['jml_peg'] != "" && $_POST['r_elem'] != "" && $_POST['kode_jur'] != "" &&
+                    $_POST['tahun_masuk'] != "" && $_POST['biaya_peg'] != "" && $_POST['total_bayar'] != "" &&
+                    $_POST['bln'] != "" && $_POST['thn'] != "") { //if 2
+                $elem = new ElemenBeasiswa();
+                $jml_peg = $_POST['jml_peg'];
+                $elem->set_kd_r($_POST['r_elem']);
+                $elem->set_kd_jur($_POST['kode_jur']);
+                $elem->set_thn_masuk($_POST['tahun_masuk']);
+                $elem->set_biaya_per_peg(str_replace(',', '', $_POST['biaya_peg']));
+                $elem->set_bln($_POST['bln']);
+                $elem->set_thn($_POST['thn']);
+                $elem->set_total_bayar(str_replace(',', '', $_POST['total_bayar']));
 
-        if ($kd_elemen_beasiswa != "") {
-            for ($i = 1; $i <= $jml_peg; $i++) {
-                $penerima_elemen = new PenerimaElemenBeasiswa();
-                $penerima_elemen->kd_elemen_beasiswa = $kd_elemen_beasiswa;
-                $penerima_elemen->kd_pb = $_POST['kd_pb' . $i];
-                $penerima_elemen->kehadiran = str_replace(',', '', $_POST['jml_hadir' . $i]);
-                $penerima_elemen->pajak = str_replace(',', '', $_POST['pajak' . $i]);
-                //if($penerima_elemen->kehadiran == 0 || $penerima_elemen->kehadiran == ""){
-                $penerima_elemen->add($penerima_elemen);
-                //}
-            }
-        }
+                $jml = 0;
+                for ($j = 1; $j <= $jml_peg; $j++) { //for
+                    if ($_POST['setuju' . $j] != "") {
+                        $jml++;
+                    }
+                } //end for
 
-//        
-        header('location:' . URL . 'elemenBeasiswa/viewJadup');
+                $elem->set_jml_peg($jml);
+                $kd_elemen_beasiswa = $elem->add_elem($elem);
+
+                if ($kd_elemen_beasiswa != "") { //if 3
+                    for ($i = 1; $i <= $jml_peg; $i++) {  // for
+                        if ($_POST['setuju' . $i] != "") {  //if 4
+                            $penerima_elemen = new PenerimaElemenBeasiswa();
+                            $penerima_elemen->kd_elemen_beasiswa = $kd_elemen_beasiswa;
+                            $penerima_elemen->kd_pb = $_POST['setuju' . $i];
+                            $penerima_elemen->kehadiran = str_replace(',', '', $_POST['jml_hadir' . $i]);
+                            $penerima_elemen->pajak = str_replace(',', '', $_POST['pajak' . $i]);
+
+                            $penerima_elemen->add($penerima_elemen);
+                        } //end if 4
+                    } //end for
+                } //end if 3
+                $url = URL . 'elemenBeasiswa/viewJadup';
+                echo '<script> alert("Data berhasil disimpan") </script>';
+                echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
+            } //end if 2
+            else {
+                header('location:' . URL . 'elemenBeasiswa/addJadup');
+            }
+        } //end if 1
     }
 
     //menghapus data jadup
@@ -169,18 +167,29 @@ class elemenBeasiswaController extends BaseController {
             $univ2 = $univ->get_univ_by_jur($jur2->get_kode_jur());
             $this->view->univ = $univ2;
 
-            $pb = new Penerima($this->registry);
-            $this->view->pb = $pb;
-
-            $bank = new Bank($this->registry);
-            $this->view->bank = $bank;
-
-            $penerima_elemen = new PenerimaElemenBeasiswa();
-            $this->view->penerima_elemen = $penerima_elemen->get_by_elemen($id);
-
             $this->view->render('bantuan/ubah_jadup');
         } else {
             header('location:' . URL . 'elemenBeasiswa/viewJadup');
+        }
+    }
+
+    public function tabel_penerima_jadup2() {
+
+        if (isset($_POST['kd_jurusan']) && isset($_POST['thn_masuk']) && $_POST['kd_jurusan'] != "" && $_POST['thn_masuk'] != "") {
+            $kd_jur = $_POST['kd_jurusan'];
+            $thn_masuk = $_POST['thn_masuk'];
+            $pb = new Penerima($this->registry);
+            $bank = new Bank($this->registry);
+            $penerima_elemen = new PenerimaElemenBeasiswa();
+            $this->view->bank = $bank;
+            $data_pb = $pb->get_penerima_by_kd_jur_thn_masuk($kd_jur, $thn_masuk);
+            $this->view->penerima_elemen = $penerima_elemen;
+            $this->view->bln = $_POST['bln'];
+            $this->view->thn = $_POST['thn'];
+            $this->view->kd_el = $_POST['kd_el'];
+            $this->view->bank = $bank;
+            $this->view->pb = $data_pb;
+            $this->view->load('bantuan/tabel_penerima_jadup2');
         }
     }
 
@@ -200,12 +209,14 @@ class elemenBeasiswaController extends BaseController {
             $elem->set_tgl_sp2d(date('Y-m-d', strtotime($_POST['tgl_sp2d'])));
             $jml = 0;
             for ($j = 1; $j <= $jml_peg; $j++) {
-                if ($_POST['jml_hadir' . $j] > 0) {
+                if ($_POST['setuju' . $j] != "") {
                     $jml++;
                 }
             }
+            //echo $jml;
             $elem->set_jml_peg($jml);
 
+            //exit();
             // var_dump($elem);
 
             $upload = new Upload();
@@ -225,71 +236,25 @@ class elemenBeasiswaController extends BaseController {
                 }
             }
 
-            if ($elem->get_no_sp2d() != "") {
-                if ($elem->get_tgl_sp2d() == "" || $elem->get_file_sp2d() == "") {
-                    if ($ajax == "") {
-                        //header('location:' . URL . 'elemenBeasiswa/viewJadup');
-                        $url = URL . 'elemenBeasiswa/editJadup/' . $elem->get_kd_d();
-                        echo '<script> alert("Jika nomor sp2d terisi,tanggal dan file sp2d harus diisi.") </script>';
-                        echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
-                    }
-                } else {
-                    //var_dump($elem);
-                    $elem->update_elem($elem);
-                    //echo $kd_elemen_beasiswa;
-                    //exit();
-                    for ($i = 1; $i <= $jml_peg; $i++) {
-                        $penerima_elemen = new PenerimaElemenBeasiswa();
-                        $penerima_elemen->kd_penerima_elemen_beasiswa = $_POST['kd_pen_el_pb' . $i];
-                        $penerima_elemen->kd_elemen_beasiswa = $elem->get_kd_d();
-                        $penerima_elemen->kd_pb = $_POST['kd_pb' . $i];
-                        $penerima_elemen->kehadiran = str_replace(',', '', $_POST['jml_hadir' . $i]);
-                        $penerima_elemen->pajak = str_replace(',', '', $_POST['pajak' . $i]);
-                        //if($penerima_elemen->kehadiran == 0 || $penerima_elemen->kehadiran == ""){
-                        $penerima_elemen->update($penerima_elemen);
-                        //}
-                    }
-
-                    if ($ajax == "") {
-                        //header('location:' . URL . 'elemenBeasiswa/viewJadup');
-                        $url = URL . 'elemenBeasiswa/editJadup/' . $elem->get_kd_d();
-                        echo '<script> alert("Data berhasil disimpan") </script>';
-                        echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
-                    }
+            $elem->update_elem($elem);
+            $penerima = new PenerimaElemenBeasiswa();
+            $penerima->delete($elem->get_kd_d());
+            for ($i = 1; $i <= $jml_peg; $i++) {
+                if ($_POST['setuju' . $i] != "") {
+                    $penerima_elemen = new PenerimaElemenBeasiswa();
+                    $penerima_elemen->kd_elemen_beasiswa = $elem->get_kd_d();
+                    $penerima_elemen->kd_pb = $_POST['setuju' . $i];
+                    $penerima_elemen->kehadiran = str_replace(',', '', $_POST['jml_hadir' . $i]);
+                    $penerima_elemen->pajak = str_replace(',', '', $_POST['pajak' . $i]);
+                    //if($penerima_elemen->kehadiran == 0 || $penerima_elemen->kehadiran == ""){
+                    $penerima_elemen->add($penerima_elemen);
                 }
-            } else {
-                if ($elem->get_tgl_sp2d() == "" && $elem->get_file_sp2d() == "") {
-                    if ($ajax == "") {
-                        //header('location:' . URL . 'elemenBeasiswa/viewJadup');
-                        //var_dump($elem);
-                        $elem->update_elem($elem);
-                        //echo $kd_elemen_beasiswa;
-                        //exit();
-                        for ($i = 1; $i <= $jml_peg; $i++) {
-                            $penerima_elemen = new PenerimaElemenBeasiswa();
-                            $penerima_elemen->kd_penerima_elemen_beasiswa = $_POST['kd_pen_el_pb' . $i];
-                            $penerima_elemen->kd_elemen_beasiswa = $elem->get_kd_d();
-                            $penerima_elemen->kd_pb = $_POST['kd_pb' . $i];
-                            $penerima_elemen->kehadiran = str_replace(',', '', $_POST['jml_hadir' . $i]);
-                            $penerima_elemen->pajak = str_replace(',', '', $_POST['pajak' . $i]);
-                            //if($penerima_elemen->kehadiran == 0 || $penerima_elemen->kehadiran == ""){
-                            $penerima_elemen->update($penerima_elemen);
-                            //}
-                        }
-
-                        if ($ajax == "") {
-                            //header('location:' . URL . 'elemenBeasiswa/viewJadup');
-                            $url = URL . 'elemenBeasiswa/editJadup/' . $elem->get_kd_d();
-                            echo '<script> alert("Data berhasil disimpan") </script>';
-                            echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
-                        }
-                    }
-                } else {
-                    $url = URL . 'elemenBeasiswa/editJadup/' . $elem->get_kd_d();
-                    echo '<script> alert("Jika tanggal atau file sp2d terisi, nomor sp2d harus diisi.") </script>';
-                    echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
-                }
+                //}
             }
+
+            $url = URL . 'elemenBeasiswa/viewJadup';
+            echo '<script> alert("Data berhasil disimpan") </script>';
+            echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
         }
     }
 
@@ -301,7 +266,7 @@ class elemenBeasiswaController extends BaseController {
         $jur = new Jurusan($this->registry);
         $this->view->jur = $jur->get_jurusan();
 
-        
+
 
 //        $elem = new ElemenBeasiswa();
 //        $this->view->elem = $elem->get_elem_buku();
@@ -310,7 +275,7 @@ class elemenBeasiswaController extends BaseController {
     }
 
     public function data_index_buku() {
-       
+
         if (isset($_POST['univ']) && isset($_POST['jurusan']) && isset($_POST['tahun'])) {
             //tinggal nambahin filter di get_elem_jadup
             $univ = $_POST['univ'];
@@ -326,9 +291,9 @@ class elemenBeasiswaController extends BaseController {
             $this->view->load('bantuan/tabel_index_buku');
         }
     }
-    
+
     public function data_index_buku2() {
-       
+
         if (isset($_POST['sp2d'])) {
             //tinggal nambahin filter di get_elem_jadup
             $sp2d = $_POST['sp2d'];
@@ -352,13 +317,11 @@ class elemenBeasiswaController extends BaseController {
             $bank = new Bank($this->registry);
             $this->view->penerima_elemen = new PenerimaElemenBeasiswa();
             $this->view->semester = $_POST['semester'];
-            $this->view->thn= $_POST['thn'];
+            $this->view->thn = $_POST['thn'];
             $this->view->bank = $bank;
             $this->view->pb = $data_pb;
             $this->view->load('bantuan/tabel_penerima_buku');
         }
-
-        
     }
 
     public function addUangBuku($id = null) {
@@ -516,7 +479,7 @@ class elemenBeasiswaController extends BaseController {
             $bank = new Bank($this->registry);
             $penerima_elemen = new PenerimaElemenBeasiswa();
             $this->view->semester = $_POST['semester'];
-            $this->view->thn= $_POST['thn'];
+            $this->view->thn = $_POST['thn'];
             $this->view->penerima_elemen = $penerima_elemen;
             $this->view->bank = $bank;
             $this->view->pb = $data_pb;
@@ -540,8 +503,8 @@ class elemenBeasiswaController extends BaseController {
         $jur = new Jurusan($this->registry);
         $jurusan = $jur->get_jurusan();
         $this->view->jur = $jurusan;
-        
-       
+
+
         $myArray = array();
         foreach ($jurusan as $val2) {
             $st = new SuratTugas($this->registry);
@@ -559,7 +522,7 @@ class elemenBeasiswaController extends BaseController {
                 //echo $byr;
                 $pros = $penerima_elemen->get_elemen_proses_dibayar("3", $val2->get_kode_jur(), $th);
                 //echo $pros;
-                $arr = array('jur' => $val2->get_nama()." ".$c_univ->get_kode(), 'thn' => $th, 'jml' => $jml, 'byr' => $byr, 'pros' => $pros);
+                $arr = array('jur' => $val2->get_nama() . " " . $c_univ->get_kode(), 'thn' => $th, 'jml' => $jml, 'byr' => $byr, 'pros' => $pros);
                 array_push($myArray, $arr);
             }
         }
@@ -590,19 +553,18 @@ class elemenBeasiswaController extends BaseController {
             $this->view->load('bantuan/tabel_index_skripsi');
         }
     }
-    
+
     public function data_index_skripsi2() {
         if (isset($_POST['sp2d'])) {
             //tinggal nambahin filter di get_elem_jadup
             $sp2d = $_POST['sp2d'];
-            
+
             $elem = new ElemenBeasiswa();
             $this->view->skripsi = $elem->get_elem_skripsi_by_sp2d($sp2d);
 
             $this->view->load('bantuan/tabel_index_skripsi');
         }
     }
-    
 
     public function addSkripsi($id = null) {
         $univ = new Universitas($this->registry);

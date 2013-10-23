@@ -33,7 +33,7 @@
         $bulan = $val->get_bln();
         echo "<td>" . Tanggal::bulan_indo($bulan) . "</td>";
         echo "<td>" . $val->get_thn() . "</td>";
-        echo "<td>" . $val->get_total_bayar() . "</td>";
+        echo "<td>" . number_format($val->get_total_bayar()) . "</td>";
         echo "<td><a href=" . URL . "elemenBeasiswa/delJadup/" . $val->get_kd_d() . " onClick=\"return del();\"><i class=\"icon-trash\"></i></a> &nbsp &nbsp 
                         <a href=" . URL . "elemenBeasiswa/editJadup/" . $val->get_kd_d() . "><i class=\"icon-pencil\"></i></a></td>";
         echo "</tr>";

@@ -176,7 +176,7 @@
         
         if($('#no_sp2d').val()!=""){
             if($('#tgl_sp2d').val()==""){
-                viewError("wtgl_sp2d","Total biaya harus diisi."); 
+                viewError("wtgl_sp2d","Tanggal SP2D harus diisi."); 
                 $jml++;
             }
              if($('#fupload').val()=="" && $('#fupload_lama').val()=="" ){
@@ -236,6 +236,16 @@
     
     $('#biaya_buku').keyup(function(){
         removeError('wbiaya_buku');
+    })
+    
+    $('#no_sp2d').keyup(function(){
+        removeError('wno_sp2d');
+    })
+    $('#tgl_sp2d').click(function(){
+        removeError('wtgl_sp2d');
+    })
+    $('#fupload').click(function(){
+        removeError('wfile_sp2d');
     })
         
 </script>

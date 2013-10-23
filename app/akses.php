@@ -143,6 +143,7 @@ $akses['ElemenBeasiswa'] = array(
                 'updateUangSkripsi',
                 'data_index_skripsi2',
                 'data_index_buku2',
+                'tabel_penerima_jadup2',
                 '__destruct'
                 );
 /*

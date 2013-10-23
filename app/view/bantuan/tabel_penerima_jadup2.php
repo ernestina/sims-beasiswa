@@ -20,49 +20,58 @@
     <input type="hidden" id="jml_peg" name="jml_peg" value="<?php echo count($this->pb); ?>">
     <?php
     $i = 1;
-
     foreach ($this->pb as $value) {
         $bank = $this->bank->get_bank_id($value->get_bank());
+        $pb_el = $this->penerima_elemen->get_list_by_elemen_pb($this->kd_el, $value->get_kd_pb());
+        //var_dump ($pb_el);
         ?>
         <tr>
             <td><?php echo $i; ?></td>
             <td><?php echo $value->get_nama() . "<br/>NIP." . $value->get_nip(); ?></td>
             <td><?php echo Golongan::golongan_int_string($value->get_gol()); ?></td>
             <td><?php echo StatusPB::status_int_string($value->get_status()); ?></td>
-            <td><input class="mini" type="text"  id="<?php echo 'jml_hadir' . $i; ?>" name="<?php echo 'jml_hadir' . $i; ?>" value="100">%</td>
-    <!--            <td><input class="mini" type="text" id="<?php echo 'jml_kotor' . $i; ?>" name="jml_kotor" value="0"></td>-->
-            <td><input class="mini" type="text" id="<?php echo 'pajak' . $i; ?>" name="<?php echo 'pajak' . $i; ?>" value="<?php
-    if ($value->get_gol() > 30) {
-        echo '5';
+            <td><input class="mini" type="text"  id="<?php echo 'jml_hadir' . $i; ?>" name="<?php echo 'jml_hadir' . $i; ?>" value="<?php if ($pb_el != false) {
+        echo $pb_el->kehadiran;
     } else {
-        echo '0';
-    }
-        ?>">%</td>
+        echo "0";
+    } ?>">%</td>
+    <!--            <td><input class="mini" type="text" id="<?php echo 'jml_kotor' . $i; ?>" name="jml_kotor" value="0"></td>-->
+            <td><input class="mini" type="text" id="<?php echo 'pajak' . $i; ?>" name="<?php echo 'pajak' . $i; ?>" value="<?php if ($pb_el != false) {
+        echo $pb_el->pajak;
+    } else {
+        if ($value->get_gol() > 30) {
+            echo "5";
+        } else {
+            echo "0";
+        }
+    } ?>">%</td>
     <!--            <td><input class="mini" type="text" id="<?php echo 'jml_bersih' . $i; ?>" name="jml_bersih" value="0"></td>-->
             <td><?php echo $bank->get_nama(); ?></td>
             <td><?php echo $value->get_no_rek(); ?></td>
             <td>
                 <input type="checkbox" id="<?php echo 'setuju' . $i; ?>" name="<?php echo 'setuju' . $i; ?>" 
-                       value="<?php echo $value->get_kd_pb(); ?>" 
+                       value="<?php echo $value->get_kd_pb(); ?>"  
                        <?php
-                       if ($value->get_status() == 1) { //mengecek status yang bisa dibisa dibayarkan hanya 1=belum lulus
-                           if ($this->penerima_elemen->cek_jadup_by_pb($value->get_kd_pb(), $this->bln, $this->thn) == TRUE) { //mengecek apakah ob pernah dibauarkan pada semester dan tahun tertentu
-                               echo " onclick='return false' title='Sedang proses/selesai dibayar.'";
-                           } else {
-                               echo " checked";
-                           }
+                       if ($pb_el != false) {
+                           echo " checked";
                        } else {
-                           echo " onclick='return false' title='Tidak berhak dibayar.'";
+                           if ($value->get_status() == 1) { //mengecek status yang bisa dibisa dibayarkan hanya 1=belum lulus
+                               if ($this->penerima_elemen->cek_jadup_by_pb($value->get_kd_pb(), $this->bln, $this->thn) == TRUE) { //mengecek apakah ob pernah dibauarkan pada semester dan tahun tertentu
+                                   echo " onclick='return false' title='Sedang proses/selesai dibayar.'";
+                               } 
+                           } else {
+                               echo " onclick='return false' title='Tidak berhak dibayar.'";
+                           }
                        }
                        ?>
                        />
 
             </td>
         <tr>
-            <?php
-            $i++;
-        }
-        ?>
+    <?php
+    $i++;
+}
+?>
         </tbody>
 </table>
 Keterangan: untuk penulisan desimal gunakan tanda titik (.).

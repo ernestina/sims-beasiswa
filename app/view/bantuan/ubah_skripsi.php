@@ -218,7 +218,7 @@
     $('#tgl_sp2d').click(function(){
         removeError('wtgl_sp2d');
     })
-    $('#file_sp2d').click(function(){
+    $('#fupload').click(function(){
         removeError('wfile_sp2d');
     })
         

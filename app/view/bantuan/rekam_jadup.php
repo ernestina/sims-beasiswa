@@ -4,10 +4,11 @@
 
 <div class="fitur">
     <fieldset><legend>Rekam Biaya Hidup</legend>
-        <form method="POST" action="<?php echo URL; ?>elemenBeasiswa/saveJadup" enctype="multipart/form-data">
-            <input  type="hidden" name="r_elem" value="1"/>       
+        <form method="POST" onSubmit="return cekField();" action="<?php echo URL; ?>elemenBeasiswa/saveJadup" enctype="multipart/form-data">
+            <input type="hidden" name="rekam_jadup"/> 
+            <input type="hidden" name="r_elem" value="1"/>       
             <div>
-
+                <div id="wkode_univ"></div>
                 <label class="isian">Universitas : </label>
                 <select id="kode_univ" name="kode_univ">
                     <option value="">Pilih Universitas</option>
@@ -17,23 +18,28 @@
                     }
                     ?> 
                 </select>
-
+                <div id="wkode_jur"></div>
                 <label class="isian">Jurusan/Prodi : </label>
                 <select id="kode_jur" name="kode_jur">
                     <option value="">Pilih Jurusan</option>
                 </select>
-
+                <div id="wtahun_masuk"></div>
                 <label class="isian">Tahun Masuk : </label>
                 <select name="tahun_masuk" id="tahun_masuk">
-                    <option value="">Pilih Tahun masuk</option>
+                    <!--                    <option value="">Pilih Tahun masuk</option>-->
                     <?php
                     for ($i = 2007; $i < date('Y') + 2; $i++) {
 
-                        echo "<option value=" . $i . " >" . $i . "</option>";
+                        if ($i == date('Y')) {
+                            echo "<option value=" . $i . " selected>" . $i . "</option>";
+                        } else {
+                            echo "<option value=" . $i . ">" . $i . "</option>";
+                        }
                     }
                     ?>
                 </select>
-
+                <div id="wbln"></div>
+                <div id="wthn"></div>
                 <label class="isian">Bulan dan Tahun : </label>
                 <ul class="inline">
                     <li><select id="bln" name="bln" style="width: 105px">
@@ -64,12 +70,12 @@
                 </ul>
             </div> <!--end kolom1-->
             <div>
-
+                <div id="wbiaya_jadup"></div>
                 <label class="isian">Biaya Per Pegawai : </label>
-                <input readonly type="text" id="biaya_peg" name="biaya_peg" size="12" value="<?php echo $this->jadup ?>" type="text"/>
-
+                <input type="text" id="biaya_peg" name="biaya_peg" size="12" />
+                <div id="wtotal_biaya"></div>
                 <label class="isian">Total Biaya : </label>
-                <input readonly type="text" id="total_bayar" name="total_bayar" size="12" value="<?php echo isset($this->d_ubah) ? $this->d_ubah->get_total_bayar() : ''; ?>"/>
+                <input readonly type="text" id="total_bayar" name="total_bayar" size="12"/>
 
                 <label class="isian">No. SP2D : </label>
                 <input type="text" disabled />
@@ -84,12 +90,16 @@
                 <input type="hidden" id="fupload" name="fupload" size="20" />
 
             </div> <!--end kolom2--> 
-            <br/>
-            <div id="tabel_penerima_jadup"> </div>
             <div>
-                <input name="simpan" class="sukses" type="submit" value="simpan"/>
-                <input name="batal" class="normal" type="reset" value="batal" onclick="location.href='<?php echo URL."elemenBeasiswa/viewJadup"; ?>';"/>
+                <ul class="inline" style="float: right; margin-right: 20px">
+                    <li><button type="submit" name="simpan" class="sukses" onClick="formSubmit();"/><i class="icon-ok icon-white"></i>Simpan</button></li>
+                    <li><button type="reset" name="batal" class="normal" onClick="location.href='<?php echo URL . "elemenBeasiswa/viewJadup"; ?>'"><i class="icon-remove icon-white"></i>Batal</li>
+                </ul>
             </div>
+            <br/>
+            <div id="wtabel_penerima_jadup"> </div>
+            <div id="tabel_penerima_jadup"> </div>
+
         </form>
     </fieldset>
 </div>
@@ -121,12 +131,12 @@
         })
         
         //menampilkan data penerima jadup
-        $('#kode_jur').change(function(){
+        $('#kode_jur, #tahun_masuk, #bln, #thn').change(function(){
             //alert ($('#kode_univ').val());
             $.ajax({
                 type:"POST",
                 url: "<?php echo URL; ?>elemenBeasiswa/tabel_penerima_jadup",
-                data: {kd_jurusan:$('#kode_jur').val(),thn_masuk:$('#tahun_masuk').val()},
+                data: {kd_jurusan:$('#kode_jur').val(),thn_masuk:$('#tahun_masuk').val(),bln:$('#bln').val(),thn:$('#thn').val()},
                 success: function(jadup){
                     $('#tabel_penerima_jadup').html(jadup);
                 }
@@ -135,19 +145,85 @@
             $("#total_bayar").val('0');
         })
         
-        $('#tahun_masuk').change(function(){
-            //alert ($('#kode_univ').val());
-            $.ajax({
-                type:"POST",
-                url: "<?php echo URL; ?>elemenBeasiswa/tabel_penerima_jadup",
-                data: {kd_jurusan:$('#kode_jur').val(),thn_masuk:$('#tahun_masuk').val()},
-                success: function(jadup){
-                    $('#tabel_penerima_jadup').html(jadup);
-                }
-            });
-            $("#total_bayar").val('0');
-        })
                            
+    })
+    
+    function cekField(){
+        var jml=0;
+     
+        if($('#biaya_peg').val()==0 || $('#biaya_peg').val()=="" ){
+            viewError("wbiaya_jadup","biaya per pegawai harus diisi");
+            jml++;
+        }
+        if($('#kode_univ').val()==""){
+            viewError("wkode_univ","Universitas harus diisi");
+            jml++;
+        }
+     
+        if($('#kode_jur').val()==""){
+            viewError("wkode_jur","Jurusan harus diisi");
+            jml++;
+        }
+     
+        if($('#tahun_masuk').val()==""){
+            viewError("wtahun_masuk","Tahun masuk harus diisi.");
+            jml++;
+        }
+     
+        if($('#bln').val()==""){
+            viewError("wbln","Bulan harus diisi.");
+            jml++;
+        }
+     
+        if($('#thn').val()==""){
+            viewError("wthn","Tahun harus diisi.");
+            jml++;
+        }
+     
+        if($('#tahun_masuk').val()==""){
+            viewError("wtahun_masuk","Tahun masuk harus diisi.");
+            jml++;
+        }
+        if($('#total_bayar').val()=="" || $('#total_bayar').val()==0){
+            viewError("wtotal_biaya","Total biaya harus diisi.");
+            jml++;
+        }
+        
+        var cks = $('#jml_peg').val();
+        var cek=0;
+        for (var j=1; j < cks+1; j++){
+            //alert('ok')
+            if ($('#setuju'+j).is(':checked')){
+                cek++;         
+            }      
+        }      
+               
+        if(cek<=0){
+            viewError("wtabel_penerima_jadup", "Penerima tunjangan hidup belum dipilih.")
+            jml++;
+        }
+     
+        if(jml>0){
+            return false;
+        } else{
+            return true;
+        }
+    }
+    
+    $('#kode_univ').click(function(){
+        removeError('wkode_univ');
+    })
+    
+    $('#kode_jur').click(function(){
+        removeError('wkode_jur');
+    })
+    
+    $('#tahun_masuk').click(function(){
+        removeError('wtahun_masuk');
+    })
+    
+    $('#biaya_peg').keyup(function(){
+        removeError('wbiaya_jadup');
     })
         
 </script>
