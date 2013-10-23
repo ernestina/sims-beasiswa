@@ -10,7 +10,7 @@
     <th width="10%">Status <br />Pembayaran</th>
     <th width="10%">No dan Tgl SP2D</th>
 </thead>
-
+<tbody>
 <?php
 $i = 1;
 foreach ($this->data_biaya as $val) {
@@ -26,11 +26,11 @@ foreach ($this->data_biaya as $val) {
         <td><?php echo $data_kontrak->no_kontrak." (".$data_kontrak->tgl_kontrak.")"; ?></td>
         <td><?php echo $data_jurusan->get_nama()." ".$data_universitas->get_kode()." ".$data_kontrak->thn_masuk_kontrak; ?></td>
         <td><?php echo $val->nama_biaya; ?></td>
-        <td><?php echo number_format($val->jml_biaya); ?></td>
-        <td><?php echo $val->jadwal_bayar; ?></td>
+        <td style="text-align: right"><?php echo number_format($val->jml_biaya); ?></td>
+        <td style="text-align: center"><?php echo $val->jadwal_bayar; ?></td>
 <!--        <td><?php echo number_format($this->biaya->get_biaya_by_kontrak_dibayar($val->kd_kontrak)); ?></td>-->
-        <td><?php echo $val->status_bayar; ?></td>
-        <td>
+        <td style="text-align: center"><?php echo $val->status_bayar; ?></td>
+        <td style="text-align: center">
             <?php
             if ($val->tgl_sp2d != "01-01-1970") {
                 echo $val->no_sp2d." (".$val->tgl_sp2d.")";
@@ -47,4 +47,5 @@ if (empty($this->data_biaya)) {
     echo "<tr><td colspan=10>Biaya kontrak tidak ditemukan.</td></tr>";
 }
 ?>
+</tbody>
 </table>

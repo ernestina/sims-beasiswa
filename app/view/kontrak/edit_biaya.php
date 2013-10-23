@@ -1,5 +1,5 @@
 <div id="top">
-    <h2><a href="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/display' ?>">DATA KONTRAK KERJASAMA</a> > BIAYA > UBAH <!-- entar pake breadcrumb--></h2>
+    <h2><a href="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/display' ?>">DATA KONTRAK KERJASAMA</a> > <a href="<?php echo URL . 'kontrak/biaya/' . $this->kontrak->kd_kontrak ?>">BIAYA</a> > UBAH <!-- entar pake breadcrumb--></h2>
     <input type="button" value="KEMBALI" onClick="location.href='<?php echo URL . 'kontrak/biaya/' . $this->kontrak->kd_kontrak; ?>'">
 
 <div>

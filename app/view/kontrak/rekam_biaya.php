@@ -1,5 +1,5 @@
 <div id="top">
-    <h2><a href="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/display' ?>">DATA KONTRAK KERJASAMA</a> > BIAYA > TAMBAH <!-- entar pake breadcrumb--></h2>
+    <h2><a href="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/display' ?>">DATA KONTRAK KERJASAMA</a> > <a href="<?php echo URL . 'kontrak/biaya/' . $this->kontrak->kd_kontrak ?>">BIAYA</a> > TAMBAH <!-- entar pake breadcrumb--></h2>
     <input type="button" value="KEMBALI" onClick="location.href='<?php echo URL . 'kontrak/biaya/' . $this->kontrak->kd_kontrak; ?>'">
 
 
@@ -19,7 +19,7 @@
                 <form id="form_rekam_biaya" method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/rekamBiaya' ?>">
                     <input type="hidden" name="rekam_biaya" size="50">
 <!--                    <label class="isian">Nomor Kontrak*</label><input type="text" size="50" name="kontrak" id="kontrak" value="<? echo $this->kontrak->no_kontrak; ?>" readonly>-->
-                    <label class="isian">Kode Kontrak</label><input type="text" size="50" name="kd_kontrak" id="kd_kontrak" value="<?php echo $this->kontrak->kd_kontrak; ?>" readonly disabled >
+                    <!--label class="isian">Kode Kontrak</label--><input type="hidden" size="50" name="kd_kontrak" id="kd_kontrak" value="<?php echo $this->kontrak->kd_kontrak; ?>" readonly >
                     <label class="isian">Nama Biaya*</label><input type="text" size="50" name="nama_biaya" id="nama_biaya">
                     <div id="wnama_biaya"></div>
                     <label class="isian">Biaya per Pegawai*</label><input type="text" size="12" name="biaya_per_peg" id="biaya_per_peg" maxlength="14">
