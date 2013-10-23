@@ -1,12 +1,12 @@
-<table class="table-bordered zebra" style="display: block">
+<table class="table-bordered zebra" width="95%">
 				<thead>
-					<th>No</th>
-					<th width="100">No. Surat Cuti</th>
-					<th width="150">Tanggal Surat Cuti</th>
-					<th width="150">Periode Awal Cuti</th>
-					<th width="150">Periode Akhir Cuti</th>
-					<th width="200">Jenis Cuti</th>
-					<th width="100">File</th>
+					<th width="5%">No</th>
+					<th width="15%">No. Surat Cuti</th>
+					<th width="15%">Tgl Surat Cuti</th>
+					<th width="15%">Periode Awal Cuti</th>
+					<th width="15%">Periode Akhir Cuti</th>
+					<th width="20%">Jenis Cuti</th>
+					<th width="25%">File</th>
 				</thead>
 				<tbody>
                                     <?php 

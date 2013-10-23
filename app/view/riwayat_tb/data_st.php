@@ -15,7 +15,7 @@
                 }
             ?>
             <div id="wnost" class="error"></div>
-            <label>no. Surat Tugas(ST)</label><input type="text" name="no_st" id="no_st" size="30" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nomor():'';?>">
+            <label>No. Surat Tugas(ST)</label><input type="text" name="no_st" id="no_st" size="30" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nomor():'';?>">
             <div id="wstlama" class="error"></div>
             <label>No. ST Lama</label><select name="st_lama" id="st_lama" type="text">
                 <?php 
@@ -89,7 +89,7 @@
         <table>
             <tr align="left">
                 <td><label>Universitas</label><select id="cuniv" onchange="get_surat_tugas(this.value,document.getElementById('thn').value)" type="text">
-                        <option value=0>semua</option>
+                        <option value=0>- semua -</option>
                     <?php 
                         foreach($this->d_univ as $val){
                             echo "<option value=".$val->get_kode_in().">".$val->get_nama()."</option>";
@@ -97,14 +97,14 @@
                     ?>
                     </select></td>
                 <td><label>Tahun Masuk</label><select id="thn" onchange="get_surat_tugas(document.getElementById('cuniv').value,this.value)" type="text">
-                        <option value=0>semua</option>
+                        <option value=0>- semua -</option>
                         <?php
                             foreach ($this->d_th_masuk as $key=>$val){
                                 echo "<option value=".$key.">".$val."</option>";
                             }
                         ?>
                     </select></td>
-                <td><input type="search" id="cari" size="30"></td>
+                <td><input type="search" id="cari" size="30"placeholder="Cari..."></td>
             </tr>
         </table>
     </div>

@@ -92,9 +92,9 @@
 		
 			<table class="table-bordered zebra scroll">
 				<thead>
-					<th>No</th>
-					<th width="300">Keterangan Pembayaran</th>
-					<th>Jumlah (Rp)</th>
+					<th width="5%">No</th>
+					<th width="60%">Keterangan Pembayaran</th>
+					<th width="35%">Jumlah (Rp)</th>
 				</thead>
 				<tbody>
                                     <?php $no=1;
@@ -129,7 +129,7 @@
 	<fieldset><legend>Riwayat Perkembangan Studi</legend>
 		<div class="kolom5">
 		
-			<label class="isian2">Judul Skripsi :</label>
+			<label class="isian2">Judul Skripsi :</label><br>
 <!--			<textarea class="midi" type="text" readonly><?php echo $this->d_pb->get_skripsi();?></textarea>-->
                         <?php echo $this->d_pb->get_skripsi()."</br><hr>";?>
 			<label class="isian2">Permasalahan Tugas Belajar :</label>
@@ -145,7 +145,8 @@
 			
 
 		<label class="isian">Unggah Transkrip:</label>-->
-
+			<br>
+			<br>
 			<?php 
                             $this->load("profil/tabel_nilai");
                         ?>
@@ -167,15 +168,15 @@
 <div id="fitur">
 	<fieldset><legend>Riwayat Penerimaan Beasiswa</legend>
 		
-		<table class="table-bordered zebra" style="display: block">
+		<table class="table-bordered zebra" width="95%">
 				<thead>
-					<th>No</th>
-					<th width="100">No. Surat Tugas</th>
-					<th width="100">Strata</th>
-					<th width="200">Universitas</th>
-					<th width="100">Jurusan</th>
-					<th width="100">Tahun Masuk</th>
-					<th width="200">Status TB</th>
+					<th width="5%">No</th>
+					<th width="15%">No. Surat Tugas</th>
+					<th width="10%">Strata</th>
+					<th width="20%">Universitas</th>
+					<th width="25%">Jurusan</th>
+					<th width="12%">Tahun Masuk</th>
+					<th width="10%">Status TB</th>
 				</thead>
 				<tbody>
                                     <?php $no=1;
@@ -190,13 +191,13 @@
                                             $strata = $d_jur[2];
                                     ?>
 					<tr>
-						<td><?php echo $no;?></td>
+						<td style="text-align: center"><?php echo $no;?></td>
                                                 <td><?php echo $no_st."</br>".Tanggal::tgl_indo($tgl_st);?></td>
-						<td><?php echo $strata;?></td>
+						<td style="text-align: center"><?php echo $strata;?></td>
 						<td><?php echo $univ;?></td>
 						<td><?php echo $jur;?></td>
-						<td><?php echo $thn_masuk;?></td>
-						<td><?php echo $v->get_status();?></td>
+						<td style="text-align: center"><?php echo $thn_masuk;?></td>
+						<td style="text-align: center"><?php echo $v->get_status();?></td>
 					</tr>
                                         <?php 
                                         $no++;

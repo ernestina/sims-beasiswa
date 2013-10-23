@@ -8,7 +8,7 @@
                 <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/display' ?>">
 <!--            <input type="hidden" name="pilih_univ">-->
                     <select name="universitas" id="kd_univ" type="text">
-                        <option value="">Semua</option>
+                        <option value="">- semua -</option>
                         <?php
                         foreach ($this->kd_univ as $univ) {
                             if ($this->pil == $univ->get_kode_in()) {

@@ -1,17 +1,18 @@
 <div id="table-title"></div>
     <div id="table-content">
 <table class="table-bordered zebra scroll">
-            <thead>
-            <th>No</th>
-            <th width="170">No Surat Cuti</th>
-            <th>Jenis Cuti</th>
-            <th>Penerima Beasiswa</th>
-            <th>Periode Cuti</th>
-            <th>Perk.Stop Elemen Beasiswa</th>
-            <th>Perk. Pembayaran Kembali</th>
-            <th>Jurusan/ Prodi</th>
+            <thead >
+            <th width="5%">No</th>
+            <th width="10%">No Surat Cuti</th>
+            <th width="10%">Jenis Cuti</th>
+            <th width="20%">Penerima Beasiswa</th>
+            <th width="8%" style="font-size: 80%">Periode Cuti</th>
+            <th width="8%" style="font-size: 80%">Perk.Stop Elemen Beasiswa</th>
+            <th width="8%" style="font-size: 80%">Perk. Pembayaran Kembali</th>
+            <th width="15%" style="font-size: 80%">Jurusan/ Prodi</th>
             <th width="20%">Aksi</th>
             </thead>
+			<tbody style="text-align: center">
             <?php 
                 $no=1;
                 foreach($this->d_ct as $val){
@@ -22,18 +23,19 @@
                     echo "<td>".$no."</td>";
                     echo "<td>".$val->get_no_surat_cuti()."</br>".Tanggal::tgl_indo($val->get_tgl_surat_cuti())."</td>";
                     echo "<td>".$val->get_jenis_cuti()."</td>";
-                    echo "<td>".$d_pb[0]."</br>".$d_pb[1]."</td>";
+                    echo "<td style='text-align: left'>".$d_pb[0]."</br>".$d_pb[1]."</td>";
                     echo "<td>".(($val->get_prd_mulai()==1)?'ganjil':'genap')."</td>";
                     echo "<td>".Tanggal::bulan_indo($perk_stop[0])." ".$perk_stop[1]."</td>";
                     echo "<td>".Tanggal::bulan_indo($perk_go[0])." ".$perk_go[1]."</td>";
-                    echo "<td>".$d_pb[2]."</td>";
-                    echo "<td><a href=".URL."cuti/del_sc/".$val->get_kode_cuti()." onClick='return del(\"$d_pb[0]\",\"".$val->get_no_surat_cuti()."\")'><i class=\"icon-trash\"></i></a> &nbsp
-                        <a href=".URL."cuti/datasc/".$val->get_kode_cuti()."><i class=\"icon-pencil\"></i></a></td>";
+                    echo "<td style='text-align: left'>".$d_pb[2]."</td>";
+                    echo "<td><a href=".URL."cuti/del_sc/".$val->get_kode_cuti()." onClick='return del(\"$d_pb[0]\",\"".$val->get_no_surat_cuti()."\")' title='hapus'><i class=\"icon-trash\"></i></a> &nbsp
+                        <a href=".URL."cuti/datasc/".$val->get_kode_cuti()." title='ubah'><i class=\"icon-pencil\"></i></a></td>";
                     echo "</tr>";
                     $no++;
                 }
             ?>
-        </table>
+        </tbody>
+		</table>
     </div>
 <script type="text/javascript">
 

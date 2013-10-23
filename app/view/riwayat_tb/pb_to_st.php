@@ -3,7 +3,7 @@
     <div class="kolom3">
         <fieldset><legend>Detil Surat Tugas</legend>
         <input type="hidden" name="kd_st" id="kd_st" value="<?php echo $this->d_st->get_kd_st();?>">
-            <label>no. Surat Tugas(ST)</label><input type="text" name="no_st" id="no_st" size="30" value="<?php echo isset($this->d_st)?$this->d_st->get_nomor():'';?>" readonly></br>
+            <label>No. Surat Tugas(ST)</label><input type="text" name="no_st" id="no_st" size="30" value="<?php echo isset($this->d_st)?$this->d_st->get_nomor():'';?>" readonly></br>
            
             <label>No. ST Lama</label><input type="text" value="<?php echo $this->d_st->get_nomor(); ?>" readonly>
             
@@ -19,7 +19,7 @@
     <div>
         <table>
             <tr align="left">
-                <td><input type="search" id="cari" size="30" placeholder="cari penerima beasiswa" onKeyup="cari(this.value);"></td>
+                <td><input type="search" id="cari" size="30" placeholder="Cari penerima beasiswa..." onKeyup="cari(this.value);"></td>
             </tr>
         </table>
     </div>

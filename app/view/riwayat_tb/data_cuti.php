@@ -39,7 +39,7 @@
             <div id="wtglsc" class="error"></div>
             <label>Tanggal SC</label><input type="text" name="tgl_sc" id="datepicker" value="<?php echo isset($this->d_ubah)?  Tanggal::ubahFormatToDatePicker($this->d_ubah->get_tgl_surat_cuti()):'';?>" readonly>
             <div id="wpb" class="error"></div>
-            <label>Penerima Beasiswa</label><input type="button" id="bt_pb" value="+" onClick="showDialog();" class="lihat">
+            <label>Penerima Beasiswa</label><input type="button" id="bt_pb" value="+" onClick="showDialog();" class="lihat" style="font-weight: bold; font-size: 120%">
             <input style="<?php echo isset($this->d_ubah)?'':'display:none';?>" type="text" name="nip_pb" id="nip_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb->get_nip():'';?>" readonly>
             <input style="<?php echo isset($this->d_ubah)?'':'display:none';?>" type="text" name="nama_pb" id="nama_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb->get_nama():'';?>" readonly>
             <input type="hidden" name="kd_pb" id="kd_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb->get_kd_pb():'';?>">
@@ -138,7 +138,7 @@
         <table>
             <tr align="left">
                 <td><label>Universitas</label><select id="cuniv" onchange="get_data_cuti(this.value,document.getElementById('thn').value)" type="text">
-                        <option value=0>semua</option>
+                        <option value=0>- semua -</option>
                     <?php 
                         foreach($this->d_univ as $val){
                             echo "<option value=".$val->get_kode_in().">".$val->get_nama()."</option>";
@@ -146,14 +146,14 @@
                     ?>
                     </select></td>
                 <td><label>Tahun Masuk</label><select id="thn" onchange="get_data_cuti(document.getElementById('cuniv').value,this.value)" type="text">
-                        <option value=0>semua</option>
+                        <option value=0>- semua -</option>
                         <?php
                             foreach ($this->d_th_masuk as $key=>$val){
                                 echo "<option value=".$key.">".$val."</option>";
                             }
                         ?>
                     </select></td>
-                <td><input type="search" id="cari" size="30"></td>
+                <td><input type="search" id="cari" size="30" placeholder="Cari..."></td>
             </tr>
         </table>
     </div>

@@ -5,7 +5,7 @@
     <table style="margin-left:10px; margin-right: 10px" width="100%" >
         <tr>
             <td><label>Universitas</label><select type="text" id="univ">
-                    <option value="0">-semua-</option>
+                    <option value="0">- semua -</option>
                     <?php 
                         foreach ($this->univ as $val){
                             echo "<option value=".$val->get_kode_in().">".$val->get_nama()."</option>";
@@ -13,7 +13,7 @@
                     ?>
                 </select></td>
             <td><label>Tahun Masuk</label><select type="text" id="thn">
-                    <option value="0">-semua-</option>
+                    <option value="0">- semua -</option>
                     <?php 
                        foreach ($this->th_masuk as $key=>$val){
                             echo "<option value=".$key.">".$val."</option>";
@@ -21,14 +21,14 @@
                     ?>
                 </select></td>
             <td><label>Status</label><select type="text" id="status">
-                    <option value="0">-semua-</option>
+                    <option value="0">- semua -</option>
                     <?php 
                        foreach ($this->d_sts as $val){
                             echo "<option value=".$val->kd_status.">".$val->nm_status."</option>";
                         }
                     ?>
                 </select></td>
-            <td><input type="search" name="cari" id="cari" size="30"></td>
+            <td><input type="search" name="cari" id="cari" size="30" placeholder="Cari..."></td>
         </tr>
         <!--tr><td colspan="3"></td><td style="padding-right: 45px; padding-top: 0px"><input type="button" value="TAMBAH" onclick="location.href='<?php echo URL.'penerima/penerima'?>'"></td></tr-->
     </table>

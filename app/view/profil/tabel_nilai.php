@@ -1,10 +1,10 @@
-			<table class="table-bordered zebra" style="width:45%;margin-left: 0px;padding-left: 0px;">
+			<table class="table-bordered zebra" style="width:45%;margin-left: 20px;padding-left: 0px;">
 				<thead>
-					<th>No</th>
-					<th>Keterangan</th>
-					<th>IP</th>
-					<th>File</th>
-                                        <th>Aksi</th>
+					<th width="5%">No</th>
+					<th width="50%">Keterangan</th>
+					<th width="15%">IP</th>
+					<th width="25%">File</th>
+                    <th width="5%">Aksi</th>
 				</thead>
 				<tbody>
                                     <?php 
@@ -16,7 +16,7 @@
 						<td><?php echo "Semester ".$v->get_semester()." dengan IPS ".($v->get_ips()); ?></td>
 						<td><?php echo $v->get_ipk();?></td>
 						<td><input type="button" value="Transkrip" id="uplod_ip" name="uplod_ip" onClick="view('<?php echo $v->get_file();?>');"/></td>
-                                                <td><a href="<?php echo URL;?>penerima/delnilai/<?php echo $v->get_kode().'/'.$this->d_pb->get_kd_pb().'/'.$this->url; ?>"><i class="icon-trash" onClick="return del_nil('<?php echo $this->d_pb->get_nama();?>','<?php echo $v->get_semester();?>')"></i></a>
+                                                <td><a href="<?php echo URL;?>penerima/delnilai/<?php echo $v->get_kode().'/'.$this->d_pb->get_kd_pb().'/'.$this->url; ?>" title="hapus"><i class="icon-trash" onClick="return del_nil('<?php echo $this->d_pb->get_nama();?>','<?php echo $v->get_semester();?>')"></i></a>
                                                     </td>
 					</tr>
                                     <?php 

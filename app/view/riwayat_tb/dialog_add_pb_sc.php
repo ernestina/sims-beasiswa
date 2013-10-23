@@ -7,14 +7,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>rekam penerima beasiswa</title>
+        <title>Rekam penerima beasiswa</title>
         <script src="<?php echo URL; ?>public/js/jquery-2.0.3.min.js"></script>
         <link href="<?php echo URL; ?>public/css/style.css" rel="stylesheet">
     </head>
     <body style="max-width: 370px;max-height: 500px; text-align: center; overflow:no-content;">
 <div id="dialog_pb" style="text-align: left;">
         <table>        
-            <tr><td><label>Cari : </label></td><td><input type="text" id="cari_pb" name="nama" onkeyup="cari(this.value);" placeholder="nama penerima beasiswa"></td></tr>
+            <tr><td><label>Cari : </label></td><td><input type="text" id="cari_pb" name="nama" onkeyup="cari(this.value);" placeholder="Nama penerima beasiswa"></td></tr>
         </table>
 </div>
 <div id="tb_pb">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>rekam penerima beasiswa</title>
+        <title>Rekam penerima beasiswa</title>
         <script src="<?php echo URL; ?>public/js/jquery-2.0.3.min.js"></script>
         <link href="<?php echo URL; ?>public/css/style.css" rel="stylesheet">
         <link href="<?php echo URL; ?>public/css/autocomplete.css" rel="stylesheet">
@@ -33,7 +33,7 @@
                 </td></tr>
 <!--            <tr><td><label>Cabang</label></td><td><input type="text" id="t_cb" name="t_cb"></td></tr>-->
             <tr><td><label>No. Rekening</label></td><td><input type="text" id="t_rek" name="no_rek"></td></tr>
-            <tr><td colspan="2"><input type="button" id="bt_ok" value="Simpan" onclick="return goSelect();"></td></tr>
+            <tr><td colspan="2"><input type="button" id="bt_ok" value="SIMPAN" onclick="return goSelect();"></td></tr>
         </table>
     </form>
 </div>

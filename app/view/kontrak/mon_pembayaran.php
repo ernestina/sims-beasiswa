@@ -6,21 +6,21 @@
 		<ul class="inline">
             <li><label>Universitas</label></li>
             <li><select name="univ" id="univ" type="text">
-                <option value="">Semua</option>
+                <option value="">- semua -</option>
                 <?php foreach ($this->univ as $univ) { ?>
                     <option value="<?php echo $univ->get_kode_in(); ?>"><?php echo $univ->get_nama(); ?></option>
                 <?php } ?>
             </select></li> &nbsp &nbsp 
             <li><label>Status pembayaran</label></li>
             <li><select id="status" name="status" type="text">
-                <option value="">Semua</option>
+                <option value="">- semua -</option>
                 <option value="belum">belum</option>
                 <option value="proses">proses</option>
                 <option value="selesai">selesai</option>
             </select></li> &nbsp &nbsp
             <li><label>Jadwal Pembayaran</label></li>
             <li><select id="jadwal" name="jadwal" type="text">
-                <option value="">Semua</option>
+                <option value="">- semua -</option>
                 <?php
                 for ($i = 2007; $i <= date('Y') + 1; $i++) {
                     ?>

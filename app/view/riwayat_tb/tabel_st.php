@@ -2,30 +2,31 @@
     <div id="table-content">
 <table class="table-bordered zebra scroll">
             <thead>
-            <th>No</th>
-            <th width="170">No Surat Tugas</th>
-            <th>Tanggal ST</th>
-            <th>Tgl Mulai</th>
-            <th>Tgl AKhir</th>
-            <th>Jenis ST</th>
-            <th>Jurusan/Prodi</th>
-            <th width="88">Aksi</th>
+            <th width="5%">No</th>
+            <th width="10%">No Surat Tugas</th>
+            <th width="10%">Tanggal ST</th>
+            <th width="10%">Tgl Mulai</th>
+            <th width="10%">Tgl AKhir</th>
+            <th width="10%">Jenis ST</th>
+            <th width="25%">Jurusan/Prodi</th>
+            <th width="15%">Aksi</th>
             </thead>
+			<tbody style="text-align: center">
             <?php 
                 $no=1;
                 if(count($this->d_st)>0){
                     foreach($this->d_st as $val){
                         echo "<tr>";
                         echo "<td>".$no."</td>";
-                        echo "<td>".$val->get_nomor()."</td>";
+                        echo "<td style='text-align: left'>".$val->get_nomor()."</td>";
                         echo "<td>".$val->get_tgl_st()."</td>";
                         echo "<td>".$val->get_tgl_mulai()."</td>";
                         echo "<td>".$val->get_tgl_selesai()."</td>";
                         echo "<td>".$val->get_jenis_st()."</td>";
-                        echo "<td>".$val->get_jur()."</td>";
-                        echo "<td><center><a href=".URL."surattugas/addpb/".$val->get_kd_st()."><i class=\"icon-user\"></i></a>  &nbsp 
-                            <a href=".URL."surattugas/del_st/".$val->get_kd_st()." onClick='return del(\"".$val->get_nomor()."\")'><i class=\"icon-trash\"></i></a> &nbsp 
-                            <a href=".URL."surattugas/datast/".$val->get_kd_st()."><i class=\"icon-pencil\"></i></a></td></center>";
+                        echo "<td style='text-align: left'>".$val->get_jur()."</td>";
+                        echo "<td><center><a href=".URL."surattugas/addpb/".$val->get_kd_st()." title='tambah penerima ST'><i class=\"icon-user\"></i></a>  &nbsp 
+                            <a href=".URL."surattugas/del_st/".$val->get_kd_st()." onClick='return del(\"".$val->get_nomor()."\")' title='hapus'><i class=\"icon-trash\"></i></a> &nbsp 
+                            <a href=".URL."surattugas/datast/".$val->get_kd_st()." title='ubah'><i class=\"icon-pencil\"></i></a></td></center>";
                         echo "</tr>";
                         $no++;
                     }
@@ -34,7 +35,8 @@
                 }
                 
             ?>
-        </table>
+        </tbody>
+		</table>
     </div>
 <script type="text/javascript">
 
