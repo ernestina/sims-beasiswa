@@ -1,0 +1,93 @@
+/* 
+    Document   : notifikasi
+    Created on : Oct 22, 2013, 12:13:17 PM
+    Author     : aisyah
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.notif {
+    border-color: grey;
+    background-color: graytext;
+    padding: 5px 5px 5px 5px;
+    border-radius:5px;
+    color: white;
+}
+
+.notif p{
+    padding-bottom: 1px;
+    width: 480px;
+    display:block;
+    margin: 0;
+}
+
+.notif ul{
+    width:600px;
+    height:600px;
+}
+
+.notif ul li{
+    padding-left: 5px;
+    border-radius: 0px;
+    border-color: #dc3c00;
+    width:590px;
+    height: 52px;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.notif ul li.jadup{
+    background-color: blue;
+}
+
+.notif ul li.buku{
+    background-color: purple;
+}
+
+.notif ul li.skripsi{
+    background-color: green;
+}
+
+.notif ul li.kontrak{
+    background-color: maroon;
+}
+
+.notif ul li.lulus{
+    background-color: white;
+}
+
+div .tanggal{
+    padding: 2px 2px 2px 2px;
+    margin: 2px 2px 2px 2px;
+    width: 10%;
+    min-height:45px;
+    background-color: #ba141a;
+    float:left;
+}
+
+div .foto_pic{
+    padding: 2px 2px 2px 2px;
+    margin: 2px 2px 2px 2px;
+    width: 10%;
+    min-height: 45px;
+    background-color: #27c6ef;
+    float: left;
+}
+
+div .content_notif{
+    padding: 2px 2px 2px 2px;
+    margin: 2px 0px 2px 0px;
+    height: 45px;
+    width: 75%;
+    background-color: gray;
+    float: left;
+    
+}
+
+div .content_notif p{
+    padding-bottom: 1px;
+    width: 480px;
+    display:block;
+    margin: 0;
+    
+}

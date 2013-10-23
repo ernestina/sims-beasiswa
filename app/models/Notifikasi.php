@@ -33,7 +33,7 @@ class Notifikasi{
     public $registry;
     private $_db;
     private $_jtemp_jadup = '7 DAY';
-    private $_jtemp_buku = '1_MONTH';
+    private $_jtemp_buku = '1 MONTH';
     private $_start_buku = array('sem_satu'=>3,'sem_dua'=>9);
     private $_start_lulus = '1 MONTH';
 
@@ -619,11 +619,12 @@ class Notifikasi{
         $this->get_data_buku();
         $this->get_data_surat_tugas();
         $this->get_data_kontrak();
-        echo "jumlah notifikasi : ".count($this->_notif_data)."</br>";
-        echo "data notifikasi : </br>";
-        $this->dump_data();
+//        echo "jumlah notifikasi : ".count($this->_notif_data)."</br>";
+//        echo "data notifikasi : </br>";
+//        $this->dump_data();
 //        $this->union_data();
 //        echo $this->diff_month('2014-11', date('Y-m-d'));
+        return $this->_notif_data;
     }
     
     private function dump_data(){
