@@ -145,6 +145,7 @@ $akses['ElemenBeasiswa'] = array(
                 'data_index_buku2',
                 'tabel_penerima_jadup2',
                 'data_index_jadup2',
+                'data_index_mon',
                 '__destruct'
                 );
 /*

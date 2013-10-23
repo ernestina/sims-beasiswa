@@ -12,15 +12,17 @@ class elemenBeasiswaController extends BaseController {
     }
 
     public function index() {
-        $elem = new ElemenBeasiswa($this->registry);
-        $fakul = new Fakultas($this->registry);
-        $this->view->fakul = $fakul->get_fakul();
+        $univ = new Universitas($this->registry);
+        $this->view->univ = $univ->get_univ();
         $jur = new Jurusan($this->registry);
         $this->view->jur = $jur->get_jurusan();
-        $kon = new Kontrak($this->registry);
-        $this->view->kon = $kon->get_All();
-        $this->view->data = $elem->get_elem();
         $this->view->render('bantuan/mon_pembayaran');
+    }
+    
+    public function data_index_mon() {
+        $elem = new ElemenBeasiswa($this->registry);
+        $this->view->data = $elem->get_elem();
+        $this->view->load('bantuan/tabel_index_mon_pembayaran');
     }
 
     public function viewJadup() {

@@ -7,18 +7,18 @@
             <tr>
                 <td>
                     <label>Universitas</label>
-                    <select type="text">
+                     <select name="universitas" id="universitas" type="text">
                         <option value="0">Semua</option>>
                         <?php 
-                            foreach ($this->fakul as $val){
-                                echo "<option value=".$val->get_kode_fakul()." >".$val->get_kode_univ()." - ".$val->get_nama()."</option>";
+                            foreach ($this->univ as $val){
+                                echo "<option value=" . $val->get_kode_in() . " >" . $val->get_nama() . "</option>";
                             }
                         ?>
                     </select>
                 </td>
                 <td>
                     <label>Jurusan/Prodi</label>
-                    <select type="text">
+                    <select name="jurusan" id="jurusan" type="text">
                         <option value="0">Semua</option>>
                         <?php 
                             foreach ($this->jur as $val2){
@@ -29,123 +29,79 @@
                 </td>
                 <td>
                     <label>Tahun Masuk</label>
-                    <select style="width: 120px" type="text">
-                        <option value="0">Semua</option>>
-                        <?php 
-                            foreach ($this->kon as $val3){
-                                echo "<option value=".$val3->thn_masuk_kontrak." >".$val3->thn_masuk_kontrak."</option>";
+                    <select name="tahun_masuk" id="tahun_masuk" type="text">
+                        <option value="">Semua</option>>
+                        
+                            <?php
+                            for ($i = 2007; $i <= date('Y') + 2; $i++) {
+                                ?>
+                                <option value="<?php echo $i; ?>" <?php
+                            if ($i == date('Y')) {
+                                echo "selected";
                             }
-                        ?>
+                                ?>><?php echo $i; ?></option>
+                                    <?php } ?>
                     </select>
 					
-                </td>
-				<td>
-					s.d
-				</td>
-                <td>
-                    <label>&nbsp </label>
-                    <select style="width: 120px" type="text">
-                        <option value="0">Semua</option>>
-                        <?php 
-                            foreach ($this->kon as $val3){
-                                echo "<option value=".$val3->thn_masuk_kontrak." >".$val3->thn_masuk_kontrak."</option>";
-                            }
-                        ?>
-                    </select>
                 </td>
                 <td ><input type="search" name="cari" id="cari" value="cari" size="30"></td>
             </tr>
         </table>
     
 </div>
-<div id="table">
-    <table class="table-bordered zebra">
-        <thead>
-        <th>No</th>
-        <th>Nama Biaya</th>
-        <th>Periode Pembayaran</th>
-        <th>Universitas</th>
-        <th>Jurusan </th>
-        <th>Th Masuk</th>
-        <th>Jumlah Pegawai dibayarkan</th>
-        <th>Jumlah Pegawai TB</th>
-        <th>No. dan Tgl SP2D</th>
-        <th>Jumlah dibayarkan</th>
-        </thead>
-        <tbody>
-            <?php
-                $no = 1;
-                foreach ($this->data as $val4){
-                    echo "<tr>";
-                    echo "<td>$no</td>";
-                    $jns_elem=$val4->get_kd_r();
-                    $bulan=$val4->get_bln();
-                    if ($jns_elem==1){
-                        echo "<td>Tunjangan Hidup</td>";
-                    } else if ($jns_elem==2) {
-                        echo "<td>Tunjangan Buku</td>";
-                    } else if ($jns_elem==3) {
-                        echo "<td>Tunjangan Skripsi/TA/Tesis</td>";
-                    } else {
-                        echo "<td>Nama biaya tidak terdaftar</td>";
-                    }
-                    if ($jns_elem==1){
-                        echo "<td>".Tanggal::bulan_indo($bulan)." ".$val4->get_thn()."</td>";
-                        /*if ($bulan==1){
-                            echo "<td>Januari ".$val4->get_thn()."</td>";
-                        } else if ($bulan==2) {
-                            echo "<td>Februari ".$val4->get_thn()."</td>";
-                        } else if ($bulan==3) {
-                            echo "<td>Maret ".$val4->get_thn()."</td>";
-                        } else if ($bulan==4) {
-                            echo "<td>April ".$val4->get_thn()."</td>";
-                        } else if ($bulan==5) {
-                            echo "<td>Mei ".$val4->get_thn()."</td>";
-                        } else if ($bulan==6) {
-                            echo "<td>Juni ".$val4->get_thn()."</td>";
-                        } else if ($bulan==7) {
-                            echo "<td>Juli ".$val4->get_thn()."</td>";
-                        } else if ($bulan==8) {
-                            echo "<td>Agustus ".$val4->get_thn()."</td>";
-                        } else if ($bulan==9) {
-                            echo "<td>September ".$val4->get_thn()."</td>";
-                        } else if ($bulan==10) {
-                            echo "<td>Oktober ".$val4->get_thn()."</td>";
-                        } else if ($bulan==11) {
-                            echo "<td>Nopember ".$val4->get_thn()."</td>";
-                        } else if ($bulan==12) {
-                            echo "<td>Desember ".$val4->get_thn()."</td>";
-                        } else {
-                            echo "<td>Bulan dan Tahun tidak diketahui</td>";
-                        }*/
-                    } else if ($jns_elem==2) {
-                        if ($bulan==1){
-                            echo "<td>Semester I ".$val4->get_thn()."</td>";
-                        } else if ($bulan==2) {
-                            echo "<td>Semester 2 ".$val4->get_thn()."</td>";
-                        } else {
-                            echo "<td>Semester dan Tahun tidak diketahui</td>";
-                        }
-                    } else if ($jns_elem==3) {
-                        echo "<td>".$val4->get_thn()."</td>";
-                    } else {
-                        echo "<td>Periode tidak diketahui</td>";
-                    }
-                    echo "<td>UNIV-nya</td>";
-                    echo "<td>Jurusanya</td>";
-                    echo "<td>Angkatannya</td>";
-                    echo "<td>".$val4->get_jml_peg()."</td>";
-                    echo "<td>jumlah pegawai dalam kontrak</td>";
-                    echo "<td>".$val4->get_no_sp2d()." ".$val4->get_tgl_sp2d()."</td>";
-                    echo "<td>".$val4->get_total_bayar()."</td>";
-                    echo "</tr>";
-                    $no++;
-                }
-            ?>
-        </tbody>
-    </table>
+<div id="tabel_index_mon">
+    
 </div>
 <div style="margin-right: 20px">
     <input class="sukses" type="submit" name="cetak" value="CETAK";">
 </div>
 </div>
+<script type="text/javascript">
+    
+    $.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()}, 
+    function (data){
+        //$('#tabel_index_mon').fadeIn(100);
+        $('#tabel_index_mon').html(data);
+    })
+    
+    $(document).ready(function(){ 
+    
+        //agar ketika universitas berubah karena dipilih, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
+        $("#universitas").change(function(){
+            $.post("<?php echo URL; ?>elemenBeasiswa/get_jur_by_univ", {univ:$("#universitas").val()},
+            function(data){                
+                $('#jurusan').html(data);
+            }); 
+        
+            $.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()},
+            function(data){                
+                $('#tabel_index_mon').html(data);
+            }); 
+        });
+        
+        //agar ketika universitas berubah karena dipilih, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
+        $("#jurusan, #tahun_masuk").change(function(){
+                  
+            $.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()},
+            function(data){                
+                $('#tabel_index_mon').html(data);
+            }); 
+        });
+        
+        $("#cari").keyup(function(){
+                  
+            $.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", { sp2d:$('#cari').val()}, 
+            function (data){
+                $('#tabel_index_mon').html(data);
+            })
+            
+            if($("#cari").val()==""){
+                $.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()}, 
+                function (data){
+                    $('#tabel_index_mon').html(data);
+                })
+            }
+        });
+    })
+   
+</script>
