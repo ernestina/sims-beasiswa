@@ -5,6 +5,10 @@
 <div class="fitur">
     <form method="POST" action="<?php echo URL; ?>elemenBeasiswa/updateJadup" onSubmit="return cekField();" enctype="multipart/form-data">
         <fieldset><legend>Ubah Biaya Hidup</legend>
+            <noscript>
+            <input name="js_enabled" type="hidden" value="1">
+            </noscript>
+            <input  type="hidden" name="ubah_jadup"/> 
             <input  type="hidden" name="r_elem" value="1"/>       
             <div>
 
@@ -178,18 +182,17 @@
             if($('#tgl_sp2d').val()!="" || $('#fupload').val()!="" && $('#fupload_lama').val()!=""){
                 viewError("wno_sp2d","Nomor sp2d harus diisi."); 
                 jml++;
-            }
-             
+            }    
             
         }
         
-//        var file = $('#fupload').val();
-//        var ext = file.split('.');
-//        var no = ext.length;
-//        if($('#fupload').val()!="" && ext[no-1] != "pdf"){
-//            viewError("wfile_sp2d","File SP2D harus pdf."); 
-//            jml++;
-//        }
+        //        var file = $('#fupload').val();
+        //        var ext = file.split('.');
+        //        var no = ext.length;
+        //        if($('#fupload').val()!="" && ext[no-1] != "pdf"){
+        //            viewError("wfile_sp2d","File SP2D harus pdf."); 
+        //            jml++;
+        //        }
         
      
         if(jml>0){
