@@ -53,6 +53,21 @@ class elemenBeasiswaController extends BaseController {
             $this->view->load('bantuan/tabel_index_jadup');
         }
     }
+    public function data_index_jadup2() {
+
+        if (isset($_POST['sp2d'])) {
+            //tinggal nambahin filter di get_elem_jadup
+            $sp2d = $_POST['sp2d'];
+            $elem = new ElemenBeasiswa();
+            //echo $univ;
+            //echo $jurusan;
+            //echo $tahun;
+            $jadup = $elem->get_elem_jadup_by_sp2d($sp2d);
+            //var_dump($buku);
+            $this->view->elem = $jadup;
+            $this->view->load('bantuan/tabel_index_jadup');
+        }
+    }
 
     public function tabel_penerima_jadup() {
 

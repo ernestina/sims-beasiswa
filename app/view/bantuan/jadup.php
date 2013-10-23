@@ -38,6 +38,7 @@
                                     <?php } ?>
                         </select>
                     </td>
+                    <td style="float: right"><input type="search" name="cari" id="cari" placeholder="cari dengan kata kunci nomor SP2D" size="30" title="Cari"></td>
                     <td style="float: right">
 <!--                        <input type="search" name="cari" id="cari" value="cari" size="30">-->
                     </td>
@@ -47,6 +48,7 @@
                         <input type="button" id="add" value="TAMBAH" onClick="location.href='<?php echo URL . 'elemenBeasiswa/addJadup' ?>'">
                     </td>
                 </tr>
+                
             </table>
 
             <div>
@@ -81,7 +83,7 @@
         });
         
         //agar ketika universitas berubah karena dipilih, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
-        $("#jurusan").change(function(){
+        $("#jurusan, #tahun_masuk").change(function(){
                   
             $.post("<?php echo URL; ?>elemenBeasiswa/data_index_jadup", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()},
             function(data){                
@@ -89,13 +91,19 @@
             }); 
         });
         
-        //agar ketika universitas berubah karena dipilih, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
-        $("#tahun_masuk").change(function(){
+        $("#cari").keyup(function(){
                   
-            $.post("<?php echo URL; ?>elemenBeasiswa/data_index_jadup", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()},
-            function(data){                
+            $.post("<?php echo URL; ?>elemenBeasiswa/data_index_jadup2", { sp2d:$('#cari').val()}, 
+            function (data){
                 $('#tabel_index_jadup').html(data);
-            }); 
+            })
+            
+            if($("#cari").val()==""){
+                $.post("<?php echo URL; ?>elemenBeasiswa/data_index_jadup", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()}, 
+                function (data){
+                    $('#tabel_index_jadup').html(data);
+                })
+            }
         });
     })
    
