@@ -38,7 +38,7 @@
                             echo '<td>' . $value->get_keterangan() . '</td>';
                             echo
                             '<td>
-                            <a href="' . URL . 'admin/deleteBank/' . $value->get_id() . '"><i class="icon-trash"></i></a>
+                            <a href="' . URL . 'admin/deleteBank/' . $value->get_id() . '" onclick="return del()"><i class="icon-trash"></i></a>
                             <a href="' . URL . 'admin/editBank/' . $value->get_id() . '"><i class="icon-pencil"></i></a>
                             </td>';
                             echo '</tr>';
@@ -53,6 +53,11 @@
 </div>
 
 <script type="text/javascript">
+    function del(){
+        if(confirm('Apakah Anda yakin akan menghapus data ini?'))
+            return true;
+        else return false
+    }
     
     $('#nama_bank').keyup(function() {
         if(document.getElementById('nama_bank').value !=''){$('#warningnama').fadeOut(200);}                 

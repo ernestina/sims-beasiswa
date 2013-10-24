@@ -20,7 +20,7 @@
                             <option value="1">Admin</option>
                             <option value="2">User</option>                          
                         </select>
-                        <label>Upload Foto</label><input type="file" name="foto" id="upload" value="" size="30"/>
+                        <label>Upload Foto</label><input type="file" name="upload" id="upload" value="" size="30"/>
 
                         <ul class="inline tengah">
                             <li><input class= "normal" type="reset" onclick="window.location.href='<?php echo URL . "admin/listUser"; ?>'" value="BATAL"></li>
@@ -56,7 +56,7 @@
                             echo '<td>' . $value->get_nmUser() . '</td>';
                             echo '<td>' . $value->get_akses() . '</td>';
                             echo '<td>
-                        <a href="' . URL . 'admin/deleteUser/' . $value->get_id() . '"><i class="icon-trash"></i></a>
+                        <a href="' . URL . 'admin/deleteUser/' . $value->get_id() . '" onclick="return del()"><i class="icon-trash"></i></a>
 			<a href="' . URL . 'admin/editUser/' . $value->get_id() . '"><i class="icon-pencil"></i></a>
                         </td>';
                             echo '</tr>';
@@ -69,6 +69,7 @@
     </div>
 </div>
 <script type="text/javascript">
+    
     $('#nip').keyup(function() {   
         $('#warningnip').fadeOut(0);             
     });
@@ -85,6 +86,12 @@
             viewError('warningnip','NIP harus diisi dengan 9 atau 18 digit angka!'); 
         }             
     });
+    
+    function del(){
+        if(confirm('Apakah Anda yakin akan menghapus data ini?'))
+            return true;
+        else return false
+    }
    
     function validate(){
         var jml=0;
