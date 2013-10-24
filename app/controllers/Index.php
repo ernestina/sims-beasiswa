@@ -19,8 +19,8 @@ class Index extends BaseController{
     }
     
     private function get_notifikasi(){
-//        $notif = new Notifikasi($this->registry);
-//        $data = $notif->get_notifikasi();
+        $notif = new Notifikasi($this->registry);
+        $data = $notif->get_notifikasi();
         
         $d_notif = array();
         $i = 0;
@@ -29,8 +29,14 @@ class Index extends BaseController{
             $nama_pic = $pic['nama'];
             $kode_pic = $pic['kode'];
             $foto_pic = $pic['foto'];
+            $jatuh_tempo = explode('-',$data->get_jatuh_tempo());
+            $count = count($jatuh_tempo)>1;
+            $bln = $count?$jatuh_tempo[1]:'';
+            $thn = $jatuh_tempo[0];
             $temp = array(
-                'jatuh_tempo'=>$data->get_jatuh_tempo(), 
+                'jatuh_tempo'=>$data->get_jatuh_tempo(),
+                'bulan'=>  Tanggal::bulan_indo($bln),
+                'tahun'=>  $thn,
                 'nama_pic'=>$nama_pic,
                 'kode_pic'=>$kode_pic,
                 'foto_pic'=>$foto_pic,

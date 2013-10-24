@@ -106,7 +106,7 @@ class Notifikasi{
                     $univ = new Universitas($this->registry);
                     $univ->set_kode_in($d_fakul->get_kode_univ());
                     $d_univ = $univ->get_univ_by_id($univ);
-                    $notif->set_univ($d_univ->get_nama());
+                    $notif->set_univ($d_univ->get_kode());
                     /** pic **/
                     $pic = new User($this->registry);
                     $d_pic = $pic->getUser_id($d_univ->get_pic());
@@ -180,7 +180,7 @@ class Notifikasi{
             a.TOTAL_BAYAR_D_ELEM_BEASISWA as TOTAL_BAYAR,
             e.THN_MASUK as THN_MASUK,
             f.NM_JUR as NM_JUR,
-            h.NM_UNIV as UNIV,
+            h.SINGKAT_UNIV as UNIV,
             a.NO_SP2D_D_ELEM_BEASISWA as SP2D,
             e.KD_ST as ST,
             e.THN_MASUK as THN_MASUK,
@@ -258,7 +258,7 @@ class Notifikasi{
             b.THN_MASUK as THN_MASUK,
             b.TGL_SEL_ST as TGL_SEL_ST,
             c.NM_JUR as NM_JUR,
-            e.NM_UNIV as NM_UNIV,
+            e.SINGKAT_UNIV as SINGKAT_UNIV,
             f.KD_USER as KD_USER,
             f.NM_USER as NM_USER,
             f.FOTO_USER as FOTO_USER,
@@ -287,7 +287,7 @@ class Notifikasi{
                 $pic = array('kode'=>$skripsi['KD_USER'],'nama'=>$skripsi['NM_USER'],'foto'=>$skripsi['FOTO_USER']);
                 $notif->set_pic($pic);
                 $notif->set_tahun_masuk($skripsi['THN_MASUK']);
-                $notif->set_univ($skripsi['NM_UNIV']);
+                $notif->set_univ($skripsi['SINGKAT_UNIV']);
                 
                 if($cek_proses){ //jika ditemukan data pembayaran
                     $cek_selesai = $this->cek_telah_bayar_elem(3,$kd_pb, $kd_st,true);
@@ -382,7 +382,7 @@ class Notifikasi{
                     $univ = new Universitas($this->registry);
                     $univ->set_kode_in($d_fakul->get_kode_univ());
                     $d_univ = $univ->get_univ_by_id($univ);
-                    $notif->set_univ($d_univ->get_nama());
+                    $notif->set_univ($d_univ->get_kode());
                     /** pic **/
                     $pic = new User($this->registry);
                     $d_pic = $pic->getUser_id($d_univ->get_pic());
@@ -409,7 +409,7 @@ class Notifikasi{
             a.TOTAL_BAYAR_D_ELEM_BEASISWA as TOTAL_BAYAR,
             e.THN_MASUK as THN_MASUK,
             f.NM_JUR as NM_JUR,
-            h.NM_UNIV as UNIV,
+            h.SINGKAT_UNIV as UNIV,
             a.NO_SP2D_D_ELEM_BEASISWA as SP2D,
             e.KD_ST as ST,
             e.THN_MASUK as THN_MASUK,
@@ -497,7 +497,7 @@ class Notifikasi{
             b.JADWAL_BAYAR_TAGIHAN as DATE_BAYAR,
             (b.BIAYA_PER_PEG_TAGIHAN*b.JML_PEG_BAYAR_TAGIHAN) as BIAYA,
             c.NM_JUR as NM_JUR,
-            e.NM_UNIV as NM_UNIV,
+            e.SINGKAT_UNIV as SINGKAT_UNIV,
             b.STS_TAGIHAN as STS_TAGIHAN,
             DATEDIFF(b.JADWAL_BAYAR_TAGIHAN,DATE(NOW())) as SELISIH,
             f.NM_USER as NM_USER,
@@ -527,7 +527,7 @@ class Notifikasi{
                 $notif->set_pic($pic);
                 $notif->set_status_notif($kontrak['STS_TAGIHAN']);
                 $notif->set_tahun_masuk($kontrak['THN_MASUK']);
-                $notif->set_univ($kontrak['NM_UNIV']);
+                $notif->set_univ($kontrak['SINGKAT_UNIV']);
                 $notif->set_jatuh_tempo($kontrak['DATE_BAYAR']);
                 $this->_notif_data[] = $notif;
             }
@@ -558,7 +558,7 @@ class Notifikasi{
             a.TGL_SEL_ST as TGL_SEL_ST,
             a.THN_MASUK as THN_MASUK,
             c.NM_JUR as NM_JUR,
-            e.NM_UNIV as NM_UNIV,
+            e.SINGKAT_UNIV as SINGKAT_UNIV,
             f.NM_USER as NM_USER,
             f.KD_USER as KD_USER,
             f.FOTO_USER as FOTO,
@@ -584,7 +584,7 @@ class Notifikasi{
                 $notif->set_pic($pic);
                 $notif->set_status_notif('akan lulus');
                 $notif->set_tahun_masuk($st['THN_MASUK']);
-                $notif->set_univ($st['NM_UNIV']);
+                $notif->set_univ($st['SINGKAT_UNIV']);
                 $notif->set_jatuh_tempo($st['TGL_SEL_ST']);
                 $this->_notif_data[] = $notif;
             }
