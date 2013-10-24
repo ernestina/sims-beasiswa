@@ -1,3 +1,69 @@
+<div style="float: right; width: 450px; background-color: #ffffff">
+<style>
+	.fotopic {
+		/*border: 2px solid red;*/
+		background-image:url('public/img/bg.png');
+		width: 18%;
+		float: left;
+		margin: 0px 5px 0px -35px;
+		height: 100%;
+		text-align: center;
+		
+	}
+	.detail {
+		/*border: 2px solid blue;*/
+		background-color: #F0F0F0;
+		width: 80%;
+		float: left;
+		margin-right: 0%;
+		height: 100%;
+	}
+	.flag {
+		float: left;
+		height: 100%;
+		width: 30px;
+		/*background-image:url('public/icon/notice.png');*/
+		background-repeat: no-repeat;
+		background-color: #F0F0F0;
+		margin-left: 0px;
+	}
+	img.noti {
+		/*height: 40%;*/
+		margin: 20px 0px 0px -10px;
+	}
+	p.noti {
+		font-family: Menu;
+		margin-top: -10px;
+		margin-left: 10px;
+	}
+	ul.noti {
+		height: 75px; margin: 5px;
+	}
+	h4 {
+		font-family: Nexa;
+		font-size: 120%;
+		margin: 10px;
+	}
+	
+</style>
+	<h2>notifikasi</h2>
+	<ul class="inline noti">
+		<div class="fotopic"><h3>foto</h3></div>
+		<div class="detail">
+		<h4>Okt 2013:<a style="color: blue"> Tunjangan Hidup</a></h4>
+		<p class="noti">Pembayaran Jadup UI - Sistem Informasi 2012 bulan Oktober 2013.</p>
+		</div>
+		<div class="flag"><img class="noti" src='public/icon/notices.png'></div>
+		
+	</ul>
+	<ul class="inline noti">
+		<div class="fotopic"><h3>foto</h3></div>
+		<div class="detail"><h4>Okt 2013:<a style="color: blue"> Tunjangan TA/Skripsi/Thesis</a></h4>
+		<p class="noti">Pembayaran Buku UI - Sistem Informasi 2012 untuk Semester I - 2013.</p></div>
+		<div class="flag"><img class="noti" src='public/icon/purges.png'></div>
+	</ul>
+</div>
+
 <div id="beranda" class="notif">
 <!--    <ul>
         <li class="jadup">
@@ -7,6 +73,7 @@
         </li>
     </ul>-->
 </div>
+
 
 <script type="text/javascript">
     $(function(){

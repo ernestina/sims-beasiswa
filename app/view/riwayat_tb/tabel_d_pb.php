@@ -3,7 +3,7 @@
         <th>no</th>
         <th width="15%">NIP</th>
         <th width="25%">Nama</th>
-        <th width="15%">Gol</th>
+        <th width="15%">Golongan</th>
         <th width="20%">Unit Asal</th>
         <th width="20%">Jurusan</th>
         <th width="20%">Jenis Beasiswa</th>
