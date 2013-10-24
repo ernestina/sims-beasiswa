@@ -34,6 +34,48 @@ class elemenBeasiswaController extends BaseController {
             $this->view->load('bantuan/tabel_index_mon_pembayaran');
         }
     }
+    
+    public function cetak_jadup($id=null){
+        if($id!=""){
+            $elem = new ElemenBeasiswa($this->registry);
+            $elem->set_kd_d($id);
+            $data_elemen = $elem->get_elem_by_id($elem);
+            $this->view->elemen = $data_elemen;
+            
+            $penerima_elemen = new PenerimaElemenBeasiswa();
+            $data_penerima_elemen = $penerima_elemen->get_by_elemen($id);
+            $this->view->penerima_elemen = $data_penerima_elemen;
+            
+            $this->view->pb = new Penerima($this->registry);
+            
+            $bank = new Bank($this->registry);
+            
+            $universitas = new Universitas($this->registry);
+            $data_univ = $universitas->get_univ_by_jur($data_elemen->get_kd_jur());
+            
+            $jurusan = new Jurusan($this->registry);
+            $jurusan->set_kode_jur($data_elemen->get_kd_jur());
+            $data_jurusan = $jurusan->get_jur_by_id($jurusan);
+            
+            $pejabat = new Pejabat();
+            $ppk = $pejabat->get_by_jabatan("1");
+            $pj = $pejabat->get_by_jabatan("2");
+            $bdr = $pejabat->get_by_jabatan("3");
+            
+            $strata = new Strata();
+            $data_strata = $strata->get_by_id($data_jurusan->get_kode_strata());
+            
+            $this->view->univ = $data_univ;
+            $this->view->jur = $data_jurusan;
+            $this->view->strata = $data_strata;
+            $this->view->ppk=$ppk;
+            $this->view->pj=$pj;
+            $this->view->bdr=$bdr;
+            $this->view->bank = $bank;
+            $this->view->load('bantuan/cetak_jadup');
+            
+        }
+    }
 
     public function cetak_mon_pembayaran() {
         if (isset($_POST['universitas']) && isset($_POST['jurusan']) && isset($_POST['tahun_masuk']) && isset($_POST['elemen'])) {

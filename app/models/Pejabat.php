@@ -70,6 +70,24 @@ class Pejabat extends BaseModel {
         //var_dump($data);
         return $pejabat;
     }
+    
+    public function get_by_jabatan($id) {
+        $table = "r_pejabat";
+        $where = "JENIS_JABATAN='" . $id . "'";
+        $sql = "SELECT * FROM $table where $where";
+        $result = $this->db->select($sql);
+        //var_dump($result);
+        foreach ($result as $val) {
+            $pejabat = new $this();
+            $pejabat->kd_pejabat = $val['KD_PEJABAT'];
+            $pejabat->nip_pejabat = $val['NIP_PEJABAT'];
+            $pejabat->nama_pejabat = $val['NAMA_PEJABAT'];
+            $pejabat->nama_jabatan = $val['NAMA_JABATAN'];
+            $pejabat->jenis_jabatan = $val['JENIS_JABATAN'];
+        }
+        //var_dump($data);
+        return $pejabat;
+    }
 
     /*
      * menambahkan data pejabat ke dalam database

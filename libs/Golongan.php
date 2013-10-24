@@ -67,6 +67,66 @@ class Golongan{
         return $gol;
     }
     
+    public static function golongan_int_string2($golongan){
+        $gol ='';
+        
+        switch($golongan){
+            case '11':
+                $gol = 'I/a';
+                break;
+            case '12':
+                $gol = 'I/b';
+                break;
+            case '13':
+                $gol = 'I/c';
+                break;
+            case '14':
+                $gol = 'I/d';
+                break;
+            case '21':
+                $gol = 'IIa';
+                break;
+            case '22':
+                $gol = 'II/b';
+                break;
+            case '23':
+                $gol = 'II/c';
+                break;
+            case '24':
+                $gol = 'II/d';
+                break;
+            case '31':
+                $gol = 'III/a';
+                break;
+            case '32':
+                $gol = 'III/b';
+                break;
+            case '33':
+                $gol = 'III/c';
+                break;
+            case '34':
+                $gol = 'III/d';
+                break;
+            case '41':
+                $gol = 'IV/a';
+                break;
+            case '42':
+                $gol = 'IV/b';
+                break;
+            case '43':
+                $gol = 'IV/c';
+                break;
+            case '44':
+                $gol = 'IV/d';
+                break;
+            case '45':
+                $gol = 'IV/e';
+                break;
+        }
+        
+        return $gol;
+    }
+    
     public static function golongan_string_int($golongan){
         $gol ='';
         
