@@ -1,18 +1,21 @@
 <div style="float: right; width: 450px; background-color: #ffffff">
 <style>
 	.fotopic {
-		/*border: 2px solid red;*/
-		background-image:url('public/img/bg.png');
-		width: 18%;
+		/*border: 2px solid red;
+		background-image:url('public/img/bg.png');*/
+		background-color: #ba141a;
+		color: #ffffff;
+		width: 17%;
 		float: left;
-		margin: 0px 5px 0px -35px;
-		height: 100%;
+		margin: 4px 5px 0px -35px;
+		height: 90%;
 		text-align: center;
-		
+		border-radius: 40px;
+		box-shadow: 1px 1px 3px #B8B8B8;
 	}
 	.detail {
-		/*border: 2px solid blue;*/
-		background-color: #F0F0F0;
+		/*border: 2px solid blue;
+		background-color: #F3F3F3;*/
 		width: 80%;
 		float: left;
 		margin-right: 0%;
@@ -24,7 +27,7 @@
 		width: 30px;
 		/*background-image:url('public/icon/notice.png');*/
 		background-repeat: no-repeat;
-		background-color: #F0F0F0;
+		/*background-color: #F0F0F0;*/
 		margin-left: 0px;
 	}
 	img.noti {
@@ -37,7 +40,10 @@
 		margin-left: 10px;
 	}
 	ul.noti {
-		height: 75px; margin: 5px;
+		height: 75px; margin: 5px; 
+		background-color: #F3F3F3;
+		-webkit-border-radius: 40px 0px 0px 40px;
+        border-radius: 40px 0px 0px 40px;
 	}
 	h4 {
 		font-family: Nexa;
@@ -50,7 +56,7 @@
 	<ul class="inline noti">
 		<div class="fotopic"><h3>foto</h3></div>
 		<div class="detail">
-		<h4>Okt 2013:<a style="color: blue"> Tunjangan Hidup</a></h4>
+		<h4>Okt 2013:<a style="color: #49afcd"> Tunjangan Hidup</a></h4>
 		<p class="noti">Pembayaran Jadup UI - Sistem Informasi 2012 bulan Oktober 2013.</p>
 		</div>
 		<div class="flag"><img class="noti" src='public/icon/notices.png'></div>
@@ -58,7 +64,7 @@
 	</ul>
 	<ul class="inline noti">
 		<div class="fotopic"><h3>foto</h3></div>
-		<div class="detail"><h4>Okt 2013:<a style="color: blue"> Tunjangan TA/Skripsi/Thesis</a></h4>
+		<div class="detail"><h4>Okt 2013:<a style="color: #49afcd"> Tunjangan TA/Skripsi/Thesis</a></h4>
 		<p class="noti">Pembayaran Buku UI - Sistem Informasi 2012 untuk Semester I - 2013.</p></div>
 		<div class="flag"><img class="noti" src='public/icon/purges.png'></div>
 	</ul>
