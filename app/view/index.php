@@ -2,9 +2,8 @@
 <style>
 	.fotopic {
 		/*border: 2px solid red;
-		background-image:url('public/img/bg.png');*/
-		background-color: #ba141a;
-		color: #ffffff;
+		background-color: #ba141a;*/
+		
 		width: 17%;
 		float: left;
 		margin: 4px 5px 0px -35px;
@@ -54,7 +53,7 @@
 </style>
 	<h2>notifikasi</h2>
 	<ul class="inline noti">
-		<div class="fotopic"><h3>foto</h3></div>
+		<div class="fotopic" style="background-image:url('public/img/logo2.jpg');"></div>
 		<div class="detail">
 		<h4>Okt 2013:<a style="color: #49afcd"> Tunjangan Hidup</a></h4>
 		<p class="noti">Pembayaran Jadup UI - Sistem Informasi 2012 bulan Oktober 2013.</p>
@@ -63,7 +62,7 @@
 		
 	</ul>
 	<ul class="inline noti">
-		<div class="fotopic"><h3>foto</h3></div>
+		<div class="fotopic" style="background-image:url('public/img/android.png');"></div>
 		<div class="detail"><h4>Okt 2013:<a style="color: #49afcd"> Tunjangan TA/Skripsi/Thesis</a></h4>
 		<p class="noti">Pembayaran Buku UI - Sistem Informasi 2012 untuk Semester I - 2013.</p></div>
 		<div class="flag"><img class="noti" src='public/icon/purges.png'></div>
