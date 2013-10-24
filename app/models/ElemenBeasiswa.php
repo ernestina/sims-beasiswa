@@ -205,7 +205,85 @@ class ElemenBeasiswa {
 
         return $data;
     }
+    
+    public function get_list_elem($univ = null, $jurusan = null, $tahun = null, $elemen=null) {
 
+        $sql = "SELECT 
+            a.KD_D_ELEM_BEASISWA AS KD_D_ELEM_BEASISWA,
+            a.KD_R_ELEM_BEASISWA AS KD_R_ELEM_BEASISWA,
+            a.TAHUN_MASUK AS TAHUN_MASUK,
+            a.KD_JUR AS KD_JUR,
+            b.NM_JUR as NM_JUR,
+            c.KD_FAKUL AS KD_FAKUL,
+            d.NM_UNIV as NM_UNIV,
+            a.NO_SP2D_D_ELEM_BEASISWA as NO_SP2D_D_ELEM_BEASISWA,
+            a.TGL_SP2D_D_ELEM_BEASISWA as TGL_SP2D_D_ELEM_BEASISWA,
+            a.JML_PEG_D_ELEM_BEASISWA as JML_PEG_D_ELEM_BEASISWA,
+            a.BLN_D_ELEM_BEASISWA as BLN_D_ELEM_BEASISWA,
+            a.THN_D_ELEM_BEASISWA as THN_D_ELEM_BEASISWA,
+            a.TOTAL_BAYAR_D_ELEM_BEASISWA as TOTAL_BAYAR_D_ELEM_BEASISWA
+            FROM " . $this->_table . " a
+                LEFT JOIN r_jur b ON a.KD_JUR = b.KD_JUR
+                LEFT JOIN r_fakul c ON b.KD_FAKUL = c.KD_FAKUL
+                LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV
+                ";
+
+        if ($univ != "") {
+            $sql .=" WHERE d.KD_UNIV ='" . $univ . "'";
+        }
+
+        if ($jurusan != "") {
+            if ($univ == "") {
+                $sql .=" WHERE b.KD_JUR ='" . $jurusan . "'";
+            } else {
+                $sql .=" AND b.KD_JUR ='" . $jurusan . "'";
+            }
+        }
+
+        if ($tahun != "") {
+            if($univ == "" && $jurusan == "" ){
+               $sql .=" WHERE a.TAHUN_MASUK ='" . $tahun . "'"; 
+            } else {
+                $sql .=" AND a.TAHUN_MASUK ='" . $tahun . "'";
+            }
+            
+        }
+        
+        if ($elemen != "") {
+            if($univ == "" && $jurusan == "" && $tahun == "" ){
+               $sql .=" WHERE a.KD_R_ELEM_BEASISWA ='" . $elemen . "'"; 
+            } else {
+                $sql .=" AND a.KD_R_ELEM_BEASISWA ='" . $elemen . "'";
+            }
+            
+        }
+
+        $sql .=" order by a.KD_D_ELEM_BEASISWA desc";
+        $result = $this->db->select($sql);
+
+        $data = array();
+        foreach ($result as $key => $value) {
+
+            $elem = new ElemenBeasiswa();
+            $elem->set_kd_d($value['KD_D_ELEM_BEASISWA']);
+            $elem->set_kd_r($value['KD_R_ELEM_BEASISWA']);
+            $elem->set_no_sp2d($value['NO_SP2D_D_ELEM_BEASISWA']);
+            $elem->set_tgl_sp2d(date('d-m-Y', strtotime($value['TGL_SP2D_D_ELEM_BEASISWA'])));
+            $elem->set_univ($value['NM_UNIV']);
+            $elem->set_thn_masuk($value['TAHUN_MASUK']);
+            $elem->set_kd_jur($value['KD_JUR']);
+            $elem->set_jml_peg($value['JML_PEG_D_ELEM_BEASISWA']);
+            $elem->set_bln($value['BLN_D_ELEM_BEASISWA']);
+            $elem->set_biaya_per_peg($v['BIAYA_PER_PEG_D_ELEM_BEASISWA']);
+            $elem->set_thn($value['THN_D_ELEM_BEASISWA']);
+            $elem->set_total_bayar($value['TOTAL_BAYAR_D_ELEM_BEASISWA']);
+            $data [] = $elem;
+        }
+        //var_dump($data);
+        return $data;
+    }
+
+    
     public function get_elem_jadup($univ = null, $jurusan = null, $tahun = null) {
 
         $sql = "SELECT 

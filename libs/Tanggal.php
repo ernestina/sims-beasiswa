@@ -143,6 +143,14 @@ class Tanggal{
         return date('Y-m-d');
     }
     
+    public static function getTglSekarangIndo(){
+        
+        $tgl = date('d');
+        $month = self::bulan_indo(date('m'));
+        $thn = date('Y');
+        return $tgl." ".$month." ".$thn;
+    }
+    
     public static function getTimeSekarang(){
         return date('Y-m-d H:i:s');
     }

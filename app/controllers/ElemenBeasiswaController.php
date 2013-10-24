@@ -18,11 +18,50 @@ class elemenBeasiswaController extends BaseController {
         $this->view->jur = $jur->get_jurusan();
         $this->view->render('bantuan/mon_pembayaran');
     }
-    
+
     public function data_index_mon() {
-        $elem = new ElemenBeasiswa($this->registry);
-        $this->view->data = $elem->get_elem();
-        $this->view->load('bantuan/tabel_index_mon_pembayaran');
+        if (isset($_POST['univ']) && isset($_POST['jurusan']) && isset($_POST['tahun']) && isset($_POST['elemen'])) {
+            //print_r($_POST['univ']);
+            $univ = $_POST['univ'];
+            $jurusan = $_POST['jurusan'];
+            $tahun = $_POST['tahun'];
+            $elemen = $_POST['elemen'];
+            
+            $elem = new ElemenBeasiswa($this->registry);
+            $this->view->data = $elem->get_list_elem($univ, $jurusan, $tahun, $elemen);
+            $this->view->jurusan = new Jurusan($this->registry);
+            $this->view->pb = new Penerima($this->registry);
+            $this->view->load('bantuan/tabel_index_mon_pembayaran');
+        }
+    }
+
+    public function cetak_mon_pembayaran() {
+        if (isset($_POST['universitas']) && isset($_POST['jurusan']) && isset($_POST['tahun_masuk']) && isset($_POST['elemen'])) {
+            //print_r($_POST['univ']);
+            $elem = new ElemenBeasiswa($this->registry);
+            $univ = $_POST['universitas'];
+            $jur = $_POST['jurusan'];
+            $tahun = $_POST['tahun_masuk'];
+            $elemen = $_POST['elemen'];
+            $universitas = new Universitas($this->registry);
+            $universitas->set_kode_in($univ);
+            $data_univ = $universitas->get_univ_by_id($universitas);
+            //var_dump($data_univ);
+            
+            $jurusan = new Jurusan($this->registry);
+            $jurusan->set_kode_jur($jur);
+            $data_jur = $jurusan->get_jur_by_id($jurusan);
+            $this->view->universitas = $data_univ;
+            $this->view->jurusan = $jurusan;
+            $this->view->data_jurusan = $data_jur; 
+            $this->view->pb = new Penerima($this->registry);            
+            $this->view->data = $elem->get_list_elem($univ, $jur, $tahun, $elemen);
+            $this->view->univ = $univ;
+            $this->view->jur = $jur;
+            $this->view->tahun = $tahun;
+            $this->view->elemen = $elemen;
+            $this->view->load('bantuan/cetak_mon_pembayaran');
+        } 
     }
 
     public function viewJadup() {
@@ -55,6 +94,7 @@ class elemenBeasiswaController extends BaseController {
             $this->view->load('bantuan/tabel_index_jadup');
         }
     }
+
     public function data_index_jadup2() {
 
         if (isset($_POST['sp2d'])) {
