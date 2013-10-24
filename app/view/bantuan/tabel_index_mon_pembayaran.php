@@ -6,8 +6,8 @@
     <th>Universitas</th>
     <th>Jurusan </th>
     <th>Th Masuk</th>
-    <th>Jumlah Pegawai dibayarkan</th>
-    <th>Jumlah Pegawai TB</th>
+    <th style="font-size: 75%">Jumlah<br>Pegawai dibayarkan</th>
+    <th style="font-size: 80%">Jumlah Pegawai TB</th>
     <th>No. dan Tgl SP2D</th>
     <th>Jumlah dibayarkan</th>
 </thead>
@@ -17,7 +17,7 @@
     //var_dump($this->data);
     foreach ($this->data as $val4) {
         echo "<tr>";
-        echo "<td>$no</td>";
+        echo "<td style='text-align: center'>$no</td>";
         $jns_elem = $val4->get_kd_r();
         
         $bulan = $val4->get_bln();
@@ -76,15 +76,15 @@
         $this->jurusan->set_kode_jur($val4->get_kd_jur());
         $jur = $this->jurusan->get_jur_by_id($this->jurusan);
         echo "<td>" . $jur->get_nama() . "</td>";
-        echo "<td>" . $val4->get_thn_masuk() . "</td>";
-        echo "<td>" . $val4->get_jml_peg() . "</td>";
-        echo "<td>" . count($this->pb->get_penerima_by_kd_jur_thn_masuk($val4->get_kd_jur(),$val4->get_thn_masuk() )) . "</td>";
+        echo "<td style='text-align: center'>" . $val4->get_thn_masuk() . "</td>";
+        echo "<td style='text-align: center'>" . $val4->get_jml_peg() . "</td>";
+        echo "<td style='text-align: center'>" . count($this->pb->get_penerima_by_kd_jur_thn_masuk($val4->get_kd_jur(),$val4->get_thn_masuk() )) . "</td>";
         $tgl = "";
         if (date('d-m-Y', strtotime($val4->get_tgl_sp2d())) != "01-01-1970" && date('d-m-Y', strtotime($val4->get_tgl_sp2d())) != "00-00-0000") {
             $tgl = date('d-m-Y', strtotime($val4->get_tgl_sp2d()));
         }
-        echo "<td>" . $val4->get_no_sp2d() . " / " . $tgl . "</td>";
-        echo "<td>" . number_format($val4->get_total_bayar()) . "</td>";
+        echo "<td style='text-align: center'>" . $val4->get_no_sp2d() . " / " . $tgl . "</td></center>";
+        echo "<td style='text-align: right'>" . number_format($val4->get_total_bayar()) . "</td>";
         echo "</tr>";
         $no++;
     }

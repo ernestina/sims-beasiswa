@@ -6,14 +6,14 @@
 					<th width="25%">File</th>
                     <th width="5%">Aksi</th>
 				</thead>
-				<tbody>
+				<tbody style="text-align: center">
                                     <?php 
                                         $no=1;
                                         foreach ($this->d_nil as $v){
                                    ?>
 					<tr>
 						<td><?php echo $no;?></td>
-						<td><?php echo "Semester ".$v->get_semester()." dengan IPS ".($v->get_ips()); ?></td>
+						<td style="text-align: left"><?php echo "Semester ".$v->get_semester()." dengan IPS ".($v->get_ips()); ?></td>
 						<td><?php echo $v->get_ipk();?></td>
 						<td><input type="button" value="Transkrip" id="uplod_ip" name="uplod_ip" onClick="view('<?php echo $v->get_file();?>');"/></td>
                                                 <td><a href="<?php echo URL;?>penerima/delnilai/<?php echo $v->get_kode().'/'.$this->d_pb->get_kd_pb().'/'.$this->url; ?>" title="hapus"><i class="icon-trash" onClick="return del_nil('<?php echo $this->d_pb->get_nama();?>','<?php echo $v->get_semester();?>')"></i></a>

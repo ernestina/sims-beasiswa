@@ -23,10 +23,10 @@
         }
         echo "<td>" . $val->get_no_sp2d() . " / ".$tgl."</td>";
 
-        echo "<td>" . $val->get_univ() . "</td>";
+        echo "<td style='text-align: left'>" . $val->get_univ() . "</td>";
 //                    $this->jur->set_kode_jur($val->get_kd_jur());
 //                    $jur = $this->jur2->get_jur_by_id($this->jur2);
-        echo "<td>" . $val->get_kd_jur() . "</td>";
+        echo "<td style='text-align: left'>" . $val->get_kd_jur() . "</td>";
         echo "<td>".$val->get_thn_masuk()."</td>";
         echo "<td>" . $val->get_jml_peg() . "</td>";
         $semester = $val->get_bln();

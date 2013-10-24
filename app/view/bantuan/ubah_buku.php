@@ -1,11 +1,10 @@
 <div id="top">
-    <h2>BIAYA BUKU > UBAH</h2> <!-- memakai breadcrumb -->
-
+    <h2>Tunjangan Buku > Ubah</h2> <!-- memakai breadcrumb -->
 
     <form method="POST" onSubmit="return cekField();" action="<?php echo URL . 'elemenBeasiswa/updateUangBuku' ?> " enctype="multipart/form-data">
         <div>
             <input  type="hidden" name="r_elem" value="2"/>
-            <fieldset>
+            <fieldset><legend>Parameter Ubah Tunjangan Buku</legend>
                 <!--div class="tigakolom"-->
                 <div class="kolom1" style="margin-right: -100px">
                     <div id="wkode_univ"></div>
@@ -90,12 +89,15 @@
                 </ul>
 
         </div>
+		</fieldset>
+		<br>
 
         <!--        <div>
                     <div>Data Penerima Biaya Buku</div>
                     <div>file link print</div>
                 </div>-->
-        <div id="wtabel_penerima_buku"></div>
+        <fieldset><legend>Daftar Penerima Tunjangan Buku</legend>
+		<div id="wtabel_penerima_buku"></div>
         <div id="tabel_penerima_buku">
         </div>
         </fieldset>

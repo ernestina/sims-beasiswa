@@ -3,12 +3,12 @@
 
     <div id="dropdown-menu">
         <form method="POST" action="<?php echo URL . 'elemenBeasiswa/cetak_mon_pembayaran'; ?>" target="_blank">
-            <table style="margin-left: 40px" >
+            <table width="100%">
                 <tr>
                     <td>
                         <label>Universitas</label>
-                        <select name="universitas" id="universitas">
-                            <option value="">Semua</option>>
+                        <select name="universitas" id="universitas" type="text">
+                            <option value="">- semua -</option>>
                             <?php
                             foreach ($this->univ as $val) {
                                 echo "<option value=" . $val->get_kode_in() . " >" . $val->get_nama() . "</option>";
@@ -18,8 +18,8 @@
                     </td>
                     <td>
                         <label>Jurusan/Prodi</label>
-                        <select name="jurusan" id="jurusan">
-                            <option value="">Semua</option>
+                        <select name="jurusan" id="jurusan" type="text">
+                            <option value="">- semua -</option>
                             <?php
                             foreach ($this->jur as $val2) {
                                 echo "<option value=" . $val2->get_kode_jur() . " >" . $val2->get_nama() . "</option>";
@@ -29,8 +29,8 @@
                     </td>
                     <td>
                         <label>Tahun Masuk</label>
-                        <select name="tahun_masuk" id="tahun_masuk">
-                            <option value="">Semua</option>
+                        <select name="tahun_masuk" id="tahun_masuk" type="text">
+                            <option value="">- semua -</option>
 
                             <?php
                             for ($i = 2007; $i <= date('Y') + 2; $i++) {
@@ -46,8 +46,8 @@
                     </td>
                     <td>
                         <label>Elemen</label>
-                        <select name="elemen" id="elemen">
-                            <option value="">Semua</option>
+                        <select name="elemen" id="elemen" type="text">
+                            <option value="">- semua -</option>
                             <option value="1">Tunjangan Hidup</option>
                             <option value="2">Buku</option>
                             <option value="3">TA/Skripsi/Tesis</option>
@@ -56,9 +56,10 @@
                         </select>
 
                     </td>
-                    <td>
+				</tr><tr>
+                    <td colspan="4">
                         <div style="margin-right: 20px">
-                            <input class="sukses" type="submit" name="cetak" value="CETAK">
+                            <input class="sukses" type="submit" name="cetak" value="CETAK" style="margin-right: 10px">
                         </div>
                     </td>
                 </tr>

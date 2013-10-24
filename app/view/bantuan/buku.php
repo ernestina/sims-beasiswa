@@ -9,7 +9,7 @@
                     <td>
                         <label>Universitas</label>
                         <select name="universitas" id="universitas" type="text">
-                            <option value="">Semua</option>>
+                            <option value="">- semua -</option>>
                             <?php
                             foreach ($this->univ as $val) {
                                 echo "<option value=" . $val->get_kode_in() . " >" . $val->get_nama() . "</option>";
@@ -20,7 +20,7 @@
                     <td>
                         <label>Jurusan/Prodi</label>
                         <select name="jurusan" id="jurusan" type="text">
-                            <option value="">Semua</option>>
+                            <option value="">- semua -</option>>
                             <?php
                             foreach ($this->jur as $val2) {
                                 echo "<option value=" . $val2->get_kode_jur() . " >" . $val2->get_nama() . "</option>";
@@ -31,7 +31,7 @@
                     <td>
                         <label>Tahun Masuk</label>
                         <select name="tahun_masuk" id="tahun_masuk" type="text">
-                        <option value="">Semua</option>>
+                        <option value="">- semua -</option>>
                         <?php
                         for ($i = 2007; $i <= date('Y') + 2; $i++) {
                             ?>
@@ -43,7 +43,7 @@
                                 <?php } ?>
                     </select>
                     </td>
-                    <td style="float: right"><input type="search" name="cari" id="cari" placeholder="cari dengan kata kunci nomor SP2D" size="30" title="Cari"></td>
+                    <td style="float: right"><input type="search" name="cari" id="cari" placeholder="Cari dengan kata kunci nomor SP2D" size="30" title="Cari"></td>
                 </tr>
                 <tr>
                     <td colspan="4" style="padding-top: 0px">

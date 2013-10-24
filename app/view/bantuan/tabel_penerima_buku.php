@@ -1,6 +1,5 @@
-<!--<fieldset>-->
 <!--table class="table-bordered zebra"-->
-<table class="table-bordered zebra" width="95%">
+<table class="table-bordered zebra">
     <thead>
     <th width="5%">No</th>
     <th width="25%">Nama</th>
@@ -10,7 +9,6 @@
     <th width="20%">No. Rekening</th>
     <th width="10%">Pilih</th>
 </thead>
-
 <tbody>
     <?php
     $no = 0;

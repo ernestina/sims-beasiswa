@@ -11,10 +11,10 @@
                                         foreach ($this->d_mas as $v){
                                    ?>
 					<tr>
-						<td><?php echo $no;?></td>
+						<td style="text-align: center"><?php echo $no;?></td>
 						<td><?php echo $v->get_uraian();?></td>
 						<td><?php echo $v->get_sumber_masalah();?></td>
-                        <td><a href="<?php echo URL;?>penerima/delmas/<?php echo $v->get_kode().'/'.$this->d_pb->get_kd_pb().'/'.$this->url; ?>" title="hapus"><i class="icon-trash" onClick="return del_mas('<?php echo $this->d_pb->get_nama();?>')"></i></a>
+                        <td style="text-align: center"><a href="<?php echo URL;?>penerima/delmas/<?php echo $v->get_kode().'/'.$this->d_pb->get_kd_pb().'/'.$this->url; ?>" title="hapus"><i class="icon-trash" onClick="return del_mas('<?php echo $this->d_pb->get_nama();?>')"></i></a>
                         </td>
 					</tr>
                                     <?php 
