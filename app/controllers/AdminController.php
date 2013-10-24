@@ -771,20 +771,35 @@ class AdminController extends BaseController {
 
     public function addUser() {
         if (ISSET($_POST['submit'])) {
-            if ($_POST['nip'] == "" || $_POST['nama'] == "" || $_POST['pass'] == "" || $_POST['cpass'] == "" || $_POST['akses'] == "") {
+
+            if ($_POST['nip'] == "" || $_POST['nama'] == "" || $_POST['pass'] == "" || $_POST['cpass'] == "" || $_POST['akses'] == "" || $_FILES['upload'] == "") {
                 echo 'ada field yang masih kosong';
             } else {
                 if ($_POST['pass'] !== $_POST['cpass']) {
 
                     echo 'password tidak sama dengan confirm password';
                 } else {
+
+                    //FILES 
+
+                    $allowedExts = array("jpg", "jpeg", "png");
+
+                    $ext = explode('.', $_FILES['upload']['name']);
+                    $extension = $ext[count($ext) - 1];
+
+                    if (in_array($extension, $allowedExts)) {
+
+                        move_uploaded_file($_FILES["upload"]["tmp_name"], "files/foto/" . $_FILES["upload"]["name"]);
+                    } else {
+                        
+                    }
+
                     $user = new User($registry);
                     $user->set_nip($_POST['nip']);
                     $user->set_nmUser($_POST['nama']);
                     $user->set_pass($_POST['pass']);
                     $user->set_akses($_POST['akses']);
-                    $user->set_foto($_POST['foto']);
-                    //            var_dump($user);
+                    $user->set_foto($_FILES["upload"]["name"]);
                     $user->addUser($user);
                 }
             }
@@ -851,6 +866,7 @@ class AdminController extends BaseController {
 
     public function deleteUser($id) {
         $user = new User($registry);
+        
         $user->delUser($id);
         header('location:' . URL . 'admin/listUser');
     }
@@ -869,8 +885,7 @@ class AdminController extends BaseController {
             echo "<option value=" . $val->get_kode_jur() . ">" . $val->get_nama() . "</option>";
         }
     }
-    
-    
+
     /*
      * mengecek ketersediaan jenis jabatan
      */
@@ -925,43 +940,42 @@ class AdminController extends BaseController {
     /*
      * halaman backup
      */
+
     public function backup() {
         $this->view->render('admin/backup_db');
     }
-    
-    public function list_backup(){
+
+    public function list_backup() {
         $this->view->d_files = array();
         $entry = opendir('public/backup');
-        while($res = readdir($entry)){
+        while ($res = readdir($entry)) {
 //            echo $res."</br>";
-            if(strlen($res)>10){
+            if (strlen($res) > 10) {
                 $this->view->d_files[] = $res;
             }
-            
         }
         $this->view->load('admin/list_backup');
     }
 
-
-    public function backup_db(){
+    public function backup_db() {
         $db = new Backuprestore();
-        
+
         $db->connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-        
-        $db->backupDatabase('beasiswa');        
-        
+
+        $db->backupDatabase('beasiswa');
+
         echo "<div id=success>Backup data berhasil dilakukan</div>";
     }
-    
-    public function del_backup($filename){
-        $filename = 'public/backup/'.$filename;
+
+    public function del_backup($filename) {
+        $filename = 'public/backup/' . $filename;
         $file_exist = file_exists($filename);
-        if($file_exist){
+        if ($file_exist) {
             unlink($filename);
 //            return true;
         }
 //        return false;
-        header('location:'.URL.'admin/backup');
+        header('location:' . URL . 'admin/backup');
     }
 
     /*
@@ -971,10 +985,10 @@ class AdminController extends BaseController {
     public function restore() {
         $this->view->render('admin/restore_db');
     }
-    
-    public function restore_db(){
+
+    public function restore_db() {
         $db = new Backuprestore();
-        $db->connect(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+        $db->connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 //        if(!move_uploaded_file($_FILES['file']['tmp_name'])){
 //            switch($_FILES['file']['error']){
 //                case 1:
@@ -992,22 +1006,22 @@ class AdminController extends BaseController {
 //            }
 //        }
 //        if (isset($_POST['sb_restore'])) {
-            if (!empty($_FILES['file']['name'])) {
-                if ($db->getlast($_FILES['file']['name']) == 'sql') {
-                    echo $db->getlast($_FILES['file']['name']);
-                    $tempFile = $_FILES['file']['tmp_name'];
-                    $targetFile = 'public/temp/' . $_FILES['file']['name'];
-                    move_uploaded_file($tempFile, $targetFile);
-                    $db->restoreDatabaseSql($targetFile);
-                } elseif ($db->getlast($_FILES['file']['name']) == 'zip') {
-                    $tempFile = $_FILES['file']['tmp_name']; //echo $tempFile;
-                    $targetFile = 'public/temp/' . $_FILES['file']['name']; //echo $targetFile;
-                    move_uploaded_file($tempFile, $targetFile);
-                    $db->restoreDatabaseZip($targetFile);
-                } else {
-                    echo "Invalid Database File Type";
-                }
+        if (!empty($_FILES['file']['name'])) {
+            if ($db->getlast($_FILES['file']['name']) == 'sql') {
+                echo $db->getlast($_FILES['file']['name']);
+                $tempFile = $_FILES['file']['tmp_name'];
+                $targetFile = 'public/temp/' . $_FILES['file']['name'];
+                move_uploaded_file($tempFile, $targetFile);
+                $db->restoreDatabaseSql($targetFile);
+            } elseif ($db->getlast($_FILES['file']['name']) == 'zip') {
+                $tempFile = $_FILES['file']['tmp_name']; //echo $tempFile;
+                $targetFile = 'public/temp/' . $_FILES['file']['name']; //echo $targetFile;
+                move_uploaded_file($tempFile, $targetFile);
+                $db->restoreDatabaseZip($targetFile);
+            } else {
+                echo "Invalid Database File Type";
             }
+        }
 //        }
         /*
          * ubah nama admin dan password admin, 
@@ -1015,26 +1029,25 @@ class AdminController extends BaseController {
          */
         $sql = "SELECT KD_USER FROM d_user WHERE AKSES_USER=1";
         $data = $this->registry->db->select($sql);
-        $id=0;
-        foreach ($data as $val){
+        $id = 0;
+        foreach ($data as $val) {
             $id = $val['KD_USER'];
         }
-        $data_admin = array('NM_USER'=>  'admin',
-                        'PASS_USER'=>Hash::create('sha1', 'admin', HASH_SALT_KEY));
-        $where = ' id_user='.$id;
-        $this->registry->db->update('d_user',$data_admin,$where);
-        
-        echo "<div id=success>restore data telah berhasil dilakukan, ".$_SESSION['ttlQuery']." query dieksekusi pada ".date('Y-m-d H:i:s', $_SESSION['timeQuery'])."</div>"; 
-    
+        $data_admin = array('NM_USER' => 'admin',
+            'PASS_USER' => Hash::create('sha1', 'admin', HASH_SALT_KEY));
+        $where = ' id_user=' . $id;
+        $this->registry->db->update('d_user', $data_admin, $where);
+
+        echo "<div id=success>restore data telah berhasil dilakukan, " . $_SESSION['ttlQuery'] . " query dieksekusi pada " . date('Y-m-d H:i:s', $_SESSION['timeQuery']) . "</div>";
+
 //        $this->view->render('admin/restore_db');
     }
 
-
-    public function get_method(){
+    public function get_method() {
         $method = get_class_methods($this);
 //        $no = 1;
-        foreach ($method as $method){
-            print_r("\$akses[\'admin\'][\'".  get_class($this)."\'][\'".$method."\'];</br>");
+        foreach ($method as $method) {
+            print_r("\$akses[\'admin\'][\'" . get_class($this) . "\'][\'" . $method . "\'];</br>");
 //            $no++;
         }
     }
