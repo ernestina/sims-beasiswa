@@ -525,8 +525,6 @@ class elemenBeasiswaController extends BaseController {
         $this->view->univ = $univ->get_univ();
         $jur = new Jurusan($this->registry);
         $this->view->jur = $jur->get_jurusan();
-        $kon = new Kontrak($this->registry);
-        $this->view->kon = $kon->get_All();
         $ref_elem = new ReferensiElemenBeasiswa();
         $this->view->buku = $ref_elem->buku();
 

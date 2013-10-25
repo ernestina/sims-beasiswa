@@ -48,6 +48,7 @@
                 <tr>
                     <td colspan="4" style="padding-top: 0px">
                         <input type="button" id="add" value="TAMBAH" onClick="location.href='<?php echo URL . 'elemenBeasiswa/addUangBuku' ?>'">
+                        
                     </td>
                 </tr>
             </table>

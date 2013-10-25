@@ -21,6 +21,10 @@ function cekAngka(val){
     }
 }
 
+function cetak_dokumen(target){
+    window.open('',target,'toolbar=no, location=no, addressbar=no, directories=no, status=no, menubar=no, width=1000,height=500,scrollbars=yes')
+}
+
 
 // Popup window code
 function newPopup(url) {
@@ -51,4 +55,5 @@ function jam(){
                     var jam_div = document.getElementById('jam'); 
                     jam_div.innerHTML = hari+", "+tgl+" "+bulan+" "+tahun+"  "+jam + ":" + menit + ":" + detik; setTimeout("jam()", 1000); 
                 } 
+                
                 

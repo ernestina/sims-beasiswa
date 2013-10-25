@@ -65,7 +65,7 @@
 		</div>
     </form>
 </fieldset>
-<p>Keterangan : * Field harus diisi.</p>
+<p class="ui-dialog-content">Keterangan : * Field harus diisi.</p>
 
 <script>
     

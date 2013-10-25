@@ -93,7 +93,7 @@
 					<div id="wfupload"></div>
 					<input type="file" name="fupload" id="fupload" style="width: 170px">
 					</td>
-					<td><a href="<?php echo URL . "kontrak/file/" . $this->data->file_kontrak; ?>" target="_blank" style="background-color: #49afcd; padding: 12px 10px 7px; border-radius: 3px"><i class="icon-search icon-white"></i></a></td>
+					<td><a href="<?php echo URL . "kontrak/file/" . $this->data->file_kontrak; ?>" target="kontrak_edit" onClick="cetak_dokumen('kontrak_edit');" style="background-color: #49afcd; padding: 12px 10px 7px; border-radius: 3px"><i class="icon-search icon-white"></i></a></td>
 				</tr>
 			</table>
 				<!--input type="file" name="fupload" id="fupload" class="unggah">

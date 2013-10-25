@@ -47,7 +47,7 @@
 </div>
 <div id="loading" class="loading" style="display: none"><img src="<?php echo URL . 'public/icon/loading.gif'; ?>" /></div>
 <div id="dialog_rekam_kontrak" title="Menambahkan Data Kontrak Kerja Sama">
-    <div id="dialog_edit_kontrak" title="Ubah Data Kontrak Kerja Sama"> </div>
+    <div id="dialog_edit_kontrak" title="Ubah Data Kontrak Kerja Sama" > </div>
 </div>
 
 
@@ -78,12 +78,9 @@
     
     //ketika link edit diklik pada halaman tabel_kontrak.php
     function edit(id){
-        $("#loading").show();
-        $("#dialog_edit_kontrak").empty();
         $("#dialog_edit_kontrak").load("<?php echo URL; ?>kontrak/viewEditKontrak/"+id);
-        //$("#dialog_edit_kontrak").hide();
         $("#dialog_edit_kontrak").dialog( "open" );
-        $("#loading").hide();
+       
     }
     
     $(document).ready(function(){ 
@@ -105,14 +102,14 @@
         //trigger ketika tombol tambah diklik akan menampilkan modal form rekam
         $("#tambah_kontrak").click(function() {
             $("#dialog_rekam_kontrak").load("<?php echo URL; ?>kontrak/viewRekamKontrak");
-            $("#dialog_rekam_kontrak").hide();
             $("#dialog_rekam_kontrak").dialog( "open" );
         });
-
+        
+        
         //modal form rekam
         $("#dialog_rekam_kontrak").dialog({
             autoOpen: false,
-            height: 550,
+            height: 500,
             width: 800,
             modal: true,
             show: "fade",
@@ -121,7 +118,7 @@
             position: 'top',
             draggable: false,
             buttons: {
-                "Simpan": function() {
+                Simpan: function() {
                     //fungsi cek rekam untuk validasi form rekam_kontrak pada rekam_kontrak_dialog.php
                     if(cekRekam()!=false){
                         $("#loading").show();
@@ -145,6 +142,7 @@
                             }                       
                         });
                     }
+                    
                 },
                 Batal: function() {
                     $( this ).dialog( "close" );
@@ -157,7 +155,7 @@
         //modal form edit
         $("#dialog_edit_kontrak").dialog({
             autoOpen: false,
-            height: 550,
+            height: 500,
             width: 800,
             modal: true,
             show: "fade",
