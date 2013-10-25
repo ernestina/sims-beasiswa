@@ -149,6 +149,8 @@ $akses['ElemenBeasiswa'] = array(
                 'get_list_elem',
                 'cetak_mon_pembayaran',
                 'cetak_jadup',
+                'cetak_ubuku',
+                'cetak_uskripsi',
                 '__destruct'
                 );
 /*

@@ -34,7 +34,10 @@
         echo "<td>" . $val->get_thn() . "</td>";
         echo "<td style=\"text-align: right\">" . number_format($val->get_total_bayar()) . "</td>";
         echo "<td><a href=" . URL . "elemenBeasiswa/delUangBuku/" . $val->get_kd_d() . " onClick=\"return del();\" title=\"hapus\"><i class=\"icon-trash\"></i></a> &nbsp &nbsp 
-                        <a href=" . URL . "elemenBeasiswa/editUangBuku/" . $val->get_kd_d() . "><i class=\"icon-pencil\" title=\"ubah\"></i></a></td>";
+                        <a href=" . URL . "elemenBeasiswa/editUangBuku/" . $val->get_kd_d() . "><i class=\"icon-pencil\" title=\"ubah\"></i></a>
+                            <a href='#' onClick='cetak_ubuku(" . $val->get_kd_d() . "); return false;'><i class=\"icon-print\"></i></a>
+                            
+        </td>";
         echo "</tr>";
         $no++;
     }
@@ -48,4 +51,13 @@
             return true;
         else return false
     }
+    function cetak_ubuku(kd_el){  
+        var url = "<?php echo URL; ?>elemenBeasiswa/cetak_ubuku/"+kd_el;
+        var w = 1000;
+        var h = 500;
+        
+        var title = "cetak pembayaran elemen jadup";
+        window.open(url, title, 'toolbar=no, location=no, addressbar=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=no, width='+w+', height='+h);
+    }
+    
 </script>

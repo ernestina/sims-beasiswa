@@ -15,22 +15,24 @@
     foreach ($this->skripsi as $val) {
         echo "<tr>";
         echo "<td>$no</td>";
-        $tgl="";
-        if(date('d-m-Y', strtotime($val->get_tgl_sp2d())) != "01-01-1970" && date('d-m-Y', strtotime($val->get_tgl_sp2d())) != "00-00-0000"){
+        $tgl = "";
+        if (date('d-m-Y', strtotime($val->get_tgl_sp2d())) != "01-01-1970" && date('d-m-Y', strtotime($val->get_tgl_sp2d())) != "00-00-0000") {
             $tgl = date('d-m-Y', strtotime($val->get_tgl_sp2d()));
         }
-        echo "<td>" . $val->get_no_sp2d() . " / ".$tgl."</td>";
+        echo "<td>" . $val->get_no_sp2d() . " / " . $tgl . "</td>";
 
         echo "<td>" . $val->get_univ() . "</td>";
 //                    $this->jur->set_kode_jur($val->get_kd_jur());
 //                    $jur = $this->jur2->get_jur_by_id($this->jur2);
         echo "<td>" . $val->get_kd_jur() . "</td>";
-        echo "<td>".$val->get_thn_masuk()."</td>";
+        echo "<td>" . $val->get_thn_masuk() . "</td>";
         echo "<td>" . $val->get_jml_peg() . "</td>";
-        
+
         echo "<td>" . number_format($val->get_total_bayar()) . "</td>";
         echo "<td><a href=" . URL . "elemenBeasiswa/delSkripsi/" . $val->get_kd_d() . " onClick=\"return del();\"><i class=\"icon-trash\"></i></a> &nbsp &nbsp 
-                        <a href=" . URL . "elemenBeasiswa/editSkripsi/" . $val->get_kd_d() . "><i class=\"icon-pencil\"></i></a></td>";
+                        <a href=" . URL . "elemenBeasiswa/editSkripsi/" . $val->get_kd_d() . "><i class=\"icon-pencil\"></i></a>
+                            <a href='#' onClick='cetak_uskripsi(" . $val->get_kd_d() . "); return false;'><i class=\"icon-print\"></i></a>
+</td>";
         echo "</tr>";
         $no++;
     }
@@ -43,5 +45,13 @@
         if(confirm('Yakin akan menghapus data ini?'))
             return true;
         else return false
+    }
+    function cetak_uskripsi(kd_el){  
+        var url = "<?php echo URL; ?>elemenBeasiswa/cetak_uskripsi/"+kd_el;
+        var w = 1000;
+        var h = 500;
+        
+        var title = "cetak pembayaran elemen jadup";
+        window.open(url, title, 'toolbar=no, location=no, addressbar=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=no, width='+w+', height='+h);
     }
 </script>
