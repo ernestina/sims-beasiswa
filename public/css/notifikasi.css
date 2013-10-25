@@ -135,10 +135,12 @@ div .content_notif p{
     /*background-color: #F0F0F0;*/
     margin-left: 0px;
 }
+
 img.noti {
     /*height: 40%;*/
     margin: 20px 0px 0px -10px;
 }
+
 div.noti {
     font-family: Menu;
     margin-top: -10px;
@@ -147,11 +149,31 @@ div.noti {
 ul.noti {
     height: 75px; margin: 5px;
     width:100%;
-    background-color: #F3F3F3;
     background-image: url('public/img/bg.png');
     -webkit-border-radius: 40px 0px 0px 40px;
     border-radius: 40px 0px 0px 40px;
 }
+
+ul.noti.jadup{
+    background-color: #99FF99;
+}
+
+ul.noti.buku{
+    background-color: #F3F3F3;
+}
+
+ul.noti.skripsi{
+    background-color: #99C2FF;
+}
+
+ul.noti.kontrak{
+    background-color: #FFB2B2;
+}
+
+ul.noti.lulus{
+    background-color: #BFD1C3;
+}
+
 h4 {
     font-family: Nexa;
     font-size: 120%;

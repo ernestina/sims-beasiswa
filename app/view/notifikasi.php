@@ -21,7 +21,7 @@
     $(function(){
         var data_notif = <?php echo $this->d_notif; ?>;
         var max_data = 9; //max data per page
-        var time_per_item = 10; //on second
+        var time_per_item = 3; //on second
         var div_container = 'beranda'
         create_element(data_notif,max_data, time_per_item, div_container);
     });
@@ -49,7 +49,7 @@
                 var bul_sem = data_notif[i].jatuh_tempo; //bulan untuk semester
                 switch(data_notif[i].jenis){
                     case 'jadup':
-                        li.className = 'inline noti';
+                        li.className = 'inline noti jadup';
                         jenis = 'Pembayaran Jadup '
                         judul_notif = 'JADUP'
                         pesan = jenis+" "+data_notif[i].univ+" - "+data_notif[i].jurusan+" "+data_notif[i].tahun_masuk+" bulan "+data_notif[i].bulan+" "+data_notif[i].tahun;
@@ -62,25 +62,25 @@
 //                        console.log(tmp)
                         var bul_sem = tmp.substr(4,2);
 //                        console.log(bul_sem);
-                        li.className = 'inline noti';
+                        li.className = 'inline noti buku';
                         jenis = 'Pembayaran Uang Buku '
                         judul_notif = 'UANG BUKU'
                         pesan = jenis+" "+data_notif[i].univ+" - "+data_notif[i].jurusan+" "+data_notif[i].tahun_masuk+" untuk semester "+data_notif[i].bulan+" "+data_notif[i].tahun;
                         break;
                     case 'skripsi':
-                        li.className = 'inline noti';
+                        li.className = 'inline noti skripsi';
                         jenis = 'Pembayaran Uang Skripsi '
                         judul_notif = 'UANG SKRIPSI'
                         pesan = jenis+" "+data_notif[i].univ+" - "+data_notif[i].jurusan+" "+data_notif[i].tahun_masuk+" bulan "+data_notif[i].bulan+" "+data_notif[i].tahun;
                         break;
                     case 'lulus':
-                        li.className = 'inline noti';
+                        li.className = 'inline noti lulus';
                         jenis = 'Pegawai TB dari '
                         judul_notif = 'MASA TUGAS BELAJAR'
                         pesan = jenis+" "+data_notif[i].univ+" - "+data_notif[i].jurusan+" "+data_notif[i].tahun_masuk+" selesai bulan "+data_notif[i].bulan+" "+data_notif[i].tahun;
                         break;
                     case 'kontrak':
-                        li.className = 'inline noti';
+                        li.className = 'inline noti kontrak';
                         jenis = 'Tagihan Kontrak '
                         judul_notif = 'PEMBAYARAN KONTRAK'
                         pesan = jenis+" "+data_notif[i].univ+" - "+data_notif[i].jurusan+" "+data_notif[i].tahun_masuk+" bulan "+data_notif[i].bulan+" "+data_notif[i].tahun;
