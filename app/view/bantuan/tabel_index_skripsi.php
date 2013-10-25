@@ -7,7 +7,7 @@
     <th width="5%">Th. Masuk</th>
     <th width="5%">Jumlah Pegawai Dibayar</th>
     <th width="10%">Total Bayar</th>
-    <th width="7%">Aksi</th>
+    <th width="10%">Aksi</th>
 </thead>
 <tbody style="text-align: center">
     <?php
@@ -28,9 +28,9 @@
         echo "<td>" . $val->get_thn_masuk() . "</td>";
         echo "<td>" . $val->get_jml_peg() . "</td>";
 
-        echo "<td>" . number_format($val->get_total_bayar()) . "</td>";
-        echo "<td><a href=" . URL . "elemenBeasiswa/delSkripsi/" . $val->get_kd_d() . " onClick=\"return del();\"><i class=\"icon-trash\"></i></a> &nbsp &nbsp 
-                        <a href=" . URL . "elemenBeasiswa/editSkripsi/" . $val->get_kd_d() . "><i class=\"icon-pencil\"></i></a>
+        echo "<td style=\"text-align: right\">" . number_format($val->get_total_bayar()) . "</td>";
+        echo "<td><a href=" . URL . "elemenBeasiswa/delSkripsi/" . $val->get_kd_d() . " onClick=\"return del();\"><i class=\"icon-trash\"></i></a> &nbsp 
+                        <a href=" . URL . "elemenBeasiswa/editSkripsi/" . $val->get_kd_d() . "><i class=\"icon-pencil\"></i></a> &nbsp 
                             <a href='#' onClick='cetak_uskripsi(" . $val->get_kd_d() . "); return false;'><i class=\"icon-print\"></i></a>
 </td>";
         echo "</tr>";

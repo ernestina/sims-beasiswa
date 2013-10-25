@@ -9,7 +9,7 @@
     <th width="5%">Semester</th>
     <th width="5%">Tahun</th>
     <th width="10%">Total Bayar</th>
-    <th width="7%">Aksi</th>
+    <th width="8%">Aksi</th>
 </thead>
 <tbody style="text-align: center">
     <?php
@@ -33,9 +33,9 @@
         echo "<td>" . $semester . "</td>";
         echo "<td>" . $val->get_thn() . "</td>";
         echo "<td style=\"text-align: right\">" . number_format($val->get_total_bayar()) . "</td>";
-        echo "<td><a href=" . URL . "elemenBeasiswa/delUangBuku/" . $val->get_kd_d() . " onClick=\"return del();\" title=\"hapus\"><i class=\"icon-trash\"></i></a> &nbsp &nbsp 
-                        <a href=" . URL . "elemenBeasiswa/editUangBuku/" . $val->get_kd_d() . "><i class=\"icon-pencil\" title=\"ubah\"></i></a>
-                            <a href='#' onClick='cetak_ubuku(" . $val->get_kd_d() . "); return false;'><i class=\"icon-print\"></i></a>
+        echo "<td><a href=" . URL . "elemenBeasiswa/delUangBuku/" . $val->get_kd_d() . " onClick=\"return del();\" title=\"hapus\"><i class=\"icon-trash\"></i></a> &nbsp
+                        <a href=" . URL . "elemenBeasiswa/editUangBuku/" . $val->get_kd_d() . "><i class=\"icon-pencil\" title=\"ubah\"></i></a> &nbsp
+                            <a href='#' onClick='cetak_ubuku(" . $val->get_kd_d() . "); return false;' title='cetak'><i class=\"icon-print\"></i></a>
                             
         </td>";
         echo "</tr>";

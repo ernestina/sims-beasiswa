@@ -22,7 +22,7 @@ foreach ($this->data_biaya as $val) {
     $data_universitas = $this->universitas->get_univ_by_jur($data_kontrak->kd_jurusan);
     ?>
     <tr>
-        <td><?php echo $i; ?></td>
+        <td style="text-align: center"><?php echo $i; ?></td>
         <td><?php echo $data_kontrak->no_kontrak." (".$data_kontrak->tgl_kontrak.")"; ?></td>
         <td><?php echo $data_jurusan->get_nama()." ".$data_universitas->get_kode()." ".$data_kontrak->thn_masuk_kontrak; ?></td>
         <td><?php echo $val->nama_biaya; ?></td>
