@@ -177,12 +177,12 @@
             '100% { -webkit-transform:translateX(-110%); }'+
             '}'+
             '@-moz-keyframes left-'+order+' {'+
-            '0% { left:100%; }'+
-            ''+frame_one+'% { left:100%; }'+
-            ''+frame_two+'% { left:0; }'+
-            ''+frame_three+'% { left:0; }'+
-            ''+frame_four+'% { left:-100; }'+
-            '100% { left:-100%; }'+
+            '0% { -moz-transform:translateX(100%); }'+
+            ''+frame_one+'% { -moz-transform:translateX(100%); }'+
+            ''+frame_two+'% { -moz-transform:translateX(0); }'+
+            ''+frame_three+'% { -moz-transform:translateX(0); }'+
+            ''+frame_four+'% { -moz-transform:translateX(-110%); }'+
+            '100% { -moz-transform:translateX(-110%); }'+
             '}');
 //            console.log(rules);
             cssAnimation.appendChild(rules);
