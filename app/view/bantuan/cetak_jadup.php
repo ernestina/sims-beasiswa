@@ -18,17 +18,32 @@ $biaya_per_pegawai = $this->elemen->get_biaya_per_peg();
             .td2{
                 border: 0px ;
             }
+
+            @media print {
+                #printbtn {
+                    display :  none;
+                }
+            }
         </style>
     </head>
     <body style="font-family:arial;color:black;font-size:10px;">
         <p align="center" style="font-weight: bold; font-size:12px;">
-            
+
             DAFTAR PEMBAYARAN BIAYA HIDUP BEASISWA INTERNAL DITJEN PERBENDAHARAAN<br />
-            PADA PROGRAM STUDI <?php echo " ".strtoupper($this->strata->kode_strata)." "; ?> <?php echo " ".strtoupper($this->jur->get_nama())." "; ?> <?php echo " ".strtoupper($this->univ->get_nama())." "; ?> ANGKATAN <?php echo " ".$this->elemen->get_thn_masuk()." ";?><br />
-            BULAN <?php echo " ".strtoupper(Tanggal::bulan_indo($this->elemen->get_bln()))." "; ?> TAHUN <?php echo " ".$this->elemen->get_thn()." ";?> 
+            PADA PROGRAM STUDI <?php echo " " . strtoupper($this->strata->kode_strata) . " "; ?> <?php echo " " . strtoupper($this->jur->get_nama()) . " "; ?> <?php echo " " . strtoupper($this->univ->get_nama()) . " "; ?> ANGKATAN <?php echo " " . $this->elemen->get_thn_masuk() . " "; ?><br />
+            BULAN <?php echo " " . strtoupper(Tanggal::bulan_indo($this->elemen->get_bln())) . " "; ?> TAHUN <?php echo " " . $this->elemen->get_thn() . " "; ?> 
         </p>
 
-        <table align="center" cellspacing=0 cellpadding=4 width=95% style="border-width: 1px; font-size: 10px; border-style: solid; border-color: black;">
+        <table border="0" align="center" cellspacing=0 cellpadding=0 width=90% style="border-width: 0px; font-size: 10px;">
+            <tr>
+                <td class="td2" align="right"> 
+                    <FORM>
+                        <button TYPE="button" id="printbtn" onClick="cetak();">Cetak</button>
+                    </FORM>
+                </td>
+            </tr>
+        </table>
+        <table align="center" cellspacing=0 cellpadding=4 width=90% style="border-width: 1px; font-size: 10px; border-style: solid; border-color: black;">
             <tr>
                 <th rowspan="2" >No</th>
                 <th rowspan="2">Nama</th>
@@ -84,7 +99,7 @@ $biaya_per_pegawai = $this->elemen->get_biaya_per_peg();
                     <td align="right"><?php echo number_format($jml_bersih); ?></td>
                     <td><?php echo $bank->get_nama(); ?></td>
                     <td><?php echo $penerima->get_no_rek(); ?></td>
-                    <td><div>
+                    <td class="td2"><div>
                             <table border="0" align="center" cellspacing=0 cellpadding=0 width=100% style="border-width: 0px; font-size: 10px;">
                                 <tr>
                                     <td class="td2" width="50%"><?php
@@ -95,12 +110,12 @@ $biaya_per_pegawai = $this->elemen->get_biaya_per_peg();
                     echo $no . "......";
                 }
             }
-            ?></td>
+                ?></td>
                                     <td class="td2" width="50%"><?php
-            if (($no % 2) == 0 && $no != 1) {
-                echo $no . "......";
-            }
-            ?></td>
+                                    if (($no % 2) == 0 && $no != 1) {
+                                        echo $no . "......";
+                                    }
+                ?></td>
                                 </tr>
                             </table> 
                         </div>
@@ -131,34 +146,34 @@ $biaya_per_pegawai = $this->elemen->get_biaya_per_peg();
         </table>
 
         <br/>
-        <table border="0" align="center" cellspacing=0 cellpadding=0 width=95% style="border-width: 0px; font-size: 10px;">
+        <table border="0" align="center" cellspacing=0 cellpadding=0 width=90% style="border-width: 0px; font-size: 10px;">
             <tr>
                 <td class="td2" width="30%" align="left">
                     Setuju Bayar,<br/>
-                    <?php echo $this->ppk->nama_jabatan." Selaku"; ?><br/>
+                    <?php echo $this->ppk->nama_jabatan . " Selaku"; ?><br/>
                     Pejabat Pembuat Komitmen
                     <br/>
                     <br/>
                     <br/> 
                     <br/> 
                     <br/> 
-                    <?php echo $this->ppk->nama_pejabat;?><br/>
-                    <?php echo "NIP ".$this->ppk->nip_pejabat;?>
+                    <?php echo $this->ppk->nama_pejabat; ?><br/>
+                    <?php echo "NIP " . $this->ppk->nip_pejabat; ?>
                 </td>
                 <td class="td2" width="30%" align="center">
                     Penanggung Jawab Kegiatan,<br />
                     <?php echo $this->pj->nama_jabatan; ?><br/>
-                    
+
                     <br/>
                     <br/>
                     <br/> 
                     <br/> 
                     <br/> 
-                    <?php echo $this->pj->nama_pejabat;?><br/>
-                    <?php echo "NIP ".$this->pj->nip_pejabat;?>
+                    <?php echo $this->pj->nama_pejabat; ?><br/>
+                    <?php echo "NIP " . $this->pj->nip_pejabat; ?>
                 </td>
                 <td class="td2" width="30%" align="right">
-                    Jakarta, &nbsp; &nbsp; &nbsp; &nbsp;   <?php echo Tanggal::bulan_indo($this->elemen->get_bln())." ".$this->elemen->get_thn(); ?><br />
+                    Jakarta, &nbsp; &nbsp; &nbsp; &nbsp;   <?php echo Tanggal::bulan_indo($this->elemen->get_bln()) . " " . $this->elemen->get_thn(); ?><br />
                     Lunas dibayar
                     <?php echo $this->bdr->nama_jabatan; ?><br/>
                     <br/>
@@ -166,15 +181,15 @@ $biaya_per_pegawai = $this->elemen->get_biaya_per_peg();
                     <br/> 
                     <br/> 
                     <br/> 
-                    <?php echo $this->bdr->nama_pejabat;?><br/>
-                    <?php echo "NIP ".$this->bdr->nip_pejabat;?>
+                    <?php echo $this->bdr->nama_pejabat; ?><br/>
+                    <?php echo "NIP " . $this->bdr->nip_pejabat; ?>
                 </td>
             </tr>
         </table>
     </body>
 </html>
 <script type="text/javascript">
-    window.onload=function cetak(){
+    function cetak(){
         window.print();
         window.onfocus = function() { window.close(); }
     }

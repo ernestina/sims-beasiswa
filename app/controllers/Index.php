@@ -19,8 +19,8 @@ class Index extends BaseController{
     }
     
     private function get_notifikasi(){
-        $notif = new Notifikasi($this->registry);
-        $data = $notif->get_notifikasi();
+        //$notif = new Notifikasi($this->registry);
+        //$data = $notif->get_notifikasi();
         
         $d_notif = array();
         $i = 0;
