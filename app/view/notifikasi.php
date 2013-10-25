@@ -20,14 +20,17 @@
 <script type="text/javascript">
     $(function(){
         var data_notif = <?php echo $this->d_notif; ?>;
-        var length_data = data_notif.length; //amount of data
-        var max_data = 7; //max data per page
+        var max_data = 9; //max data per page
         var time_per_item = 10; //on second
-//        console.log(max_data);
+        var div_container = 'beranda'
+        create_element(data_notif,max_data, time_per_item, div_container);
+    });
+    
+    var create_element = function(data_notif,max_data, time_per_item, div_container){
+        var length_data = data_notif.length; //amount of data
         var num_div = Math.ceil(length_data/max_data); //num of page
-//        console.log(num_div);
         if(length_data>0){
-            document.getElementById('beranda').className = 'notif';
+            document.getElementById(div_container).className = 'notif';
             var notif_container = document.createElement('div');
             notif_container.className = 'marquee';
             var ul = document.createElement('div');
@@ -39,7 +42,6 @@
                     container = document.createElement('p');   
                 }
                 var li = document.createElement('ul');
-                //                li.appendChild(document.createTextNode(content));
                 var jenis = '';
                 var judul_notif = ''; //judul notifikasi
                 var pesan = ''; //detail pesan notifikasi
@@ -66,8 +68,6 @@
                         pesan = jenis+" "+data_notif[i].univ+" - "+data_notif[i].jurusan+" "+data_notif[i].tahun_masuk+" untuk semester "+data_notif[i].bulan+" "+data_notif[i].tahun;
                         break;
                     case 'skripsi':
-                        var tmp = data_notif[i].jatuh_tempo;
-                        console.log(tmp)
                         li.className = 'inline noti';
                         jenis = 'Pembayaran Uang Skripsi '
                         judul_notif = 'UANG SKRIPSI'
@@ -84,7 +84,6 @@
                         jenis = 'Tagihan Kontrak '
                         judul_notif = 'PEMBAYARAN KONTRAK'
                         pesan = jenis+" "+data_notif[i].univ+" - "+data_notif[i].jurusan+" "+data_notif[i].tahun_masuk+" bulan "+data_notif[i].bulan+" "+data_notif[i].tahun;
-                        console.log(pesan)
                         break;
                 }
                 judul_notif.toUpperCase();
@@ -139,6 +138,11 @@
             document.getElementById('beranda').appendChild(notif_container);
         }
         
+        add_css_child(num_div,time_per_item);
+        add_keyframe(num_div);
+    }
+    
+    var add_css_child = function(num_div,time_per_item){
         for(var i=1;i<=num_div;i++){
             var order = num_to_text(i)+''; //untuk penamaan animasi
             var num = i+''; //child ke-
@@ -146,9 +150,7 @@
             var animation = 'left-'+order+' 20s ease infinite';
             $('p:nth-child('+num+')').css({'animation':'left-'+order+' '+timing+'s ease infinite','-moz-animation':'left-'+order+' '+timing+'s ease infinite','-webkit-animation':'left-'+order+' '+timing+'s ease infinite'}); //nambah css ke p child ke n         
         }
-        
-        add_keyframe(num_div);
-    });
+    }
     
     var add_keyframe = function(num_elemen){
         var div = split_persen(num_elemen); 
@@ -251,6 +253,7 @@
     var num_ten_to_twenty = function(num){
         if(num>20 || num<10){
             alert('angka harus antara 10 sampai 20');
+            return false;
         }
 
         var tens = Math.floor(num/10);
@@ -276,6 +279,7 @@
     var num_above_twenty_to_hundred = function(num){
         if(num<21 || num>99){
             alert('angka harus antara 21 sampai 99')
+            return false;
         }
         
         var ten = 'ty';
