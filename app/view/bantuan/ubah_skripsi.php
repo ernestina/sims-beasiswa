@@ -4,6 +4,10 @@
 
     <form method="POST" onSubmit="return cekField();" action="<?php echo URL . 'elemenBeasiswa/updateUangSkripsi' ?> " enctype="multipart/form-data">
         <div>
+            <noscript>
+            <input  type="hidden" name="js" value="1" />
+            </noscript>
+            <input  type="hidden" name="ubah_uskripsi" />
             <input  type="hidden" name="r_elem" value="3"/>
             <fieldset>
                 <!--div class="tigakolom"-->

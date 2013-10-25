@@ -96,6 +96,7 @@ class Bootstrap {
         if ($i > 1)
             call_user_func_array(array($this->controller, $action), $arguments);
         else
+            
             call_user_func(array($this->controller, $action), $arguments);
     }
     

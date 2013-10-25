@@ -206,7 +206,7 @@ class ElemenBeasiswa {
         return $data;
     }
     
-    public function get_list_elem($univ = null, $jurusan = null, $tahun = null, $elemen=null) {
+    public function get_list_elem($univ = NULL, $jurusan = NULL, $tahun = NULL, $elemen=NULL) {
 
         $sql = "SELECT 
             a.KD_D_ELEM_BEASISWA AS KD_D_ELEM_BEASISWA,
@@ -228,7 +228,7 @@ class ElemenBeasiswa {
                 LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV
                 ";
 
-        if ($univ != "") {
+        if ($univ != "" ) {
             $sql .=" WHERE d.KD_UNIV ='" . $univ . "'";
         }
 
@@ -241,7 +241,7 @@ class ElemenBeasiswa {
         }
 
         if ($tahun != "") {
-            if($univ == "" && $jurusan == "" ){
+            if($univ == "" && $jurusan == ""){
                $sql .=" WHERE a.TAHUN_MASUK ='" . $tahun . "'"; 
             } else {
                 $sql .=" AND a.TAHUN_MASUK ='" . $tahun . "'";

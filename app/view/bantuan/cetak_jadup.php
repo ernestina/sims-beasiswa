@@ -136,9 +136,9 @@ $biaya_per_pegawai = $this->elemen->get_biaya_per_peg();
                 <td ></td>
                 <td ></td>
                 <td align="right"><?php echo number_format($total_potongan) ?></td>
-                <td ><?php echo number_format($total_jml_kotor); ?></td>
-                <td ><?php echo number_format($total_pajak); ?></td>
-                <td ><?php echo number_format($total_jml_bersih); ?></td>
+                <td align="right"><?php echo number_format($total_jml_kotor); ?></td>
+                <td align="right"><?php echo number_format($total_pajak); ?></td>
+                <td align="right"><?php echo number_format($total_jml_bersih); ?></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>                

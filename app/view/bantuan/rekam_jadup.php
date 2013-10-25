@@ -5,6 +5,9 @@
 <div class="fitur">
     <fieldset><legend>Rekam Biaya Hidup</legend>
         <form method="POST" onSubmit="return cekField();" action="<?php echo URL; ?>elemenBeasiswa/saveJadup" enctype="multipart/form-data">
+            <noscript>
+            <input  type="hidden" name="js" value="1" />
+            </noscript>
             <input type="hidden" name="rekam_jadup"/> 
             <input type="hidden" name="r_elem" value="1"/>       
             <div>

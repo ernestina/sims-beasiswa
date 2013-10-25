@@ -3,6 +3,10 @@
 
     <form method="POST" onSubmit="return cekField();" action="<?php echo URL . 'elemenBeasiswa/updateUangBuku' ?> " enctype="multipart/form-data">
         <div>
+            <noscript>
+            <input  type="hidden" name="js" value="1" />
+            </noscript>
+             <input  type="hidden" name="ubah_buku" />
             <input  type="hidden" name="r_elem" value="2"/>
             <fieldset><legend>Parameter Ubah Tunjangan Buku</legend>
                 <!--div class="tigakolom"-->

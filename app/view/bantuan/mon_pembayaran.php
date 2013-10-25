@@ -2,7 +2,7 @@
     <h2>MONITORING PEMBAYARAN KEUANGAN</h2>
 
     <div id="dropdown-menu">
-        <form method="POST" action="<?php echo URL . 'elemenBeasiswa/cetak_mon_pembayaran'; ?>" target="_blank">
+        <form method="POST" action="<?php echo URL . 'elemenBeasiswa/cetak_mon_pembayaran'; ?>" onsubmit="window.open('','cetak_mon','toolbar=no, location=no, addressbar=no, directories=no, status=no, menubar=no, width=1000,height=500,scrollbars=yes');" target="cetak_mon">
             <table width="100%">
                 <tr>
                     <td>
@@ -74,6 +74,7 @@
 </div>
 <script type="text/javascript">
     
+        
     $.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),elemen:$('#elemen').val()}, 
     function (data){
         //$('#tabel_index_mon').fadeIn(100);

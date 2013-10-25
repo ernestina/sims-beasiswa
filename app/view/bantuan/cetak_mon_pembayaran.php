@@ -9,10 +9,19 @@
             table {
                 border-collapse: collapse;
             }
+            .td2{
+                border: 0px ;
+            }
+
+            @media print {
+                #printbtn {
+                    display :  none;
+                }
+            }
         </style>
     </head>
-    <body style="font-family:arial;color:black;font-size:11px;">
-        <p align="center" style="font-weight: bold; font-size:14px;">
+    <body style="font-family:arial;color:black;font-size:10px;">
+        <p align="center" style="font-weight: bold; font-size:12px;">
             <?php 
             if ($this->elemen != "") {
                 $el = $this->elemen;
@@ -33,14 +42,14 @@
             PEGAWAI TUGAS BELAJAR INTERNAL DIREKTORAT JENDERAL PERBENDAHARAAN <br />
             <?php
             
-            if ($this->univ != "") {
+            if ($this->univ != 0) {
                 echo strtoupper($this->universitas->get_nama()) . "<br />";
             }
-            if ($this->jur != "") {
+            if ($this->jur != 0) {
                 echo "JURUSAN " . strtoupper($this->data_jurusan->get_nama());
             }
 
-            if ($this->tahun != "") {
+            if ($this->tahun != 0) {
                 echo " TAHUN " . strtoupper($this->tahun) . "<br />";
             }
             
@@ -48,21 +57,30 @@
             <?php echo PER." ".strtoupper(Tanggal::getTglSekarangIndo()); ?>
 
         </p>
-        <table align="center" cellspacing=0 cellpadding=4 width=90% style="border-width: 1px; border-style: solid; border-color: black;">
+        <table border="0" align="center" cellspacing=0 cellpadding=0 width=90% style="border-width: 0px; font-size: 10px;">
+            <tr>
+                <td class="td2" align="right"> 
+                    <FORM>
+                        <button TYPE="button" id="printbtn" onClick="cetak();">Cetak</button>
+                    </FORM>
+                </td>
+            </tr>
+        </table>
+        <table align="center" cellspacing=0 cellpadding=4 width=90% style="border-width: 1px; font-size: 10px; border-style: solid; border-color: black;">
             <thead>
             <th>No</th>
             <?php $k=0; ?>
-            <?php if ($this->elemen == "") { ?>
+            <?php if ($this->elemen == 0) { ?>
             <th>Nama Biaya</th>
             <?php $k=$k+1; } ?>
             <th>Periode Pembayaran</th>
-            <?php if ($this->univ == "") { ?>
+            <?php if ($this->univ == 0) { ?>
                 <th>Universitas</th>
             <?php $k=$k+1; } ?>
-            <?php if ($this->jur == "") { ?>
+            <?php if ($this->jur == 0) { ?>
                 <th>Jurusan</th>
             <?php $k=$k+1; } ?>
-            <?php if ($this->tahun == "") { ?>
+            <?php if ($this->tahun == 0) { ?>
                 <th>Tahun Masuk</th>
             <?php $k=$k+1; } ?>
             <th >Jumlah Pegawai dibayarkan</th>
@@ -80,7 +98,7 @@
                 echo "<td>$no</td>";
                 $jns_elem = $val4->get_kd_r();
                 $bulan = $val4->get_bln();
-                if ($this->elemen == "") {  
+                if ($this->elemen == 0) {  
                     if ($jns_elem == 1) {
                         echo "<td>Tunjangan Hidup</td>";
                     } else if ($jns_elem == 2) {
@@ -135,17 +153,17 @@
                     echo "<td>Periode tidak diketahui</td>";
                 }
 
-                if ($this->univ == "") {
+                if ($this->univ == 0) {
                     echo "<td>" . $val4->get_univ() . "</td>";
                 }
                 $this->jurusan->set_kode_jur($val4->get_kd_jur());
                 $jur = $this->jurusan->get_jur_by_id($this->jurusan);
-                if ($this->jur == "") {
+                if ($this->jur == 0) {
 
                     echo "<td>" . $jur->get_nama() . "</td>";
                 }
 
-                if ($this->tahun == "") {
+                if ($this->tahun == 0) {
                     echo "<td>" . $val4->get_thn_masuk() . "</td>";
                 }
                 echo "<td>" . $val4->get_jml_peg() . "</td>";
@@ -173,7 +191,7 @@
 </html>
 
 <script type="text/javascript">
-    window.onload=function cetak(){
+    function cetak(){
         window.print();
         window.onfocus = function() { window.close(); }
     }

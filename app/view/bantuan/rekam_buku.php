@@ -4,6 +4,10 @@
 
     <form method="POST" onSubmit="return cekField();" action="<?php echo URL . 'elemenBeasiswa/saveUangBuku' ?> " enctype="multipart/form-data">
         <div>
+            <noscript>
+            <input  type="hidden" name="js" value="1" />
+            </noscript>
+            <input  type="hidden" name="rekam_buku" />
             <input  type="hidden" name="r_elem" value="2"/>
             <fieldset><legend>Parameter Bantuan Buku</legend>
                 <!--div class="tigakolom"-->
