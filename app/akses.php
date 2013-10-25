@@ -235,5 +235,8 @@ $akses['Penerima'] = array(
                 'filter_pb',
                 'cari'
                 );			
-
+/*
+ * notifikasi
+ */
+$akses['Notifikasi'] = array('__construct','index','__destruct');
 ?>

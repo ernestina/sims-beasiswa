@@ -14,13 +14,13 @@ class Index extends BaseController{
     public function index(){
         //$notif = new Notifikasi($this->registry);
         //$notif->get_notifikasi();
-        $this->view->d_notif = $this->get_notifikasi();
+        //$this->view->d_notif = $this->get_notifikasi();
         $this->view->render('index');
     }
     
     private function get_notifikasi(){
-        //$notif = new Notifikasi($this->registry);
-        //$data = $notif->get_notifikasi();
+        $notif = new Notifikasi($this->registry);
+        $data = $notif->get_notifikasi();
         
         $d_notif = array();
         $i = 0;

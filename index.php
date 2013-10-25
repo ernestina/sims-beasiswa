@@ -54,6 +54,7 @@ $registry->auth->add_access('penerima','pic',$akses['Penerima']);
 $registry->auth->add_access('admin','pic','get_jur_by_univ');
 $registry->auth->add_access('auth','pic','logout');
 $registry->auth->add_access('auth','guest',$akses['Auth']);
+$registry->auth->add_access('notifikasi','guest',$akses['Notifikasi']);
 $registry->exception = new ClassException();
 $registry->bootstrap = new Bootstrap($registry);
 
