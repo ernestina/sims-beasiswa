@@ -235,7 +235,51 @@
 	<li><input class="sukses" type="submit" value="SIMPAN" style="font-size: 100%" onclick="return cek();"/></li></ul></div>
 </form>
 
-</div> <!--div top-->
+</div> 
+<div id="dialog_add_problem">
+    <div id="dialog_pb" style="text-align: left;">
+    
+    <form id="form_add_problem" method="POST" action="">
+        <table>
+            <input type="hidden" id="cek" value="">
+            <input type="hidden" id="kd_pb" name="kd_pb" value="<?php echo $this->d_pb->get_kd_pb();?>">
+            <tr><td colspan="2"><h3>REKAM PERMASALAHAN</h3></td></tr>
+            <tr><td>Nama</td><td><?php echo $this->d_pb->get_nama();?></td></tr>
+            <tr><td>NIP</td><td><?php echo $this->d_pb->get_nip();?></td></tr>
+            <div id="winput_mas" class="error"></div>
+            <tr><td><label>Uraian</label></td><td><textarea id="uraian" name="uraian" cols="40" rows="10"></textarea></td></tr>
+            <tr><td><label>Sumber Permasalahan</label></td><td><input type="text" id="sumber" name="sumber"></td></tr>
+<!--            <tr><td colspan="2"><input type="button" id="bt_ok" value="simpan" onclick="return goSelect();"></td></tr>-->
+        </table>
+    </form>
+</div>
+</div>
+<div id="dialog_add_nilai">
+    <div id="dialog_pb" style="text-align: left;">
+    
+    <form id="form_add_nilai" method="POST" action="">
+        <table>
+            <input type="hidden" id="kd_pb" name="kd_pb" value="<?php echo $this->d_pb->get_kd_pb();?>">
+            <tr><td colspan="2"><h3>REKAM NILAI SEMESTER</h3></td></tr>
+            <tr><td>Nama</td><td><?php echo $this->d_pb->get_nama();?></td></tr>
+            <tr><td>NIP</td><td><?php echo $this->d_pb->get_nip();?></td></tr>
+            <div id="winput_nil" class="error"></div>
+            <tr><td><label>IPS</label></td><td><input type="text" id="ips" name="ips"></td></tr>
+            <tr><td><label>IPK</label></td><td><input type="text" id="ipk" name="ipk"></td></tr>
+            <tr><td><label>Semester</label></td><td><select id="semester" name="semester">
+                        <?php 
+                            for($i=1;$i<=10;$i++){
+                                echo "<option value=$i>Semester $i</option>";
+                            }
+                        ?>
+                    </select></td></tr>
+            <tr><td><label>File</label></td><td><input type="file" id="sfile" name="sfile"></td></tr>
+<!--            <tr><td colspan="2"><input type="button" id="bt_ok" value="simpan" onclick="return goSelect();"></td></tr>-->
+        </table>
+    </form>
+</div>
+</div>
+<!--div top-->
 
 <!--</body>-->
 
@@ -293,6 +337,26 @@ function hideWarning(){
             $('#wskripsi').fadeOut(200);
         }
     })
+    
+    $('#uraian').keyup(function(){
+            $('#winput_mas').fadeOut(100);
+        })
+        
+    $('#sumber').keyup(function(){
+        $('#winput_mas').fadeOut(100);
+    })
+    
+    $('#ips').keyup(function(){
+        $('#winput_nil').fadeOut(100);
+    })
+
+    $('#ipk').keyup(function(){
+        $('#winput_nil').fadeOut(100);
+    })
+
+    $('#sfile').change(function(){
+        $('#winput_nil').fadeOut(100);
+    })
 
 }
 
@@ -327,9 +391,11 @@ function open_dialog(id_pb,kategori){
     switch(kategori){
         case 'problem':
             var url = "<?php echo URL;?>penerima/dialog_masalah/"+id_pb;
+            $('#dialog_add_problem').dialog('open');
             break;
         case 'nilai':
             var url = "<?php echo URL;?>penerima/dialog_nilai/"+id_pb;
+            $('#dialog_add_nilai').dialog('open');
             break;
     }
     
@@ -338,7 +404,7 @@ function open_dialog(id_pb,kategori){
     var left = (screen.width/2)-(w/2);
     var top = (screen.height/2)-(h/2);
     var title = "rekam penerima beasiswa";
-    window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+//    window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
 }
 
 function cek(){
@@ -459,6 +525,174 @@ function view_file(file,dokumen){
     
     
 }
+
+var kd_pb = document.getElementById('kd_pb').value;
+$( "#dialog_add_problem" ).dialog({
+        autoOpen: false,
+        height: 450,
+        width: 400,
+        modal: true,
+        buttons: {
+            "Simpan": function() {
+                var cek_isian = true;
+                cek_isian = add_problem();
+                if(cek_isian){
+                    var formData = new FormData($('#form_add_problem')[0]);
+
+                    $.ajax({
+                        url: '<?php echo URL; ?>penerima/add_problem',
+                        type: 'POST',
+                        data: formData,
+                        async: false,
+                        success: function () {
+                                callFromDialog(kd_pb,'problem'); //or use //window.opener.document.getElementById(idFromCallPage).value = data;
+
+                        },
+                        cache: false,
+                        contentType: false,
+                        processData: false
+                    });
+                    $( this ).dialog( "close" );
+                }
+
+
+        }
+    },
+    close: function() {
+//                allFields.val( "" ).removeClass( "ui-state-error" );
+    }
+});
+    
+    function add_problem(){
+        var kd_pb = document.getElementById('kd_pb').value;
+        var uraian = document.getElementById('uraian').value;
+        var sumber = document.getElementById('sumber').value;
+        
+        if(uraian==""){
+            var winput = "uraian permasalahan harus diisi!"
+            $('#winput_mas').html(winput);
+            $('#winput_mas').fadeIn(200);
+            
+            return false;
+        }
+        
+        if(sumber==""){
+            var winput = "sumber permasalahan harus diisi!"
+            $('#winput_mas').html(winput);
+            $('#winput_mas').fadeIn(200);
+            
+            return false;
+        }
+        
+        return true;
+        
+    }
+    
+    $( "#dialog_add_nilai" ).dialog({
+            autoOpen: false,
+            height: 450,
+            width: 400,
+            modal: true,
+            buttons: {
+                "Simpan": function() {
+                    var cek_isian = true;
+                    cek_isian = add_nilai();
+                    if(cek_isian){
+                        var formData = new FormData($('#form_add_nilai')[0]);
+        
+                        $.ajax({
+                            url: '<?php echo URL; ?>penerima/add_nilai',
+                            type: 'POST',
+                            data: formData,
+                            async: false,
+                            success: function (data) {
+                                    callFromDialog(kd_pb,'nilai'); //or use //window.opener.document.getElementById(idFromCallPage).value = data;
+                                    
+                            },
+                            cache: false,
+                            contentType: false,
+                            processData: false
+                        });
+                        $( this ).dialog( "close" );
+                    }
+                    
+                    
+            }
+        },
+        close: function() {
+//                allFields.val( "" ).removeClass( "ui-state-error" );
+        }
+    });
+    
+    function add_nilai(){
+        var kd_pb = document.getElementById('kd_pb').value;
+        var ips = document.getElementById('ips').value;
+        var ipk = document.getElementById('ipk').value;
+        var sem = document.getElementById('semester').value;
+        var sfile = document.getElementById('sfile').value;
+        var pattern = '^[0-4]{1}[\.][0-9]{1,2}$';
+        if(ips==""){
+            var winput = "Indeks Prestasi Semester harus diisi!"
+            $('#winput_nil').html(winput);
+            $('#winput_nil').fadeIn(200);
+            
+            return false;
+        }else if(!ips.match(pattern)){
+            var winput = "Indeks Prestasi Semester tidak sesuai format!";
+            $('#winput_nil').html(winput);
+            $('#winput_nil').fadeIn(200);
+            
+            return false;
+        }else if(ips>4.00){
+            var winput = "Tidak ada Indeks Prestasi Semester lebih dari 4.00 [SUPERRR SEKALIIII]!";
+            $('#winput_nil').html(winput);
+            $('#winput_nil').fadeIn(200);
+            
+            return false;
+        }
+        
+        if(ipk==""){
+            var winput = "Indeks Prestasi Kumulatif harus diisi!";
+            $('#winput_nil').html(winput);
+            $('#winput_nil').fadeIn(200);
+            
+            return false;
+        }else if(!ipk.match(pattern)){
+            var winput = "Indeks Prestasi Kumulatif tidak sesuai format!";
+            $('#winput_nil').html(winput);
+            $('#winput_nil').fadeIn(200);
+            
+            return false;
+        }else if(ipk>4.00){
+            var winput = "Tidak ada Indeks Prestasi Kumulatif lebih dari 4.00 [SUPERRR SEKALIIII]!";
+            $('#winput_nil').html(winput);
+            $('#winput_nil').fadeIn(200);
+            
+            return false;
+        }
+        
+        if(sfile==""){
+            var winput = "File harus dipilih!"
+            $('#winput_nil').html(winput);
+            $('#winput_nil').fadeIn(200);
+            
+            return false;
+        }else{
+            var fsplit = sfile.split(".");
+            var ext = fsplit[fsplit.length-1];
+            if(ext!='pdf'){
+                var winput = "Format file harus pdf!"
+                $('#winput_nil').html(winput);
+                $('#winput_nil').fadeIn(200);
+
+                return false;
+            }
+        }
+        
+        return true;
+        
+    }
+    
 function HandleBrowseClick()
 {
     var fileinput = document.getElementById("SKL");

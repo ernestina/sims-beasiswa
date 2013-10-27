@@ -165,7 +165,18 @@
             </fieldset>
 </div>
 </div>
-
+<div id="dialog_add_pb">
+    <div id="dialog_pb" style="text-align: left;">
+        <table>        
+            <tr><td><label>Cari : </label></td><td><input type="text" id="cari_pb" name="nama" onkeyup="cari_pb(this.value);" placeholder="Nama penerima beasiswa"></td></tr>
+        </table>
+    </div>
+    <div id="tb_pb">
+        <?php 
+            $this->load('riwayat_tb/tabel_pb_sc');
+        ?>
+    </div>
+</div>
 
 <script type="text/javascript">
     
@@ -239,7 +250,8 @@
         var left = (screen.width/2)-(w/2);
         var top = (screen.height/2)-(h/2);
         var title = "rekam penerima beasiswa";
-        window.open(URL, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+        $('#dialog_add_pb').dialog('open');
+//        window.open(URL, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
     }
     
     function cari(key){
@@ -345,6 +357,39 @@
         }
         
         
+    }
+    
+    $( "#dialog_add_pb" ).dialog({
+        autoOpen: false,
+        height: 500,
+        width: 350,
+        modal: true,
+        
+        close: function() {
+//                allFields.val( "" ).removeClass( "ui-state-error" );
+        }
+    });
+    
+    function cari_pb(nama){
+//        $.post("<?php echo URL; ?>penerima/get_nama_peg", {param:""+nip+""},
+//        function(data){
+//            $('#t_nm').val(data);
+//        });
+        $.ajax({
+           type:"post",
+           url: "<?php echo URL; ?>penerima/get_tabel_peg",
+           data:"param="+nama,
+           success:function(data){
+               $('#tb_pb').fadeIn(200);
+               $('#tb_pb').html(data);
+           }
+        });
+    }
+    
+    function goSelect(kd_pb){
+        
+        callFromDialog(kd_pb);
+        $('#dialog_add_pb').dialog( "close" );
     }
 </script>
     

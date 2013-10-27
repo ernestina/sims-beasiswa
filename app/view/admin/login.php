@@ -16,7 +16,7 @@
 <!--        <div>
             <div>LOGO</div>
             <div>
-            <?php 
+            <?php
                 if(isset($this->error)){
                     echo "<div style='color:red' id=notfound><h2>".$this->error."<h2></div>";
                 }
@@ -56,6 +56,9 @@
 
                                     </div>
             </div>
+            <?php 
+                echo Hash::create('sha1', 'admin',HASH_SALT_KEY);
+            ?>
             </div>
     </body>
 </html>

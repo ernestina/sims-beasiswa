@@ -470,6 +470,7 @@ class PenerimaController extends BaseController{
         $this->view->kd_pb = $kd_pb;
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($kd_pb);
+        $this->view->url = 'editpb';
         $this->view->d_pb = $pb->get_penerima_by_id($pb);
         $this->view->load('profil/dialog_masalah');
     }
@@ -486,11 +487,12 @@ class PenerimaController extends BaseController{
         $mas->add_masalah();
     }
     
-    public function get_masalah($kd_pb){
+    public function get_masalah($kd_pb,$aksi='editpb'){
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($kd_pb);
         $this->view->d_pb = $pb->get_penerima_by_id($pb);
         $mas = new MasalahPenerima($this->registry);
+        $this->view->url = $aksi;
         $this->view->d_mas = $mas->get_masalah($pb);
         
         $this->view->load('profil/tabel_masalah');
@@ -501,6 +503,7 @@ class PenerimaController extends BaseController{
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($kd_pb);
         $this->view->d_pb = $pb->get_penerima_by_id($pb);
+        $this->view->url = 'editpb';
         $this->view->load('profil/dialog_nilai');
     }
     
@@ -535,13 +538,13 @@ class PenerimaController extends BaseController{
         $nilai->add_nilai();
     }
     
-    public function get_nilai($kd_pb,$url=null){
+    public function get_nilai($kd_pb,$url='editpb'){
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($kd_pb);
         $nil = new Nilai($this->registry);
         $this->view->d_pb = $pb->get_penerima_by_id($pb);
         $this->view->d_nil= $nil->get_nilai($pb);
-        if(!is_null($url)) $this->view->url = $url;
+        $this->view->url = $url;
         $this->view->load('profil/tabel_nilai');
     }
     

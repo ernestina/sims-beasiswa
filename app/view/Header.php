@@ -17,8 +17,7 @@
         <link href="<?php echo URL; ?>public/css/style.css" rel="stylesheet">
         <link href="<?php echo URL; ?>public/css/dialog.css" rel="stylesheet">
         <link href="<?php echo URL; ?>public/css/notifikasi.css" rel="stylesheet">
-        
-
+        <link href="<?php echo URL; ?>public/css/autocomplete.css" rel="stylesheet">
         <script type="text/javascript">
             $(function(){
                 $('#datepicker').datepicker(); 
