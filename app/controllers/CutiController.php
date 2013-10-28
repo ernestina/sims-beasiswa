@@ -54,6 +54,8 @@ class CutiController extends BaseController{
             $ct->set_perk_go($bln_go." ".$thn_go);
             $ct->set_file($file);
             if($ct->add_cuti()){
+                $pb->set_status(4);
+                $pb->update_penerima();
                 $this->registry->upload->uploadFile();
                 header('location:'.URL.'cuti/datasc');
             }else{
