@@ -1,24 +1,26 @@
 <table class="table-bordered zebra scroll" >
         <thead >
         <th>no</th>
-        <th width="15%">NIP</th>
-        <th width="25%">Nama</th>
-        <th width="15%">Golongan</th>
-        <th width="20%">Unit Asal</th>
-        <th width="20%">Jurusan</th>
-        <th width="20%">Jenis Beasiswa</th>
+        <th width="15%">NIP/Nama</th>
+        <th width="25%">Golongan/Unit Asal</th>
+        <th width="15%">Jurusan</th>
+        <th width="20%">Masa TB</th>
+        <th width="20%">Status</th>
+        <th width="20%">Aksi</th>
         </thead>
 		<tbody>
         <?php 
             $no=1;
             foreach($this->d_pb as $v){
+                $tmp = explode(";",$v->get_st());
                 echo "<tr>";
                 echo "<td style=\"text-align: center\">".$no."</td>";
-                echo "<td><a href=".URL."penerima/profil/".$v->get_kd_pb().">".$v->get_nip()."</a></td>";
-                echo "<td>".$v->get_nama()."</td>";
-                echo "<td>".Golongan::golongan_int_string($v->get_gol())."</td>";
-                echo "<td>".$v->get_unit_asal()."</td>";
+                //echo "<td><a href=".URL."penerima/profil/".$v->get_kd_pb().">".$v->get_nip()."</a></td>";
+                echo "<td>".$v->get_nip()."</br>".$v->get_nama()."</td>";
+                echo "<td>".Golongan::golongan_int_string($v->get_gol())."</br>".$v->get_unit_asal()."</td>";
                 echo "<td>".$v->get_jur()."</td>";
+                echo "<td>dari : ".Tanggal::tgl_indo($tmp[0])."</br>sampai : ".Tanggal::tgl_indo($tmp[1])."</td>";
+                echo "<td>".$v->get_status()."</td>";
                 echo "<td><center><a href=".URL."penerima/delpb/".$v->get_kd_pb()." onClick='return del(\"".$v->get_nama()."\")' title=\"hapus\"><i class=\"icon-trash\"></i></a> &nbsp
 				<a href=".URL."penerima/profil/".$v->get_kd_pb()." title='ubah'><i class=\"icon-pencil\"></i></a>
 				</center></td>";

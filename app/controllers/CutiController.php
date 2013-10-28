@@ -71,6 +71,10 @@ class CutiController extends BaseController{
             $pb = new Penerima($this->registry);
             $pb->set_kd_pb($ct->get_pb());
             $this->view->d_pb_ubah = $pb->get_penerima_by_id($pb);
+            $is_exist_file = ($this->view->d_ubah->get_file()!=NULL && $this->view->d_ubah->get_file()!='')?true:false;
+            $file = array('file_exist'=>$is_exist_file);
+        }else{
+            $file = array('file_exist'=>false);
         }
         $jsc = new JenisSuratCuti($this->registry);
         $univ = new Universitas($this->registry);
@@ -82,6 +86,7 @@ class CutiController extends BaseController{
         $this->view->d_jsc = $jsc->get_jsc();
         $this->view->d_th_masuk = $st->get_list_th_masuk();
         $this->view->curr_year = date('Y');
+        $this->view->d_file_exist = json_encode($file);
         $this->view->render('riwayat_tb/data_cuti');
     }
     

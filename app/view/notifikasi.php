@@ -71,7 +71,7 @@
                         li.className = 'inline noti skripsi';
                         jenis = 'Pembayaran Uang Skripsi '
                         judul_notif = 'UANG SKRIPSI'
-                        pesan = jenis+" "+data_notif[i].univ+" - "+data_notif[i].jurusan+" "+data_notif[i].tahun_masuk+" bulan "+data_notif[i].bulan+" "+data_notif[i].tahun;
+                        pesan = jenis+" "+data_notif[i].univ+" - "+data_notif[i].jurusan+" "+data_notif[i].tahun_masuk;
                         break;
                     case 'lulus':
                         li.className = 'inline noti lulus';

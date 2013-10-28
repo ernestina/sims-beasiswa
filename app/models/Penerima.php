@@ -55,7 +55,9 @@ class Penerima {
             $nm_jur = $d_jur->get_nama();
             $penerima->set_jur($nm_jur);
             $penerima->set_bank($val['KD_BANK']);
-            $penerima->set_status($val['KD_STS_TB']);
+            $stb = new Status();
+            $d_stb = $stb->get_by_id($val['KD_STS_TB']);
+            $penerima->set_status($d_stb->nm_status);
             $penerima->set_nip($val['NIP_PB']);
             $penerima->set_nama($val['NM_PB']);
             $penerima->set_jkel($val['JK_PB']);
@@ -442,6 +444,8 @@ class Penerima {
         $sql .= "a.KD_ST as KD_ST,
             a.KD_JUR as KD_JUR,
             a.KD_STS_TB as KD_STS_TB,
+            b.TGL_MUL_ST as TGL_MUL_ST,
+            b.TGL_SEL_ST as TGL_SEL_ST,
             a.KD_BANK as KD_BANK,";
         $sql .= "
             a.KD_GOL as KD_GOL,
@@ -486,14 +490,17 @@ class Penerima {
         foreach($result as $val){
             $penerima = new $this($this->registry);
             $penerima->set_kd_pb($val['KD_PB']);
-            $penerima->set_st($val['KD_ST']);
+            $st = new SuratTugas($this->registry);
+            $penerima->set_st($val['TGL_MUL_ST'].";".$val['TGL_SEL_ST']);
             $jur = new Jurusan($this->registry);
             $jur->set_kode_jur($val['KD_JUR']);
             $d_jur = $jur->get_jur_by_id($jur);
             $nm_jur = $d_jur->get_nama();
             $penerima->set_jur($nm_jur);
             $penerima->set_bank($val['KD_BANK']);
-            $penerima->set_status($val['KD_STS_TB']);
+            $stb = new Status();
+            $d_stb = $stb->get_by_id($val['KD_STS_TB']);
+            $penerima->set_status($d_stb->nm_status);
             $penerima->set_nip($val['NIP_PB']);
             $penerima->set_nama($val['NM_PB']);
             $penerima->set_jkel($val['JK_PB']);

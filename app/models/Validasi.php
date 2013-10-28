@@ -135,5 +135,17 @@ class Validasi{
             return false;
         }
     }
+
+    public static function remove_space($string){
+        $string = trim(strtolower($string));
+        $karakter = array(" ","-","_","\t");
+        $replace= "";
+        $len = count($karakter);
+        for($i=0;$i<$len;$i++){
+            $string = str_replace($karakter[$i, $replace, $string);
+        }
+
+        return $replace;
+    }
 }
 ?>
