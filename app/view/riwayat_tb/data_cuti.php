@@ -40,9 +40,9 @@
             <label>Tanggal SC</label><input type="text" name="tgl_sc" id="datepicker" value="<?php echo isset($this->d_ubah)?  Tanggal::ubahFormatToDatePicker($this->d_ubah->get_tgl_surat_cuti()):'';?>" readonly>
             <div id="wpb" class="error"></div>
             <label>Penerima Beasiswa</label><input type="button" id="bt_pb" value="+" onClick="showDialog();" class="lihat" style="font-weight: bold; font-size: 120%">
-            <input style="<?php echo isset($this->d_ubah)?'':'display:none';?>" type="text" name="nip_pb" id="nip_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb->get_nip():'';?>" readonly>
-            <input style="<?php echo isset($this->d_ubah)?'':'display:none';?>" type="text" name="nama_pb" id="nama_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb->get_nama():'';?>" readonly>
-            <input type="hidden" name="kd_pb" id="kd_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb->get_kd_pb():'';?>">
+            <input style="<?php echo isset($this->d_ubah)?'':'display:none';?>" type="text" name="nip_pb" id="nip_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb_ubah->get_nip():'';?>" readonly>
+            <input style="<?php echo isset($this->d_ubah)?'':'display:none';?>" type="text" name="nama_pb" id="nama_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb_ubah->get_nama():'';?>" readonly>
+            <input type="hidden" name="kd_pb" id="kd_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb_ubah->get_kd_pb():'';?>">
 <!--            </br><label>Universitas</label><select id="univ" name="univ" onChange="get_jurusan(this.value);">
                 <option value="0">-Pilih Universitas-</option>
                 <?php 

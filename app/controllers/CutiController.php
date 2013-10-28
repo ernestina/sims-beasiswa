@@ -68,7 +68,7 @@ class CutiController extends BaseController{
 //            var_dump($this->view->d_ubah);
             $pb = new Penerima($this->registry);
             $pb->set_kd_pb($ct->get_pb());
-            $this->view->d_pb = $pb->get_penerima_by_id($pb);
+            $this->view->d_pb_ubah = $pb->get_penerima_by_id($pb);
         }
         $jsc = new JenisSuratCuti($this->registry);
         $univ = new Universitas($this->registry);
