@@ -184,7 +184,7 @@ class PenerimaController extends BaseController{
             'EMAIL_PB'=>$email,
             'NO_REKENING_PB'=>$no_rek,
             'JK_PB'=>$jkel,
-            'KD_GOL'=>$gol,
+            'KD_GOL'=>  Golongan::golongan_string_int2($gol),
             'UNIT_ASAL_PB'=>$unit,
             'KD_JUR'=>$jur,
             'KD_STS_TB'=>1
@@ -397,7 +397,7 @@ class PenerimaController extends BaseController{
         $return = json_encode(array(
             'nama'=>$nm,
             'jkel'=>$jk,
-            'gol'=>$gol,
+            'gol'=>  Golongan::golongan_int_string($gol),
             'unit'=>$unit,
             'registered'=>$d_cek
         ));

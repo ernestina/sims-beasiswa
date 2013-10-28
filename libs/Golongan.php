@@ -171,5 +171,65 @@ class Golongan{
         
         return $gol;
     }
+    
+    public static function golongan_string_int2($golongan){
+        $gol ='';
+        
+        switch($golongan){
+            case 'Juru Muda - I/a':
+                $gol = '11';
+                break;
+            case 'Juru Muda Tk.I - I/b':
+                $gol = '12';
+                break;
+            case 'Juru - I/c':
+                $gol = '13';
+                break;
+            case 'Juru Tk.I - I/d':
+                $gol = '14';
+                break;
+            case 'Pengatur Muda - IIa':
+                $gol = '21';
+                break;
+            case 'Pengatur Muda Tk.I - II/b':
+                $gol = '22';
+                break;
+            case 'Pengatur - II/c':
+                $gol = '23';
+                break;
+            case 'Pengatur Tk.I - II/d':
+                $gol = '24';
+                break;
+            case 'Penata Muda III/a':
+                $gol = '31';
+                break;
+            case 'Penata Muda Tk.I - III/b':
+                $gol = '32';
+                break;
+            case 'Penata - III/c':
+                $gol = '33';
+                break;
+            case 'Penata Tk.I - III/d':
+                $gol = '34';
+                break;
+            case 'Pembina - IV/a':
+                $gol = '41';
+                break;
+            case 'Pembina Tk.I - IV/b':
+                $gol = '42';
+                break;
+            case 'Pembina Utama Muda - IV/c':
+                $gol = '43';
+                break;
+            case 'Pembina Utama Madya - IV/d':
+                $gol = '44';
+                break;
+            case 'Pembina Utama - IV/e':
+                $gol = '45';
+                break;
+        }
+        
+        return $gol;
+    }
 }
 ?>
