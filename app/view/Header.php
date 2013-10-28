@@ -65,7 +65,7 @@
                     <li class="subnav">
                         <a href="#">DATABASE</a>
                         <ul>
-                            <li><a href="<?php echo URL; ?>admin/config"> <i class="icon-wrench icon-white"></i>  Setting</a></li>
+                            <!--<li><a href="<?php echo URL; ?>admin/config"> <i class="icon-wrench icon-white"></i>  Setting</a></li>-->
             <!--                <li><a href="<?php echo URL . '#' ?>">IP-Server</a></li>-->
                             <li><a href="<?php echo URL; ?>admin/backup"><i class="icon-hdd icon-white"></i>  Backup</a></li>
                             <li><a href="<?php echo URL; ?>admin/restore"><i class="icon-repeat icon-white"></i>  Restore</a></li>
