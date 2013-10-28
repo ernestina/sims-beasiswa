@@ -45,10 +45,16 @@ class SurattugasController extends BaseController{
             $st->add_st($data);
             $upload->uploadFile();
         }
-        
+        $aksi = array();
         if(!is_null($id)){
             $st->set_kd_st($id);
             $this->view->d_ubah = $st->get_surat_tugas_by_id($st);
+            $is_exist_file = ($this->view->d_ubah->get_file()!=NULL)?true:false;
+            $file = array('file_exist'=>$is_exist_file);
+            $aksi = array('aksi'=>'ubah');
+        }else{
+            $aksi = array('aksi'=>'rekam');
+            $file = array('file_exist'=>false);
         }
         
         $univ = new Universitas($this->registry);
@@ -62,7 +68,8 @@ class SurattugasController extends BaseController{
         $this->view->d_th_masuk = $st->get_list_th_masuk(true);
         $this->view->d_th_masuk_input = $st->get_list_th_masuk(false);
         $this->view->d_st = $st->get_surat_tugas();
-        
+        $this->view->aksi = json_encode($aksi);
+        $this->view->d_file_exist = json_encode($file);
         $this->view->render('riwayat_tb/data_st');
     }
     

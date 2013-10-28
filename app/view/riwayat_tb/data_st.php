@@ -18,9 +18,19 @@
             <label>No. Surat Tugas(ST)</label><input type="text" name="no_st" id="no_st" size="30" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nomor():'';?>">
             <div id="wstlama" class="error"></div>
             <label>No. ST Lama</label><select name="st_lama" id="st_lama" type="text">
+                <option value="0"> Pilih Surat Tugas Lama </option>
                 <?php 
                     foreach($this->d_st_lama as $val){
-                        echo "<option value=".$val->get_kd_st().">".$val->get_nomor()." [".$val->get_jur()."]</option>";
+                        if(isset($this->d_ubah)){
+                            if($this->d_ubah->get_st_lama()==$val->get_kd_st()){
+                                echo "<option value=".$val->get_kd_st()." selected>".$val->get_nomor()." [".$val->get_jur()."]</option>";
+                            }else{
+                                echo "<option value=".$val->get_kd_st().">".$val->get_nomor()." [".$val->get_jur()."]</option>";
+                            }
+                        }else{
+                            echo "<option value=".$val->get_kd_st().">".$val->get_nomor()." [".$val->get_jur()."]</option>";
+                        }
+                        
                     }
                 ?>
             </select>
@@ -28,21 +38,39 @@
             <label>jenis ST</label><select name="jns_st" id="jenis" type="text">
                 <?php 
                     foreach($this->d_jst as $val){
-                        echo "<option value=".$val->get_kode().">".$val->get_nama()."</option>";
+                        if(isset($this->d_ubah)){
+                            if($this->d_ubah->get_jenis_st()==$val->get_kode()){
+                                echo "<option value=".$val->get_kode()." selected>".$val->get_nama()."</option>";
+                            }else{
+                                echo "<option value=".$val->get_kode().">".$val->get_nama()."</option>";
+                            }
+                        }else{
+                            echo "<option value=".$val->get_kode().">".$val->get_nama()."</option>";
+                        }
+                        
                     }
                 ?>
             </select>
             <div id="wtglst" class="error"></div>
-            <label>Tanggal ST</label><input type="text" name="tgl_st" id="datepicker" value="<?php echo Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly>
+            <label>Tanggal ST</label><input type="text" name="tgl_st" id="datepicker" value="<?php echo isset($this->d_ubah)?  Tanggal::ubahFormatToDatePicker($this->d_ubah->get_tgl_st()):Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly>
             <div id="wtglmulai" class="error"></div>
-            <label>Tanggal Mulai ST</label><input type="text" name="tgl_mulai" id="datepicker1"  value="<?php echo Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly>
+            <label>Tanggal Mulai ST</label><input type="text" name="tgl_mulai" id="datepicker1"  value="<?php echo isset($this->d_ubah)?Tanggal::ubahFormatToDatePicker($this->d_ubah->get_tgl_mulai()):Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly>
             <div id="wtglselesai" class="error"></div>
-            <label>Tanggal Selesai ST</label><input type="text" name="tgl_selesai" id="datepicker2"  value="<?php echo Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly>
+            <label>Tanggal Selesai ST</label><input type="text" name="tgl_selesai" id="datepicker2"  value="<?php echo isset($this->d_ubah)?Tanggal::ubahFormatToDatePicker($this->d_ubah->get_tgl_selesai()):Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly>
             <div id="wpemberi" class="error"></div>
             <label>Pemberi Beasiswa</label><select name="pemb" id="pemberi" type="text">
                 <?php 
                     foreach($this->d_pemb as $val){
-                        echo "<option value=".$val->kd_pemberi.">".$val->nama_pemberi."</option>";
+                        if(isset($this->d_ubah)){
+                            if($this->d_ubah->get_pemberi()==$val->kd_pemberi){
+                                echo "<option value=".$val->kd_pemberi." selected>".$val->nama_pemberi."</option>";
+                            }else{
+                                echo "<option value=".$val->kd_pemberi.">".$val->nama_pemberi."</option>";
+                            }
+                        }else{
+                            echo "<option value=".$val->kd_pemberi.">".$val->nama_pemberi."</option>";
+                        }
+                        
                     }
                 ?>
             </select>
@@ -50,7 +78,16 @@
             <label>Universitas</label><select name="univ" id="univ" onchange="get_jurusan(this.value)" type="text">
                 <?php 
                     foreach($this->d_univ as $val){
-                        echo "<option value=".$val->get_kode_in().">".$val->get_nama()."</option>";
+//                        if(isset($this->d_ubah)){
+//                            if($this->d_ubah->get_univ()==$val->get_kode_in()){
+//                                echo "<option value=".$val->get_kode_in()." selected>".$val->get_nama()."</option>";
+//                            }else{
+//                                echo "<option value=".$val->get_kode_in().">".$val->get_nama()."</option>";
+//                            }
+//                        }else{
+                            echo "<option value=".$val->get_kode_in().">".$val->get_nama()."</option>";
+//                        }
+                        
                     }
                 ?>
             </select>
@@ -58,7 +95,16 @@
             <label>Jurusan/Prodi</label><select name="jur" id="jur" type="text">
                 <?php 
                     foreach($this->d_jur as $val){
-                        echo "<option value=".$val->get_kode_jur().">".$val->get_nama()." [".$val->get_kode_fakul()."]</option>";
+                        if(isset($this->d_ubah)){
+                            if($this->d_ubah->get_jur()==$val->get_kode_jur()){
+                                echo "<option value=".$val->get_kode_jur()." selected>".$val->get_nama()." [".$val->get_kode_fakul()."]</option>";
+                            }else{
+                                echo "<option value=".$val->get_kode_jur().">".$val->get_nama()." [".$val->get_kode_fakul()."]</option>";
+                            }
+                        }else{
+                            echo "<option value=".$val->get_kode_jur().">".$val->get_nama()." [".$val->get_kode_fakul()."]</option>";
+                        }
+                        
                     }
                 ?>
             </select>
@@ -66,7 +112,16 @@
             <label>Tahun Masuk</label><select name="th_masuk" id="th_masuk" type="text">
                 <?php
                     foreach ($this->d_th_masuk_input as $key=>$val){
-                        echo "<option value=".$key.">".$val."</option>";
+                        if(isset($this->d_ubah)){
+                            if($this->d_ubah->get_th_masuk()==$key){
+                                echo "<option value=".$key." selected>".$val."</option>";
+                            }else{
+                                echo "<option value=".$key.">".$val."</option>";
+                            }
+                        }else{
+                            echo "<option value=".$key.">".$val."</option>";
+                        }
+                        
                     }
                 ?>
             </select>
@@ -124,7 +179,8 @@
         hideErrorId();
         hideWarning();
         get_jurusan(document.getElementById('univ').value);
-        
+//        var file_exist = <?php echo $this->d_file_exist;?>;
+//        console.log(file_exist.file_exist);
     });
     
     function hideErrorId(){
@@ -248,12 +304,17 @@
             jml++;
         }
         
-        if(sfile==''){
-            jml++;
-            var wfile = '<div id=warning>File surat belum dipilih!</div>'
-            $('#wfile').fadeIn(200);
-            $('#wfile').html(wfile);
-            return false;
+        if(sfile==''){ 
+            
+            var file_exist = <?php echo $this->d_file_exist;?>;
+            if(file_exist.file_exist===false){
+                jml++;
+                var wfile = '<div id=warning>File surat belum dipilih!</div>'
+                $('#wfile').fadeIn(200);
+                $('#wfile').html(wfile);
+                return false;
+            }
+            
         }else{
             var csplit = sfile.split(".");
             var ext = csplit[csplit.length-1];

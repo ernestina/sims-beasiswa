@@ -14,6 +14,7 @@ class SuratTugas {
     private $_jenis_st;
     private $_st_lama;
     private $_nomor;
+    private $_pemberi;
     private $_tgl_st;
     private $_tgl_mulai;
     private $_tgl_selesai;
@@ -48,6 +49,7 @@ class SuratTugas {
             $d_jur = $jur->get_jur_by_id($jur);
             $st->set_jur($d_jur->get_nama());
             $st->set_nomor($val['NO_ST']);
+            $st->set_pemberi($val['KD_PEMB']);
             $st->set_st_lama($val['KD_ST_LAMA']);
             $jst = new JenisSuratTugas($this->registry);
             $jst->set_kode($val['KD_JENIS_ST']);
@@ -76,6 +78,7 @@ class SuratTugas {
             $this->set_kd_st($val['KD_ST']);
             $this->set_jur($val['KD_JUR']);
             $this->set_nomor($val['NO_ST']);
+            $st->set_pemberi($val['KD_PEMB']);
             $this->set_st_lama($val['KD_ST_LAMA']);
             $this->set_jenis_st($val['KD_JENIS_ST']);
             $this->set_tgl_st($val['TGL_ST']);
@@ -136,6 +139,7 @@ class SuratTugas {
             $d_jur = $jur->get_jur_by_id($jur);
             $st->set_jur($d_jur->get_nama());
             $st->set_nomor($val['NOMOR_ST']);
+            $st->set_pemberi($val['KD_PEMB']);
             $st->set_st_lama($val['KD_ST_LAMA']);
             $jst = new JenisSuratTugas($this->registry);
             $jst->set_kode($val['KD_JENIS_ST']);
@@ -267,6 +271,10 @@ class SuratTugas {
     public function set_nomor($nomor) {
         $this->_nomor = $nomor;
     }
+    
+    public function set_pemberi($pemberi) {
+        $this->_pemberi = $pemberi;
+    }
 
     public function set_tgl_st($tgl) {
         $this->_tgl_st = $tgl;
@@ -310,6 +318,10 @@ class SuratTugas {
 
     public function get_nomor() {
         return $this->_nomor;
+    }
+    
+    public function get_pemberi() {
+        return $this->_pemberi;
     }
 
     public function get_tgl_st() {
