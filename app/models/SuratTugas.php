@@ -189,19 +189,23 @@ class SuratTugas {
      * mendapatkan data tahun masuk
      * param 
      */
-    public function get_list_th_masuk() {
-        $sql = "SELECT DISTINCT(THN_MASUK) as THN FROM ".$this->_tb_st." ORDER BY THN DESC";
-        $d_thn = $this->db->select($sql);
-//        $this_year = (int) date('Y');
-//        $begin_list = $this_year - 6;
+    public function get_list_th_masuk($st=true) {
         $data = array();
-        foreach ($d_thn as $v){
-            $data[$v['THN']] = $v['THN'];
+        if($st){
+            $sql = "SELECT DISTINCT(THN_MASUK) as THN FROM ".$this->_tb_st." ORDER BY THN DESC";
+            $d_thn = $this->db->select($sql);
+            foreach ($d_thn as $v){
+                $data[$v['THN']] = $v['THN'];
+            }
+        }else{
+            $this_year = (int) date('Y');
+            $begin_list = $this_year - 3;
+            $end_list = $this_year + 3;
+            
+            for ($begin_list; $begin_list <= $end_list; $begin_list++) {
+                $data[$begin_list] = $begin_list;
+            }
         }
-//        for ($begin_list; $begin_list <= $this_year; $begin_list++) {
-//            $data[$begin_list] = $begin_list;
-//        }
-
         return $data;
     }
 

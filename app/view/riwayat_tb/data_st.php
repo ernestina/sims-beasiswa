@@ -65,7 +65,7 @@
             <div id="wthnmasuk" class="error"></div>
             <label>Tahun Masuk</label><select name="th_masuk" id="th_masuk" type="text">
                 <?php
-                    foreach ($this->d_th_masuk as $key=>$val){
+                    foreach ($this->d_th_masuk_input as $key=>$val){
                         echo "<option value=".$key.">".$val."</option>";
                     }
                 ?>

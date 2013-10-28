@@ -59,7 +59,8 @@ class SurattugasController extends BaseController{
         $this->view->d_jst = $st->get_st_class();
         $this->view->d_univ = $univ->get_univ();
         $this->view->d_jur = $jur->get_jurusan();
-        $this->view->d_th_masuk = $st->get_list_th_masuk();
+        $this->view->d_th_masuk = $st->get_list_th_masuk(true);
+        $this->view->d_th_masuk_input = $st->get_list_th_masuk(false);
         $this->view->d_st = $st->get_surat_tugas();
         
         $this->view->render('riwayat_tb/data_st');
