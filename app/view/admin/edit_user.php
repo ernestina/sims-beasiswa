@@ -20,7 +20,7 @@
                             <option value="1">Admin</option>
                             <option value="2">User</option>                          
                         </select>
-                        <label>Upload Foto</label><input type="file" name="foto" id="foto" value="" size="30"/>
+                        <label>Upload Foto</label><input type="file" name="upload" id="upload" value="" size="30"/>
                         <ul class="inline tengah">
                             <li><input class="normal" type="reset" onclick="window.location.href='<?php echo URL . "admin/listUser"; ?>'" value="BATAL"></li>
                             <li><input class="sukses" type="submit" name="submit" value="SIMPAN" onclick=""></li>
