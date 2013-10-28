@@ -1,11 +1,12 @@
+<!--ubah buku-->
 <table class="table-bordered zebra">
     <thead>
     <th width="5%">No</th>
     <th width="25%">Nama</th>
-    <th width="15%">Gol</th>
+    <th width="20%">Gol</th>
     <th width="10%">Status</th>
     <th width="15%">Bank Penerima</th>
-    <th width="20%">No. Rekening</th>
+    <th width="15%">No. Rekening</th>
     <th width="10%">Pilih</th>
 </thead>
 <tbody>
@@ -17,7 +18,7 @@ foreach ($this->pb as $pb) {
     $bank = $this->bank->get_bank_id($pb->get_bank());
     ?>
     <tr>
-        <td><?php echo $i; ?></td>
+        <td style="text-align: center"><?php echo $i; ?></td>
         <td><?php echo $pb->get_nama(); ?></td>
         <td><?php echo Golongan::golongan_int_string($pb->get_gol()); ?></td>
         <td><?php echo StatusPB::status_int_string($pb->get_status()); ?></td>

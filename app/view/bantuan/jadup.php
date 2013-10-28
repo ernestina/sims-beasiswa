@@ -45,7 +45,8 @@
                 </tr>
                 <tr>
                     <td colspan="4" style="padding-top: 0px">
-                        <input type="button" id="add" value="TAMBAH" onClick="location.href='<?php echo URL . 'elemenBeasiswa/addJadup' ?>'">
+                        <!--input type="button" id="add" value="TAMBAH" onClick="location.href='<?php echo URL . 'elemenBeasiswa/addJadup' ?>'"-->
+						<button type="button" onClick="location.href='<?php echo URL . "elemenBeasiswa/addJadup"; ?>'"><i class="icon-plus icon-white"></i>  TAMBAH</button>
                     </td>
                 </tr>
                 

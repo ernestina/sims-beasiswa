@@ -1,5 +1,5 @@
 <div id="top">
-    <h2>BIAYA TA/SKRIPSI/TESIS > UBAH</h2> <!-- memakai breadcrumb -->
+    <h2><a href="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'elemenBeasiswa/viewSkripsi' ?>">BIAYA TA/SKRIPSI/TESIS</a> > UBAH</h2> <!-- memakai breadcrumb -->
 
 
     <form method="POST" onSubmit="return cekField();" action="<?php echo URL . 'elemenBeasiswa/updateUangSkripsi' ?> " enctype="multipart/form-data">
@@ -9,7 +9,7 @@
             </noscript>
             <input  type="hidden" name="ubah_uskripsi" />
             <input  type="hidden" name="r_elem" value="3"/>
-            <fieldset>
+            <fieldset><legend>Parameter Ubah Tunjangan Skripsi/TA/Tesis/Desertasi</legend>
                 <!--div class="tigakolom"-->
                 <div class="kolom1">
                     <div id="wkode_univ"></div>
@@ -77,12 +77,14 @@
                 </ul>
 
         </div>
+		</fieldset><br>
 
         <!--        <div>
                     <div>Data Penerima Biaya Buku</div>
                     <div>file link print</div>
                 </div>-->
-        <div id="wtabel_penerima_skripsi"></div>
+        <fieldset><legend>Daftar Penerima Tunjangan Skripsi/TA/Tesis/Desertasi</legend>
+		<div id="wtabel_penerima_skripsi"></div>
         <div id="tabel_penerima_skripsi">
         </div>
         </fieldset>

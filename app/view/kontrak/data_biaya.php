@@ -1,7 +1,7 @@
 
 <div id="top">
     <h2><a href="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/display' ?>">DATA KONTRAK KERJASAMA</a> > BIAYA</h2> <!-- ntar pake breadcrumb -->
-    <input type="button" value="KEMBALI" onClick="location.href='<?php echo URL . 'kontrak/display'; ?>'">
+    <!--input type="button" value="KEMBALI" onClick="location.href='<?php echo URL . 'kontrak/display'; ?>'"-->
 
             <label class="isian">Nomor / Tanggal Kontrak</label><input type="text" size="50" readonly value="<?php echo $this->data_kontrak->no_kontrak . " / " . $this->data_kontrak->tgl_kontrak; ?>" disabled>
             <label class="isian">Program Studi</label><textarea type="text" rows="1" disabled><?php echo $this->nama_jur . " " . $this->nama_univ . " " . $this->data_kontrak->thn_masuk_kontrak; ?></textarea>

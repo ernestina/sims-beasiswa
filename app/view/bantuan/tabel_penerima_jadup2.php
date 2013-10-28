@@ -1,22 +1,21 @@
-
-<table>
+<!--ubah jadup-->
+<table class="table-bordered zebra">
     <thead>
         <tr>
             <th width= '3%'>No</th>
-            <th width= '20%'>Nama</th>
+            <th width= '25%'>Nama</th>
             <th width= '10%'>Gol</th>
-            <th width= '15%'>Status</th>
-            <th width= '5%'>Jumlah Kehadiran (persentase)</th>
+            <th width= '10%'>Status</th>
+            <th width= '12%' style="font-size: 90%">Jumlah Kehadiran (persentase)</th>
 <!--            <th width= '10%'>Jumlah Kotor</th>-->
-            <th width= '10%'>Pajak (persentase)</th>
+            <th width= '12%' style="font-size: 80%">Pajak (persentase)</th>
 <!--            <th width= '10%'>Jumlah Bersih</th>-->
-            <th width= '5%'>Bank Penerima</th>
-            <th width= '5%'>No. Rekening</th>
-            <th width= '5%'></th>
-            <th></th>
+            <th width= '10%'>Bank Penerima</th>
+            <th width= '10%'>No. Rekening</th>
+            <th width= '5%'>Pilih</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody style="text-align: center">
     <input type="hidden" id="jml_peg" name="jml_peg" value="<?php echo count($this->pb); ?>">
     <?php
     $i = 1;
@@ -27,16 +26,19 @@
         ?>
         <tr>
             <td><?php echo $i; ?></td>
-            <td><?php echo $value->get_nama() . "<br/>NIP." . $value->get_nip(); ?></td>
-            <td><?php echo Golongan::golongan_int_string($value->get_gol()); ?></td>
+            <td style="text-align: left"><?php echo $value->get_nama() . "<br/>NIP." . $value->get_nip(); ?></td>
+            <td style="text-align: left"><?php echo Golongan::golongan_int_string($value->get_gol()); ?></td>
             <td><?php echo StatusPB::status_int_string($value->get_status()); ?></td>
-            <td><input class="mini" type="text"  id="<?php echo 'jml_hadir' . $i; ?>" name="<?php echo 'jml_hadir' . $i; ?>" value="<?php if ($pb_el != false) {
+            <td><ul class="inline" style="margin-left: -40px"><li><input class="mini" type="text"  id="<?php echo 'jml_hadir' . $i; ?>" name="<?php echo 'jml_hadir' . $i; ?>" value="<?php if ($pb_el != false) {
         echo $pb_el->kehadiran;
     } else {
         echo "0";
-    } ?>">%</td>
+    } ?>" style="text-align: right"></li>
+			<li style="padding: 5px; vertical-align: top;">%</li>
+		</ul>
+		</td>
     <!--            <td><input class="mini" type="text" id="<?php echo 'jml_kotor' . $i; ?>" name="jml_kotor" value="0"></td>-->
-            <td><input class="mini" type="text" id="<?php echo 'pajak' . $i; ?>" name="<?php echo 'pajak' . $i; ?>" value="<?php if ($pb_el != false) {
+            <td><ul class="inline" style="margin-left: -40px"><li><input class="mini" type="text" id="<?php echo 'pajak' . $i; ?>" name="<?php echo 'pajak' . $i; ?>" value="<?php if ($pb_el != false) {
         echo $pb_el->pajak;
     } else {
         if ($value->get_gol() > 30) {
@@ -44,7 +46,9 @@
         } else {
             echo "0";
         }
-    } ?>">%</td>
+    } ?>" style="text-align: right"></li>
+			<li style="padding: 5px; vertical-align: top;">%</li>
+		</td>
     <!--            <td><input class="mini" type="text" id="<?php echo 'jml_bersih' . $i; ?>" name="jml_bersih" value="0"></td>-->
             <td><?php echo $bank->get_nama(); ?></td>
             <td><?php echo $value->get_no_rek(); ?></td>
@@ -67,14 +71,14 @@
                        />
 
             </td>
-        <tr>
+        </tr>
     <?php
     $i++;
 }
 ?>
         </tbody>
 </table>
-Keterangan: untuk penulisan desimal gunakan tanda titik (.).
+<p style="margin-left: 20px">Keterangan: untuk penulisan desimal gunakan tanda titik (.).<p>
 <script>
    
     //    for(var i=1; i<=$('#jml_peg').val(); i++){

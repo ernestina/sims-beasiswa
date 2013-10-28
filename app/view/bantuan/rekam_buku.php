@@ -1,5 +1,5 @@
 <div id="top">
-    <h2>BIAYA BUKU > TAMBAH</h2> <!-- memakai breadcrumb -->
+    <h2><a href="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'elemenBeasiswa/viewUangBuku' ?>">BIAYA BUKU</a> > TAMBAH</h2> <!-- memakai breadcrumb -->
 
 
     <form method="POST" onSubmit="return cekField();" action="<?php echo URL . 'elemenBeasiswa/saveUangBuku' ?> " enctype="multipart/form-data">

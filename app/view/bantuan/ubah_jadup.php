@@ -1,16 +1,16 @@
 <div id="top">
     <h2><a href="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'elemenBeasiswa/viewJadup' ?>">BIAYA TUNJANGAN HIDUP</a> > UBAH</h2> <!-- memakai breadcrumb -->
-</div>
 
-<div class="fitur">
+<fieldset><legend>Parameter Ubah Tunjangan Hidup</legend>
+<div class="kolom1">
     <form method="POST" action="<?php echo URL; ?>elemenBeasiswa/updateJadup" onSubmit="return cekField();" enctype="multipart/form-data">
-        <fieldset><legend>Ubah Biaya Hidup</legend>
+        
             <noscript>
             <input name="js_enabled" type="hidden" value="1">
             </noscript>
             <input  type="hidden" name="ubah_jadup"/> 
             <input  type="hidden" name="r_elem" value="1"/>       
-            <div>
+         
 
                 <label class="isian">Universitas : </label>
                 <input type="hidden" id="kode_univ" name="kode_univ" value="<?php echo $this->univ->get_kode_in(); ?>">
@@ -59,7 +59,7 @@
 <!--                    <li><input type="text" value="<?php echo $this->elemen->get_thn(); ?>" disabled></li>-->
                 </ul>
             </div> <!--end kolom1-->
-            <div>
+            <div class="kolom2">
                 <div id="wbiaya_jadup"></div>
                 <label class="isian">Biaya Per Pegawai : </label>
                 <input type="text" value="<?php echo number_format($this->elemen->get_biaya_per_peg()); ?>" disabled>
@@ -108,11 +108,14 @@
                     <li><button type="reset" name="batal" class="normal" onClick="location.href='<?php echo URL . "elemenBeasiswa/viewJadup"; ?>'"><i class="icon-remove icon-white"></i>Batal</li>
                 </ul>
             </div>
-        </fieldset>
+        </fieldset><br>
+		<fieldset><legend>Daftar Penerima Tunjangan Hidup</legend>
         <div id="wtabel_penerima_jadup"> </div>
         <div id="tabel_penerima_jadup"> </div>
+		</fieldset>
     </form>
 
+</div>
 </div>
 
 

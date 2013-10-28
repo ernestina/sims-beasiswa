@@ -59,7 +59,8 @@
 				</tr><tr>
                     <td colspan="4">
                         <div style="margin-right: 20px">
-                            <input class="sukses" type="submit" name="cetak" value="CETAK" style="margin-right: 10px">
+                            <!--input class="sukses" type="submit" name="cetak" value="CETAK" style="margin-right: 10px"-->
+							<button onClick="formSubmit" style="margin-right:20px"><i class="icon-print icon-white"></i>  CETAK</button>
                         </div>
                     </td>
                 </tr>

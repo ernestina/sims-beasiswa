@@ -29,9 +29,9 @@
         echo "<td>" . $val->get_jml_peg() . "</td>";
 
         echo "<td style=\"text-align: right\">" . number_format($val->get_total_bayar()) . "</td>";
-        echo "<td><a href=" . URL . "elemenBeasiswa/delSkripsi/" . $val->get_kd_d() . " onClick=\"return del();\"><i class=\"icon-trash\"></i></a> &nbsp 
-                        <a href=" . URL . "elemenBeasiswa/editSkripsi/" . $val->get_kd_d() . "><i class=\"icon-pencil\"></i></a> &nbsp 
-                            <a href='#' onClick='cetak_uskripsi(" . $val->get_kd_d() . "); return false;'><i class=\"icon-print\"></i></a>
+        echo "<td><a href=" . URL . "elemenBeasiswa/delSkripsi/" . $val->get_kd_d() . " onClick=\"return del();\" title='hapus'><i class=\"icon-trash\"></i></a> &nbsp 
+                        <a href=" . URL . "elemenBeasiswa/editSkripsi/" . $val->get_kd_d() . " title='ubah'><i class=\"icon-pencil\"></i></a> &nbsp 
+                            <a href='#' onClick='cetak_uskripsi(" . $val->get_kd_d() . "); return false;' title='cetak'><i class=\"icon-print\"></i></a>
 </td>";
         echo "</tr>";
         $no++;

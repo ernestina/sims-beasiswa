@@ -71,7 +71,7 @@
                 <div class="flag"><img class="noti" src='public/icon/purges.png'></div>
         </ul>-->
 </div>
-<div id="beranda" class="notif">
+<div id="beranda">
 <!--    <marquee id="marikue" scrollamount="2" behavior="scroll" direction="up" style="height:620px">-->
         <!--    <ul>
                 <li class="jadup">

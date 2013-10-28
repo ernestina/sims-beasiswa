@@ -1,15 +1,15 @@
 <!--<fieldset>-->
 <table class="table-bordered zebra">
-    <thead>
-    <th>No</th>
-    <th>Nama</th>
-    <th>Gol</th>
-    <th>Status</th>
-    <th>Bank Penerima</th>
-    <th>No. Rekening</th>
-    <th>Judul Penelitian</th>
-    <th>Pilih</th>
-</thead>
+	<thead>
+		<th width="5%">No</th>
+        <th width="20%">Nama</th>
+        <th width="10%">Gol</th>
+        <th width="5%">Status</th>
+        <th width="15%">Bank Penerima</th>
+        <th width="15%">No. Rekening</th>
+        <th width="20%">Judul Penelitian</th>
+        <th width="10%">Pilih</th>
+    </thead>
 <tbody>
     <?php
     $no = 0;

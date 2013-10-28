@@ -1,5 +1,5 @@
 <div id="top">
-    <h2>BIAYA BUKU > TA/SKRIPSI/TESIS</h2> <!-- memakai breadcrumb -->
+    <h2><a href="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'elemenBeasiswa/viewSkripsi' ?>">BIAYA TA/SKRIPSI/TESIS</a> > REKAM</h2> <!-- memakai breadcrumb -->
 
 
     <form method="POST" onSubmit="return cekField();" action="<?php echo URL . 'elemenBeasiswa/saveUangSkripsi' ?> " enctype="multipart/form-data">
@@ -9,7 +9,7 @@
             </noscript>
             <input  type="hidden" name="rekam_uskripsi" />
             <input  type="hidden" name="r_elem" value="3"/>
-            <fieldset>
+            <fieldset><legend>Parameter Tunjangan Skripsi/TA/Tesis/Desertasi</legend>
                 <!--div class="tigakolom"-->
                 <div class="kolom1">
                     <div id="wkode_univ"></div>
@@ -97,18 +97,20 @@
                     <div>Data Penerima Biaya Buku</div>
                     <div>file link print</div>
                 </div>-->
-        <div id="wtabel_penerima_skripsi"></div>
+        <br>
+		<fieldset><legend>Daftar Penerima Tunjangan Skripsi/TA/Tesis/Desertasi</legend>
+		<div id="wtabel_penerima_skripsi"></div>
         <div id="tabel_penerima_skripsi">
             <table class="table-bordered zebra">
                 <thead>
-                <th>No</th>
-                <th>Nama</th>
-                <th>Gol</th>
-                <th>Status</th>
-                <th>Bank Penerima</th>
-                <th>No. Rekening</th>
-                <th>Judul Penelitian</th>
-                <th>Pilih</th>
+                <th width="5%">No</th>
+                <th width="20%">Nama</th>
+                <th width="10%">Gol</th>
+                <th width="5%">Status</th>
+                <th width="15%">Bank Penerima</th>
+                <th width="15%">No. Rekening</th>
+                <th width="20%">Judul Penelitian</th>
+                <th width="10%">Pilih</th>
                 </thead>
             </table>
         </div>

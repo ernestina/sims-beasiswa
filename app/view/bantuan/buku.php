@@ -43,11 +43,12 @@
                                 <?php } ?>
                     </select>
                     </td>
-                    <td style="float: right"><input type="search" name="cari" id="cari" placeholder="Cari dengan kata kunci nomor SP2D" size="30" title="Cari"></td>
+                    <td style="float: right"><input type="search" name="cari" id="cari" placeholder="Cari dengan kata kunci nomor SP2D..." size="30" title="Cari"></td>
                 </tr>
                 <tr>
                     <td colspan="4" style="padding-top: 0px">
-                        <input type="button" id="add" value="TAMBAH" onClick="location.href='<?php echo URL . 'elemenBeasiswa/addUangBuku' ?>'">
+                        <!--input type="button" id="add" value="TAMBAH" onClick="location.href='<?php echo URL . 'elemenBeasiswa/addUangBuku' ?>'"-->
+						<button type="button" id="add" onClick="location.href='<?php echo URL . "elemenBeasiswa/addUangBuku"; ?>'" ><i class="icon-plus icon-white"></i>  TAMBAH</button>
                         
                     </td>
                 </tr>

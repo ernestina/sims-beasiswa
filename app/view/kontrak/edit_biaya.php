@@ -1,6 +1,6 @@
 <div id="top">
     <h2><a href="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/display' ?>">DATA KONTRAK KERJASAMA</a> > <a href="<?php echo URL . 'kontrak/biaya/' . $this->kontrak->kd_kontrak ?>">BIAYA</a> > UBAH <!-- entar pake breadcrumb--></h2>
-    <input type="button" value="KEMBALI" onClick="location.href='<?php echo URL . 'kontrak/biaya/' . $this->kontrak->kd_kontrak; ?>'">
+    <!--input type="button" value="KEMBALI" onClick="location.href='<?php echo URL . 'kontrak/biaya/' . $this->kontrak->kd_kontrak; ?>'"-->
 
 <div>
     <label class="isian">Nomor / Tanggal Kontrak</label><input type="text" size="50" readonly value="<?php echo $this->kontrak->no_kontrak . " / " . $this->kontrak->tgl_kontrak; ?>" disabled>

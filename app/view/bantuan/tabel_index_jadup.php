@@ -2,14 +2,14 @@
     <thead>
     <th width="2%">No</th>
     <th width="10%">No dan Tgl SP2D</th>
-    <th width="10%">Universitas</th>
-    <th width="15%">Jurusan/Prodi</th>
+    <th width="15%">Universitas</th>
+    <th width="10%">Jurusan/Prodi</th>
     <th width="5%">Th. Masuk</th>
     <th width="5%">Jumlah Pegawai Dibayar</th>
     <th width="10%">Bulan</th>
     <th width="5%">Tahun</th>
     <th width="10%">Total Bayar</th>
-    <th width="7%">Aksi</th>
+    <th width="8%">Aksi</th>
 </thead>
 <tbody style="text-align: center">
     <?php
@@ -24,19 +24,19 @@
         }
         echo "<td>" . $val->get_no_sp2d() . " / " . $tgl . "</td>";
 
-        echo "<td>" . $val->get_univ() . "</td>";
+        echo "<td style='text-align: left'>" . $val->get_univ() . "</td>";
 //                    $this->jur->set_kode_jur($val->get_kd_jur());
 //                    $jur = $this->jur2->get_jur_by_id($this->jur2);
-        echo "<td>" . $val->get_kd_jur() . "</td>";
+        echo "<td style='text-align: left'>" . $val->get_kd_jur() . "</td>";
         echo "<td>" . $val->get_thn_masuk() . "</td>";
         echo "<td>" . $val->get_jml_peg() . "</td>";
         $bulan = $val->get_bln();
         echo "<td>" . Tanggal::bulan_indo($bulan) . "</td>";
         echo "<td>" . $val->get_thn() . "</td>";
-        echo "<td>" . number_format($val->get_total_bayar()) . "</td>";
-        echo "<td><a href=" . URL . "elemenBeasiswa/delJadup/" . $val->get_kd_d() . " onClick=\"return del();\"><i class=\"icon-trash\"></i></a> &nbsp &nbsp 
-                        <a href=" . URL . "elemenBeasiswa/editJadup/" . $val->get_kd_d() . "><i class=\"icon-pencil\"></i></a>
-                            <a href='#' onClick='cetak_jadup(" . $val->get_kd_d() . "); return false;'><i class=\"icon-print\"></i></a>
+        echo "<td style='text-align: right'>" . number_format($val->get_total_bayar()) . "</td>";
+        echo "<td><a href=" . URL . "elemenBeasiswa/delJadup/" . $val->get_kd_d() . " onClick=\"return del();\" title='hapus'><i class=\"icon-trash\" ></i></a> &nbsp 
+                        <a href=" . URL . "elemenBeasiswa/editJadup/" . $val->get_kd_d() . " title='ubah'><i class=\"icon-pencil\"></i></a> &nbsp
+                            <a href='#' onClick='cetak_jadup(" . $val->get_kd_d() . "); return false;' title='cetak'><i class=\"icon-print\"></i></a>
                   </td>";
         echo "</tr>";
         $no++;

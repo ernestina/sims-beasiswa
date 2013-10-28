@@ -42,7 +42,7 @@
                                 <?php } ?>
                     </select>
                 </td>
-                <td ><input type="search" name="cari" id="cari" placeholder="Cari dengan kata kunci nomor SP2D" style="float: right"> </td>
+                <td ><input type="search" name="cari" id="cari" placeholder="Cari dengan kata kunci nomor SP2D..." style="float: right"> </td>
             </tr>
         </table>
 
