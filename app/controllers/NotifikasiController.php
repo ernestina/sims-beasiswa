@@ -31,9 +31,17 @@ class NotifikasiController extends BaseController{
             $count = count($jatuh_tempo)>1;
             $bln = $count?$jatuh_tempo[1]:'';
             $thn = $jatuh_tempo[0];
+            $bulan = Tanggal::bulan_indo($bln);
+            if($data->get_jenis_notif()=='buku'){
+                if($jatuh_tempo[1]==1){
+                    $bulan = 'ganjil';
+                }else{
+                    $bulan = 'genap';
+                }
+            }
             $temp = array(
                 'jatuh_tempo'=>$data->get_jatuh_tempo(),
-                'bulan'=>  Tanggal::bulan_indo($bln),
+                'bulan'=>  $bulan,
                 'tahun'=>  $thn,
                 'nama_pic'=>$nama_pic,
                 'kode_pic'=>$kode_pic,

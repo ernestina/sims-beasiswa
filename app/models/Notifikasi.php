@@ -281,7 +281,7 @@ class Notifikasi{
             LEFT JOIN r_jur c ON b.KD_JUR=c.KD_JUR
             LEFT JOIN r_fakul d ON c.KD_FAKUL=d.KD_FAKUL
             LEFT JOIN r_univ e ON d.KD_UNIV=e.KD_UNIV
-            LEFT JOIN d_user f ON e.KD_USER=f.KD_USER";
+            LEFT JOIN d_user f ON e.KD_USER=f.KD_USER WHERE a.JUDUL_SKRIPSI_PB<>''";
 //        echo $sql."</br>";
         $d_skripsi = $this->_db->select($sql);
         foreach($d_skripsi as $skripsi){
@@ -290,9 +290,12 @@ class Notifikasi{
             $kd_st = $skripsi['KD_ST'];
             $sudah_ta = $judul_skripsi!='' && $judul_skripsi!=NULL;
             $cek_proses = $this->cek_telah_bayar_elem(3,$kd_pb, $kd_st);
+//            var_dump($cek_proses);
             if($sudah_ta){
                 $notif = new NotifikasiDao();
-                $notif->set_jatuh_tempo($skripsi['TGL_SEL_ST']);
+                $jatuh_tempo = strtotime('-1 MONTH', strtotime($skripsi['TGL_SEL_ST']));
+//                var_dump($skripsi['TGL_SEL_ST']);var_dump(date('Y-m-d',$jatuh_tempo));
+                $notif->set_jatuh_tempo(date('Y-m-d',$jatuh_tempo));
                 $notif->set_jenis_notif($skripsi['JENIS']);
                 $notif->set_jurusan($skripsi['NM_JUR']);
                 $notif->set_kode_link($kd_st);
@@ -304,9 +307,10 @@ class Notifikasi{
                 
                 if($cek_proses){ //jika ditemukan data pembayaran
                     $cek_selesai = $this->cek_telah_bayar_elem(3,$kd_pb, $kd_st,true);
+                    var_dump($cek_selesai);
                     if(!$cek_selesai){ //jika data sp2d telah ada
                         $notif->set_status_notif('proses');
-                   echo $kd_st."-".$skripsi['NM_PB']."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+//                   echo $kd_st."-".$skripsi['NM_PB']."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
                         $data_skripsi[]=$notif;
                     }
                 }else{ // jika data tidak ditemukan 
@@ -366,14 +370,14 @@ class Notifikasi{
 //            print_r($d_bulan);
             foreach ($d_bulan as $bulan){
                 $cek_proses = $this->cek_telah_bayar_elem(2, $bulan, $kd_st);
-                echo $bulan; var_dump($cek_proses);
+//                echo $bulan; var_dump($cek_proses);
                 $cek_bayar = $this->cek_telah_bayar_elem(2, $bulan, $kd_st,true);
                 if($cek_proses){
                     if(!$cek_bayar){
                         $notif = $this->get_data_buku_by_st($kd_st, $bulan);
                         $notif->set_link($bulan);
                         $notif->set_status_notif('proses');
-                        echo $kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+//                        echo $kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
 //                        print_r($notif);
                         $this->_notif_data[] = $notif;
                     }
@@ -408,7 +412,7 @@ class Notifikasi{
                                     'nama'=>$d_pic->get_nmUser(),
                                     'foto'=>$d_pic->get_foto());
                     $notif->set_pic($pic_arr);
-                    echo $kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+//                    echo $kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
                     $this->_notif_data[] = $notif;
                 }
             }
@@ -478,7 +482,7 @@ class Notifikasi{
     }
     
     private function cek_telah_bayar_elem($kode_elem, $month,$surat_tugas,$cek_sp2d=false){
-        $month = explode("-",$month);
+        if($kode_elem!=3) $month = explode("-",$month);
         $sql = "SELECT a.KD_D_ELEM_BEASISWA as KD_D_ELEM_BEASISWA, 
                 a.NO_SP2D_D_ELEM_BEASISWA as NO_SP2D_ELEM_BEASISWA
                 FROM d_elemen_beasiswa a 
@@ -486,7 +490,15 @@ class Notifikasi{
                 LEFT JOIN d_pb c ON b.KD_PB = c.KD_PB
                 LEFT JOIN d_srt_tugas d ON c.KD_ST = d.KD_ST
                 WHERE a.BLN_D_ELEM_BEASISWA=".$month[1]." AND THN_D_ELEM_BEASISWA=".$month[0]." AND d.KD_ST=".$surat_tugas." AND KD_R_ELEM_BEASISWA=$kode_elem";
-        
+        if($kode_elem==3){
+            $sql = "SELECT a.KD_D_ELEM_BEASISWA as KD_D_ELEM_BEASISWA, 
+                a.NO_SP2D_D_ELEM_BEASISWA as NO_SP2D_ELEM_BEASISWA
+                FROM d_elemen_beasiswa a 
+                LEFT JOIN t_elem_beasiswa b ON a.KD_D_ELEM_BEASISWA = b.KD_D_ELEM_BEASISWA
+                LEFT JOIN d_pb c ON b.KD_PB = c.KD_PB
+                LEFT JOIN d_srt_tugas d ON c.KD_ST = d.KD_ST
+                WHERE b.KD_PB=".$month." AND d.KD_ST=".$surat_tugas." AND KD_R_ELEM_BEASISWA=$kode_elem";
+        }
         if($cek_sp2d){
             $sql .= " AND a.NO_SP2D_D_ELEM_BEASISWA<>''";
         }

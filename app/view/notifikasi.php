@@ -45,7 +45,14 @@
                 var jenis = '';
                 var judul_notif = ''; //judul notifikasi
                 var pesan = ''; //detail pesan notifikasi
-                var jatuh_tempo = (data_notif[i].bulan).substr(0,3)+" "+data_notif[i].tahun 
+                var jatuh_tempo = (data_notif[i].bulan).substr(0,3)+" "+data_notif[i].tahun
+                if(data_notif[i].jenis==='buku'){
+                    if(data_notif[i].bulan=='ganjil'){
+                        jatuh_tempo = "Semester Ganjil "+data_notif[i].tahun
+                    }else{
+                        jatuh_tempo = "Semester Genap "+data_notif[i].tahun
+                    }
+                }
                 var bul_sem = data_notif[i].jatuh_tempo; //bulan untuk semester
                 switch(data_notif[i].jenis){
                     case 'jadup':
