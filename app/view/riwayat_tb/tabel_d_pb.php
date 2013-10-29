@@ -1,12 +1,12 @@
 <table class="table-bordered zebra scroll" >
         <thead >
-        <th>no</th>
-        <th width="15%">NIP/Nama</th>
-        <th width="25%">Golongan/Unit Asal</th>
-        <th width="15%">Jurusan</th>
-        <th width="20%">Masa TB</th>
-        <th width="20%">Status</th>
-        <th width="20%">Aksi</th>
+        <th>No</th>
+        <th width="20%">NIP/Nama</th>
+        <th width="15%">Golongan/Unit Asal</th>
+        <th width="25%">Jurusan</th>
+        <th width="15%">Masa TB</th>
+        <th width="15%">Status</th>
+        <th width="7%">Aksi</th>
         </thead>
 		<tbody>
         <?php 

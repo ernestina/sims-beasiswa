@@ -14,7 +14,7 @@
             <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/viewRekamBiaya' ?>">
             <input type="hidden" id="kd_kontrak" name="kd_kontrak" value="<?php echo $this->data_kontrak->kd_kontrak; ?>">
 		<table width="95%">
-			<tr><td><input class="sukses" type="submit" value="TAMBAH"></td></tr>
+			<tr><td><input class="biru" type="submit" value="TAMBAH"></td></tr>
 		</table>
             </form>
        

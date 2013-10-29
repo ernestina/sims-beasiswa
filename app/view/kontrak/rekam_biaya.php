@@ -30,7 +30,7 @@
                     <div id="wjadwal_bayar"></div>
                     <label class="isian">Total Biaya*</label><input type="text" size="14" name="jml_biaya" id="jml_biaya" maxlength="14" readonly>
                     <div id="wjml_biaya"></div>
-                    <input type="submit" class="sukses" value="SIMPAN" onClick="return simpan();">
+                    <input type="submit" class="biru" value="SIMPAN" onClick="return simpan();">
                 </form>
             </fieldset>
         </div>
