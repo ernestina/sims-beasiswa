@@ -28,7 +28,7 @@
                         <select name="tahun_masuk" id="tahun_masuk" type="text">
                             <option value="">Semua</option>>
                             <?php
-                            for ($i = 2007; $i <= date('Y') + 2; $i++) {
+                            for ($i = 2007; $i <= date('Y') + 1; $i++) {
                                 ?>
                                 <option value="<?php echo $i; ?>" <?php
                             if ($i == date('Y')) {
@@ -46,10 +46,10 @@
                 <tr>
                     <td colspan="4" style="padding-top: 0px">
                         <!--input type="button" id="add" value="TAMBAH" onClick="location.href='<?php echo URL . 'elemenBeasiswa/addJadup' ?>'"-->
-						<button type="button" onClick="location.href='<?php echo URL . "elemenBeasiswa/addJadup"; ?>'"><i class="icon-plus icon-white"></i>  TAMBAH</button>
+                        <button type="button" onClick="location.href='<?php echo URL . "elemenBeasiswa/addJadup"; ?>'"><i class="icon-plus icon-white"></i>  TAMBAH</button>
                     </td>
                 </tr>
-                
+
             </table>
 
             <div>
@@ -62,11 +62,16 @@
 </div>
 <script type="text/javascript">
     
-    $.post("<?php echo URL; ?>elemenBeasiswa/data_index_jadup", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()}, 
-    function (data){
-        //$('#tabel_index_jadup').fadeIn(100);
-        $('#tabel_index_jadup').html(data);
-    })
+    displayElemen();
+    function displayElemen(){
+        $.post("<?php echo URL; ?>elemenBeasiswa/data_index_jadup", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()}, 
+        function (data){
+            //$('#tabel_index_jadup').fadeIn(100);
+            $('#tabel_index_jadup').html(data);
+        });
+        
+        $('#cari').val('');
+    }
     
     $(document).ready(function(){ 
     
@@ -75,35 +80,27 @@
             $.post("<?php echo URL; ?>elemenBeasiswa/get_jur_by_univ", {univ:$("#universitas").val()},
             function(data){                
                 $('#jurusan').html(data);
-            }); 
-        
-            $.post("<?php echo URL; ?>elemenBeasiswa/data_index_jadup", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()},
-            function(data){                
-                $('#tabel_index_jadup').html(data);
-            }); 
+            });
+            displayElemen();
+         
         });
         
         //agar ketika universitas berubah karena dipilih, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
         $("#jurusan, #tahun_masuk").change(function(){
                   
-            $.post("<?php echo URL; ?>elemenBeasiswa/data_index_jadup", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()},
-            function(data){                
-                $('#tabel_index_jadup').html(data);
-            }); 
+            displayElemen();
         });
         
         $("#cari").keyup(function(){
-                  
-            $.post("<?php echo URL; ?>elemenBeasiswa/data_index_jadup2", { sp2d:$('#cari').val()}, 
-            function (data){
-                $('#tabel_index_jadup').html(data);
-            })
-            
+                          
             if($("#cari").val()==""){
-                $.post("<?php echo URL; ?>elemenBeasiswa/data_index_jadup", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()}, 
+                displayElemen();
+            } else {
+                $.post("<?php echo URL; ?>elemenBeasiswa/data_index_jadup2", { sp2d:$('#cari').val()}, 
                 function (data){
                     $('#tabel_index_jadup').html(data);
-                })
+                });
+                $("#jurusan, #tahun_masuk, #universitas").val('');
             }
         });
     })

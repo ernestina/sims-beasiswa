@@ -190,17 +190,8 @@ class elemenBeasiswaController extends BaseController {
     public function viewJadup() {
 
         $univ = new Universitas($this->registry);
-        $this->view->univ = $univ->get_univ();
-
-        $jur = new Jurusan($this->registry);
-        $this->view->jur = $jur->get_jurusan();
-
-        $kon = new Kontrak($this->registry);
-        $this->view->kon = $kon->get_All();
-
-//        $elem = new ElemenBeasiswa();
-//        $this->view->elem = $elem->get_elem_jadup();
-//        var_dump($elem->get_elem_jadup());
+        $user = Session::get('kd_user');
+        $this->view->univ = $univ->get_univ_by_pic($user);
         $this->view->render('bantuan/jadup');
     }
 
@@ -211,8 +202,9 @@ class elemenBeasiswaController extends BaseController {
             $univ = $_POST['univ'];
             $jurusan = $_POST['jurusan'];
             $tahun = $_POST['tahun'];
+            $user = Session::get('kd_user');
             $elem = new ElemenBeasiswa();
-            $this->view->elem = $elem->get_elem_jadup($univ, $jurusan, $tahun);
+            $this->view->elem = $elem->get_elem_jadup($univ, $jurusan, $tahun, $user);
 
             $this->view->load('bantuan/tabel_index_jadup');
         }

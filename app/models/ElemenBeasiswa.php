@@ -284,7 +284,7 @@ class ElemenBeasiswa {
     }
 
     
-    public function get_elem_jadup($univ = null, $jurusan = null, $tahun = null) {
+    public function get_elem_jadup($univ = null, $jurusan = null, $tahun = null, $user=null) {
 
         $sql = "SELECT 
             a.KD_D_ELEM_BEASISWA AS KD_D_ELEM_BEASISWA,
@@ -303,7 +303,9 @@ class ElemenBeasiswa {
                 LEFT JOIN r_jur b ON a.KD_JUR = b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL = c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV
-                WHERE KD_R_ELEM_BEASISWA='" . $this->_jadup . "'";
+                WHERE KD_R_ELEM_BEASISWA='" . $this->_jadup . "'
+                AND d.KD_USER ='".$user."'
+                ";
 
         if ($univ != "") {
             $sql .=" AND d.KD_UNIV ='" . $univ . "'";
