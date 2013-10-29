@@ -142,7 +142,7 @@ class Validasi{
         $replace= "";
         $len = count($karakter);
         for($i=0;$i<$len;$i++){
-            $string = str_replace($karakter[$i, $replace, $string);
+            $string = str_replace($karakter[$i], $replace, $string);
         }
 
         return $replace;

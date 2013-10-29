@@ -144,11 +144,21 @@ class Penerima {
         $data = array();
         foreach($result as $val){
             $penerima = new $this($this->registry);
+            $st = new SuratTugas($this->registry);
+            $st->set_kd_st($val['KD_ST']);
+            $d_st = $st->get_surat_tugas_by_id($st);
+            $tglmulsel = $d_st->get_tgl_mulai().";".$d_st->get_tgl_selesai();
             $penerima->set_kd_pb($val['KD_PB']);
-            $penerima->set_st($val['KD_ST']);
-            $penerima->set_jur($val['KD_JUR']);
+            $penerima->set_st($tglmulsel);
+            $jur = new Jurusan($this->registry);
+            $jur->set_kode_jur($val['KD_JUR']);
+            $d_jur = $jur->get_jur_by_id($jur);
+            $nm_jur = $d_jur->get_nama();
+            $penerima->set_jur($nm_jur);
             $penerima->set_bank($val['KD_BANK']);
-            $penerima->set_status($val['KD_STS_TB']);
+            $stb = new Status();
+            $d_stb = $stb->get_by_id($val['KD_STS_TB']);
+            $penerima->set_status($d_stb->nm_status);
             $penerima->set_nip($val['NIP_PB']);
             $penerima->set_nama($val['NM_PB']);
             $penerima->set_jkel($val['JK_PB']);
