@@ -830,29 +830,78 @@ class AdminController extends BaseController {
             if ($_POST['nip'] == "" || $_POST['nama'] == "") {
                 echo 'ada field yang masih belum diisi';
             } else {
-                if ($_POST['pass'] == "no_change" || $_POST['cpass'] == "no_change") {
-//                    echo 'dsadfa';
-                    $user = new User($registry);
-                    $user->set_id($_POST['id']);
-                    $user->set_nip($_POST['nip']);
-                    $user->set_nmUser($_POST['nama']);
-                    $user->set_akses($_POST['akses']);
-                    $user->set_foto($_POST['foto']);
-                    $user->updateUser_withoutpass($user);
-                }
+
                 if ($_POST['pass'] !== $_POST['cpass']) {
                     echo 'data tidak bisa disimpan karena password berbeda dengan confirm passwordnya';
                 }
+
+                if ($_POST['pass'] == "no_change" || $_POST['cpass'] == "no_change") {
+
+                    if ($_FILES['upload']['name'] == "") {
+                                              
+                        $user = new User($registry);
+                        $user->set_id($_POST['id']);
+                        $user->set_nip($_POST['nip']);
+                        $user->set_nmUser($_POST['nama']);
+                        $user->set_akses($_POST['akses']);
+                        $user->updateUser_withoutpass($user);
+                        
+                    } else {
+                        $allowedExts = array("jpg", "jpeg", "png");
+
+                        $ext = explode('.', $_FILES['upload']['name']);
+                        $extension = $ext[count($ext) - 1];
+
+                        if (in_array($extension, $allowedExts)) {
+
+                            move_uploaded_file($_FILES["upload"]["tmp_name"], "files/foto/" . $_FILES["upload"]["name"]);
+                        } else {
+                            
+                        }
+                        $user = new User($registry);
+                        $user->set_id($_POST['id']);
+                        $user->set_nip($_POST['nip']);
+                        $user->set_nmUser($_POST['nama']);
+                        $user->set_akses($_POST['akses']);
+                        $user->set_foto($_POST['nip'] . "." . $extension);
+                        $user->updateUser_withoutpass($user);
+                    }
+                }
+
                 if ($_POST['pass'] !== "no_change" && $_POST['pass'] == $_POST['cpass']) {
-                    $user = new User($registry);
-                    $user->set_id($_POST['id']);
-                    $user->set_nip($_POST['nip']);
-                    $user->set_nmUser($_POST['nama']);
-                    $user->set_pass($_POST['pass']);
-                    $user->set_akses($_POST['akses']);
-                    $user->set_foto($_POST['foto']);
-                    $user->updateUser($user);
-//                    var_dump($user);
+
+                    if ($_FILES['upload']['name'] == "") {
+                                              
+                        $user = new User($registry);
+                        $user->set_id($_POST['id']);
+                        $user->set_nip($_POST['nip']);
+                        $user->set_nmUser($_POST['nama']);
+                        $user->set_pass($_POST['pass']);
+                        $user->set_akses($_POST['akses']);
+                        $user->updateUser($user);
+                        
+                    } else {
+                        
+                        $allowedExts = array("jpg", "jpeg", "png");
+
+                        $ext = explode('.', $_FILES['upload']['name']);
+                        $extension = $ext[count($ext) - 1];
+
+                        if (in_array($extension, $allowedExts)) {
+
+                            move_uploaded_file($_FILES["upload"]["tmp_name"], "files/foto/" . $_FILES["upload"]["name"]);
+                        } else {
+                            
+                        }
+                        $user = new User($registry);
+                        $user->set_id($_POST['id']);
+                        $user->set_nip($_POST['nip']);
+                        $user->set_nmUser($_POST['nama']);
+                        $user->set_pass($_POST['pass']);
+                        $user->set_akses($_POST['akses']);
+                        $user->set_foto($_POST['nip'] . "." . $extension);
+                        $user->updateUser($user);
+                    }
                 }
             }
         }
@@ -866,7 +915,7 @@ class AdminController extends BaseController {
 
     public function deleteUser($id) {
         $user = new User($registry);
-        
+
         $user->delUser($id);
         header('location:' . URL . 'admin/listUser');
     }
