@@ -20,7 +20,7 @@
                 <tr>
                     <td><?php echo $i; ?></td>
                     <td style="text-align: left">
-                        <a href="<?php echo URL . "kontrak/file/" . $val->file_kontrak; ?>" target="kontrak" onClick="cetak_dokumen('kontrak');"><?php echo $val->no_kontrak; ?></a>
+                        <a href="<?php echo URL . "kontrak/file/" . $val->file_kontrak; ?>" target="file_kontrak" onClick="cetak_dokumen('file_kontrak');"><?php echo $val->no_kontrak; ?></a>
                         <?php
                         $kontrak_lama = $this->kontrak->get_by_id($val->kontrak_lama);
                         //var_dump($kontrak_lama);

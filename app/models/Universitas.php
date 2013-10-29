@@ -274,7 +274,7 @@ class Universitas {
         foreach ($result as $val) {
             $this->set_kode_in($val['KD_UNIV']);
             $this->set_kode($val['SINGKAT_UNIV']);
-            $this->set_pic($val['KD_PIC']);
+            $this->set_pic($val['KD_USER']);
             $this->set_nama($val['NM_UNIV']);
             $this->set_alamat($val['ALMT_UNIV']);
             $this->set_telepon($val['TELP_UNIV']);
@@ -282,6 +282,28 @@ class Universitas {
             $this->set_lokasi($val['LOK_UNIV']);
         }
         return $this;
+    }
+    
+    public function get_univ_by_pic($pic) {
+        $table = "r_univ";
+        $where = "KD_USER = '".$pic."'";
+        $sql = "SELECT * FROM $table where $where";
+        $result = $this->db->select($sql);
+        //var_dump($result);
+        $data = array();
+        foreach ($result as $val) {
+            $univ = new $this($this->registry);
+            $univ->set_kode_in($val['KD_UNIV']);
+            $univ->set_kode($val['SINGKAT_UNIV']);
+            $univ->set_pic($val['KD_USER']);
+            $univ->set_nama($val['NM_UNIV']);
+            $univ->set_alamat($val['ALMT_UNIV']);
+            $univ->set_telepon($val['TELP_UNIV']);
+            $univ->set_status($val['STATUS_UNIV']);
+            $univ->set_lokasi($val['LOK_UNIV']);
+            $data[] = $univ;
+        }
+        return $data;
     }
 
     /*

@@ -195,6 +195,7 @@ $akses['Kontrak'] = array(
                 'delTagihanPb',
                 'viewAddTagihanPb',
                 'cekTagihanPbByBiaya',
+                'getSelectByJur',
                 '__destruct'
                 );
 /*

@@ -20,7 +20,9 @@ class KontrakController extends BaseController {
         //$kontrak = new Kontrak();
         //$data = $kontrak->get_All();
         $universitas = new Universitas($this->registry);
-        $univ = $universitas->get_univ();
+        $kd_user = Session::get('kd_user');
+        //echo $kd_user;
+        $univ = $universitas->get_univ_by_pic($kd_user);
         //var_dump($univ);
         $this->view->kd_univ = $univ;
         //$this->view->data = $data;
@@ -31,12 +33,14 @@ class KontrakController extends BaseController {
     public function get_data_kontrak() {
         $kontrak = new Kontrak();
         $univ = $_POST['univ'];
+        $user = Session::get('kd_user');
+        //echo $user;
         $biaya = new Biaya();
         $jurusan = new Jurusan($this->registry);
         $universitas = new Universitas($this->registry);
 
         if ($univ == "") {
-            $data = $kontrak->get_All();
+            $data = $kontrak->get_All($user);
             $this->view->data = $data;
             //var_dump($data);
         } else {
@@ -53,7 +57,9 @@ class KontrakController extends BaseController {
     public function rekamKontrak() {
         if (!isset($_POST['rekam_kontrak'])) {
             $universitas = new Universitas($this->registry);
-            $univ = $universitas->get_univ();
+            $kd_user = Session::get('kd_user');
+            //echo $kd_user;
+            $univ = $universitas->get_univ_by_pic($kd_user);
             $kontrak = new Kontrak();
             $kon = $kontrak->get_All();
             $this->view->univ = $univ;
@@ -114,12 +120,37 @@ class KontrakController extends BaseController {
     //menampilkan halaman rekam_kontrak_dialog dalam bentuk modal (pada halaman data_kontrak)
     public function viewRekamKontrak() {
         $universitas = new Universitas($this->registry);
-        $univ = $universitas->get_univ();
-        $kontrak = new Kontrak();
-        $kon = $kontrak->get_All();
+        $kd_user = Session::get('kd_user');
+        //echo $kd_user;
+        $univ = $universitas->get_univ_by_pic($kd_user);
         $this->view->univ = $univ;
-        $this->view->kon = $kon;
         $this->view->load('kontrak/rekam_kontrak_dialog');
+    }
+
+    public function getSelectByJur() {
+        if (isset($_POST['jur'])) {
+            if ($_POST['jur'] != "") {
+                $jur = $_POST['jur'];
+                //print_r($jur);
+                $kontrak = new Kontrak();
+                $data = $kontrak->get_by_jur($jur);
+                echo "<option value=\"\">Pilih kontrak lama</option>";
+                foreach ($data as $kon) {
+                    if (isset($_POST['kon_def'])) {
+                        if ($kon->kd_kontrak === $_POST['kon_def']) {
+                            $select = " selected";
+                        } else {
+                            $select = "";
+                        }
+                        echo "<option value=" . $kon->kd_kontrak . "" . $select . ">" . $kon->no_kontrak . "</option>\n";
+                    } else {
+                        echo "<option value=" . $kon->kd_kontrak . ">" . $kon->no_kontrak . "</option>\n";
+                    }
+                }
+            } else {
+               echo "<option value=\"\">Pilih kontrak lama</option>"; 
+            }
+        }
     }
 
     //melakukan proses rekam kontrak pada modal rekam_kontrak_dialog (pada halaman data_kontrak)
@@ -263,8 +294,10 @@ class KontrakController extends BaseController {
             //echo $data->kd_jurusan;
             //var_dump($jur);
             $this->view->universitas = $universitas;
-            $univ = $universitas->get_univ();
-            $kon = $kontrak->get_All();
+            $kd_user = Session::get('kd_user');
+            //echo $kd_user;
+            $univ = $universitas->get_univ_by_pic($kd_user);
+            $kon = $kontrak->get_by_jur($data->kd_jurusan);
             $this->view->jur = $jur;
             $this->view->univ = $univ;
             $this->view->data = $data;
@@ -306,7 +339,15 @@ class KontrakController extends BaseController {
     public function delKontrak($id = null) {
         if ($id != "") {
             $kontrak = new Kontrak();
+            $data_kontrak = $kontrak->get_by_id($id);
             $kontrak->delete($id);
+
+            $file = "files/kontrak/" . $data_kontrak->file_kontrak;
+            echo $file;
+            if (file_exists($file)) {
+                unlink($file);
+            }
+
             //echo "berhasil hapus";
         }
         header("Location:" . URL . "kontrak/display");
@@ -859,25 +900,25 @@ class KontrakController extends BaseController {
                 $data_biaya = $biaya->get_by_filter();
             }
             if ($univ != "" && $status == "" && $tahun == "") {
-                $data_biaya = $biaya->get_by_filter($univ,"","");
+                $data_biaya = $biaya->get_by_filter($univ, "", "");
             }
             if ($univ == "" && $status != "" && $tahun == "") {
-                $data_biaya = $biaya->get_by_filter("",$status,"");
+                $data_biaya = $biaya->get_by_filter("", $status, "");
             }
             if ($univ == "" && $status == "" && $tahun != "") {
-                $data_biaya = $biaya->get_by_filter("","",$tahun);
+                $data_biaya = $biaya->get_by_filter("", "", $tahun);
             }
             if ($univ != "" && $status != "" && $tahun == "") {
-                $data_biaya = $biaya->get_by_filter($univ,$status,"");
+                $data_biaya = $biaya->get_by_filter($univ, $status, "");
             }
             if ($univ != "" && $status == "" && $tahun != "") {
-                $data_biaya = $biaya->get_by_filter($univ,"",$tahun);
+                $data_biaya = $biaya->get_by_filter($univ, "", $tahun);
             }
             if ($univ == "" && $status != "" && $tahun != "") {
-                $data_biaya = $biaya->get_by_filter("",$status,$tahun);
+                $data_biaya = $biaya->get_by_filter("", $status, $tahun);
             }
             if ($univ != "" && $status != "" && $tahun != "") {
-                $data_biaya = $biaya->get_by_filter($univ,$status,$tahun);
+                $data_biaya = $biaya->get_by_filter($univ, $status, $tahun);
             }
 
             $universitas = new Universitas($this->registry);
@@ -897,7 +938,7 @@ class KontrakController extends BaseController {
     //menampilkan cetak biaya kontrak
     public function cetakBiayaKontrak() {
         if (isset($_POST['univ']) && isset($_POST['status']) && isset($_POST['jadwal'])) {
-             $univ = $_POST['univ'];
+            $univ = $_POST['univ'];
             //print_r ($univ);
             $status = $_POST['status'];
             $tahun = $_POST['jadwal'];
@@ -907,25 +948,25 @@ class KontrakController extends BaseController {
                 $data_biaya = $biaya->get_by_filter();
             }
             if ($univ != "" && $status == "" && $tahun == "") {
-                $data_biaya = $biaya->get_by_filter($univ,"","");
+                $data_biaya = $biaya->get_by_filter($univ, "", "");
             }
             if ($univ == "" && $status != "" && $tahun == "") {
-                $data_biaya = $biaya->get_by_filter("",$status,"");
+                $data_biaya = $biaya->get_by_filter("", $status, "");
             }
             if ($univ == "" && $status == "" && $tahun != "") {
-                $data_biaya = $biaya->get_by_filter("","",$tahun);
+                $data_biaya = $biaya->get_by_filter("", "", $tahun);
             }
             if ($univ != "" && $status != "" && $tahun == "") {
-                $data_biaya = $biaya->get_by_filter($univ,$status,"");
+                $data_biaya = $biaya->get_by_filter($univ, $status, "");
             }
             if ($univ != "" && $status == "" && $tahun != "") {
-                $data_biaya = $biaya->get_by_filter($univ,"",$tahun);
+                $data_biaya = $biaya->get_by_filter($univ, "", $tahun);
             }
             if ($univ == "" && $status != "" && $tahun != "") {
-                $data_biaya = $biaya->get_by_filter("",$status,$tahun);
+                $data_biaya = $biaya->get_by_filter("", $status, $tahun);
             }
             if ($univ != "" && $status != "" && $tahun != "") {
-                $data_biaya = $biaya->get_by_filter($univ,$status,$tahun);
+                $data_biaya = $biaya->get_by_filter($univ, $status, $tahun);
             }
 
             $universitas = new Universitas($this->registry);

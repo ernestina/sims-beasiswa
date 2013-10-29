@@ -32,7 +32,7 @@ foreach ($this->data_biaya as $val) {
         <td style="text-align: center"><?php echo $val->status_bayar; ?></td>
         <td style="text-align: center">
             <?php
-            if ($val->tgl_sp2d != "01-01-1970") {
+            if ($val->tgl_sp2d != "01-01-1970" && $val->tgl_sp2d != "00-00-0000") {
                 echo $val->no_sp2d." (".$val->tgl_sp2d.")";
             } else {
                 echo "-";

@@ -1190,5 +1190,22 @@ th, td {
 
 	.close:hover { background: #49afcd; }
 	
-
+        .ui-dialog .ui-dialog-content{
+                font-family: Nexa;
+		background: #fff;
+		background: -moz-linear-gradient(#fff, #999);
+		background: -webkit-linear-gradient(#fff, #999);
+		background: -o-linear-gradient(#fff, #999);
+                font-size: 97%;
+		
+        }
+        .ui-dialog .ui-dialog-buttonpane{
+                font-family: Nexa;
+		background: #fff;
+		background: -moz-linear-gradient(#fff, #999);
+		background: -webkit-linear-gradient(#fff, #999);
+		background: -o-linear-gradient(#fff, #999);
+                font-size: 97%;
+		
+        }
 

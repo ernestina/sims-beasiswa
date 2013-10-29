@@ -28,9 +28,22 @@ class Kontrak extends BaseModel {
      * return array objek 
      */ //date('d-M-Y',strtotime($sm->getTgl()))
 
-    public function get_All() {
+    public function get_All($user = null) {
         $table = "d_kontrak";
-        $sql = "SELECT * FROM $table order by KD_KON desc";
+        if ($user != "") {
+            $sql = "
+                SELECT a.* 
+                FROM d_kontrak a, r_jur b, r_fakul c, r_univ d
+                WHERE a.KD_JUR = b.KD_JUR AND
+                    b.KD_FAKUL = c.KD_FAKUL AND
+                    c.KD_UNIV = d.KD_UNIV AND
+                    d.KD_USER = '" . $user . "'
+                ORDER BY a.KD_KON desc
+                ";
+        } else {
+            $sql = "SELECT * FROM $table order by KD_KON desc";
+        }
+
         $result = $this->db->select($sql);
         //var_dump($result);
         $data = array();
@@ -38,7 +51,7 @@ class Kontrak extends BaseModel {
             $kontrak = new $this();
             $kontrak->kd_kontrak = $val['KD_KON'];
             $kontrak->no_kontrak = $val['NO_KON'];
-            $kontrak->tgl_kontrak = date('d-m-Y',strtotime($val['TGL_KON'])); //$val['TGL_KON']; 
+            $kontrak->tgl_kontrak = date('d-m-Y', strtotime($val['TGL_KON'])); //$val['TGL_KON']; 
             $kontrak->kd_jurusan = $val['KD_JUR'];
             $kontrak->thn_masuk_kontrak = $val['THN_MASUK_KON'];
             $kontrak->jml_pegawai_kontrak = $val['JML_PGW_KON'];
@@ -51,17 +64,17 @@ class Kontrak extends BaseModel {
         //var_dump($data);
         return $data;
     }
-    
+
     /*
      * mendapatkan seluruh data konrak dari database dalam bentuk array berdasarkan kd_univ
      * mengubah masing-masing array ke dalam objek kontrak
      * return array objek 
-     */ 
+     */
 
     public function get_by_univ($kd_univ) {
         $table = "d_kontrak a, r_jur b, r_fakul c";
-        $where = "a.KD_JUR=b.KD_JUR and b.KD_FAKUL=c.KD_FAKUL and c.KD_UNIV = '".$kd_univ."'";
-        $sql = "SELECT * FROM $table where $where";
+        $where = "a.KD_JUR=b.KD_JUR and b.KD_FAKUL=c.KD_FAKUL and c.KD_UNIV = '" . $kd_univ . "'";
+        $sql = "SELECT * FROM $table where $where order by KD_KON desc";
         $result = $this->db->select($sql);
         //var_dump($result);
         $data = array();
@@ -69,7 +82,7 @@ class Kontrak extends BaseModel {
             $kontrak = new $this();
             $kontrak->kd_kontrak = $val['KD_KON'];
             $kontrak->no_kontrak = $val['NO_KON'];
-            $kontrak->tgl_kontrak = date('d-m-Y',strtotime($val['TGL_KON'])); //$val['TGL_KON']; 
+            $kontrak->tgl_kontrak = date('d-m-Y', strtotime($val['TGL_KON'])); //$val['TGL_KON']; 
             $kontrak->kd_jurusan = $val['KD_JUR'];
             $kontrak->thn_masuk_kontrak = $val['THN_MASUK_KON'];
             $kontrak->jml_pegawai_kontrak = $val['JML_PGW_KON'];
@@ -100,7 +113,7 @@ class Kontrak extends BaseModel {
             $kontrak = new $this();
             $kontrak->kd_kontrak = $val['KD_KON'];
             $kontrak->no_kontrak = $val['NO_KON'];
-            $kontrak->tgl_kontrak = date('d-m-Y',strtotime($val['TGL_KON'])); //$val['TGL_KON']; 
+            $kontrak->tgl_kontrak = date('d-m-Y', strtotime($val['TGL_KON'])); //$val['TGL_KON']; 
             $kontrak->kd_jurusan = $val['KD_JUR'];
             $kontrak->thn_masuk_kontrak = $val['THN_MASUK_KON'];
             $kontrak->jml_pegawai_kontrak = $val['JML_PGW_KON'];
@@ -111,6 +124,31 @@ class Kontrak extends BaseModel {
         }
         //var_dump($data);
         return $kontrak;
+    }
+
+    public function get_by_jur($jur) {
+        $table = "d_kontrak";
+        $where = "KD_JUR='" . $jur . "'";
+        $sql = "SELECT * FROM $table where $where order by KD_KON desc";
+        $result = $this->db->select($sql);
+        //var_dump($result);
+        $data = array();
+        foreach ($result as $val) {
+            $kontrak = new $this();
+            $kontrak->kd_kontrak = $val['KD_KON'];
+            $kontrak->no_kontrak = $val['NO_KON'];
+            $kontrak->tgl_kontrak = date('d-m-Y', strtotime($val['TGL_KON'])); //$val['TGL_KON']; 
+            $kontrak->kd_jurusan = $val['KD_JUR'];
+            $kontrak->thn_masuk_kontrak = $val['THN_MASUK_KON'];
+            $kontrak->jml_pegawai_kontrak = $val['JML_PGW_KON'];
+            $kontrak->lama_semester_kontrak = $val['LAMA_SEM_KON'];
+            $kontrak->nilai_kontrak = $val['NILAI_KON'];
+            $kontrak->file_kontrak = $val['FILE_KON'];
+            $kontrak->kontrak_lama = $val['KONTRAK_LAMA'];
+            $data[] = $kontrak;
+        }
+        //var_dump($data);
+        return $data;
     }
 
     /*
@@ -135,7 +173,6 @@ class Kontrak extends BaseModel {
         );
         //var_dump($data);
         $this->db->insert($table, $data);
-       
     }
 
     /*
@@ -159,7 +196,7 @@ class Kontrak extends BaseModel {
 
     public function update(kontrak $kontrak) {
         $table = "d_kontrak";
-         $data = array(
+        $data = array(
             'NO_KON' => $kontrak->no_kontrak,
             'TGL_KON' => $kontrak->tgl_kontrak,
             'KD_JUR' => $kontrak->kd_jurusan,
@@ -182,14 +219,14 @@ class Kontrak extends BaseModel {
 
     public function isEmpty(Kontrak $kontrak) {
         $cek = true;
-        if (    $kontrak->no_kontrak != "" &&
+        if ($kontrak->no_kontrak != "" &&
                 $kontrak->tgl_kontrak != "" &&
                 $kontrak->kd_jurusan != "" &&
                 $kontrak->thn_masuk_kontrak != "" &&
                 $kontrak->jml_pegawai_kontrak != "" &&
                 $kontrak->lama_semester_kontrak != "" &&
-                $kontrak->file_kontrak !==""
-            ) {
+                $kontrak->file_kontrak !== ""
+        ) {
             $cek = false;
         }
         return $cek;

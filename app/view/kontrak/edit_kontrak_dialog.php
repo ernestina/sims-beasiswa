@@ -21,7 +21,7 @@
                 <?php } ?>
             </select><div id="wuniv"></div>
             <label>Jurusan* </label>
-            <select name="jur" id="jur" type="text">
+            <select name="jur" id="jur">
                 <!--                <option value="">Pilih Jurusan</option>-->
                 <?php
                 foreach ($this->jur as $jur) {
@@ -30,7 +30,7 @@
                     } else {
                         $select = "";
                     }
-                    echo "oke";
+                    
                 ?>
                 <option value="<?php echo $jur->get_kode_jur(); ?>" <?php echo $select; ?>><?php echo $jur->get_nama(); ?></option>
                 <?php } ?>
@@ -72,19 +72,23 @@
             </select><div id="wtahun_masuk"></div>
             <label>Nilai kontrak* </label><input type="text" name="nilai_kontrak" id="nilai_kontrak" maxlength="14" value="<?php echo number_format($this->data->nilai_kontrak); ?>">
             <div id="wnilai_kontrak"></div>
-            <label>Kontrak Lama </label><select name="kontrak_lama" id="kontrak_lama" type="text">
-                <option value="">Pilih Kontrak Lama</option>
-                <?php
+            <label>Kontrak Lama </label>
+            <input type="hidden" id="kon_def" name="kon_def" value="<?php echo $this->data->kontrak_lama; ?>">
+            <select name="kontrak_lama" id="kontrak_lama">  
+                <option value="">Pilih kontrak lama</option>
+                 <?php
                 foreach ($this->kon as $kon) {
                     if ($kon->kd_kontrak == $this->data->kontrak_lama) {
                         $select = "selected";
                     } else {
                         $select = "";
                     }
-                    ?>
-                    <option value="<?php echo $kon->kd_kontrak; ?>" <?php echo $select; ?>><?php echo $kon->no_kontrak; ?></option>
+                    
+                ?>
+                <option value="<?php echo $kon->kd_kontrak; ?>" <?php echo $select; ?>><?php echo $kon->no_kontrak; ?></option>
                 <?php } ?>
-            </select><div id="wkontrak_lama" name="wkontrak_lama">
+            </select>
+            <div id="wkontrak_lama" name="wkontrak_lama">
                 
 				<label>File Kontrak </label>
 			<table style="margin-left: -10px">
@@ -112,17 +116,8 @@
 
 <script>
     
-    //menampilkan jurusan sesuai dengan data didatabase ketika form pertama kali ditampilkan
-    // jur_def merupakan jurusan pada data kontrak yang akan diedit
-//    univ = $("#univ").val();
-//    jur_def = $("#jur_def").val();
-    
-    
-//    $.post("<?php echo URL; ?>kontrak/get_jur_by_univ", {univ:univ,jur_def:jur_def},
-//    function(data){                
-//        $('#jur').html(data);
-//    });
-    
+  
+ 
     
     $(document).ready(function(){ 
         
@@ -132,12 +127,23 @@
         //agar ketika universitas berubah karena dipilih, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
         $("#univ").change(function(){
             $.post("<?php echo URL; ?>kontrak/get_jur_by_univ", {univ:$("#univ").val()},
-            function(data){  
+            function(data){    
                 $('#jur').empty();
                 $('#jur').html(data);
+                $('#kontrak_lama').html('<option value="">Pilih kontrak lama</option>');
+            }); 
+            
+        });
+        
+        //menampilkan list data kontrak lama
+        $("#jur").change(function(){
+            $.post("<?php echo URL; ?>kontrak/getSelectByJur", {jur:$("#jur").val(),kon_def:$("#kon_def").val()},
+            function(data){                
+                $('#kontrak_lama').empty();
+                $('#kontrak_lama').html(data);
             });  
         });
-    
+        
         //menampilkan datepicker   
         $(function() { 
             $("#tanggal").datepicker({dateFormat: "dd-mm-yy"

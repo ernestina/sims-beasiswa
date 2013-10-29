@@ -154,10 +154,12 @@ class User {
         foreach ($result as $v) {
             $role = $v['AKSES_USER'];
             $kd = $v['NM_USER'];
+            $kd_user = $v['KD_USER'];
         }
         $return[] = count($result);
         $return[] = $role;
         $return[] = $kd;
+        $return[] = $kd_user;
         return $return;
     }
 

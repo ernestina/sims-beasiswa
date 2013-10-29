@@ -7,6 +7,7 @@
             <td style="padding-top:15px;">
                 <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/display' ?>">
 <!--            <input type="hidden" name="pilih_univ">-->
+<!--                    <input type="hidden" id="user" name="user" value="<?php echo Session::get('kd_user'); ?>">-->
                     <select name="universitas" id="kd_univ" type="text">
                         <option value="">- semua -</option>
                         <?php
@@ -46,7 +47,9 @@
     </p>
 </div>
 <div id="loading" class="loading" style="display: none"><img src="<?php echo URL . 'public/icon/loading.gif'; ?>" /></div>
-<div id="dialog_rekam_kontrak" title="Menambahkan Data Kontrak Kerja Sama">
+<div>
+    <div id="dialog_rekam_kontrak" title ="Rekam Kontrak Kerja Sama"></div>
+
     <div id="dialog_edit_kontrak" title="Ubah Data Kontrak Kerja Sama" > </div>
 </div>
 
@@ -59,25 +62,17 @@
     //fungsi untuk menampilkan data kontrak
     function displayKontrak(){
         $("#loading").show();
-        if($("#kd_univ").val() == ""){
-            univ = "";
-            $.post("<?php echo URL; ?>kontrak/get_data_kontrak", {univ:""+univ},
-            function(data){                
-                $('#tb_kontrak').fadeIn(100);
-                $('#tb_kontrak').html(data);
-            });
-        } else {
-            $.post("<?php echo URL; ?>kontrak/get_data_kontrak", {univ:""+$("#kd_univ").val()},
-            function(data){                
-                $('#tb_kontrak').fadeIn(100);
-                $('#tb_kontrak').html(data);
-            });
-        } 
+        $.post("<?php echo URL; ?>kontrak/get_data_kontrak", {univ:""+$("#kd_univ").val()},
+        function(data){                
+            $('#tb_kontrak').fadeIn(100);
+            $('#tb_kontrak').html(data);
+        });
         $("#loading").hide();
     }
     
     //ketika link edit diklik pada halaman tabel_kontrak.php
     function edit(id){
+        $("#dialog_rekam_kontrak, #dialog_edit_kontrak").empty();
         $("#dialog_edit_kontrak").load("<?php echo URL; ?>kontrak/viewEditKontrak/"+id);
         $("#dialog_edit_kontrak").dialog( "open" );
        
@@ -90,7 +85,7 @@
             $("#loading").show();
             univ = $("#kd_univ").val();
             //url = $("#url").val();
-            $.post("<?php echo URL; ?>kontrak/get_data_kontrak", {univ:""+univ},
+            $.post("<?php echo URL; ?>kontrak/get_data_kontrak", {univ:univ},
             function(data){                
                 $('#tb_kontrak').fadeIn(100);
                 $('#tb_kontrak').html(data);
@@ -101,6 +96,7 @@
         
         //trigger ketika tombol tambah diklik akan menampilkan modal form rekam
         $("#tambah_kontrak").click(function() {
+            $("#dialog_rekam_kontrak, #dialog_edit_kontrak").empty();
             $("#dialog_rekam_kontrak").load("<?php echo URL; ?>kontrak/viewRekamKontrak");
             $("#dialog_rekam_kontrak").dialog( "open" );
         });
@@ -109,7 +105,7 @@
         //modal form rekam
         $("#dialog_rekam_kontrak").dialog({
             autoOpen: false,
-            height: 500,
+            height: 550,
             width: 800,
             modal: true,
             show: "fade",
@@ -136,13 +132,14 @@
                                 $('#form_rekam_kontrak2')[0].reset();
                                 displayKontrak();
                                 $("#loading").hide(); 
-                                //$( this ).dialog( "close" );
                                 alert('Data berhasil disimpan');
+                                
  
                             }                       
                         });
+                        $(this ).dialog("close"); 
                     }
-                    
+                         
                 },
                 Batal: function() {
                     $( this ).dialog( "close" );
@@ -155,7 +152,7 @@
         //modal form edit
         $("#dialog_edit_kontrak").dialog({
             autoOpen: false,
-            height: 500,
+            height: 550,
             width: 800,
             modal: true,
             show: "fade",
@@ -193,6 +190,7 @@
                 },
                 Batal: function() {
                     $( this ).dialog( "close" );
+                    $("#dialog_edit_kontrak").empty();
                 }
             }
         });

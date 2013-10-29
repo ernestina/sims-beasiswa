@@ -41,6 +41,7 @@ class AuthController extends BaseController {
             Session::set('loggedin',TRUE);
             Session::set('user', $user);
             Session::set('role', $res[1]);
+            Session::set('kd_user', $res[3]);
             Session::set('univ',$d_univ);
             Session::set('jur',$d_jur);
             header('location:'.URL);
