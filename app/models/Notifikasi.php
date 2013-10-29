@@ -144,13 +144,26 @@ class Notifikasi{
         while($cek_bulan){
             if($is_semester){
                 $temp = explode("-",$bln_mul);
-                $bulan = $temp[1];
-                $is_sem_satu = $bulan==$this->_start_buku['sem_satu'];
-                $is_sem_dua = $bulan==$this->_start_buku['sem_dua']; 
-                if($is_sem_satu || $is_sem_dua){
+                $bulan = (int) $temp[1];
+//                echo $bulan."</br>";
+//                $is_sem_satu = $bulan==$this->_start_buku['sem_satu'];
+//                $is_sem_dua = $bulan==$this->_start_buku['sem_dua'];
+                $is_semester_satu= ($bulan>7 || $bulan<2);
+                $is_semester_dua = ($bulan>1 && $bulan<8);
+//                var_dump($is_semester_dua); echo $bulan."</br>";
+                if($is_semester_satu){
+                    $tahun = (int) $temp[0];
+                    if($bulan<2) $tahun--;
+                    $semester = $tahun."-1";
+                    
 //                    echo $kd_st."-".$bln_mul."</br>";
-                    $d_bulan[] = $bln_mul;
+                    //ada cek dulu apakah ada di array d_bulan, jika tidak ada tambahkan
+                    
+                }elseif($is_semester_dua){
+                    $semester = $temp[0]."-2";
                 }
+                $data_exist = in_array($semester, $d_bulan);
+                if(!$data_exist) $d_bulan[] = $semester;
             }else{
                 $d_bulan[] = $bln_mul;
             }
@@ -293,12 +306,12 @@ class Notifikasi{
                     $cek_selesai = $this->cek_telah_bayar_elem(3,$kd_pb, $kd_st,true);
                     if(!$cek_selesai){ //jika data sp2d telah ada
                         $notif->set_status_notif('proses');
-    //                    echo $kd_st."-".$skripsi['NM_PB']."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+                   echo $kd_st."-".$skripsi['NM_PB']."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
                         $data_skripsi[]=$notif;
                     }
                 }else{ // jika data tidak ditemukan 
                     $notif->set_status_notif('belum');
-    //                echo $kd_st."-".$skripsi['NM_PB']."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+                echo $kd_st."-".$skripsi['NM_PB']."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
                     $data_skripsi[]=$notif;
                 }
             }
@@ -348,23 +361,28 @@ class Notifikasi{
         $d_st = $this->get_list_kode_st(true);
         foreach ($d_st as $st){
             $kd_st = $st['KD_ST'];
+//            print_r($kd_st);
             $d_bulan = $this->get_bulan_surat_tugas($kd_st,true);
+//            print_r($d_bulan);
             foreach ($d_bulan as $bulan){
                 $cek_proses = $this->cek_telah_bayar_elem(2, $bulan, $kd_st);
+                echo $bulan; var_dump($cek_proses);
                 $cek_bayar = $this->cek_telah_bayar_elem(2, $bulan, $kd_st,true);
                 if($cek_proses){
                     if(!$cek_bayar){
-                        $d_proses = $this->get_data_buku_by_st($kd_st, $bulan);
-                        $d_proses->set_link($bulan);
-//                        echo $kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
-                        $this->_notif_data[] = $d_proses;
+                        $notif = $this->get_data_buku_by_st($kd_st, $bulan);
+                        $notif->set_link($bulan);
+                        $notif->set_status_notif('proses');
+                        echo $kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+//                        print_r($notif);
+                        $this->_notif_data[] = $notif;
                     }
                 }else{
                     $notif = new NotifikasiDao();
                     $st = new SuratTugas($this->registry);
                     $st->set_kd_st($kd_st);
                     $d_st = $st->get_surat_tugas_by_id($st);
-                    $notif->set_jatuh_tempo($d_st->get_th_masuk());
+                    $notif->set_jatuh_tempo($bulan);
                     $notif->set_jenis_notif('buku');
                     /** jurusan **/
                     $jur = new Jurusan($this->registry);
@@ -390,7 +408,7 @@ class Notifikasi{
                                     'nama'=>$d_pic->get_nmUser(),
                                     'foto'=>$d_pic->get_foto());
                     $notif->set_pic($pic_arr);
-//                    echo $kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+                    echo $kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
                     $this->_notif_data[] = $notif;
                 }
             }
@@ -405,7 +423,7 @@ class Notifikasi{
             a.KD_D_ELEM_BEASISWA as KODE,";
         $sql .= "b.NM_ELEM_BEASISWA as NAMA,
             a.JML_PEG_D_ELEM_BEASISWA as JML_PEG,
-            CONCAT(a.BLN_D_ELEM_BEASISWA,'-',a.THN_D_ELEM_BEASISWA) as BULAN,
+            CONCAT(a.THN_D_ELEM_BEASISWA,'-',a.BLN_D_ELEM_BEASISWA) as BULAN,
             a.TOTAL_BAYAR_D_ELEM_BEASISWA as TOTAL_BAYAR,
             e.THN_MASUK as THN_MASUK,
             f.NM_JUR as NM_JUR,
@@ -440,7 +458,7 @@ class Notifikasi{
                         'nama'=>$val['NM_USER'],
                         'foto'=>$val['FOTO_USER']);
             $jth_tempo = date('Y-m-d');
-            $notif->set_jatuh_tempo($jth_tempo);
+            $notif->set_jatuh_tempo($val['BULAN']);
             $notif->set_jenis_notif($val['JENIS']);
             $notif->set_jurusan($val['NM_JUR']);
             $notif->set_kode_link($val['KODE']);
