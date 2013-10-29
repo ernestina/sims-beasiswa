@@ -21,7 +21,7 @@
             </style>
     </head>
     <body style="font-family:arial;color:black;font-size:10px;">
-        <p align="center" style="font-weight: bold; font-size:16px;">
+        <p align="center" style="font-weight: bold; font-size:13px;">
             MONITORING KONTRAK KERJASAMA <br />
             BEASISWA INTERNAL DIREKTORAT JENDERAL PERBENDAHARAAN <br />
             <?php
@@ -33,8 +33,12 @@
             }
             
             if ($this->jadwal != "") {
-                echo "JADWAL PEMBAYARAN : TAHUN " . strtoupper($this->jadwal) . "<br />";
+                echo "JADWAL PEMBAYARAN TAHUN " . strtoupper($this->jadwal) . "<br />";
             }
+            
+            echo "PER ".strtoupper(Tanggal::getTglSekarangIndo());
+            echo "<br />";
+            echo "(PIC: ".strtoupper(Session::get('user')).")";
             ?>
 
         </p>
@@ -47,6 +51,7 @@
                 </td>
             </tr>
         </table>
+        <br />
         <table align="center" cellspacing=0 cellpadding=4 width=90% style="border-width: 1px; font-size: 10px; border-style: solid; border-color: black;">
             <thead bgcolor="#E6F9ED">
             <th>No</th>

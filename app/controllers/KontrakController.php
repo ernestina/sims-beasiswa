@@ -52,6 +52,28 @@ class KontrakController extends BaseController {
         $this->view->universitas = $universitas;
         $this->view->load('kontrak/tabel_kontrak');
     }
+    
+    //menampilkan data kontrak dalam bentuk tabel di tabel_kontrak di halaman data_kontrak
+    public function get_data_kontrak2() {
+        $kontrak = new Kontrak();
+        $key = $_POST['key'];
+        $user = Session::get('kd_user');
+        //echo $user;
+        $biaya = new Biaya();
+        $jurusan = new Jurusan($this->registry);
+        $universitas = new Universitas($this->registry);
+
+        if ($key != "") {
+            $data = $kontrak->get_by_nomor($key,$user);
+            $this->view->data = $data;
+            //var_dump($data);
+        } 
+        $this->view->biaya = $biaya;
+        $this->view->jurusan = $jurusan;
+        $this->view->kontrak = $kontrak;
+        $this->view->universitas = $universitas;
+        $this->view->load('kontrak/tabel_kontrak');
+    }
 
     //menampilkan halaman rekam_kontrak dan melakukan proses rekam kontrak (pada halaman baru)
     public function rekamKontrak() {
@@ -148,7 +170,7 @@ class KontrakController extends BaseController {
                     }
                 }
             } else {
-               echo "<option value=\"\">Pilih kontrak lama</option>"; 
+                echo "<option value=\"\">Pilih kontrak lama</option>";
             }
         }
     }
@@ -923,30 +945,9 @@ class KontrakController extends BaseController {
             $tahun = $_POST['jadwal'];
             //print_r ($tahun);
             $biaya = new Biaya();
-            if ($univ == "" && $status == "" && $tahun == "") {
-                $data_biaya = $biaya->get_by_filter();
-            }
-            if ($univ != "" && $status == "" && $tahun == "") {
-                $data_biaya = $biaya->get_by_filter($univ, "", "");
-            }
-            if ($univ == "" && $status != "" && $tahun == "") {
-                $data_biaya = $biaya->get_by_filter("", $status, "");
-            }
-            if ($univ == "" && $status == "" && $tahun != "") {
-                $data_biaya = $biaya->get_by_filter("", "", $tahun);
-            }
-            if ($univ != "" && $status != "" && $tahun == "") {
-                $data_biaya = $biaya->get_by_filter($univ, $status, "");
-            }
-            if ($univ != "" && $status == "" && $tahun != "") {
-                $data_biaya = $biaya->get_by_filter($univ, "", $tahun);
-            }
-            if ($univ == "" && $status != "" && $tahun != "") {
-                $data_biaya = $biaya->get_by_filter("", $status, $tahun);
-            }
-            if ($univ != "" && $status != "" && $tahun != "") {
-                $data_biaya = $biaya->get_by_filter($univ, $status, $tahun);
-            }
+            $user = Session::get('kd_user');
+            $biaya = new Biaya();
+            $data_biaya = $biaya->get_by_filter($univ, $status, $tahun, $user);
 
             $universitas = new Universitas($this->registry);
             $universitas->set_kode_in($univ);

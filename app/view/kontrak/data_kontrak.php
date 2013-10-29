@@ -24,6 +24,7 @@
         <!--            <input type="button" value="SUBMIT">-->
 
             </td>
+            <td style="float: left"><input type="search" name="cari" id="cari" placeholder="cari dengan kata kunci nomor kontrak" title="Cari"></td>
 
             <td>
 <!--                <input type="button" value="TAMBAH" onClick="location.href='<?php echo URL . 'kontrak/rekamKontrak'; ?>'"style="margin-top:0px; margin-right: -8px">-->
@@ -62,7 +63,7 @@
     //fungsi untuk menampilkan data kontrak
     function displayKontrak(){
         $("#loading").show();
-        $.post("<?php echo URL; ?>kontrak/get_data_kontrak", {univ:""+$("#kd_univ").val()},
+        $.post("<?php echo URL; ?>kontrak/get_data_kontrak", {univ:$("#kd_univ").val()},
         function(data){                
             $('#tb_kontrak').fadeIn(100);
             $('#tb_kontrak').html(data);
@@ -91,6 +92,7 @@
                 $('#tb_kontrak').html(data);
             });
             $("#loading").hide();
+            $("#cari").val('');
             
         });
         
@@ -194,6 +196,22 @@
                 }
             }
         });
+        
+        
+        $("#cari").keyup(function(){
+                             
+            if($("#cari").val()==""){
+                displayKontrak();
+            } else {
+                $.post("<?php echo URL; ?>kontrak/get_data_kontrak2", {key:$('#cari').val()}, 
+                function(data){
+                    $('#tb_kontrak').fadeIn(100);
+                    $('#tb_kontrak').html(data);
+                });
+                $("#kd_univ").val('');
+            }
+        });
+        
     })
     
     

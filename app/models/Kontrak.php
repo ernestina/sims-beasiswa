@@ -96,6 +96,38 @@ class Kontrak extends BaseModel {
         return $data;
     }
 
+    public function get_by_nomor($key, $user) {
+       
+        $sql = "SELECT * FROM d_kontrak a 
+                LEFT JOIN r_jur b ON  a.KD_JUR=b.KD_JUR
+                LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
+                LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV 
+                WHERE
+                a.NO_KON LIKE '".$key."%' 
+               AND d.KD_USER ='".$user."'
+            ";
+        
+        $result = $this->db->select($sql);
+        //var_dump($result);
+        $data = array();
+        foreach ($result as $val) {
+            $kontrak = new $this();
+            $kontrak->kd_kontrak = $val['KD_KON'];
+            $kontrak->no_kontrak = $val['NO_KON'];
+            $kontrak->tgl_kontrak = date('d-m-Y', strtotime($val['TGL_KON'])); //$val['TGL_KON']; 
+            $kontrak->kd_jurusan = $val['KD_JUR'];
+            $kontrak->thn_masuk_kontrak = $val['THN_MASUK_KON'];
+            $kontrak->jml_pegawai_kontrak = $val['JML_PGW_KON'];
+            $kontrak->lama_semester_kontrak = $val['LAMA_SEM_KON'];
+            $kontrak->nilai_kontrak = $val['NILAI_KON'];
+            $kontrak->file_kontrak = $val['FILE_KON'];
+            $kontrak->kontrak_lama = $val['KONTRAK_LAMA'];
+            $data[] = $kontrak;
+        }
+        //var_dump($data);
+        return $data;
+    }
+
     /*
      * mendapatkan  data kontrak dari database sesuai dengan id
      * mengubah masing-masing array ke dalam objek kontrak
