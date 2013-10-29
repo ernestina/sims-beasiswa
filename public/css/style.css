@@ -37,8 +37,8 @@ h2, legend {
     font-size: 24px;
 }
 
-a:link {color:#2C697B;}
-a:hover {color:#6DBFD7;}
+a:link {color:#267890;}
+a:hover {color:#A4D7E6;}
 
 
 #header {
@@ -1121,6 +1121,22 @@ th, td {
 
 /*coba modal*/
 .modalDialog {
+		position: fixed;
+		font-family: Nexa;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background: rgba(0,0,0,0.8);
+		z-index: 99999;
+		opacity:0;
+		-webkit-transition: opacity 400ms ease-in;
+		-moz-transition: opacity 400ms ease-in;
+		transition: opacity 400ms ease-in;
+		pointer-events: none;
+	}
+
+		.ui-dialog ui-dialog-content {
 		position: fixed;
 		font-family: Nexa;
 		top: 0;
