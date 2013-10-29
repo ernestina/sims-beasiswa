@@ -229,6 +229,21 @@ class Cuti{
         $where = " KD_CUTI=".$this->get_kode_cuti();
         return $this->_db->delete($this->t_cuti,$where);
     }
+    
+    /*
+     * cek apakah nomor st pernah direkam
+     */
+    public function cek_exist_nomor($nomor){
+        $sql = "SELECT NO_CUTI FROM ".$this->t_cuti;
+        $data = $this->_db->select($sql);
+        foreach ($data as $v){
+//            echo $v['NO_CUTI'];
+            $tmp = Validasi::remove_space($v['NO_CUTI']);
+            $cek = $nomor==$tmp;
+            if($cek) return true;
+        }
+        return false;
+    }
 
     /*
      * setter

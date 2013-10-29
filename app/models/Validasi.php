@@ -127,7 +127,7 @@ class Validasi{
         ;
     }
 	
-	public static function cekNip($nip) {
+    public static function cekNip($nip) {
         
         if (preg_match("/^[0-9]{18}$/", $nip)== true || preg_match("/^[0-9]{9}$/", $nip)== true ) {
             return true;
@@ -139,13 +139,12 @@ class Validasi{
     public static function remove_space($string){
         $string = trim(strtolower($string));
         $karakter = array(" ","-","_","\t");
-        $replace= "";
         $len = count($karakter);
         for($i=0;$i<$len;$i++){
             $string = str_replace($karakter[$i], $replace, $string);
         }
 
-        return $replace;
+        return $string;
     }
 }
 ?>

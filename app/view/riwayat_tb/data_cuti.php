@@ -186,6 +186,14 @@
         hideWarning();
         $('#cari').keyup(function(){
             cari(document.getElementById('cari').value);
+        });
+        
+        $('#no_sc').keyup(function(){
+            var nomor = document.getElementById('no_sc').value;
+            cek_exist_nomor(nomor);
+//            if(document.getElementById('no_sc').value !=''){
+//                $('#wnosc').fadeOut(200);
+//            }
         })
     });
     
@@ -194,11 +202,11 @@
     }
     
     function hideWarning(){
-        $('#no_sc').keyup(function(){
-            if(document.getElementById('no_sc').value !=''){
-                $('#wnosc').fadeOut(200);
-            }
-        })
+//        $('#no_sc').keyup(function(){
+//            if(document.getElementById('no_sc').value !=''){
+//                $('#wnosc').fadeOut(200);
+//            }
+//        })
         $('#datepicker').change(function(){
             if($('#datepicker').val()!=''){
                 $('#wtglsc').fadeOut(200);
@@ -224,6 +232,22 @@
             }
         });
         
+    }
+    
+    function cek_exist_nomor(no_sc){
+        $.post("<?php echo URL; ?>cuti/cek_exist_nomor", {nomor:""+no_sc+""},
+        function(data){
+            console.log(data);
+            if(data==1){
+                var wnosc = 'Nomor surat pernah direkam!';
+                $('#wnosc').fadeIn(0);
+                $('#wnosc').html(wnosc);
+                return false;
+            }else{
+                $('#wnosc').fadeOut(200);
+            }
+            
+        });
     }
     
     function callFromDialog(kd_pb){

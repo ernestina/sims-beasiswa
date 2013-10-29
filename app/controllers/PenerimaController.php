@@ -381,8 +381,8 @@ class PenerimaController extends BaseController{
     }
     
     public function get_nama_peg(){
-        $nip = $_POST['param'];
-        
+        $nip = $_POST['nip'];
+        $kd_st = $_POST['kd_st'];
         $peg = new Pegawai($this->registry);
         $peg->set_nip($nip);
         $data = $peg->get_peg_by_nip($peg);
@@ -392,8 +392,10 @@ class PenerimaController extends BaseController{
         $unit = $data->get_unit_asal();
         $pb = new Penerima($this->registry);
         $pb->set_nip($nip);
-        $d_cek = $pb->cek_exist_pb();
-        $d_cek = $d_cek['cek'];
+//        $d_cek = $pb->cek_exist_pb();
+//        $d_cek = $d_cek['cek'];
+        $d_cek = $pb->is_prn_beasiswa_strata($nip, $kd_st);
+        $d_cek = ($d_cek>0)?1:0;
         $return = json_encode(array(
             'nama'=>$nm,
             'jkel'=>$jk,

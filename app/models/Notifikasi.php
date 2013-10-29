@@ -315,7 +315,7 @@ class Notifikasi{
                     }
                 }else{ // jika data tidak ditemukan 
                     $notif->set_status_notif('belum');
-                echo $kd_st."-".$skripsi['NM_PB']."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+//                echo $kd_st."-".$skripsi['NM_PB']."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
                     $data_skripsi[]=$notif;
                 }
             }

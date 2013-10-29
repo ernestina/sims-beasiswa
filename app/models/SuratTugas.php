@@ -245,6 +245,23 @@ class SuratTugas {
     }
     
     /*
+     * cek apakah nomor st pernah direkam
+     */
+    public function cek_exist_nomor($nomor){
+        $sql = "SELECT NO_ST FROM ".$this->_tb_st;
+        $data = $this->db->select($sql);
+        foreach ($data as $v){
+//            echo $v['NO_ST'];
+            $tmp = Validasi::remove_space($v['NO_ST']);
+//            echo $tmp."666".$nomor;
+            $cek = $nomor==$tmp;
+            if($cek) return true;
+        }
+        return false;
+    }
+
+
+    /*
      * setter
      */
 

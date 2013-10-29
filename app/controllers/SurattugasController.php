@@ -191,17 +191,18 @@ class SurattugasController extends BaseController{
     /*
      * cek apakah pb telah terdaftar di data pb, atau belum terdaftar pada st manapun
      */
-    public function cek_pb_on_st($nip){
-//        $nip = $_POST['nip'];
+    public function cek_pb_on_st(){
+        $nip = $_POST['nip'];
+        $kd_st = $_POST['kd_st'];
         $return = 0;
         $pb = new Penerima($this->registry);
-        $pb->set_nip($nip);
-        $d_cek = $pb->cek_exist_pb();
-        if(((int) $d_cek['cek'])>0) {
-            $return=1;
-        }else{
-            $return=0;
-        }
+//        $pb->set_nip($nip);
+//        $d_cek = $pb->cek_exist_pb();
+        $d_cek = $pb->is_prn_beasiswa_strata($nip,$kd_st);
+//        var_dump($d_cek);
+//        if(((int) $d_cek['cek'])>0) {
+        if($d_cek) $return=1;
+        
         echo $return;
     }
 
@@ -214,6 +215,19 @@ class SurattugasController extends BaseController{
         $method = get_class_methods($this);
         foreach ($method as $method){
             print_r("\$akses['pic']['".  get_class($this)."']['".$method."'];</br>");
+        }
+    }
+    
+    public function cek_exist_nomor(){
+        $nomor = $_POST['nomor'];
+//        $nomor = 'ST-1349/PB.1/2012';
+        $nomor = Validasi::remove_space($nomor);
+        $st = new SuratTugas($this->registry);
+        $cek = $st->cek_exist_nomor($nomor);
+        if($cek){
+            echo 1;
+        }else{
+            echo 0;
         }
     }
 

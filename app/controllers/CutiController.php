@@ -199,6 +199,19 @@ class CutiController extends BaseController{
         }
     }
     
+    public function cek_exist_nomor(){
+        $nomor = $_POST['nomor'];
+        $nomor = Validasi::remove_space($nomor);
+        
+        $sc = new Cuti($this->registry);
+        $cek = $sc->cek_exist_nomor($nomor);
+        if($cek){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+    
     public function __destruct() {
         parent::__destruct();
     }

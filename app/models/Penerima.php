@@ -315,6 +315,25 @@ class Penerima {
     }
     
     /*
+     * cek apakah pb pernah mendapat beasiswa dalam strata yg sama
+     */
+    
+    public function is_prn_beasiswa_strata($nip,$kd_st){
+//        $st = new SuratTugas($this->registry);
+//        $st->set_kd_st($kd_st);
+        $sql = "SELECT * FROM ".$this->_tb_penerima." a 
+            LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+            WHERE a.NIP_PB='".$nip."' 
+                AND b.KD_STRATA=(SELECT b.KD_STRATA FROM d_srt_tugas a 
+                                LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+                                WHERE a.KD_ST=".$kd_st.")";
+//        echo $sql;
+        $count = count($this->db->select($sql));
+        $is_exist = $count>0;
+        if($is_exist) return true;
+        return false;
+    }
+    /*
      * cek perubahan status tugas belajar
      * tanggal telah bersih, tidak menerima null atau karakter kosong
      */

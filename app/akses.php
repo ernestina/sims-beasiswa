@@ -65,7 +65,7 @@ $akses['Admin'] = array(
                     'backup_db',
                     'del_backup',
                     'list_backup',
-                    'restore_db'
+                    'restore_db',
                 );
 
 /*
@@ -83,7 +83,8 @@ $akses['Cuti'] = array(
                 '__destruct',
                 'load_model',
                 'get_data_sc',
-                'get_sc_by_name'
+                'get_sc_by_name',
+                'cek_exist_nomor'
                 );
 /*
  * akses modul surat tugas
@@ -102,6 +103,7 @@ $akses['Surattugas'] = array(
                 'get_method',
                 'load_model',
                 'get_thn_masuk_by_jur',
+                'cek_exist_nomor',
                 '__destruct'
                 );
 /*

@@ -181,6 +181,12 @@
         get_jurusan(document.getElementById('univ').value);
 //        var file_exist = <?php echo $this->d_file_exist;?>;
 //        console.log(file_exist.file_exist);
+        $('#no_st').keyup(function(){
+            var nomor = document.getElementById('no_st').value;
+//            console.log(nomor);
+            cek_exist_nomor(nomor);
+//            console.log('test');
+        })
     });
     
     function hideErrorId(){
@@ -188,11 +194,11 @@
     }
     
     function hideWarning(){
-        $('#no_st').keyup(function(){
-            if(document.getElementById('no_st').value !=''){
-                $('#wnost').fadeOut(200);
-            }
-        })
+//        $('#no_st').keyup(function(){
+//            if(document.getElementById('no_st').value !=''){
+//                $('#wnost').fadeOut(200);
+//            }
+//        })
         
         if($('#datepicker').val()!=''){
             $('wtglst').fadeOut(200);
@@ -220,6 +226,23 @@
         function(data){                
             $('#tb_st').fadeIn(100);
             $('#tb_st').html(data);
+        });
+    }
+    
+    function cek_exist_nomor(no_st){
+//        alert(document.getElementById('cuniv').value);
+        $.post("<?php echo URL; ?>surattugas/cek_exist_nomor", {nomor:""+no_st+""},
+        function(data){
+            if(data==1){
+                console.log(data);
+                var wnost = 'Nomor surat pernah direkam!';
+                $('#wnost').fadeIn(0);
+                $('#wnost').html(wnost);
+                return false;
+            }else{
+                $('#wnost').fadeOut(200);
+            }
+            
         });
     }
     

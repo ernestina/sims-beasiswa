@@ -170,7 +170,7 @@ function hideError(){
         $.ajax({
            type:"post",
            url: "<?php echo URL; ?>penerima/get_nama_peg",
-           data:"param="+nip,
+           data:"nip="+nip+"&kd_st="+document.getElementById('kd_st').value,
            dataType:"json",
            success:function(data){
                $('#t_nm').val(data.nama);
@@ -212,7 +212,7 @@ function hideError(){
         }
         
         if(cek!=0){
-            var winput = "pegawai ini telah terdaftar sebagai penerima beasiswa";
+            var winput = "pegawai ini pernah terdaftar sebagai penerima beasiswa pada strata yang sama";
             $('#winput').html(winput);
             $('#winput').fadeIn(200);
             
@@ -222,21 +222,23 @@ function hideError(){
         
     }
     
-    function validate(nip){
+    function validate(nip,kd_st){
         var cek;
         $.ajax({
             type:'POST',
             url:'<?php echo URL?>surattugas/cek_pb_on_st',
-            data:'nip='+nip,
+            data:'nip='+nip+'&kd_st='+kd_st,
             dataType:'json',
             success:function(data){
-                /*if(data.cek>0){
-                    var winput = "pegawai ini telah terdaftar sebagai penerima beasiswa"
+                if(data.cek==1){
+                    var winput = "pegawai ini pernah terdaftar sebagai penerima beasiswa pada strata yang sama"
                     $('#winput').html(winput);
-                }*/
+                    return false;
+                }
 //                $('#cek').val(data.cek);
-                cek = data.cek;
-                return cek;
+//*******************************
+//                cek = data.cek;
+//                return cek;
             }
         });
     }
@@ -360,7 +362,7 @@ function hideError(){
                     cek_isian = goSelect();
                     console.log(cek_isian);
                     if ( cek_isian ) {
-    //                    validate(nip.val());
+//                        validate(nip.val(),kd.val());
                         var formData = new FormData($('#form_add_pb')[0]);
 
                         $.ajax({
