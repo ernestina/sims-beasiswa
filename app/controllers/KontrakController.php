@@ -881,7 +881,9 @@ class KontrakController extends BaseController {
 
     public function monitoring() {
         $universitas = new Universitas($this->registry);
-        $univ = $universitas->get_univ();
+        $kd_user = Session::get('kd_user');
+        //echo $kd_user;
+        $univ = $universitas->get_univ_by_pic($kd_user);
         //var_dump($univ);
         $this->view->univ = $univ;
         $this->view->render('kontrak/mon_pembayaran');
@@ -895,32 +897,9 @@ class KontrakController extends BaseController {
             $status = $_POST['status'];
             $tahun = $_POST['jadwal'];
             //print_r ($tahun);
+            $user = Session::get('kd_user');
             $biaya = new Biaya();
-            if ($univ == "" && $status == "" && $tahun == "") {
-                $data_biaya = $biaya->get_by_filter();
-            }
-            if ($univ != "" && $status == "" && $tahun == "") {
-                $data_biaya = $biaya->get_by_filter($univ, "", "");
-            }
-            if ($univ == "" && $status != "" && $tahun == "") {
-                $data_biaya = $biaya->get_by_filter("", $status, "");
-            }
-            if ($univ == "" && $status == "" && $tahun != "") {
-                $data_biaya = $biaya->get_by_filter("", "", $tahun);
-            }
-            if ($univ != "" && $status != "" && $tahun == "") {
-                $data_biaya = $biaya->get_by_filter($univ, $status, "");
-            }
-            if ($univ != "" && $status == "" && $tahun != "") {
-                $data_biaya = $biaya->get_by_filter($univ, "", $tahun);
-            }
-            if ($univ == "" && $status != "" && $tahun != "") {
-                $data_biaya = $biaya->get_by_filter("", $status, $tahun);
-            }
-            if ($univ != "" && $status != "" && $tahun != "") {
-                $data_biaya = $biaya->get_by_filter($univ, $status, $tahun);
-            }
-
+            $data_biaya = $biaya->get_by_filter($univ, $status, $tahun, $user);
             $universitas = new Universitas($this->registry);
             $jurusan = new Jurusan($this->registry);
             $kontrak = new Kontrak();

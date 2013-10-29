@@ -233,48 +233,29 @@ class Biaya extends BaseModel {
 
     //GET data biaya berdasarkan universitas, status, jadwal pembayaran
     // return object biaya
-    public function get_by_filter($kd_univ = null, $status = null, $jadwal = null) {
-        $table = "d_tagihan a, d_kontrak b, r_jur c, r_fakul d, r_univ e";
-        $sql = "SELECT a.* FROM $table";
-        if($kd_univ !=""){
-           $sql .= " WHERE a.KD_KON = b.KD_KON AND b.KD_JUR = c.KD_JUR AND c.KD_FAKUL = d.KD_FAKUL";
-           $sql .= " AND d.KD_UNIV = e.KD_UNIV AND e.KD_UNIV='" . $kd_univ . "'";
-        }
-        
-        if($status != ""){
-            if($kd_univ != ""){
-                $sql .= " AND aSTS_TAGIHAN='" . $status . "'";
-            } else {
-               $sql .= " a.AND STS_TAGIHAN='" . $status . "'"; 
-            }
-        }
-        $sql .= " ORDER BY JADWAL_BAYAR_TAGIHAN asc";
-//        if ($kd_univ != "" && $status == "" && $jadwal == "") {
-//            $sql = "SELECT * FROM $table a, d_kontrak b, r_jur c, r_fakul d, r_univ e";
-//            $sql .= " WHERE a.KD_KON = b.KD_KON AND b.KD_JUR = c.KD_JUR AND c.KD_FAKUL = d.KD_FAKUL";
-//            $sql .= " AND d.KD_UNIV = e.KD_UNIV AND e.KD_UNIV='" . $kd_univ . "' order by JADWAL_BAYAR_TAGIHAN asc";
-//        } else if ($kd_univ == "" && $status != "" && $jadwal == "") {
-//            $sql = "SELECT * FROM $table where STS_TAGIHAN='" . $status . "' order by JADWAL_BAYAR_TAGIHAN asc";
-//        } else if ($kd_univ == "" && $status == "" && $jadwal != "") {
-//            $sql = "SELECT * FROM $table where YEAR(JADWAL_BAYAR_TAGIHAN)='" . $jadwal . "' order by JADWAL_BAYAR_TAGIHAN asc";
-//        } else if ($kd_univ != "" && $status != "" && $jadwal == "") {
-//            $sql = "SELECT * FROM d_tagihan a, d_kontrak b, r_jur c, r_fakul d, r_univ e";
-//            $sql .= " WHERE a.KD_KON = b.KD_KON AND b.KD_JUR = c.KD_JUR AND c.KD_FAKUL = d.KD_FAKUL AND d.KD_UNIV = e.KD_UNIV";
-//            $sql .= " AND e.KD_UNIV='" . $kd_univ . "' AND STS_TAGIHAN ='" . $status . "' order by JADWAL_BAYAR_TAGIHAN asc";
-//        } else if ($kd_univ != "" && $status == "" && $jadwal != "") {
-//            $sql = "SELECT * FROM d_tagihan a, d_kontrak b, r_jur c, r_fakul d, r_univ e";
-//            $sql .= " WHERE a.KD_KON = b.KD_KON AND b.KD_JUR = c.KD_JUR AND c.KD_FAKUL = d.KD_FAKUL AND d.KD_UNIV = e.KD_UNIV";
-//            $sql .= " AND e.KD_UNIV='" . $kd_univ . "' AND YEAR(JADWAL_BAYAR_TAGIHAN)='" . $jadwal . "' order by JADWAL_BAYAR_TAGIHAN asc";
-//        } else if ($kd_univ == "" && $status != "" && $jadwal != "") {
-//            $sql = "SELECT * FROM $table where STS_TAGIHAN='" . $status . "' AND YEAR(JADWAL_BAYAR_TAGIHAN)='" . $jadwal . "' order by JADWAL_BAYAR_TAGIHAN asc";
-//        } else if ($kd_univ != "" && $status != "" && $jadwal != "") {
-//            $sql = "SELECT * FROM d_tagihan a, d_kontrak b, r_jur c, r_fakul d, r_univ e";
-//            $sql .= " WHERE a.KD_KON = b.KD_KON AND b.KD_JUR = c.KD_JUR AND c.KD_FAKUL = d.KD_FAKUL AND d.KD_UNIV = e.KD_UNIV";
-//            $sql .= " AND e.KD_UNIV='" . $kd_univ . "' AND STS_TAGIHAN ='" . $status . "' AND YEAR(JADWAL_BAYAR_TAGIHAN)='" . $jadwal . "' order by JADWAL_BAYAR_TAGIHAN asc";
-//        } else {
-//            $sql = "SELECT * FROM $table order by JADWAL_BAYAR_TAGIHAN asc";
-//        }
+    public function get_by_filter($kd_univ = null, $status = null, $jadwal = null, $user=null) {
+        $sql = "
+            SELECT a.* 
+            FROM d_tagihan a LEFT JOIN d_kontrak b ON a.KD_KON = b.KD_KON
+            LEFT JOIN r_jur c ON b.KD_JUR = c.KD_JUR
+            LEFT JOIN r_fakul d ON c.KD_FAKUL = d.KD_FAKUL
+            LEFT JOIN r_univ e ON d.KD_UNIV = e.KD_UNIV
+            WHERE e.KD_USER='" . $user . "'
+            ";
 
+        if ($kd_univ != "") {
+            $sql .= " AND e.KD_UNIV='" . $kd_univ . "'";
+        }
+
+        if ($status != "") { 
+                $sql .= " AND a.STS_TAGIHAN='" . $status . "'";
+        }
+
+        if ($jadwal != "") {  
+                $sql .= " AND YEAR(a.JADWAL_BAYAR_TAGIHAN)='" . $jadwal . "'";  
+        }
+
+        $sql .= " ORDER BY a.JADWAL_BAYAR_TAGIHAN asc";
 
         $result = $this->db->select($sql);
         //var_dump($result);

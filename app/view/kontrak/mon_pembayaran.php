@@ -23,8 +23,13 @@
                 <option value="">- semua -</option>
                 <?php
                 for ($i = 2007; $i <= date('Y') + 1; $i++) {
+                    if($i==date('Y')){
+                        $select="selected";
+                    } else {
+                        $select="";
+                    }
                     ?>
-                    <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                    <option value="<?php echo $i; ?>" <?php echo $select; ?>><?php echo $i; ?></option>
                 <?php } ?>
             </select></li>
 		</ul>
