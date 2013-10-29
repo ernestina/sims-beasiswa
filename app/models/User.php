@@ -103,14 +103,24 @@ class User {
     public function updateUser(User $user) {
 
         $where = "KD_USER = " . $user->get_id();
+        if ($user->get_foto() == "") {
 
-        $data = array(
-            'NIP_USER' => $user->get_nip(),
-            'NM_USER' => $user->get_nmUser(),
-            'PASS_USER' => Hash::create('sha1', $user->get_pass(), HASH_SALT_KEY),
-            'AKSES_USER' => $user->get_akses(),
-            'FOTO_USER' => $user->get_foto()
-        );
+            $data = array(
+                'NIP_USER' => $user->get_nip(),
+                'NM_USER' => $user->get_nmUser(),
+                'PASS_USER' => Hash::create('sha1', $user->get_pass(), HASH_SALT_KEY),
+                'AKSES_USER' => $user->get_akses()
+            );
+        } else {
+            $data = array(
+                'NIP_USER' => $user->get_nip(),
+                'NM_USER' => $user->get_nmUser(),
+                'PASS_USER' => Hash::create('sha1', $user->get_pass(), HASH_SALT_KEY),
+                'AKSES_USER' => $user->get_akses(),
+                'FOTO_USER' => $user->get_foto()
+            );
+        }
+
         $this->_db->update($this->_table, $data, $where);
     }
 
@@ -118,12 +128,21 @@ class User {
         $where = "KD_USER = " . $user->get_id();
 
 //            var_dump($user->get_pass());
-        $data = array(
-            'NIP_USER' => $user->get_nip(),
-            'NM_USER' => $user->get_nmUser(),
-            'AKSES_USER' => $user->get_akses(),
-            'FOTO_USER' => $user->get_foto()
-        );
+        if ($user->get_foto() == "") {
+            $data = array(
+                'NIP_USER' => $user->get_nip(),
+                'NM_USER' => $user->get_nmUser(),
+                'AKSES_USER' => $user->get_akses()
+            );
+        } else {
+            $data = array(
+                'NIP_USER' => $user->get_nip(),
+                'NM_USER' => $user->get_nmUser(),
+                'AKSES_USER' => $user->get_akses(),
+                'FOTO_USER' => $user->get_foto()
+            );
+        }
+
         $this->_db->update($this->_table, $data, $where);
     }
 
@@ -177,23 +196,23 @@ class User {
     }
 
     public function delUser($id) {
-        
+
         $where = "KD_USER=" . $id;
-        
-        $sql = "SELECT * FROM ".$this->_table." WHERE ".$where."";
+
+        $sql = "SELECT * FROM " . $this->_table . " WHERE " . $where . "";
         $result = $this->_db->select($sql);
-        
+
         $pic = new User($registry);
         foreach ($result as $value) {
             $pic->set_id($value['KD_USER']);
-            $pic->set_akses($value['AKSES_USER']);        
+            $pic->set_akses($value['AKSES_USER']);
         }
-        
-        if ($pic->get_akses()=='1'){
+
+        if ($pic->get_akses() == '1') {
             
         } else {
             $this->_db->delete($this->_table, $where);
-        }       
+        }
     }
 
     public function get_id() {
