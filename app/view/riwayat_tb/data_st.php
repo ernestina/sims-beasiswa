@@ -223,7 +223,8 @@
     
     function get_surat_tugas(univ,th_masuk){
 //        alert(document.getElementById('cuniv').value);
-        $.post("<?php echo URL; ?>surattugas/get_data_st", {param:""+univ+","+th_masuk+""},
+        var kd_user = <?php echo Session::get('kd_user');?>;
+        $.post("<?php echo URL; ?>surattugas/get_data_st", {param:""+univ+","+th_masuk+","+kd_user+""},
         function(data){                
             $('#tb_st').fadeIn(100);
             $('#tb_st').html(data);

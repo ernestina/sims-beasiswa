@@ -9,6 +9,7 @@ class SurattugasController extends BaseController{
     
     public function __construct($registry) {
         parent::__construct($registry);
+        $this->kd_user = Session::get('kd_user');
     }
     
     public function datast($id=null){
@@ -48,7 +49,7 @@ class SurattugasController extends BaseController{
         $aksi = array();
         if(!is_null($id)){
             $st->set_kd_st($id);
-            $this->view->d_ubah = $st->get_surat_tugas_by_id($st);
+            $this->view->d_ubah = $st->get_surat_tugas_by_id($st,$this->kd_user);
             $is_exist_file = ($this->view->d_ubah->get_file()!=NULL)?true:false;
             $file = array('file_exist'=>$is_exist_file);
             $aksi = array('aksi'=>'ubah');
@@ -56,7 +57,7 @@ class SurattugasController extends BaseController{
             $aksi = array('aksi'=>'rekam');
             $file = array('file_exist'=>false);
         }
-        
+         
         $univ = new Universitas($this->registry);
         $jur = new Jurusan($this->registry);
         $pemb = new PemberiBeasiswa();
@@ -67,7 +68,7 @@ class SurattugasController extends BaseController{
         $this->view->d_jur = $jur->get_jurusan();
         $this->view->d_th_masuk = $st->get_list_th_masuk(true);
         $this->view->d_th_masuk_input = $st->get_list_th_masuk(false);
-        $this->view->d_st = $st->get_surat_tugas();
+        $this->view->d_st = $st->get_surat_tugas($this->kd_user);
         $this->view->aksi = json_encode($aksi);
         $this->view->d_file_exist = json_encode($file);
         $this->view->render('riwayat_tb/data_st');
@@ -137,11 +138,12 @@ class SurattugasController extends BaseController{
         $param = explode(",", $param);
         $univ = $param[0];
         $thn = $param[1];
+        $kd_user = $param[2];
         $this->view->d_st=array();
         if($univ==0 AND $thn==0){
             $this->view->d_st = $st->get_surat_tugas();
         }else{
-            $this->view->d_st = $st->get_surat_tugas_by_univ_thn_masuk($univ, $thn);
+            $this->view->d_st = $st->get_surat_tugas_by_univ_thn_masuk($univ, $thn, $kd_user);
         }
         $this->view->load('riwayat_tb/tabel_st');
     }
@@ -169,7 +171,7 @@ class SurattugasController extends BaseController{
         $this->view->kd_st=$id;
         $this->view->d_bank = $bank->get_bank();
         $this->view->d_univ = $univ->get_univ();
-        $this->view->d_st = $st->get_surat_tugas_by_id($st);
+        $this->view->d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
         $this->view->d_pb = $pb->get_penerima_by_st($pb);
         $this->view->d_th_masuk = $st->get_list_th_masuk();
         $this->view->render('riwayat_tb/pb_to_st');

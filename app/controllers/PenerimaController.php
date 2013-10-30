@@ -9,6 +9,7 @@ class PenerimaController extends BaseController{
     
     public function __construct($registry){
         parent::__construct($registry);
+        $this->kd_user = Session::get('kd_user');
     }
     
     public function profil($id=null){
@@ -25,9 +26,9 @@ class PenerimaController extends BaseController{
         $beaya = new Biaya();
         if(!is_null($id)){
             $pb->set_kd_pb($id);
-            $this->view->d_pb = $pb->get_penerima_by_id($pb);
+            $this->view->d_pb = $pb->get_penerima_by_id($pb,$this->kd_user);
             $st->set_kd_st($this->view->d_pb->get_st());
-            $this->view->d_st = $st->get_surat_tugas_by_id($st);
+            $this->view->d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
             $this->view->d_bank = $bank->get_bank_id($this->view->d_pb->get_bank());
             $jur->set_kode_jur($this->view->d_pb->get_jur());
             $this->view->d_jur = $jur->get_jur_by_id($jur);
@@ -36,8 +37,8 @@ class PenerimaController extends BaseController{
             $this->view->d_univ = $univ->get_univ_by_jur($this->view->d_jur->get_kode_jur());
             $this->view->d_nil = $nilai->get_nilai($pb);
             $this->view->d_cur_ipk = $nilai->get_current_ipk($pb);
-            $this->view->d_cuti = $cuti->get_cuti($pb);
-            $this->view->d_rwt_beas = $pb->get_penerima_by_column($pb,'nip',true);
+            $this->view->d_cuti = $cuti->get_cuti($this->kd_user,$pb);
+            $this->view->d_rwt_beas = $pb->get_penerima_by_column($pb,$this->kd_user,'nip',true);
             $elem = $el->get_elem_per_pb($pb, false);
             $bea = $beaya->get_cost_per_pb($pb,false);
             $this->view->d_mas = $mas->get_masalah($pb);
@@ -71,7 +72,7 @@ class PenerimaController extends BaseController{
         $sts = new Status();
         $this->view->th_masuk = $st->get_list_th_masuk();
         $this->view->univ = $univ->get_univ();
-        $this->view->d_pb = $pb->get_penerima();
+        $this->view->d_pb = $pb->get_penerima($this->kd_user);
         $this->view->d_sts = $sts->get_status();
         $this->view->render('riwayat_tb/data_pb');
     }
@@ -134,7 +135,7 @@ class PenerimaController extends BaseController{
         $kd_st = $_POST['param'];
         $pb = new Penerima($this->registry);
         $pb->set_st($kd_st);
-        $this->view->d_pb = $pb->get_penerima_by_st($pb);
+        $this->view->d_pb = $pb->get_penerima_by_st($pb,$this->kd_user);
         $this->view->load('riwayat_tb/tabel_pb');
         
     }
@@ -146,7 +147,7 @@ class PenerimaController extends BaseController{
         $pb = new Penerima($this->registry);
         $pb->set_nama($nama);
         $pb->set_st($st);
-        $this->view->d_pb = $pb->get_penerima_by_name($pb,true);
+        $this->view->d_pb = $pb->get_penerima_by_name($pb,$this->kd_user,true);
         $this->view->load('riwayat_tb/tabel_pb');
         
     }
@@ -309,7 +310,7 @@ class PenerimaController extends BaseController{
 //            $cek = Tanggal::check_before_a_date($lap_selesai_tb, $tgl_sel_st);
 //            if($cek){
                 $st->set_kd_st($kd_st);
-                $d_st = $st->get_surat_tugas_by_id($st);
+                $d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
                 $status = $pb->get_status_change_pb($d_st,$lap_selesai_tb,$tgl_sel_st);
 //            }
         }
@@ -373,7 +374,7 @@ class PenerimaController extends BaseController{
     public function delpb($id){
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($id);
-        $pb->get_penerima_by_id($pb);
+        $pb->get_penerima_by_id($pb,$this->kd_user);
         $file = 'files/'.$pb->get_foto();
         $pb->delete_penerima();
         if(file_exists($file)) unlink($file);
@@ -449,9 +450,9 @@ class PenerimaController extends BaseController{
         $cuti = new Cuti($this->registry);
         $mas = new MasalahPenerima($this->registry);
         $pb->set_kd_pb($kode_pb);
-        $this->view->d_pb = $pb->get_penerima_by_id($pb);
+        $this->view->d_pb = $pb->get_penerima_by_id($pb,$this->kd_user);
         $st->set_kd_st($this->view->d_pb->get_st());
-        $this->view->d_st = $st->get_surat_tugas_by_id($st);
+        $this->view->d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
         $this->view->d_bank = $bank->get_bank_id($this->view->d_pb->get_bank());
         $this->view->t_bank = $bank->get_bank();
         $jur->set_kode_jur($this->view->d_pb->get_jur());
@@ -462,8 +463,8 @@ class PenerimaController extends BaseController{
         $this->view->d_univ = $univ->get_univ_by_jur($this->view->d_jur->get_kode_jur());
         $this->view->d_nil = $nilai->get_nilai($pb);
         $this->view->d_cur_ipk = $nilai->get_current_ipk($pb);
-        $this->view->d_cuti = $cuti->get_cuti($pb);
-        $this->view->d_rwt_beas = $pb->get_penerima_by_column($pb,'nip',true);
+        $this->view->d_cuti = $cuti->get_cuti($this->kd_user,$pb);
+        $this->view->d_rwt_beas = $pb->get_penerima_by_column($pb,$this->kd_user,'nip',true);
         $this->view->d_mas = $mas->get_masalah($pb);
         $this->view->render('profil/ubah_profil_v2');
     }
@@ -473,7 +474,7 @@ class PenerimaController extends BaseController{
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($kd_pb);
         $this->view->url = 'editpb';
-        $this->view->d_pb = $pb->get_penerima_by_id($pb);
+        $this->view->d_pb = $pb->get_penerima_by_id($pb,$this->kd_user);
         $this->view->load('profil/dialog_masalah');
     }
     
@@ -492,7 +493,7 @@ class PenerimaController extends BaseController{
     public function get_masalah($kd_pb,$aksi='editpb'){
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($kd_pb);
-        $this->view->d_pb = $pb->get_penerima_by_id($pb);
+        $this->view->d_pb = $pb->get_penerima_by_id($pb,$this->kd_user);
         $mas = new MasalahPenerima($this->registry);
         $this->view->url = $aksi;
         $this->view->d_mas = $mas->get_masalah($pb);
@@ -504,7 +505,7 @@ class PenerimaController extends BaseController{
         $this->view->kd_pb = $kd_pb;
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($kd_pb);
-        $this->view->d_pb = $pb->get_penerima_by_id($pb);
+        $this->view->d_pb = $pb->get_penerima_by_id($pb,$this->kd_user);
         $this->view->url = 'editpb';
         $this->view->load('profil/dialog_nilai');
     }
@@ -516,7 +517,7 @@ class PenerimaController extends BaseController{
         $sem = $_POST['semester'];
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($kd_pb);
-        $d_pb = $pb->get_penerima_by_id($pb);
+        $d_pb = $pb->get_penerima_by_id($pb,$this->kd_user);
 //        echo "penerima";
         /*
          * upload file
@@ -544,7 +545,7 @@ class PenerimaController extends BaseController{
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($kd_pb);
         $nil = new Nilai($this->registry);
-        $this->view->d_pb = $pb->get_penerima_by_id($pb);
+        $this->view->d_pb = $pb->get_penerima_by_id($pb,$this->kd_user);
         $this->view->d_nil= $nil->get_nilai($pb);
         $this->view->url = $url;
         $this->view->load('profil/tabel_nilai');
@@ -600,7 +601,7 @@ class PenerimaController extends BaseController{
     public function cekfile($kd_pb,$case){
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($kd_pb);
-        $d_pb = $pb->get_penerima_by_id($pb);
+        $d_pb = $pb->get_penerima_by_id($pb,$this->kd_user);
         $return = 0;
         switch($case){
             case 'foto':
@@ -635,7 +636,7 @@ class PenerimaController extends BaseController{
         $kd_pb = $_POST['param'];
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($kd_pb);
-        $d_pb = $pb->get_penerima_by_id($pb);
+        $d_pb = $pb->get_penerima_by_id($pb,$this->kd_user);
         
         $return = json_encode(array(
             'kd_pb'=>$d_pb->get_kd_pb(),
@@ -650,7 +651,7 @@ class PenerimaController extends BaseController{
         $nama = $_POST['param'];
         $pb = new Penerima($this->registry);
         $pb->set_nama($nama);
-        $this->view->d_pb = $pb->get_penerima_by_name($pb);
+        $this->view->d_pb = $pb->get_penerima_by_name($pb,$this->kd_user);
         $this->view->load('riwayat_tb/tabel_pb_sc');
     }
     
@@ -687,7 +688,7 @@ class PenerimaController extends BaseController{
         $thn_masuk = $atr[1];
         $status = $atr[2];
         $pb = new Penerima($this->registry);
-        $this->view->d_pb = $pb->get_penerima_filter($univ, $thn_masuk, $status);
+        $this->view->d_pb = $pb->get_penerima_filter($univ, $thn_masuk, $status,$this->kd_user);
         $this->view->load('riwayat_tb/tabel_d_pb');
     }
     
@@ -698,7 +699,7 @@ class PenerimaController extends BaseController{
         $name = $_POST['name'];
         $pb = new Penerima($this->registry);
         $pb->set_nama($name);
-        $this->view->d_pb = $pb->get_penerima_by_name($pb);
+        $this->view->d_pb = $pb->get_penerima_by_name($pb,$this->kd_user);
         $this->view->load('riwayat_tb/tabel_d_pb');
     }
 

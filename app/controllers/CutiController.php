@@ -9,6 +9,7 @@ class CutiController extends BaseController{
     
     public function __construct($registry) {
         parent::__construct($registry);
+        $this->kd_user = Session::get('kd_user');
     }
     
     public function index(){
@@ -66,7 +67,7 @@ class CutiController extends BaseController{
         
         if(!is_null($id)){
             $ct->set_kode_cuti($id);
-            $this->view->d_ubah = $ct->get_cuti_by_id($ct);
+            $this->view->d_ubah = $ct->get_cuti_by_id($ct,$this->kd_user);
 //            var_dump($this->view->d_ubah);
             $pb = new Penerima($this->registry);
             $pb->set_kd_pb($ct->get_pb());
@@ -81,7 +82,7 @@ class CutiController extends BaseController{
         $st = new SuratTugas($this->registry);
         $pb = new Penerima($this->registry);
         $this->view->d_pb = $pb->get_penerima();
-        $this->view->d_ct = $ct->get_cuti();
+        $this->view->d_ct = $ct->get_cuti($this->kd_user);
         $this->view->d_univ = $univ->get_univ();
         $this->view->d_jsc = $jsc->get_jsc();
         $this->view->d_th_masuk = $st->get_list_th_masuk();
@@ -178,7 +179,7 @@ class CutiController extends BaseController{
         if($univ==0 AND $thn_masuk==0){
             $this->view->d_ct = $sc->get_cuti();
         }else{
-            $this->view->d_ct = $sc->get_cuti_by_univ_thn_masuk($univ, $thn_masuk);
+            $this->view->d_ct = $sc->get_cuti_by_univ_thn_masuk($univ, $thn_masuk,$this->kd_user);
         }
         $this->view->load('riwayat_tb/tabel_sc');
     }
@@ -186,7 +187,7 @@ class CutiController extends BaseController{
     public function get_sc_by_name(){
         $sc = new Cuti($this->registry);
         $pb_name = $_POST['param'];
-        $this->view->d_ct=$sc->get_cuti_by_pb_name($pb_name);
+        $this->view->d_ct=$sc->get_cuti_by_pb_name($pb_name,$this->kd_user);
         
         $this->view->load('riwayat_tb/tabel_sc');
     }

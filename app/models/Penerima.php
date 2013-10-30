@@ -38,11 +38,16 @@ class Penerima {
         $this->registry = $registry;
     }
 
-    public function get_penerima($posisi=null,$batas=null){
+    public function get_penerima($kd_user=1,$posisi=null,$batas=null){
         $sql = "SELECT * FROM ".$this->_tb_penerima;
+        $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+                LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
+                LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV
+                WHERE d.KD_USER=".$kd_user;
         if(!is_null($posisi) AND !is_null($batas)){
             $sql .= " LIMIT ".$posisi.",".$batas;
         }
+//        echo $sql;
         $result = $this->db->select($sql);
         $data = array();
         foreach($result as $val){
@@ -78,8 +83,13 @@ class Penerima {
         return $data;
     }
     
-    public function get_penerima_by_id($pb = Penerima){
-        $sql = "SELECT * FROM ".$this->_tb_penerima." WHERE KD_PB=".$pb->get_kd_pb();
+    public function get_penerima_by_id($pb = Penerima,$kd_user){
+        $sql = "SELECT * FROM ".$this->_tb_penerima;
+        $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+                LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
+                LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
+        $sql .= " WHERE a.KD_PB=".$pb->get_kd_pb();
+        $sql .= " AND d.KD_USER=".$kd_user;
         $result = $this->db->select($sql);
         foreach($result as $val){
             $this->set_kd_pb($val['KD_PB']);
@@ -105,8 +115,13 @@ class Penerima {
         return $this;
     }
     
-    public function get_penerima_by_st($pb = Penerima){
-        $sql = "SELECT * FROM ".$this->_tb_penerima." WHERE KD_ST=".$pb->get_st();
+    public function get_penerima_by_st($pb = Penerima,$kd_user=1){
+        $sql = "SELECT * FROM ".$this->_tb_penerima;
+        $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+                LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
+                LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
+        $sql .= " WHERE a.KD_ST=".$pb->get_st();
+        $sql .= " AND d.KD_USER=".$kd_user;
         $result = $this->db->select($sql);
         $data = array();
         foreach($result as $val){
@@ -135,10 +150,15 @@ class Penerima {
         return $data;
     }
     
-    public function get_penerima_by_name($pb = Penerima, $filter_st=false){
-        $sql = "SELECT * FROM ".$this->_tb_penerima." WHERE NM_PB LIKE '%".$pb->get_nama()."%'"; 
+    public function get_penerima_by_name($pb = Penerima, $kd_user=1, $filter_st=false){
+        $sql = "SELECT * FROM ".$this->_tb_penerima;
+        $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+                LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
+                LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
+        $sql .= " WHERE NM_PB LIKE '%".$pb->get_nama()."%'";
+        $sql .= " AND d.KD_USER=".$kd_user;
         if($filter_st){
-            $sql .= " AND KD_ST=".$pb->get_st();
+            $sql .= " AND a.KD_ST=".$pb->get_st();
         }
         $result = $this->db->select($sql);
         $data = array();
@@ -178,7 +198,7 @@ class Penerima {
         return $data;
     }
     
-    public function get_penerima_by_column($pb = Penerima, $cat="",$info = false){
+    public function get_penerima_by_column($pb = Penerima, $kd_user=1, $cat="",$info = false){
         $sql = "SELECT a.KD_PB as KD_PB,";
         if($info){
             $sql .= "CONCAT(b.NO_ST,',',b.TGL_ST,',',b.THN_MASUK) as KD_ST,
@@ -207,7 +227,7 @@ class Penerima {
             a.NO_SPMT_PB as NO_SPMT_PB,
             a.JUDUL_SKRIPSI_PB as JUDUL_SKRIPSI_PB
             FROM ".$this->_tb_penerima." a ";
-        if($info){
+//        if($info){
             $sql .= "LEFT JOIN d_srt_tugas b ON a.KD_ST=b.KD_ST
                 LEFT JOIN r_jur c ON a.KD_JUR=c.KD_JUR
                 LEFT JOIN r_stb d ON a.KD_STS_TB=d.KD_STS_TB
@@ -215,9 +235,12 @@ class Penerima {
                 LEFT JOIN r_fakul f ON c.KD_FAKUL=f.KD_FAKUL
                 LEFT JOIN r_univ g ON f.KD_UNIV=g.KD_UNIV
                 LEFT JOIN r_strata h ON c.KD_STRATA=h.KD_STRATA ";
-        }
+//        }
         if($cat=='nip'){
-            $sql .= "WHERE NIP_PB =".$pb->get_nip();
+            $sql .= "WHERE a.NIP_PB =".$pb->get_nip();
+            $sql .= " AND g.KD_USER=".$kd_user;
+        }else{
+            $sql .= " WHERE g.KD_USER=".$kd_user;
         }
         
         $result = $this->db->select($sql);
@@ -468,7 +491,7 @@ class Penerima {
         return $data;
     }
     
-    public function get_penerima_filter($univ, $thn_masuk, $status){
+    public function get_penerima_filter($univ, $thn_masuk, $status, $kd_user){
         $sql = "SELECT a.KD_PB as KD_PB,";
         $sql .= "a.KD_ST as KD_ST,
             a.KD_JUR as KD_JUR,
@@ -514,6 +537,8 @@ class Penerima {
         }else if($univ!=0 && $thn_masuk==0 &&$status!=0){
             $sql .= "WHERE g.KD_UNIV=".$univ."  AND a.KD_STS_TB=".$status;
         }
+        $sql .= " AND g.KD_USER=".$kd_user;
+//        echo $sql;
         $result = $this->db->select($sql);
         $data = array();
         foreach($result as $val){

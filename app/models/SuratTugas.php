@@ -34,10 +34,14 @@ class SuratTugas {
      * method untuk mndapatkan semua surat tugas
      * @param id_sutat_tugas
      */
-    public function get_surat_tugas($id = null) {
+    public function get_surat_tugas($kd_user=1,$id = null) {
         $sql = "SELECT * FROM " . $this->_tb_st;
+        $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+                LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
+                LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
         if (!is_null($id)) {
-            $sql .= ' WHERE KD_ST<>' . $id;
+            $sql .= ' WHERE a.KD_ST<>' . $id;
+            $sql .= ' AND d.KD_USER='.$kd_user;
         }
         $result = $this->db->select($sql);
         $data = array();
@@ -71,8 +75,13 @@ class SuratTugas {
      * method untuk mndapatkan surat tugas berdasarkan id
      * @param id_sutat_tugas
      */
-    public function get_surat_tugas_by_id($st = SuratTugas) {
-        $sql = "SELECT * FROM " . $this->_tb_st . " WHERE KD_ST=" . $st->get_kd_st();
+    public function get_surat_tugas_by_id($st = SuratTugas,$kd_user=1) {
+        $sql = "SELECT * FROM " . $this->_tb_st; 
+        $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+                LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
+                LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
+        $sql .= " WHERE a.KD_ST=" . $st->get_kd_st();
+        $sql .= ' AND d.KD_USER='.$kd_user;
         $result = $this->db->select($sql);
         foreach ($result as $val) {
             $this->set_kd_st($val['KD_ST']);
@@ -102,7 +111,7 @@ class SuratTugas {
         return $data;
     }
 
-    public function get_surat_tugas_by_univ_thn_masuk($univ, $thn) {
+    public function get_surat_tugas_by_univ_thn_masuk($univ, $thn, $kd_user=null) {
         $sql = "SELECT 
             a.KD_ST as KD_ST,
             a.KD_JUR as KD_JUR,
@@ -128,6 +137,10 @@ class SuratTugas {
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV
                 WHERE d.KD_UNIV=" . $univ . " AND a.THN_MASUK=" . $thn;
+        }
+        
+        if(!is_null($kd_user)){
+            $sql .= ' AND d.KD_USER='.$kd_user;
         }
         $result = $this->db->select($sql);
         $data = array();
@@ -251,9 +264,7 @@ class SuratTugas {
         $sql = "SELECT NO_ST FROM ".$this->_tb_st;
         $data = $this->db->select($sql);
         foreach ($data as $v){
-//            echo $v['NO_ST'];
             $tmp = Validasi::remove_space($v['NO_ST']);
-//            echo $tmp."666".$nomor;
             $cek = $nomor==$tmp;
             if($cek) return true;
         }
