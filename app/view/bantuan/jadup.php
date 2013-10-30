@@ -87,8 +87,7 @@
                 success: function(thn_masuk){
                     $('#tahun_masuk').html(thn_masuk);
                 }
-            });
-            
+            }); 
         })
         
         //agar ketika universitas berubah karena dipilih, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
