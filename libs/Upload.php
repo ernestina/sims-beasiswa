@@ -80,8 +80,8 @@ class Upload {
         $this->fileTo = $nama;
         return $this->fileTo;
     }
-    
-     /*
+
+    /*
      * param tipe dokumen, misal foto harus jpg, surat tugas harus pdf
      * 
      */
@@ -113,14 +113,11 @@ class Upload {
         array_push($nama, $rand);
         $this->changeFileName($this->getFileName(), $nama);
         if ($this->cekFileExist()) {
-//            if($this->cekEkstensi($this->getFileExt())){
-            move_uploaded_file($this->getDirFrom(), $this->getDirTo() . $this->getFileTo());
-            return true;
-//            }else{
-//                throw new Exception();
-            return false;
-//                exit();
-//            }
+            if (move_uploaded_file($this->getDirFrom(), $this->getDirTo() . $this->getFileTo())) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

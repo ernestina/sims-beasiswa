@@ -6,7 +6,7 @@
             <th width= '20%'>Nama</th>
             <th width= '10%'>Gol</th>
             <th width= '15%'>Status</th>
-            <th width= '5%'>Jumlah Kehadiran (persentase)</th>
+            <th width= '5%' style="display:none;">Jumlah Kehadiran (persentase)</th>
 <!--            <th width= '10%'>Jumlah Kotor</th>-->
             <th width= '10%'>Pajak (persentase)</th>
 <!--            <th width= '10%'>Jumlah Bersih</th>-->
@@ -29,7 +29,7 @@
             <td><?php echo $value->get_nama() . "<br/>NIP." . $value->get_nip(); ?></td>
             <td><?php echo Golongan::golongan_int_string($value->get_gol()); ?></td>
             <td><?php echo StatusPB::status_int_string($value->get_status()); ?></td>
-            <td><input class="mini" type="text"  id="<?php echo 'jml_hadir' . $i; ?>" name="<?php echo 'jml_hadir' . $i; ?>" value="100">%</td>
+            <td style="display:none;"><input class="mini" type="hidden"  id="<?php echo 'jml_hadir' . $i; ?>" name="<?php echo 'jml_hadir' . $i; ?>" value="100">%</td>
     <!--            <td><input class="mini" type="text" id="<?php echo 'jml_kotor' . $i; ?>" name="jml_kotor" value="0"></td>-->
             <td><input class="mini" type="text" id="<?php echo 'pajak' . $i; ?>" name="<?php echo 'pajak' . $i; ?>" value="<?php
     if ($value->get_gol() > 30) {
@@ -37,7 +37,7 @@
     } else {
         echo '0';
     }
-        ?>">%</td>
+        ?>"></td>
     <!--            <td><input class="mini" type="text" id="<?php echo 'jml_bersih' . $i; ?>" name="jml_bersih" value="0"></td>-->
             <td><?php echo $bank->get_nama(); ?></td>
             <td><?php echo $value->get_no_rek(); ?></td>

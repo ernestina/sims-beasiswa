@@ -28,46 +28,51 @@
                 </select>
                 <div id="wtahun_masuk"></div>
                 <label class="isian">Tahun Masuk : </label>
-                <select name="tahun_masuk" id="tahun_masuk">
-                    <!--                    <option value="">Pilih Tahun masuk</option>-->
-                    <?php
-                    for ($i = 2007; $i < date('Y') + 2; $i++) {
-
-                        if ($i == date('Y')) {
-                            echo "<option value=" . $i . " selected>" . $i . "</option>";
-                        } else {
-                            echo "<option value=" . $i . ">" . $i . "</option>";
-                        }
-                    }
-                    ?>
+                <select id="tahun_masuk" name="tahun_masuk">
+                    <option value="">Pilih Tahun masuk</option>   
                 </select>
                 <div id="wbln"></div>
                 <div id="wthn"></div>
                 <label class="isian">Bulan dan Tahun : </label>
                 <ul class="inline">
                     <li><select id="bln" name="bln" style="width: 105px">
-                            <option value="1">Januari</option>
-                            <option value="2">Februari</option>
-                            <option value="3">Maret</option>
-                            <option value="4">April</option>
-                            <option value="5">Mei</option>
-                            <option value="6">Juni</option>
-                            <option value="7">Juli</option>
-                            <option value="8">Agustus</option>
-                            <option value="9">September</option>
-                            <option value="10">Oktober</option>
-                            <option value="11">Nopember</option>
-                            <option value="12">Desember</option>
+                             <option value="">Pilih Bulan</option>
+                            <?php
+                            for($i=1; $i<=12; $i++){
+                              if($i==date('m')){
+                                  $select="selected";
+                              } else {
+                                  $select="";
+                              } 
+                              
+                              echo "<option value=\"".$i."\" $select>".Tanggal::bulan_indo($i)."</option>";
+                            }
+                            ?>
+
+                            <!--                            <option value="">Pilih Bulan</option>
+                                                        <option value="1">Januari</option>
+                                                        <option value="2">Februari</option>
+                                                        <option value="3">Maret</option>
+                                                        <option value="4">April</option>
+                                                        <option value="5">Mei</option>
+                                                        <option value="6">Juni</option>
+                                                        <option value="7">Juli</option>
+                                                        <option value="8">Agustus</option>
+                                                        <option value="9">September</option>
+                                                        <option value="10">Oktober</option>
+                                                        <option value="11">Nopember</option>
+                                                        <option value="12">Desember</option>-->
                         </select></li>
                     <li><select id="thn" name="thn" style="width: 100px">
+                            <option value="">Pilih Tahun</option>
                             <?php
-                            for ($i = 2007; $i < date('Y') + 2; $i++) {
-                                if ($i == date('Y')) {
-                                    echo "<option value=" . $i . " selected>" . $i . "</option>";
-                                } else {
-                                    echo "<option value=" . $i . " >" . $i . "</option>";
-                                }
-                            }
+//                            for ($i = 2007; $i < date('Y') + 2; $i++) {
+//                                if ($i == date('Y')) {
+//                                    echo "<option value=" . $i . " selected>" . $i . "</option>";
+//                                } else {
+//                                    echo "<option value=" . $i . " >" . $i . "</option>";
+//                                }
+//                            }
                             ?>
                         </select></li>
                 </ul>
@@ -110,7 +115,7 @@
 
 <script type="text/javascript">
     
-       
+          
     //mengubah inputan  dengan memunculkan separator ribuan
     $('#biaya_peg').number(true,0);
     $('#total_bayar').number(true,0);
@@ -133,8 +138,49 @@
             $("#total_bayar").val('0');
         })
         
+        //menampilkan daftar tahun
+        $('#kode_jur').change(function(){
+            //alert ($('#kode_jur').val());
+            $.ajax({
+                type:"POST",
+                url: "<?php echo URL; ?>elemenBeasiswa/get_thn_masuk_by_jur",
+                data: {kd_jurusan:$('#kode_jur').val()},
+                success: function(thn_masuk){
+                    $('#tahun_masuk').html(thn_masuk);
+                }
+            });
+            
+            $("#total_bayar").val('0');
+        })
+        
+        
+        //menampilkan data tahun
+        $('#tahun_masuk').change(function(){
+            //alert ($('#kode_tahun_masuk').val());
+            $.ajax({
+                type:"POST",
+                url: "<?php echo URL; ?>elemenBeasiswa/get_thn_bayar",
+                data: {thn:$('#tahun_masuk').val()},
+                success: function(thn){
+                    $('#thn').html(thn);
+                }
+            });
+            
+            $.ajax({
+                type:"POST",
+                url: "<?php echo URL; ?>elemenBeasiswa/tabel_penerima_jadup",
+                data: {kd_jurusan:$('#kode_jur').val(),thn_masuk:$('#tahun_masuk').val(),bln:$('#bln').val(),thn:$('#thn').val()},
+                success: function(jadup){
+                    $('#tabel_penerima_jadup').html(jadup);
+                }
+            });
+            
+            $("#total_bayar").val('0');
+            
+        })
+        
         //menampilkan data penerima jadup
-        $('#kode_jur, #tahun_masuk, #bln, #thn').change(function(){
+        $('#bln, #thn').change(function(){
             //alert ($('#kode_univ').val());
             $.ajax({
                 type:"POST",
@@ -223,6 +269,14 @@
     
     $('#tahun_masuk').click(function(){
         removeError('wtahun_masuk');
+    })
+    
+    $('#bln').click(function(){
+        removeError('wbln');
+    })
+    
+    $('#thn').click(function(){
+        removeError('wthn');
     })
     
     $('#biaya_peg').keyup(function(){

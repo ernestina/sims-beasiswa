@@ -408,7 +408,7 @@ class ElemenBeasiswa {
         return $data;
     }
     
-    public function get_elem_jadup_by_sp2d($sp2d) {
+    public function get_elem_jadup_by_sp2d($sp2d, $user) {
 
         $sql = "SELECT 
             a.KD_D_ELEM_BEASISWA AS KD_D_ELEM_BEASISWA,
@@ -427,7 +427,9 @@ class ElemenBeasiswa {
                 LEFT JOIN r_jur b ON a.KD_JUR = b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL = c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV
-                WHERE KD_R_ELEM_BEASISWA='" . $this->_jadup . "'";
+                WHERE KD_R_ELEM_BEASISWA='" . $this->_jadup . "'
+                AND d.KD_USER ='".$user."'
+                ";
 
         if ($sp2d != "") {
             $sql .=" AND a.NO_SP2D_D_ELEM_BEASISWA LIKE '" . $sp2d . "%'";

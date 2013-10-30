@@ -365,7 +365,7 @@ class KontrakController extends BaseController {
             $kontrak->delete($id);
 
             $file = "files/kontrak/" . $data_kontrak->file_kontrak;
-            echo $file;
+            //echo $file;
             if (file_exists($file)) {
                 unlink($file);
             }

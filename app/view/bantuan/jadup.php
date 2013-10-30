@@ -30,11 +30,7 @@
                             <?php
                             for ($i = 2007; $i <= date('Y') + 1; $i++) {
                                 ?>
-                                <option value="<?php echo $i; ?>" <?php
-                            if ($i == date('Y')) {
-                                echo "selected";
-                            }
-                                ?>><?php echo $i; ?></option>
+                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
                                     <?php } ?>
                         </select>
                     </td>

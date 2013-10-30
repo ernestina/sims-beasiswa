@@ -97,16 +97,16 @@ class Kontrak extends BaseModel {
     }
 
     public function get_by_nomor($key, $user) {
-       
+
         $sql = "SELECT * FROM d_kontrak a 
                 LEFT JOIN r_jur b ON  a.KD_JUR=b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV 
                 WHERE
-                a.NO_KON LIKE '".$key."%' 
-               AND d.KD_USER ='".$user."'
+                a.NO_KON LIKE '" . $key . "%' 
+               AND d.KD_USER ='" . $user . "'
             ";
-        
+
         $result = $this->db->select($sql);
         //var_dump($result);
         $data = array();
@@ -178,6 +178,37 @@ class Kontrak extends BaseModel {
             $kontrak->file_kontrak = $val['FILE_KON'];
             $kontrak->kontrak_lama = $val['KONTRAK_LAMA'];
             $data[] = $kontrak;
+        }
+        //var_dump($data);
+        return $data;
+    }
+
+    public function get_list_thn_masuk() {
+        $table = "d_kontrak";
+        //$where = "KD_JUR='" . $jur . "'";
+        $sql = "SELECT distinct(THN_MASUK_KON) AS THN_MASUK_KON FROM $table order by THN_MASUK_KON desc";
+        $result = $this->db->select($sql);
+        //var_dump($result);
+        $data = array();
+        foreach ($result as $val) {
+            $data[] = $val['THN_MASUK_KON'];
+        }
+        //var_dump($data);
+        return $data;
+    }
+
+    public function get_list_thn_masuk_by_jur($jur) {
+        $table = "d_kontrak";
+        $where = "KD_JUR='" . $jur . "'";
+        $sql = "SELECT distinct THN_MASUK_KON FROM $table 
+                WHERE $where
+                order by THN_MASUK_KON desc
+                ";
+        $result = $this->db->select($sql);
+        //var_dump($result);
+        $data = array();
+        foreach ($result as $val) {
+            $data[] = $val['THN_MASUK_KON'];
         }
         //var_dump($data);
         return $data;

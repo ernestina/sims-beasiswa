@@ -219,7 +219,8 @@ class elemenBeasiswaController extends BaseController {
             //echo $univ;
             //echo $jurusan;
             //echo $tahun;
-            $jadup = $elem->get_elem_jadup_by_sp2d($sp2d);
+            $user = Session::get('kd_user');
+            $jadup = $elem->get_elem_jadup_by_sp2d($sp2d, $user);
             //var_dump($buku);
             $this->view->elem = $jadup;
             $this->view->load('bantuan/tabel_index_jadup');
@@ -245,16 +246,8 @@ class elemenBeasiswaController extends BaseController {
 
     public function addJadup() {
         $univ = new Universitas($this->registry);
-        $this->view->univ = $univ->get_univ();
-
-        $jur = new Jurusan($this->registry);
-        $this->view->jur = $jur->get_jurusan();
-
-//        $pb = new Penerima($this->registry);
-//        $this->view->pb = $pb->get_penerima();
-
-        $ref_elem = new ReferensiElemenBeasiswa();
-        $this->view->jadup = $ref_elem->jadup();
+        $user = Session::get('kd_user');
+        $this->view->univ = $univ->get_univ_by_pic($user);
 
         $this->view->render('bantuan/rekam_jadup');
     }
@@ -264,6 +257,8 @@ class elemenBeasiswaController extends BaseController {
             if (isset($_POST['js']) && $_POST['js'] == 1) {
                 header('location:' . URL . 'elemenBeasiswa/viewJadup');
             }
+//            var_dump($_POST);
+//            exit();
             if ($_POST['jml_peg'] != "" && $_POST['r_elem'] != "" && $_POST['kode_jur'] != "" &&
                     $_POST['tahun_masuk'] != "" && $_POST['biaya_peg'] != "" && $_POST['total_bayar'] != "" &&
                     $_POST['bln'] != "" && $_POST['thn'] != "") { //if 2
@@ -319,10 +314,18 @@ class elemenBeasiswaController extends BaseController {
         if ($id != "") {
             $elem = new ElemenBeasiswa($this->registry);
             //echo $id;
+            $elem->set_kd_d($id);
+            $elemen = $elem->get_elem_by_id($elem);
             $elem->delete_elem($id);
 
             $penerima_elemen = new PenerimaElemenBeasiswa();
             $penerima_elemen->delete($id);
+
+            $file = "files/sp2d/" . $elemen->get_file_sp2d();
+            //echo $file;
+            if (file_exists($file)) {
+                unlink($file);
+            }
         }
         header('location:' . URL . 'elemenBeasiswa/viewJadup');
     }
@@ -376,7 +379,10 @@ class elemenBeasiswaController extends BaseController {
         if (isset($_POST['ubah_jadup'])) {
             if (isset($_POST['js']) && $_POST['js'] == 1) {
                 header('location:' . URL . 'elemenBeasiswa/viewJadup');
+                exit();
             }
+            
+            
             if ($_POST['jml_peg'] != "" && $_POST['r_elem'] != "" && $_POST['kode_jur'] != "" &&
                     $_POST['tahun_masuk'] != "" && $_POST['biaya_peg'] != "" && $_POST['total_bayar'] != "" &&
                     $_POST['bln'] != "" && $_POST['thn'] != "" && $_POST['kd_el'] != "") {
@@ -406,9 +412,22 @@ class elemenBeasiswaController extends BaseController {
                 if ($upload->getFileName() != "") {
                     $upload->setDirTo("files/sp2d/");
                     $nama = array($elem->get_no_sp2d(), $elem->get_tgl_sp2d());
-                    $upload->uploadFile2("", $nama);
+                    if ($upload->uploadFile2("", $nama) == false) {
+                        $url = URL . 'elemenBeasiswa/viewJadup';
+                        echo '<script> alert("File gagal diupload.") </script>';
+                        echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
+                        exit();
+                    }
                     $elem->set_file_sp2d($upload->getFileTo());
                     //echo $upload->getFileName();
+
+                    if ($_POST['fupload_lama'] != "") {
+                        $file = "files/sp2d/" . $_POST['fupload_lama'];
+                        //echo $file;
+                        if (file_exists($file)) {
+                            unlink($file);
+                        }
+                    }
                 } else {
                     if ($_POST['fupload_lama'] != "") {
                         $elem->set_file_sp2d($_POST['fupload_lama']);
@@ -438,10 +457,12 @@ class elemenBeasiswaController extends BaseController {
                 echo '<script> alert("Data berhasil disimpan") </script>';
                 echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
             } else {
-                header('location:' . URL . 'elemenBeasiswa/viewJadup');
+                echo "2";
+                //header('location:' . URL . 'elemenBeasiswa/viewJadup');
             }
         } else {
-            header('location:' . URL . 'elemenBeasiswa/viewJadup');
+            echo "3";
+            //header('location:' . URL . 'elemenBeasiswa/viewJadup');
         }
     }
 
@@ -1002,7 +1023,7 @@ class elemenBeasiswaController extends BaseController {
             $univ = $_POST['univ'];
             $jurusan = new Jurusan($this->registry);
             $data = $jurusan->get_jur_by_univ($univ);
-            echo "<option value=''>Pilih Jurusan</option>";
+            echo "<option value=\"\">Pilih Jurusan</option>";
             foreach ($data as $jur) {
                 if (isset($_POST['jur_def'])) {
                     if ($jur->get_kode_jur() == $_POST['jur_def']) {
@@ -1017,6 +1038,50 @@ class elemenBeasiswaController extends BaseController {
             }
         } else {
             echo "<option value=''>Pilih Jurusan</option>";
+        }
+    }
+
+    public function get_thn_masuk_by_jur() {
+
+        if (isset($_POST['kd_jurusan']) && $_POST['kd_jurusan'] != "") {
+            $jur = $_POST['kd_jurusan'];
+            //print_r ($jur);
+            $kontrak = new Kontrak();
+            $data = $kontrak->get_list_thn_masuk_by_jur("1");
+            //var_dump($data);
+            echo "<option value=''>Pilih Tahun Masuk</option>";
+            foreach ($data as $thn) {
+                if (isset($_POST['jur_def'])) {
+                    if ($thn == $_POST['thn_def']) {
+                        $select = " selected";
+                    } else {
+                        $select = "";
+                    }
+                    echo "<option value=" . $thn . "" . $select . ">" . $thn . "</option>\n";
+                } else {
+                    echo "<option value=" . $thn . ">" . $thn . "</option>\n";
+                }
+            }
+        } else {
+            echo "<option value=''>Pilih Tahun Masuk</option>";
+        }
+    }
+
+    public function get_thn_bayar() {
+
+        if (isset($_POST['thn']) && $_POST['thn'] != "") {
+            $thn = $_POST['thn'];
+            //print_r ($jur);
+            echo "<option value=''>Pilih Tahun </option>";
+            for ($i = $thn; $i <= date('Y') + 1; $i++) {
+                if ($i == date('Y')) {
+                    echo "<option value=" . $i . " selected>" . $i . "</option>";
+                } else {
+                    echo "<option value=" . $i . " >" . $i . "</option>";
+                }
+            }
+        } else {
+            echo "<option value=''>Pilih Tahun</option>";
         }
     }
 

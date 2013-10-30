@@ -6,7 +6,7 @@
             <th width= '25%'>Nama</th>
             <th width= '10%'>Gol</th>
             <th width= '10%'>Status</th>
-            <th width= '12%' style="font-size: 90%">Jumlah Kehadiran (persentase)</th>
+            <th width= '12%' style="display:none">Jumlah Kehadiran (persentase)</th>
 <!--            <th width= '10%'>Jumlah Kotor</th>-->
             <th width= '12%' style="font-size: 80%">Pajak (persentase)</th>
 <!--            <th width= '10%'>Jumlah Bersih</th>-->
@@ -16,7 +16,7 @@
         </tr>
     </thead>
     <tbody style="text-align: center">
-    <input type="hidden" id="jml_peg" name="jml_peg" value="<?php echo count($this->pb); ?>">
+    <input type="hidden" id="jml_peg" name="jml_peg" value="<?php echo count($this->pb); ?>"/>
     <?php
     $i = 1;
     foreach ($this->pb as $value) {
@@ -29,7 +29,7 @@
             <td style="text-align: left"><?php echo $value->get_nama() . "<br/>NIP." . $value->get_nip(); ?></td>
             <td style="text-align: left"><?php echo Golongan::golongan_int_string($value->get_gol()); ?></td>
             <td><?php echo StatusPB::status_int_string($value->get_status()); ?></td>
-            <td><ul class="inline" style="margin-left: -40px"><li><input class="mini" type="text"  id="<?php echo 'jml_hadir' . $i; ?>" name="<?php echo 'jml_hadir' . $i; ?>" value="<?php if ($pb_el != false) {
+            <td style="display:none"><ul class="inline" style="margin-left: -40px"><li><input class="mini" type="hidden"  id="<?php echo 'jml_hadir' . $i; ?>" name="<?php echo 'jml_hadir' . $i; ?>" value="<?php if ($pb_el != false) {
         echo $pb_el->kehadiran;
     } else {
         echo "0";
@@ -47,7 +47,7 @@
             echo "0";
         }
     } ?>" style="text-align: right"></li>
-			<li style="padding: 5px; vertical-align: top;">%</li>
+			<li style="padding: 5px; vertical-align: top;"></li>
 		</td>
     <!--            <td><input class="mini" type="text" id="<?php echo 'jml_bersih' . $i; ?>" name="jml_bersih" value="0"></td>-->
             <td><?php echo $bank->get_nama(); ?></td>
@@ -78,8 +78,9 @@
 ?>
         </tbody>
 </table>
-<p style="margin-left: 20px">Keterangan: untuk penulisan desimal gunakan tanda titik (.).<p>
+<p style="margin-left: 20px">Keterangan: untuk penulisan desimal gunakan tanda titik (.).</p>
 <script>
+    
    
     //    for(var i=1; i<=$('#jml_peg').val(); i++){
     //        $('#jml_hadir'+i).number(true,0);

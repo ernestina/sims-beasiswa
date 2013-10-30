@@ -153,6 +153,8 @@ $akses['ElemenBeasiswa'] = array(
                 'cetak_jadup',
                 'cetak_ubuku',
                 'cetak_uskripsi',
+                'get_thn_masuk_by_jur',
+                'get_thn_bayar',
                 '__destruct'
                 );
 /*
