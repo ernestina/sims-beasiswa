@@ -13,9 +13,10 @@ class elemenBeasiswaController extends BaseController {
 
     public function index() {
         $univ = new Universitas($this->registry);
-        $this->view->univ = $univ->get_univ();
-        $jur = new Jurusan($this->registry);
-        $this->view->jur = $jur->get_jurusan();
+        $user = Session::get('kd_user');
+        $univ2 = $univ->get_univ_by_pic($user);
+        $this->view->univ = $univ2;
+        
         $this->view->render('bantuan/mon_pembayaran');
     }
 
@@ -26,9 +27,10 @@ class elemenBeasiswaController extends BaseController {
             $jurusan = $_POST['jurusan'];
             $tahun = $_POST['tahun'];
             $elemen = $_POST['elemen'];
+            $user = Session::get('kd_user');
 
             $elem = new ElemenBeasiswa($this->registry);
-            $this->view->data = $elem->get_list_elem($univ, $jurusan, $tahun, $elemen);
+            $this->view->data = $elem->get_list_elem($univ, $jurusan, $tahun, $elemen, $user);
             $this->view->jurusan = new Jurusan($this->registry);
             $this->view->pb = new Penerima($this->registry);
             $this->view->load('bantuan/tabel_index_mon_pembayaran');
@@ -178,7 +180,8 @@ class elemenBeasiswaController extends BaseController {
             $this->view->jurusan = $jurusan;
             $this->view->data_jurusan = $data_jur;
             $this->view->pb = new Penerima($this->registry);
-            $this->view->data = $elem->get_list_elem($univ, $jur, $tahun, $elemen);
+            $user = Session::get('kd_user');
+            $this->view->data = $elem->get_list_elem($univ, $jur, $tahun, $elemen, $user);
             $this->view->univ = $univ;
             $this->view->jur = $jur;
             $this->view->tahun = $tahun;

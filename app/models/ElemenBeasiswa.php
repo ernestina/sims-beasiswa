@@ -206,7 +206,7 @@ class ElemenBeasiswa {
         return $data;
     }
     
-    public function get_list_elem($univ = NULL, $jurusan = NULL, $tahun = NULL, $elemen=NULL) {
+    public function get_list_elem($univ = NULL, $jurusan = NULL, $tahun = NULL, $elemen=NULL, $user=NULL) {
 
         $sql = "SELECT 
             a.KD_D_ELEM_BEASISWA AS KD_D_ELEM_BEASISWA,
@@ -226,38 +226,40 @@ class ElemenBeasiswa {
                 LEFT JOIN r_jur b ON a.KD_JUR = b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL = c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV
+                WHERE d.KD_USER = '".$user."'
                 ";
 
         if ($univ != "" ) {
-            $sql .=" WHERE d.KD_UNIV ='" . $univ . "'";
+            $sql .=" AND d.KD_UNIV ='" . $univ . "'";
         }
 
         if ($jurusan != "") {
-            if ($univ == "") {
-                $sql .=" WHERE b.KD_JUR ='" . $jurusan . "'";
-            } else {
+//            if ($univ == "") {
+//                $sql .=" WHERE b.KD_JUR ='" . $jurusan . "'";
+//            } else {
                 $sql .=" AND b.KD_JUR ='" . $jurusan . "'";
-            }
+//            }
         }
 
         if ($tahun != "") {
-            if($univ == "" && $jurusan == ""){
-               $sql .=" WHERE a.TAHUN_MASUK ='" . $tahun . "'"; 
-            } else {
+//            if($univ == "" && $jurusan == ""){
+//               $sql .=" WHERE a.TAHUN_MASUK ='" . $tahun . "'"; 
+//            } else {
                 $sql .=" AND a.TAHUN_MASUK ='" . $tahun . "'";
-            }
+//            }
             
         }
         
+               
         if ($elemen != "") {
-            if($univ == "" && $jurusan == "" && $tahun == "" ){
-               $sql .=" WHERE a.KD_R_ELEM_BEASISWA ='" . $elemen . "'"; 
-            } else {
+//            if($univ == "" && $jurusan == "" && $tahun == "" ){
+//               $sql .=" WHERE a.KD_R_ELEM_BEASISWA ='" . $elemen . "'"; 
+//            } else {
                 $sql .=" AND a.KD_R_ELEM_BEASISWA ='" . $elemen . "'";
-            }
+//            }
             
         }
-
+        
         $sql .=" order by a.KD_D_ELEM_BEASISWA desc";
         $result = $this->db->select($sql);
 

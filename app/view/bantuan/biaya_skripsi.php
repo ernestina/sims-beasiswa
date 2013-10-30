@@ -27,11 +27,7 @@
                     <label>Tahun Masuk</label>
                     <select name="tahun_masuk" id="tahun_masuk" type="text">
                         <option value="">Semua</option>>
-                        <?php
-                        for ($i = 2007; $i <= date('Y') + 2; $i++) {
-                            ?>
-                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                                <?php } ?>
+                        
                     </select>
                 </td>
                 <td ><input type="search" name="cari" id="cari" placeholder="Cari dengan kata kunci nomor SP2D..." style="float: right"> </td>
@@ -89,8 +85,22 @@
             displayElemenSkripsi();
         });
         
+         $('#jurusan').change(function(){
+            //alert ($('#kode_jur').val());
+            displayElemenSkripsi();
+            
+            $.ajax({
+                type:"POST",
+                url: "<?php echo URL; ?>elemenBeasiswa/get_thn_masuk_by_jur",
+                data: {kd_jurusan:$('#jurusan').val()},
+                success: function(thn_masuk){
+                    $('#tahun_masuk').html(thn_masuk);
+                }
+            }); 
+        })
+        
         //agar ketika universitas berubah karena dipilih, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
-        $("#jurusan, #tahun_masuk").change(function(){
+        $("#tahun_masuk").change(function(){
                   
             displayElemenSkripsi();
         });

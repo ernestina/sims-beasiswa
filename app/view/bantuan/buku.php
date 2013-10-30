@@ -28,11 +28,7 @@
                         <label>Tahun Masuk</label>
                         <select name="tahun_masuk" id="tahun_masuk" type="text">
                             <option value="">- semua -</option>>
-                            <?php
-                            for ($i = 2007; $i <= date('Y') + 2; $i++) {
-                                ?>
-                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                            <?php } ?>
+                            
                         </select>
                     </td>
                     <td style="float: right"><input type="search" name="cari" id="cari" placeholder="Cari dengan kata kunci nomor SP2D..." size="30" title="Cari"></td>
@@ -79,9 +75,21 @@
             displayElemenBuku();
         });
         
+         $('#jurusan').change(function(){
+            //alert ($('#kode_jur').val());
+            displayElemenBuku();
+            
+            $.ajax({
+                type:"POST",
+                url: "<?php echo URL; ?>elemenBeasiswa/get_thn_masuk_by_jur",
+                data: {kd_jurusan:$('#jurusan').val()},
+                success: function(thn_masuk){
+                    $('#tahun_masuk').html(thn_masuk);
+                }
+            }); 
+        })
         
-        $("#jurusan, #tahun_masuk").change(function(){
-                  
+        $("#tahun_masuk").change(function(){             
             displayElemenBuku();
         });
         
