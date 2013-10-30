@@ -83,13 +83,13 @@ class Penerima {
         return $data;
     }
     
-    public function get_penerima_by_id($pb = Penerima,$kd_user){
+    public function get_penerima_by_id($pb = Penerima,$kd_user=null){
         $sql = "SELECT * FROM ".$this->_tb_penerima;
         $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
         $sql .= " WHERE a.KD_PB=".$pb->get_kd_pb();
-        $sql .= " AND d.KD_USER=".$kd_user;
+        if(!is_null($kd_user)) $sql .= " AND d.KD_USER=".$kd_user;
         $result = $this->db->select($sql);
         foreach($result as $val){
             $this->set_kd_pb($val['KD_PB']);
