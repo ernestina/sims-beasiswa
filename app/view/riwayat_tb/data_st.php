@@ -140,7 +140,7 @@
     
         <fieldset><legend>Daftar Surat Tugas</legend>
     
-    <div>
+    
         <table>
             <tr align="left">
                 <td><label>Universitas</label><select id="cuniv" onchange="get_surat_tugas(this.value,document.getElementById('thn').value)" type="text">
@@ -162,13 +162,14 @@
                 <td><input type="search" id="cari" size="30"placeholder="Cari..."></td>
             </tr>
         </table>
-    </div>
+    
     <div id="tb_st">
         <?php 
             $this->load('riwayat_tb/tabel_st');
         ?>
     </div>
             </fieldset>
+</div>
 </div>
 </div>
 

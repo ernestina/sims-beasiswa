@@ -1,5 +1,7 @@
+</div>
 </body>
-<footer>&copy 2013 SIMS. Pengembangan Pegawai - <a href="http://www.perbendaharaan.go.id">Dirjen Perbendaharaan</a>. <a href="#openModal">Developer</a>.
+
+<footer>&copy 2013 SIMS. Pengembangan Pegawai - <a href="http://www.perbendaharaan.go.id">Dirjen Perbendaharaan</a><div class="profil2" style="border: no-border"><a href="#openModal">Developer</a></div>
 <div id="openModal" class="modalDialog">
 	<div>
 		<a href="#close" title="Tutup" class="close"><i class="icon-remove icon-white" style="margin-left: 4px; margin-top: 1px"></i></a>
@@ -8,6 +10,6 @@
 		
 	</div>
 </div>
-</div>
+
 </footer>
 </html>

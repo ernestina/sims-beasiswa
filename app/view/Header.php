@@ -30,7 +30,7 @@
         <div id="wrapper">
             <div id="header">
                 <div class="kolom1">
-                    <img src="<?php echo URL; ?>public/img/logo.png" style="padding-left: 20px; padding-bottom: 10px">
+                    <img src="<?php echo URL; ?>public/img/treascho-new.png" style="padding-left: 40px; padding-bottom: 10px" width="70%">
                 </div>
 				
                 <div id="jam" class="kolom2" >

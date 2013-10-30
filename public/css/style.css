@@ -39,6 +39,8 @@ h2, legend {
 
 a:link {color:#267890;}
 a:hover {color:#A4D7E6;}
+/*a:visited {color:#174856;}*/
+a:active {color:#A4D7E6}
 
 
 #header {
@@ -54,7 +56,7 @@ a:hover {color:#A4D7E6;}
     background-color: #ffffff;
     padding: 20px 0px 20px 0px;
     box-shadow: #aaa 2px 2px 10px 1px;
-    min-height: 620px;
+    min-height: 600px;
 }
 
 #fitur {
@@ -142,6 +144,11 @@ a:hover {color:#A4D7E6;}
     border: 2px solid #49afcd;
     margin: 0px 0px 0px 70px;
 }
+.profil2 {
+    padding-right: 0px; float: right;
+    margin: 0px 0px 0px 70px;
+}
+
 .blok {
     width: 100px;
     background-color: #49afcd;
@@ -352,6 +359,12 @@ input.sukses[type="submit"] :focus, input.sukses[type="submit"]:hover {
     background-color: #51a351;
 }
 
+button.sukses[type="submit"] :focus, button.sukses[type="submit"]:hover {
+    color: #ffffff;
+    background-color: #51a351;
+	border-color: #51a351;
+}
+
 input.warning[type="submit"] :focus, input.warning[type="submit"]:hover {
     color: #ffffff;
     background-color: #f89406;
@@ -363,7 +376,18 @@ input.normal[type="submit"] :focus, input.normal[type="submit"]:hover {
     border-color: #bd362f;
 }
 
-button :focus, button:hover, input[type="button"] :focus, input[type="button"] :hover {
+button.normal[type="reset"] :focus, button.normal[type="reset"]:hover {
+    color: #ffffff;
+    background-color: #bd362f;
+    border-color: #bd362f;
+}
+
+button :focus, button:hover {
+    color: #ffffff;
+    background-color: #2f96b4;
+    border-color: #2f96b4;
+}
+input.lihat[type="button"] :focus, input.lihat[type="button"] :hover {
     color: #ffffff;
     background-color: #2f96b4;
     border-color: #2f96b4;
@@ -1122,7 +1146,7 @@ th, td {
 /*coba modal*/
 .modalDialog {
 		position: fixed;
-		font-family: Nexa;
+		font-family: Sub;
 		top: 0;
 		right: 0;
 		bottom: 0;
@@ -1190,6 +1214,18 @@ th, td {
 
 	.close:hover { background: #49afcd; }
 	
+
+footer {
+	background-color: #333;
+	padding: 20px;
+	color: #49afcd;
+	/*margin: 20px 0px 0px 0px;*/
+	font-family: Sub;
+	margin-bottom: 0px;
+	box-shadow: #aaa 5px 5px 10px;
+	/*text-align: center;*/
+}
+
         .ui-dialog .ui-dialog-content{
                 font-family: Nexa;
 		background: #fff;
@@ -1209,3 +1245,6 @@ th, td {
 		
         }
 
+footer a { color: #267890; }
+footer h2 { color: #333 }
+footer p { font-family: Sub;}

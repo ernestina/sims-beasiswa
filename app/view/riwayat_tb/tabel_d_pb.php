@@ -2,10 +2,10 @@
         <thead >
         <th>No</th>
         <th width="20%">NIP/Nama</th>
-        <th width="15%">Golongan/Unit Asal</th>
-        <th width="25%">Jurusan</th>
-        <th width="15%">Masa TB</th>
-        <th width="15%">Status</th>
+        <th width="20%">Golongan/Unit Asal</th>
+        <th width="23%">Jurusan</th>
+        <th width="17%">Masa TB</th>
+        <th width="10%">Status</th>
         <th width="7%">Aksi</th>
         </thead>
 		<tbody>
