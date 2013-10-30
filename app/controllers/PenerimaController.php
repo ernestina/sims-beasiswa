@@ -272,7 +272,7 @@ class PenerimaController extends BaseController{
         /*
          * upload foto
          */
-        if($_FILES['fotoinput']!=''){
+        if($_FILES['fotoinput']['name']!=''){
             $upload_foto = $this->registry->upload;
             $upload_foto->init('fotoinput');
             $upload_foto->setDirTo('files/foto/');
@@ -298,7 +298,7 @@ class PenerimaController extends BaseController{
             $upload_skl->changeFileName($upload_skl->getFileName(),$nm_skl);
             $file_skl = $upload_skl->getFileTo();
             $upload_skl->uploadFile();
-            var_dump($upload_skl);
+//            var_dump($file_skl);
             unset($upload_skl);
         }else{
             $file_skl = $pb->get_skl();
@@ -319,7 +319,7 @@ class PenerimaController extends BaseController{
         /*
          * upload spmt
          */
-        if($_FILES['spmtinput']['nama']!=''){
+        if($_FILES['spmtinput']['name']!=''){
             $upload_spmt = $this->registry->upload;
             $upload_spmt->init('spmtinput');
             $upload_spmt->setDirTo('files/spmt/');
@@ -327,7 +327,8 @@ class PenerimaController extends BaseController{
             $upload_spmt->changeFileName($upload_spmt->getFileName(),$nm_spmt);
             $file_spmt = $upload_spmt->getFileTo();
             $upload_spmt->uploadFile();
-    //        var_dump($upload_spmt);
+//            var_dump($upload_spmt);
+            var_dump($file_spmt);
             unset($upload_spmt);
         }else{
             $file_spmt = $pb->get_spmt();
@@ -336,7 +337,7 @@ class PenerimaController extends BaseController{
         $skripsi = $_POST['skripsi'];
         
         $data = array($kd_pb,$nip,$no_st,$alamat,$email,$telp,$bank,$norek,$foto,$file_skl,$lap_selesai_tb,$file_spmt,$skripsi);
-        var_dump($data);
+//        var_dump($data);
         $pb->set_alamat($alamat);
         $pb->set_email($email);
         $pb->set_telp($telp);
@@ -352,7 +353,7 @@ class PenerimaController extends BaseController{
         }
         
         if($pb->update_penerima()){
-            header('location:'.URL.'penerima/profil/'.$kd_pb);
+//            header('location:'.URL.'penerima/profil/'.$kd_pb);
         }else{
             /*
              * gagal insert, balikin isian!!!

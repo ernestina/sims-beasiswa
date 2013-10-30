@@ -71,18 +71,24 @@
                         <input type="text" id="status_tb" name="status_tb" disabled value="<?php echo StatusPB::status_int_string($this->d_pb->get_status());?>"/>
 			<!--row berikut hanya muncul jika status TB: lulus dan/atau tidak lulus -->
 			
-			<label class="isian">Tanggal Akhir TB :</label>
-			<!--input type="file" id="skl" name="skl" /-->
+<!--			<label class="isian">Tanggal Akhir TB :</label>
+			input type="file" id="skl" name="skl" /
 			<ul class="inline">
 				<li><input class="unggah" type="text" id="tgl_akhir_tb" disabled /></li>
-				<li><input type="button" value="Lihat" id="fileSKL" class="lihat"/><!--View file SKL-->
+				<li><input type="button" value="Lihat" id="fileSKL" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');"/>View file SKL
 				</li>
-			</ul>
+			</ul>-->
 			
 			<label class="isian">Tanggal Lapor Selesai TB :</label>
 			<ul class="inline">
                             <li><input class="unggah" type="text" id="tgl_lapor" disabled value="<?php echo ($this->d_pb->get_tgl_lapor()=='0000-00-00' OR $this->d_pb->get_tgl_lapor()=='')?'':(Tanggal::tgl_indo($this->d_pb->get_tgl_lapor()))?>"/></li>
-				<li><input type="button" value="Lihat" id="fileSPMT" class="lihat"/><!--View file SPMT-->
+				<li><input type="button" value="Lihat" id="fileSP" class="lihat"/><!--View file SPMT-->
+				</li>
+			</ul>
+                        <label class="isian"></label>
+			<ul class="inline">
+                            <li><input type="button" value="Lihat SPMT" id="fileSPMT" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','spmt');"/></li>
+				<li><input type="button" value="Lihat SKL" id="fileSKL" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');"/><!--View file SPMT-->
 				</li>
 			</ul>
 	</fieldset>
@@ -220,6 +226,31 @@ $(function(){
         window.location.href="<?php echo URL;?>penerima/editpb/<?php echo $this->d_pb->get_kd_pb();?>";
     })
 })
+
+function view_file(file,dokumen){
+    var url = '';
+    switch(dokumen){
+        case 'foto':
+            url = "<?php echo URL;?>penerima/view_foto/"+file;
+            break;
+        case 'skl':
+            url = "<?php echo URL;?>penerima/view_skl/"+file;
+            break;
+        case 'spmt':
+            url = "<?php echo URL;?>penerima/view_spmt/"+file;
+            break;
+    }
+    
+    var w = 800;
+    var h = 500;
+    var left = (screen.width/2)-(w/2);
+    var top = (screen.height/2)-(h/2);
+    var title = "tampilan transkrip";
+    window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+    
+    
+}
+
 function HandleBrowseClick()
 {
     var fileinput = document.getElementById("SKL");

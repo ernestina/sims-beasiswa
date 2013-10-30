@@ -71,7 +71,10 @@ class Upload {
         for ($i = 0; $i < $length; $i++) {
             $nama .= $ubahNama[$i] . "_";
         }
-        $ekst = end(explode(".", $filename));
+        $tmp = explode(".", $filename);
+        $len = count($tmp);
+        $ekst = $tmp[$len-1];
+//        $ekst = end(explode(".", $filename));
         $nama = rtrim($nama, "_");
         //$nama .= $filename;
         $nama .= "." . $ekst;
