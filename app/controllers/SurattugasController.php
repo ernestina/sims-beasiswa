@@ -149,6 +149,17 @@ class SurattugasController extends BaseController{
     }
     
     /*
+     * cari berdasarkan nomor
+     */
+    public function cari_st(){
+        $nomor = $_POST['param'];
+        $st = new SuratTugas($this->registry);
+        $d_st = $st->get_surat_tugas_by_nomor($nomor, $this->kd_user);
+        $this->view->d_st = $d_st;
+        $this->view->load('riwayat_tb/tabel_st');
+    }
+    
+    /*
      * menampilkan kotak dialog tambah penerima dari data surat tugas
      */
     public function dialog_add_pb($id){

@@ -159,7 +159,7 @@
                             }
                         ?>
                     </select></td>
-                <td><input type="search" id="cari" size="30"placeholder="Cari..."></td>
+                <td><input type="search" id="cari" size="30" placeholder="Cari..."></td>
             </tr>
         </table>
     
@@ -187,6 +187,12 @@
 //            console.log(nomor);
             cek_exist_nomor(nomor);
 //            console.log('test');
+        })
+        
+        $('#cari').keyup(function(){
+            var keyword = document.getElementById('cari').value;
+            console.log(keyword);
+            cari_st(keyword);
         })
     });
     
@@ -256,8 +262,12 @@
     }
     
     
-    function cari_st(){
-        
+    function cari_st(key){
+        $.post("<?php echo URL; ?>surattugas/cari_st", {param:""+key+""},
+        function(data){
+            $('#tb_st').fadeIn(100);
+            $('#tb_st').html(data);
+        });
     }
     
     function cek(){

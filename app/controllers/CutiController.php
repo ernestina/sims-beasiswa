@@ -71,7 +71,7 @@ class CutiController extends BaseController{
 //            var_dump($this->view->d_ubah);
             $pb = new Penerima($this->registry);
             $pb->set_kd_pb($ct->get_pb());
-            $this->view->d_pb_ubah = $pb->get_penerima_by_id($pb);
+            $this->view->d_pb_ubah = $pb->get_penerima_by_id($pb,$this->kd_user);
             $is_exist_file = ($this->view->d_ubah->get_file()!=NULL && $this->view->d_ubah->get_file()!='')?true:false;
             $file = array('file_exist'=>$is_exist_file);
         }else{
@@ -211,6 +211,11 @@ class CutiController extends BaseController{
         }else{
             echo 0;
         }
+    }
+    
+    public function view_sc($file){
+        $this->view->file = $file;
+        $this->view->load('riwayat_tb/display_sc');
     }
     
     public function __destruct() {

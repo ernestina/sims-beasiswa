@@ -84,7 +84,8 @@ $akses['Cuti'] = array(
                 'load_model',
                 'get_data_sc',
                 'get_sc_by_name',
-                'cek_exist_nomor'
+                'cek_exist_nomor',
+                'view_sc'
                 );
 /*
  * akses modul surat tugas
@@ -104,6 +105,7 @@ $akses['Surattugas'] = array(
                 'load_model',
                 'get_thn_masuk_by_jur',
                 'cek_exist_nomor',
+                'cari_st',
                 '__destruct'
                 );
 /*

@@ -40,7 +40,8 @@ class Cuti{
             a.PRD_MUL_CUTI as PRD_MUL_CUTI,
             a.PRD_SEL_CUTI as PRD_SEL_CUTI,
             a.PERK_STOP as PERK_STOP,
-            a.PERK_GO as PERK_GO
+            a.PERK_GO as PERK_GO,
+            a.FILE_CUTI as FILE_CUTI
             FROM ".$this->t_cuti." a ";
         
 //        if(!is_null($pb)){
@@ -65,7 +66,7 @@ class Cuti{
             $cuti->set_jenis_cuti($v['KD_JNS_SRT_CUTI']);
             $pb = new Penerima($this->registry);
             $pb->set_kd_pb($v['KD_PB']);
-            $d_pb = $pb->get_penerima_by_id($pb);
+            $d_pb = $pb->get_penerima_by_id($pb,$kd_user);
             $jur = new Jurusan($this->registry);
             $jur->set_kode_jur($d_pb->get_jur());
             $d_jur = $jur->get_jur_by_id($jur);
@@ -76,6 +77,7 @@ class Cuti{
             $cuti->set_prd_selesai($v['PRD_SEL_CUTI']);
             $cuti->set_perk_stop($v['PERK_STOP']);
             $cuti->set_perk_go($v['PERK_GO']);
+            $cuti->set_file($v['FILE_CUTI']);
             unset($pb);
             unset($jur);
             $data[] = $cuti;
@@ -196,7 +198,7 @@ class Cuti{
             $cuti->set_jenis_cuti($d_jsc->get_nama());
             $pb = new Penerima($this->registry);
             $pb->set_kd_pb($v['KD_PB']);
-            $d_pb = $pb->get_penerima_by_id($pb);
+            $d_pb = $pb->get_penerima_by_id($pb,$kd_user);
             $jur = new Jurusan($this->registry);
             $jur->set_kode_jur($d_pb->get_jur());
             $d_jur = $jur->get_jur_by_id($jur);

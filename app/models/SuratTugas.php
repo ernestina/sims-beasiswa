@@ -99,6 +99,38 @@ class SuratTugas {
         return $this;
     }
     
+    /*
+     * method untuk mndapatkan surat tugas berdasarkan id
+     * @param id_sutat_tugas
+     */
+    public function get_surat_tugas_by_nomor($nomor,$kd_user=1) {
+        $sql = "SELECT * FROM " . $this->_tb_st; 
+        $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+                LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
+                LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
+        $sql .= " WHERE a.NO_ST LIKE '%" . $nomor."%'";
+        $sql .= ' AND d.KD_USER='.$kd_user;
+//        echo $sql;
+        $result = $this->db->select($sql);
+        $return = array();
+        foreach ($result as $val) {
+            $tmp = new $this($this->registry);
+            $tmp->set_kd_st($val['KD_ST']);
+            $tmp->set_jur($val['KD_JUR']);
+            $tmp->set_nomor($val['NO_ST']);
+            $tmp->set_pemberi($val['KD_PEMB']);
+            $tmp->set_st_lama($val['KD_ST_LAMA']);
+            $tmp->set_jenis_st($val['KD_JENIS_ST']);
+            $tmp->set_tgl_st($val['TGL_ST']);
+            $tmp->set_tgl_mulai($val['TGL_MUL_ST']);
+            $tmp->set_tgl_selesai($val['TGL_SEL_ST']);
+            $tmp->set_th_masuk($val['THN_MASUK']);
+            $tmp->set_file($val['FILE_ST']);
+            $return[] = $tmp;
+        }
+        return $return;
+    }
+    
     
     public function get_thn_masuk_by_jur($kd_jur) {
         $sql = "SELECT distinct THN_MASUK as TAHUN_MASUK  FROM " . $this->_tb_st . " WHERE KD_JUR=" . $kd_jur. " order by TAHUN_MASUK desc";

@@ -268,7 +268,7 @@ class PenerimaController extends BaseController{
         $bank = $_POST['bank'];
         $norek = $_POST['rekening'];
         $pb->set_kd_pb($kd_pb);
-        $pb = $pb->get_penerima_by_id($pb);
+        $pb = $pb->get_penerima_by_id($pb,$this->kd_user);
         /*
          * upload foto
          */
