@@ -166,7 +166,7 @@ class Penerima {
             $penerima = new $this($this->registry);
             $st = new SuratTugas($this->registry);
             $st->set_kd_st($val['KD_ST']);
-            $d_st = $st->get_surat_tugas_by_id($st);
+            $d_st = $st->get_surat_tugas_by_id($st,$kd_user);
             $tglmulsel = $d_st->get_tgl_mulai().";".$d_st->get_tgl_selesai();
             $penerima->set_kd_pb($val['KD_PB']);
             $penerima->set_st($tglmulsel);

@@ -82,7 +82,7 @@ class CutiController extends BaseController{
         $univ = new Universitas($this->registry);
         $st = new SuratTugas($this->registry);
         $pb = new Penerima($this->registry);
-        $this->view->d_pb = $pb->get_penerima();
+        $this->view->d_pb = $pb->get_penerima($this->kd_user);
         $this->view->d_ct = $ct->get_cuti($this->kd_user);
         $this->view->d_univ = $univ->get_univ();
         $this->view->d_jsc = $jsc->get_jsc();
