@@ -183,7 +183,7 @@ class SurattugasController extends BaseController{
         $this->view->d_bank = $bank->get_bank();
         $this->view->d_univ = $univ->get_univ();
         $this->view->d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
-        $this->view->d_pb = $pb->get_penerima_by_st($pb);
+        $this->view->d_pb = $pb->get_penerima_by_st($pb,$this->kd_user);
         $this->view->d_th_masuk = $st->get_list_th_masuk();
         $this->view->render('riwayat_tb/pb_to_st');
     }

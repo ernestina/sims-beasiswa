@@ -185,7 +185,7 @@ class PenerimaController extends BaseController{
          * mendapatkan kode jurusan 
          */
         $st->set_kd_st($kd);
-        $st->get_surat_tugas_by_id($st);
+        $st->get_surat_tugas_by_id($st,$this->kd_user);
         $jur = $st->get_jur();
         $data = array(
             'KD_ST'=>$kd,
