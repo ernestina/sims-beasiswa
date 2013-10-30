@@ -116,9 +116,9 @@ class CutiController extends BaseController{
         /*
          * cek eksistensi file
          */
-        $d_ct = $ct->get_cuti_by_id($ct);
+        $d_ct = $ct->get_cuti_by_id($ct,$this->kd_user);
         if($file!=''){
-            $this->registry->upload('fupload');
+            $this->registry->upload->init('fupload');
             $this->registry->upload->setDirTo('files/cuti/');
             $pb = new Penerima($this->registry);
             $pb->set_kd_pb($kd_pb);
