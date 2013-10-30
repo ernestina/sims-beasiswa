@@ -31,9 +31,9 @@
                     <label class="isian">Semester dan Tahun : </label>
                     <?php
                     if ($this->elemen->get_bln() == "1")
-                        $bln = "Semester 1";
+                        $bln = "Ganjil";
                     if ($this->elemen->get_bln() == "2")
-                        $bln = "Semester 2";
+                        $bln = "Genap";
                     ?>
                     <input type="hidden" id="semester" name="semester" value="<?php echo $this->elemen->get_bln(); ?>">
                     <input type="hidden" id="thn" name="thn" value="<?php echo $this->elemen->get_thn(); ?>">
@@ -75,7 +75,7 @@
                     <label class="isian">File SP2D : </label>
                     <ul class="inline tengah">
                         <li><input type="file" id="fupload" name="fupload" size="20" /></li>
-                        <li><a href="<?php echo URL . 'elemenBeasiswa/filesp2d/' . $this->elemen->get_file_sp2d(); ?>" target="_blank"><?php
+                        <li><a href="<?php echo URL . 'elemenBeasiswa/filesp2d/' . $this->elemen->get_file_sp2d(); ?>" target="file_buku" onClick="cetak_dokumen('file_buku');"><?php
                            if ($file != "") {
                                echo "lihat file";
                            }

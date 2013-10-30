@@ -31,37 +31,7 @@
                     <label class="isian">Tahun Masuk : </label>
                     <select type="text" name="tahun_masuk" id="tahun_masuk">
                         <option value="">Pilih Tahun masuk</option>
-                        <?php
-                        for ($i = 2007; $i < date('Y') + 2; $i++) {
-
-                            if ($i == date('Y') - 3) {
-                                echo "<option value=" . $i . " selected>" . $i . "</option>";
-                            } else {
-                                echo "<option value=" . $i . " >" . $i . "</option>";
-                            }
-                        }
-                        ?>
                     </select>
-                    <!--                    <div id="wsemester"></div>
-                                        <div id="wthn"></div>
-                                        <label class="isian">Semester dan Tahun : </label>
-                                        <ul class="inline" style="margin-bottom: 0px">
-                                            <li><select type="text" id="semester" name="semester" class="unggah">
-                                                    <option value="1">Semester I</option>
-                                                    <option value="2">Semester II</option>
-                                                </select></li>
-                                            <li><select class="mini" type="text" id="thn" name="thn">
-                    <?php
-                    for ($i = 2007; $i < date('Y') + 2; $i++) {
-                        if ($i == date('Y')) {
-                            echo "<option value=" . $i . " selected>" . $i . "</option>";
-                        } else {
-                            echo "<option value=" . $i . " >" . $i . "</option>";
-                        }
-                    }
-                    ?>
-                                                </select></li>
-                                        </ul>-->
                 </div>
 
                 <div class="kolom2" style="margin-left: -40px">
@@ -145,13 +115,13 @@
         
         //menampilkan data penerima uang skripsi
         $('#kode_jur').change(function(){
-            //alert ($('#kode_univ').val());
+            //alert ($('#kode_jur').val());
             $.ajax({
                 type:"POST",
-                url: "<?php echo URL; ?>elemenBeasiswa/tabel_penerima_skripsi",
-                data: {kd_jurusan:$('#kode_jur').val(),thn_masuk:$('#tahun_masuk').val()},
-                success: function(jadup){
-                    $('#tabel_penerima_skripsi').html(jadup);
+                url: "<?php echo URL; ?>elemenBeasiswa/get_thn_masuk_by_jur",
+                data: {kd_jurusan:$('#kode_jur').val()},
+                success: function(thn_masuk){
+                    $('#tahun_masuk').html(thn_masuk);
                 }
             });
             

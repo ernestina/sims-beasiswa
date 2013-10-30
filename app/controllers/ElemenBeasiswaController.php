@@ -381,8 +381,8 @@ class elemenBeasiswaController extends BaseController {
                 header('location:' . URL . 'elemenBeasiswa/viewJadup');
                 exit();
             }
-            
-            
+
+
             if ($_POST['jml_peg'] != "" && $_POST['r_elem'] != "" && $_POST['kode_jur'] != "" &&
                     $_POST['tahun_masuk'] != "" && $_POST['biaya_peg'] != "" && $_POST['total_bayar'] != "" &&
                     $_POST['bln'] != "" && $_POST['thn'] != "" && $_POST['kd_el'] != "") {
@@ -413,7 +413,7 @@ class elemenBeasiswaController extends BaseController {
                     $upload->setDirTo("files/sp2d/");
                     $nama = array($elem->get_no_sp2d(), $elem->get_tgl_sp2d());
                     if ($upload->uploadFile2("", $nama) == false) {
-                        $url = URL . 'elemenBeasiswa/viewJadup';
+                        $url = URL . 'elemenBeasiswa/editJadup/' . $elem->get_kd_d();
                         echo '<script> alert("File gagal diupload.") </script>';
                         echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
                         exit();
@@ -453,31 +453,24 @@ class elemenBeasiswaController extends BaseController {
                     //}
                 }
 
-                $url = URL . 'elemenBeasiswa/viewJadup';
+                $url = URL . 'elemenBeasiswa/editJadup/' . $elem->get_kd_d();
                 echo '<script> alert("Data berhasil disimpan") </script>';
                 echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
             } else {
-                echo "2";
-                //header('location:' . URL . 'elemenBeasiswa/viewJadup');
+                //echo "2";
+                header('location:' . URL . 'elemenBeasiswa/viewJadup');
             }
         } else {
-            echo "3";
-            //header('location:' . URL . 'elemenBeasiswa/viewJadup');
+            //echo "3";
+            header('location:' . URL . 'elemenBeasiswa/viewJadup');
         }
     }
 
     public function viewUangBuku() {
 
         $univ = new Universitas($this->registry);
-        $this->view->univ = $univ->get_univ();
-
-        $jur = new Jurusan($this->registry);
-        $this->view->jur = $jur->get_jurusan();
-
-
-
-//        $elem = new ElemenBeasiswa();
-//        $this->view->elem = $elem->get_elem_buku();
+        $user = Session::get('kd_user');
+        $this->view->univ = $univ->get_univ_by_pic($user);
 
         $this->view->render('bantuan/buku');
     }
@@ -535,7 +528,8 @@ class elemenBeasiswaController extends BaseController {
     public function addUangBuku($id = null) {
 
         $univ = new Universitas($this->registry);
-        $this->view->univ = $univ->get_univ();
+        $user = Session::get('kd_user');
+        $this->view->univ = $univ->get_univ_by_pic($user);
         $jur = new Jurusan($this->registry);
         $this->view->jur = $jur->get_jurusan();
         $ref_elem = new ReferensiElemenBeasiswa();
@@ -598,6 +592,14 @@ class elemenBeasiswaController extends BaseController {
 
             $penerima_elemen = new PenerimaElemenBeasiswa();
             $penerima_elemen->delete($id);
+
+            $elem->set_kd_d($id);
+            $elemen = $elem->get_elem_by_id($elem);
+            $file = "files/sp2d/" . $elemen->get_file_sp2d();
+            //echo $file;
+            if (file_exists($file)) {
+                unlink($file);
+            }
         }
         $url = URL . 'elemenBeasiswa/viewUangBuku';
         echo '<script> alert("Data berhasil dihapus") </script>';
@@ -664,8 +666,23 @@ class elemenBeasiswaController extends BaseController {
                 if ($upload->getFileName() != "") {
                     $upload->setDirTo("files/sp2d/");
                     $nama = array($elem->get_no_sp2d(), $elem->get_tgl_sp2d());
-                    $upload->uploadFile2("", $nama);
+                    //$upload->uploadFile2("", $nama);
+                    if ($upload->uploadFile2("", $nama) == false) {
+                        $url = URL . 'elemenBeasiswa/viewJadup';
+                        echo '<script> alert("File gagal diupload.") </script>';
+                        echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
+                        exit();
+                    }
+
                     $elem->set_file_sp2d($upload->getFileTo());
+
+                    if ($_POST['fupload_lama'] != "") {
+                        $file = "files/sp2d/" . $_POST['fupload_lama'];
+                        //echo $file;
+                        if (file_exists($file)) {
+                            unlink($file);
+                        }
+                    }
                     //echo $upload->getFileName();
                 } else {
                     if ($_POST['fupload_lama'] != "") {
@@ -727,11 +744,15 @@ class elemenBeasiswaController extends BaseController {
 
     public function viewSkripsi() {
         $univ = new Universitas($this->registry);
-        $this->view->univ = $univ->get_univ();
+        $user = Session::get('kd_user');
+        $univ = $univ->get_univ_by_pic($user);
+         
+        $this->view->univ = $univ;
 
         $jur = new Jurusan($this->registry);
+        //$jurusan = $jur->get_jur_by_pic($user);
         $jurusan = $jur->get_jurusan();
-        $this->view->jur = $jurusan;
+        //$this->view->jur = $jurusan;
 
 
         $myArray = array();
@@ -797,9 +818,8 @@ class elemenBeasiswaController extends BaseController {
 
     public function addSkripsi($id = null) {
         $univ = new Universitas($this->registry);
-        $this->view->univ = $univ->get_univ();
-        $jur = new Jurusan($this->registry);
-        $this->view->jur = $jur->get_jurusan();
+        $user = Session::get('kd_user');
+        $this->view->univ = $univ->get_univ_by_pic($user);
         $this->view->render('bantuan/rekam_biaya_skripsi');
     }
 
@@ -976,8 +996,24 @@ class elemenBeasiswaController extends BaseController {
                 if ($upload->getFileName() != "") {
                     $upload->setDirTo("files/sp2d/");
                     $nama = array($elem->get_no_sp2d(), $elem->get_tgl_sp2d());
-                    $upload->uploadFile2("", $nama);
+                    //$upload->uploadFile2("", $nama);
+                    if ($upload->uploadFile2("", $nama) == false) {
+                        $url = URL . 'elemenBeasiswa/editJadup/' . $elem->get_kd_d();
+                        echo '<script> alert("File gagal diupload.") </script>';
+                        echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
+                        exit();
+                    }
                     $elem->set_file_sp2d($upload->getFileTo());
+                    //echo $upload->getFileName();
+
+                    if ($_POST['fupload_lama'] != "") {
+                        $file = "files/sp2d/" . $_POST['fupload_lama'];
+                        //echo $file;
+                        if (file_exists($file)) {
+                            unlink($file);
+                        }
+                    }
+                    
                     //echo $upload->getFileName();
                 } else {
                     if ($_POST['fupload_lama'] != "") {

@@ -59,7 +59,7 @@
                     <label class="isian">File SP2D : </label>
                     <ul class="inline tengah">
                         <li><input type="file" id="fupload" name="fupload" size="20" /></li>
-                        <li><a href="<?php echo URL . 'elemenBeasiswa/filesp2d/' . $this->elemen->get_file_sp2d(); ?>" target="_blank"><?php
+                        <li><a href="<?php echo URL . 'elemenBeasiswa/filesp2d/' . $this->elemen->get_file_sp2d(); ?>" target="file_skripsi" onClick="cetak_dokumen('file_skripsi');"><?php
                            if ($file != "") {
                                echo "lihat file";
                            }

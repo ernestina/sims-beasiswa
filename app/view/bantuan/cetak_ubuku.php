@@ -28,10 +28,16 @@ $biaya_per_pegawai = $this->elemen->get_biaya_per_peg();
     </head>
     <body style="font-family:arial;color:black;font-size:10px;">
         <p align="center" style="font-weight: bold; font-size:12px;">
-
+            <?php 
+            if($this->elemen->get_bln()==1){
+                $semester="GANJIL";
+            } else {
+               $semester="GENAP"; 
+            }
+            ?>
             DAFTAR PEMBAYARAN BIAYA BUKU BEASISWA INTERNAL DITJEN PERBENDAHARAAN<br />
             PADA PROGRAM STUDI <?php echo " " . strtoupper($this->strata->kode_strata) . " "; ?> <?php echo " " . strtoupper($this->jur->get_nama()) . " "; ?> <?php echo " " . strtoupper($this->univ->get_nama()) . " "; ?> ANGKATAN <?php echo " " . $this->elemen->get_thn_masuk() . " "; ?><br />
-            SEMESTER <?php echo " " . $this->elemen->get_bln() . " "; ?> TAHUN <?php echo " " . $this->elemen->get_thn() . " "; ?> 
+            SEMESTER <?php echo " " . $semester . " "; ?> TAHUN <?php echo " " . $this->elemen->get_thn() . " "; ?> 
         </p>
 
         <table border="0" align="center" cellspacing=0 cellpadding=0 width=90% style="border-width: 0px; font-size: 10px;">

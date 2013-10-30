@@ -31,35 +31,20 @@
                     <label class="isian">Tahun Masuk : </label>
                     <select type="text" name="tahun_masuk" id="tahun_masuk">
                         <option value="">Pilih Tahun masuk</option>
-                        <?php
-                        for ($i = 2007; $i < date('Y') + 2; $i++) {
-
-                            if ($i == date('Y') - 3) {
-                                echo "<option value=" . $i . " selected>" . $i . "</option>";
-                            } else {
-                                echo "<option value=" . $i . " >" . $i . "</option>";
-                            }
-                        }
-                        ?>
+                       
                     </select>
                     <div id="wsemester"></div>
                     <div id="wthn"></div>
                     <label class="isian">Semester dan Tahun : </label>
                     <ul class="inline" style="margin-bottom: 0px">
-                        <li><select type="text" id="semester" name="semester" class="unggah">
-                                <option value="1">Semester I</option>
-                                <option value="2">Semester II</option>
+                        <li><select type="text" id="semester" name="semester" style="width: 110px">
+                                <option value="">Pilih Semester</option>
+                                <option value="1">Ganjil</option>
+                                <option value="2">Genap</option>
                             </select></li> &nbsp
-                        <li><select type="text" id="thn" name="thn" style="width: 68px">
-                                <?php
-                                for ($i = 2007; $i < date('Y') + 2; $i++) {
-                                    if ($i == date('Y')) {
-                                        echo "<option value=" . $i . " selected>" . $i . "</option>";
-                                    } else {
-                                        echo "<option value=" . $i . " >" . $i . "</option>";
-                                    }
-                                }
-                                ?>
+                        <li><select type="text" id="thn" name="thn" style="width: 100px">
+                                <option value="">Pilih Tahun</option>
+                                
                             </select></li>
                     </ul>
                 </div>
@@ -142,8 +127,48 @@
             $("#total_bayar").val('0');
         })
         
+        //menampilkan daftar tahun
+        $('#kode_jur').change(function(){
+            //alert ($('#kode_jur').val());
+            $.ajax({
+                type:"POST",
+                url: "<?php echo URL; ?>elemenBeasiswa/get_thn_masuk_by_jur",
+                data: {kd_jurusan:$('#kode_jur').val()},
+                success: function(thn_masuk){
+                    $('#tahun_masuk').html(thn_masuk);
+                }
+            });
+            
+            $("#total_bayar").val('0');
+        })
+        
+        //menampilkan data tahun
+        $('#tahun_masuk').change(function(){
+            //alert ($('#kode_tahun_masuk').val());
+            $.ajax({
+                type:"POST",
+                url: "<?php echo URL; ?>elemenBeasiswa/get_thn_bayar",
+                data: {thn:$('#tahun_masuk').val()},
+                success: function(thn){
+                    $('#thn').html(thn);
+                }
+            });
+            
+             $.ajax({
+                type:"POST",
+                url: "<?php echo URL; ?>elemenBeasiswa/tabel_penerima_buku",
+                data: {kd_jurusan:$('#kode_jur').val(),thn_masuk:$('#tahun_masuk').val(),semester:$('#semester').val(),thn:$('#thn').val()},
+                success: function(jadup){
+                    $('#tabel_penerima_buku').html(jadup);
+                }
+            });
+            
+            $("#total_bayar").val('0');
+            
+        })
+        
         //menampilkan data penerima jadup
-        $('#kode_jur, #tahun_masuk, #semester, #thn').change(function(){
+        $('#semester, #thn').change(function(){
             //alert ($('#kode_univ').val());
             $.ajax({
                 type:"POST",
@@ -211,7 +236,7 @@
         }
         
         if(hasChecked==false){
-            viewError("wtabel_penerima_buku", "Penerima biaya buku belum dipilih.")
+            //viewError("wtabel_penerima_buku", "Penerima biaya buku belum dipilih.")
             $jml++;
         }
      

@@ -21,35 +21,27 @@
                         <label>Jurusan/Prodi</label>
                         <select name="jurusan" id="jurusan" type="text">
                             <option value="">- semua -</option>>
-                            <?php
-                            foreach ($this->jur as $val2) {
-                                echo "<option value=" . $val2->get_kode_jur() . " >" . $val2->get_nama() . "</option>";
-                            }
-                            ?>
+
                         </select>
                     </td>
                     <td>
                         <label>Tahun Masuk</label>
                         <select name="tahun_masuk" id="tahun_masuk" type="text">
-                        <option value="">- semua -</option>>
-                        <?php
-                        for ($i = 2007; $i <= date('Y') + 2; $i++) {
-                            ?>
-                            <option value="<?php echo $i; ?>" <?php
-                        if ($i == date('Y')) {
-                            echo "selected";
-                        }
-                            ?>><?php echo $i; ?></option>
-                                <?php } ?>
-                    </select>
+                            <option value="">- semua -</option>>
+                            <?php
+                            for ($i = 2007; $i <= date('Y') + 2; $i++) {
+                                ?>
+                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                            <?php } ?>
+                        </select>
                     </td>
                     <td style="float: right"><input type="search" name="cari" id="cari" placeholder="Cari dengan kata kunci nomor SP2D..." size="30" title="Cari"></td>
                 </tr>
                 <tr>
                     <td colspan="4" style="padding-top: 0px">
                         <!--input type="button" id="add" value="TAMBAH" onClick="location.href='<?php echo URL . 'elemenBeasiswa/addUangBuku' ?>'"-->
-						<button type="button" id="add" onClick="location.href='<?php echo URL . "elemenBeasiswa/addUangBuku"; ?>'" ><i class="icon-plus icon-white"></i>  TAMBAH</button>
-                        
+                        <button type="button" id="add" onClick="location.href='<?php echo URL . "elemenBeasiswa/addUangBuku"; ?>'" ><i class="icon-plus icon-white"></i>  TAMBAH</button>
+
                     </td>
                 </tr>
             </table>
@@ -65,10 +57,15 @@
 </div>
 <script type="text/javascript">
     
-    $.post("<?php echo URL; ?>elemenBeasiswa/data_index_buku", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()}, 
-    function (data){
-        $('#tabel_index_buku').html(data);
-    })
+    displayElemenBuku();
+    function displayElemenBuku(){
+        $.post("<?php echo URL; ?>elemenBeasiswa/data_index_buku", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()}, 
+        function (data){
+            $('#tabel_index_buku').html(data);
+        }); 
+        
+        $('#cari').val('');
+    }
     
     $(document).ready(function(){ 
     
@@ -79,43 +76,25 @@
                 $('#jurusan').html(data);
             }); 
         
-            $.post("<?php echo URL; ?>elemenBeasiswa/data_index_buku", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()}, 
-            function (data){
-                $('#tabel_index_buku').html(data);
-            })
+            displayElemenBuku();
         });
         
-        //agar ketika universitas berubah karena dipilih, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
-        $("#jurusan").change(function(){
+        
+        $("#jurusan, #tahun_masuk").change(function(){
                   
-            $.post("<?php echo URL; ?>elemenBeasiswa/data_index_buku", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()}, 
-            function (data){
-                $('#tabel_index_buku').html(data);
-            })
+            displayElemenBuku();
         });
-        
-        //agar ketika universitas berubah karena dipilih, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
-        $("#tahun_masuk").change(function(){
-                  
-            $.post("<?php echo URL; ?>elemenBeasiswa/data_index_buku", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()}, 
-            function (data){
-                $('#tabel_index_buku').html(data);
-            })
-        });
-        
         
         $("#cari").keyup(function(){
-                  
-            $.post("<?php echo URL; ?>elemenBeasiswa/data_index_buku2", { sp2d:$('#cari').val()}, 
-            function (data){
-                $('#tabel_index_buku').html(data);
-            })
-            
+                           
             if($("#cari").val()==""){
-                $.post("<?php echo URL; ?>elemenBeasiswa/data_index_buku", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val()}, 
+                displayElemenBuku();
+            } else {
+                $.post("<?php echo URL; ?>elemenBeasiswa/data_index_buku2", { sp2d:$('#cari').val()}, 
                 function (data){
                     $('#tabel_index_buku').html(data);
-                })
+                });
+                $("#jurusan, #tahun_masuk, #universitas").val('');
             }
         });
         
