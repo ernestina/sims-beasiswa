@@ -49,7 +49,7 @@ $biaya_per_pegawai = $this->elemen->get_biaya_per_peg();
                 <th rowspan="2">Nama</th>
                 <th rowspan="2">NIP</th>
                 <th rowspan="2">Gol</th>
-                <th colspan="7">Biaya Penunjang Hidup</th>
+                <th colspan="5">Biaya Penunjang Hidup</th>
                 <th rowspan="2">Bank<br>Penerima</th>
                 <th rowspan="2">No<br>Rekening</th>
                 <th width="15%" rowspan="2">Tanda Tangan</th>
@@ -57,8 +57,8 @@ $biaya_per_pegawai = $this->elemen->get_biaya_per_peg();
             <tr >
                 <th >Biaya <br>Penunjang</th>
                 <th >Jml <br>Bln</th>
-                <th >% Hadir</th>
-                <th >Potongan<br></th>
+                <th style="display:none">% Hadir</th>
+                <th style="display:none">Potongan<br></th>
                 <th >Jumlah<br>Kotor</th>
                 <th >PPh</th>
                 <th >Jumlah<br>Bersih</th>
@@ -92,8 +92,8 @@ $biaya_per_pegawai = $this->elemen->get_biaya_per_peg();
                     <td><?php echo Golongan::golongan_int_string2($penerima->get_gol()); ?></td>
                     <td align="right"><?php echo number_format($biaya_per_pegawai); ?></td>
                     <td>1</td>
-                    <td align="right"><?php echo $hadir; ?></td>
-                    <td align="right"><?php echo number_format($potongan); ?></td>
+                    <td align="right" style="display:none"><?php echo $hadir; ?></td>
+                    <td align="right" style="display:none"><?php echo number_format($potongan); ?></td>
                     <td align="right"><?php echo number_format($jml_kotor); ?></td>
                     <td align="right"><?php echo number_format($pajak); ?></td>
                     <td align="right"><?php echo number_format($jml_bersih); ?></td>
@@ -134,8 +134,8 @@ $biaya_per_pegawai = $this->elemen->get_biaya_per_peg();
                 <td colspan="4" align="center"> Jumlah</td>
                 <td align="right"><?php echo number_format($biaya_per_pegawai * ($no - 1)); ?></td>
                 <td ></td>
-                <td ></td>
-                <td align="right"><?php echo number_format($total_potongan) ?></td>
+                <td style="display:none"></td>
+                <td align="right" style="display:none"><?php echo number_format($total_potongan) ?></td>
                 <td align="right"><?php echo number_format($total_jml_kotor); ?></td>
                 <td align="right"><?php echo number_format($total_pajak); ?></td>
                 <td align="right"><?php echo number_format($total_jml_bersih); ?></td>
