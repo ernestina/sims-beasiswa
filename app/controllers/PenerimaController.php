@@ -48,7 +48,18 @@ class PenerimaController extends BaseController{
              */
             foreach($elem as $v){
                 $d = new BiayaPenerimaBeasiswa();
-                $d->set_nama_biaya($v->get_kd_r());
+                $is_jadup = ($v->get_kd_r()=='tunjangan hidup');
+                $is_buku = ($v->get_kd_r()=='buku');
+                $nama = $v->get_kd_r();
+                if($is_jadup){
+                    $nama .= " ".$v->get_bln()." ".$v->get_thn();
+                }
+                if($is_buku){
+                    $bulan = Tanggal::bulan_num($v->get_bln());
+                    $bulan = ($bulan==1)?'ganjil':'genap';
+                    $nama .= " semester ".$bulan." ".$v->get_thn();
+                }
+                $d->set_nama_biaya($nama);
                 $d->set_jumlah_biaya($v->get_total_bayar());
                 $d_bea[] = $d;
             }
@@ -353,7 +364,7 @@ class PenerimaController extends BaseController{
         }
         
         if($pb->update_penerima()){
-//            header('location:'.URL.'penerima/profil/'.$kd_pb);
+            header('location:'.URL.'penerima/profil/'.$kd_pb);
         }else{
             /*
              * gagal insert, balikin isian!!!

@@ -231,7 +231,7 @@
 	</div>
         <div>
 <ul class="inline kanan">
-	<li><input class="normal" type="submit" value="BATAL" style="font-size: 100%"/></li>
+	<li><input class="normal" type="button" value="BATAL" style="font-size: 100%" onClick="location.href = '<?php echo URL;?>penerima/profil/<?php echo $this->d_pb->get_kd_pb();?>'"/></li>
 	<li><input class="sukses" type="submit" value="SIMPAN" style="font-size: 100%" onclick="return cek();"/></li></ul></div>
 </form>
 
