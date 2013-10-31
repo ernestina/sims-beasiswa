@@ -3,8 +3,8 @@
 
     <table width=100% style="margin-left: 0px">
         <tr>
-            <td width="95px" ><label >Pilih Universitas :</label></td>
-            <td style="padding-top:15px;">
+            <td width="10%" ><label >Pilih Universitas :</label></td>
+            <td width="20%"style="padding-top:15px;">
                 <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/display' ?>">
 <!--            <input type="hidden" name="pilih_univ">-->
 <!--                    <input type="hidden" id="user" name="user" value="<?php echo Session::get('kd_user'); ?>">-->
@@ -24,9 +24,9 @@
         <!--            <input type="button" value="SUBMIT">-->
 
             </td>
-            <td style="float: left"><input type="search" name="cari" id="cari" placeholder="cari dengan kata kunci nomor kontrak" title="Cari"></td>
+            <td width="20%" style="float: left"><input type="search" name="cari" id="cari" placeholder="cari dengan kata kunci nomor kontrak" title="Cari"></td>
 
-            <td>
+            <td width="40%">
 <!--                <input type="button" value="TAMBAH" onClick="location.href='<?php echo URL . 'kontrak/rekamKontrak'; ?>'"style="margin-top:0px; margin-right: -8px">-->
                 <input type="button" id="tambah_kontrak" value="TAMBAH" style="margin-top:0px; margin-right: -8px">
                 </form>
@@ -42,6 +42,7 @@
 <div id="tb_kontrak">
 </div>
 <div class="fitur">
+    <br/>
     <p style="margin-left: 30px">
         Keterangan:
         * Nilai kontrak dengan nilai total biaya kontrak tidak sama.
