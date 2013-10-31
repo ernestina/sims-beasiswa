@@ -30,7 +30,7 @@
         <div id="wrapper">
             <div id="header">
                 <div class="kolom1">
-                    <a href="<?php echo URL; ?>" style="cursor:  pointer"><img src="<?php echo URL; ?>public/img/treascho-new.png" style="padding-left: 40px; padding-bottom: 10px" width="70%"></a>
+                    <a href="<?php echo URL; ?>" style="cursor:  pointer"><img src="<?php echo URL; ?>public/img/treascho-new.png" style="padding-left: 40px; padding-bottom: 10px" width="40%"></a>
                 </div>
 				
                 <div id="jam" class="kolom2" >
@@ -38,7 +38,7 @@
                     <p id="jam" onload="jam()"></p>
 
                 </div>
-                <div style="float: top">Willkomnen <?php echo Session::get('user').'</br>anda login sebagai '.  strtoupper((Session::get('role')==1)?'admin':'pic');?></div>
+                <div style="float: top; margin-top: 20px">Willkomnen <?php echo Session::get('user').'</br>anda login sebagai '.  strtoupper((Session::get('role')==1)?'admin':'pic');?></div>
             </div>
 
             <div id="menu">

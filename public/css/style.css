@@ -1,3 +1,7 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
 @font-face {
     font-family: "Nexa";
     src: url("../font/Casper.ttf");
@@ -35,6 +39,7 @@ body {
 h2, legend {
     font-family: "Sub";
     font-size: 24px;
+	padding-top: 20px
 }
 
 a:link {color:#267890;}
@@ -54,7 +59,7 @@ a:active {color:#A4D7E6}
     overflow: auto;
     /*border: 1px solid #000000;*/
     background-color: #ffffff;
-    padding: 20px 0px 20px 0px;
+    padding: 0px 0px 20px 0px;
     box-shadow: #aaa 2px 2px 10px 1px;
     min-height: 600px;
 }
@@ -211,7 +216,7 @@ a:active {color:#A4D7E6}
 #jam.kolom2{
     text-align: center;
     font-family: "Sub";
-    font-size: 150%;
+    font-size: 120%;
     padding-top: 40px;
     margin-right: -200px;
 }
