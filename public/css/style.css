@@ -1253,3 +1253,13 @@ footer {
 footer a { color: #267890; }
 footer h2 { color: #333 }
 footer p { font-family: Sub;}
+
+.ui-tabs .ui-tabs-nav li a {font-size:8pt !important;}
+.ui-tabs .ui-tabs-panel {
+    position: relative;
+    font-size:8pt;
+    min-height: 100%;
+}
+.ui-tabs{
+    border: none;
+}

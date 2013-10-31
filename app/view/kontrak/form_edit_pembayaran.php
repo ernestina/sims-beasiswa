@@ -2,8 +2,9 @@
 <div id="proses_pembayaran" style="display:none" align="left">
     <p> Sistem sedang melakukan proses update pembayaran tagihan biaya.....</p>
 </div>
-<form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/updatePembayaran' ?>" enctype="multipart/form-data">
+<form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/updatePembayaran' ?>" enctype="multipart/form-data" onSubmit="return konfirmasi_pembayaran();">
     <input type="hidden" name="update_pembayaran">
+    <input type="hidden" name="tab" value="2">
 
     <label class="isian">No. SP2D</label>
     <input type="text" name="no_sp2d" id="no_sp2d" size="30" value="<?php echo $this->biaya->no_sp2d; ?>">
@@ -32,8 +33,10 @@
 
     <input type="hidden" id="kd_biaya" name="kd_biaya" value="<?php echo $this->biaya->kd_biaya; ?>">
     <input type="hidden" name="file_sp2d_lama" id="file_sp2d_lama" value="<?php echo $this->biaya->file_sp2d; ?>">
-    <input type="submit" class="sukses" value="SIMPAN" onClick="return konfirmasi_pembayaran();">
-
+    <ul class="inline" style="float: right; margin-right: 20px">
+                <li><button type="submit" name="simpan" class="sukses" onClick="formSubmit();"/><i class="icon-ok icon-white"></i>Simpan</button></li>
+                <li><button type="reset" name="batal" id="batal3" class="normal"><i class="icon-remove icon-white"></i>Batal</li>
+            </ul>
 </form>
 
 <script>
@@ -102,5 +105,11 @@
             return true;
         }
     }
+    
+    $('#batal3').click(function(){
+        removeError('wno_sp2d');       
+        removeError('wtgl_sp2d');  
+        removeError('wfile_sp2d');   
+             
+    })   
 </script>
-

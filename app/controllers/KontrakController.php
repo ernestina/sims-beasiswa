@@ -482,6 +482,8 @@ class KontrakController extends BaseController {
 
     //melakukan proses rekam biaya baru pada halaman rekam_biaya
     public function rekamBiaya() {
+        var_dump($_POST);
+        exit();
         if (isset($_POST['rekam_biaya'])) {
             $biaya = new Biaya();
             $biaya->kd_kontrak = $_POST['kd_kontrak'];
@@ -536,7 +538,7 @@ class KontrakController extends BaseController {
     }
 
     //menampilkan master halaman edit biaya berdasarkan id=kd_biaya pada halaman baru
-    public function editBiaya($id = null) {
+    public function editBiaya($id = null,$tab=null) {
         if ($id != "") {
             $biaya = new Biaya();
             $data_biaya = $biaya->get_by_id($id); //mendapatkan data biaya berdasarkan id=kd_biaya
@@ -564,10 +566,14 @@ class KontrakController extends BaseController {
             //var_dump($jur->get_nama());
             $nama_jur = $jur->get_nama(); //mendapatkan nama jurusan
             //menampilkan daftar biaya berdasarkan kontrak
+            if($tab=="" || $tab>2){
+                $tab=0;
+            }
             $this->view->nama_univ = $nama_univ;
             $this->view->nama_jur = $nama_jur;
             $this->view->biaya = $data_biaya;
             $this->view->kontrak = $data_kontrak;
+            $this->view->tab = $tab;
             $this->view->render('kontrak/edit_biaya');
         } else {
             header('location:' . URL . 'kontrak/display');
@@ -755,14 +761,14 @@ class KontrakController extends BaseController {
 
                     $biaya->updateTagihan($biaya);
                     //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
-                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
+                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya."/1";
 //                    header("refresh:1;url=" . $url);
 //                    echo "Perubahan data tagihan berhasil disimpan.";
                     echo '<script> alert("Perubahan data tagihan berhasil disimpan") </script>';
                     echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
                 } else {
                     //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
-                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
+                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya."/1";
 //                    header("refresh:1;url=" . $url);
 //                    echo "Jumlah pegawai yang akan dibayarkan dengan data penerima pada tagihan tidak sama.";
                     echo '<script> alert("Jumlah pegawai yang akan dibayarkan dengan data penerima pada tagihan tidak sama") </script>';
@@ -771,7 +777,7 @@ class KontrakController extends BaseController {
             } else {
                 //echo "kosong";
                 //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
-                $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
+                $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya."/1";
 //                header("refresh:1;url=" . $url);
 //                echo "Isian form belum lengkap.";
                 echo '<script> alert("Isian form belum lengkap") </script>';
@@ -804,7 +810,7 @@ class KontrakController extends BaseController {
             $biaya->status_bayar = $biaya_current->status_bayar;  //untuk mendapatkan status bayar terkini
             if ($biaya->status_bayar == "belum") {
                 //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
-                $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
+                $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya."/2";
 //                header("refresh:1;url=" . $url);
 //                echo "Data tagihan biaya belum diisi.";
                 echo '<script> alert("Data tagihan biaya belum diisi") </script>';
@@ -821,14 +827,14 @@ class KontrakController extends BaseController {
                     }
                     $biaya->updatePembayaranTagihan($biaya);
                     //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
-                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
+                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya."/2";
 //                    header("refresh:1;url=" . $url);
 //                    echo "Perubahan data Pembayaran tagihan berhasil disimpan.";
                     echo '<script> alert("Perubahan data Pembayaran tagihan berhasil disimpan") </script>';
                     echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
                 } else {
                     //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
-                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
+                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya."/2";
 //                    header("refresh:1;url=" . $url);
 //                    echo "Isian form pembayaran tagihan biaya belum lengkap.";
                     echo '<script> alert("Isian form pembayaran tagihan biaya belum lengkap") </script>';

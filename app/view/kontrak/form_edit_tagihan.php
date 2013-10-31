@@ -1,155 +1,163 @@
-<form method="POST" id="form_tagihan" action="<?php echo URL . 'kontrak/updateTagihan' ?>" enctype="multipart/form-data">
-    <input type="hidden" name="update_tagihan">
-    <!--h1>Data Tagihan Biaya</h1-->
-    <div id="proses_tagihan" title="Informasi" style="display:none" align="center">
-        <p> Sistem sedang melakukan proses update data tagihan biaya.....</p>
-    </div>
+<div>
+    <form method="POST" id="form_tagihan" action="<?php echo URL . 'kontrak/updateTagihan' ?>" enctype="multipart/form-data" onSubmit="return konfirmasi_tagihan();">
+        <input type="hidden" name="update_tagihan">
+        <input type="hidden" name="tab" value="1">
+        <!--h1>Data Tagihan Biaya</h1-->
+        <div id="proses_tagihan" title="Informasi" style="display:none" align="center">
+            <p> Sistem sedang melakukan proses update data tagihan biaya.....</p>
+        </div>
 
-    <div class="kolom1">
+        <div class="kolom1">
 
-        <label class="isian">No. BAST</label>
-        <input type="text" size="30" name="no_bast" id="no_bast" value="<?php echo $this->biaya->no_bast; ?>">
-        <div id="wno_bast"></div>
-        <label class="isian">Tgl. BAST</label>
-        <?php
-        $tgl_bast = date('d-m-Y', strtotime($this->biaya->tgl_bast));
-        if ($tgl_bast != "01-01-1970" && $tgl_bast != "00-00-0000") {
-            $tgl_bast_ = $tgl_bast;
-        } else {
-            $tgl_bast_ = "";
-        }
-        ?>
-        <input type="text" size="20" name="tgl_bast" id="tgl_bast" value="<?php echo $tgl_bast_ ?>" readonly>
-        <div id="wtgl_bast"></div>
-        <label class="isian">File BAST</label>
-        <?php
-        $file_bast = $this->biaya->file_bast;
-        if ($file_bast != "") {
-            $file_bast_ = $file_bast;
-        } else {
-            $file_bast_ = "";
-        }
-        ?>
+            <label class="isian">No. BAST</label>
+            <input type="text" size="30" name="no_bast" id="no_bast" value="<?php echo $this->biaya->no_bast; ?>">
+            <div id="wno_bast"></div>
+            <label class="isian">Tgl. BAST</label>
+            <?php
+            $tgl_bast = date('d-m-Y', strtotime($this->biaya->tgl_bast));
+            if ($tgl_bast != "01-01-1970" && $tgl_bast != "00-00-0000") {
+                $tgl_bast_ = $tgl_bast;
+            } else {
+                $tgl_bast_ = "";
+            }
+            ?>
+            <input type="text" size="20" name="tgl_bast" id="tgl_bast" value="<?php echo $tgl_bast_ ?>" readonly>
+            <div id="wtgl_bast"></div>
+            <label class="isian">File BAST</label>
+            <?php
+            $file_bast = $this->biaya->file_bast;
+            if ($file_bast != "") {
+                $file_bast_ = $file_bast;
+            } else {
+                $file_bast_ = "";
+            }
+            ?>
+            <ul class="inline">
+                <li><input type="file" name="file_bast" id="file_bast"/></li>
+                <li><a href="<?php echo URL . "kontrak/fileBast/" . $file_bast_; ?>"target="file_bast" onClick="cetak_dokumen('file_bast');"><?php if ($file_bast_ != "") echo "lihat file"; ?></a></li>
+            </ul>
+            <div id="wfile_bast"></div>
+
+            <label class="isian">No. BAP</label>
+            <input type="text" size="30" name="no_bap" id="no_bap" value="<?php echo $this->biaya->no_bap; ?>">
+            <div id="wno_bap"></div>
+            <label class="isian">Tgl. BAP</label>
+            <?php
+            $tgl_bap = date('d-m-Y', strtotime($this->biaya->tgl_bap));
+            if ($tgl_bap != "01-01-1970" && $tgl_bap != "00-00-0000") {
+                $tgl_bap_ = $tgl_bap;
+            } else {
+                $tgl_bap_ = "";
+            }
+            ?>
+            <input type="text" size="20" name="tgl_bap" id="tgl_bap" value="<?php echo $tgl_bap_; ?>" readonly>            
+            <div id="wtgl_bap"></div>
+            <label class="isian">File BAP</label>
+            <?php
+            $file_bap = $this->biaya->file_bap;
+            if ($file_bap != "") {
+                $file_bap_ = $file_bap;
+            } else {
+                $file_bap_ = "";
+            }
+            ?>
+            <ul class="inline">
+                <li><input type="file" name="file_bap" id="file_bap"/></li>
+                <li><a href="<?php echo URL . "kontrak/fileBap/" . $file_bap_; ?>"target="file_bap" onClick="cetak_dokumen('file_bap');"><?php if ($file_bap_ != "") echo "lihat file"; ?></a></li>
+            </ul>
+            <div id="wfile_bap"></div>
+        </div>
+
+        <div class="kolom2">
+            <label class="isian">No. Ringkasan Kontrak</label>
+            <input type="text" size="30" name="no_ring_kon" id="no_ring_kon" value="<?php echo $this->biaya->no_ring_kontrak; ?>">
+            <div id="wno_ring_kon"></div>
+            <label class="isian">Tgl Ringkasan Kontrak</label>
+            <?php
+            $tgl_ring_kontrak = date('d-m-Y', strtotime($this->biaya->tgl_ring_kontrak));
+            if ($tgl_ring_kontrak != "01-01-1970" && $tgl_ring_kontrak != "00-00-0000") {
+                $tgl_ring_kontrak_ = $tgl_ring_kontrak;
+            } else {
+                $tgl_ring_kontrak_ = "";
+            }
+            ?>
+            <input type="text"name="tgl_ring_kon" id="tgl_ring_kon" value="<?php echo $tgl_ring_kontrak_; ?>" readonly>
+            <div id="wtgl_ring_kon"></div>
+            <label class="isian">File. Ringkasan Kontrak</label>
+            <?php
+            $file_ring_kontrak = $this->biaya->file_ring_kontrak;
+            if ($file_ring_kontrak != "") {
+                $file_ring_kontrak_ = $file_ring_kontrak;
+            } else {
+                $file_ring_kontrak_ = "";
+            }
+            ?>
+            <ul class="inline">
+                <li><input type="file"size="30" name="file_ring_kon" id="file_ring_kon"></li>
+                <li><a href="<?php echo URL . "kontrak/fileRingKontrak/" . $file_ring_kontrak_; ?>"target="file_ring" onClick="cetak_dokumen('file_ring');"><?php if ($file_ring_kontrak_ != "") echo "lihat file"; ?></a></li>
+            </ul>
+            <div id="wfile_ring_kon"></div>
+
+            <label class="isian">No. Kuitansi</label>
+            <input type="text" size="30" name="no_kuitansi" id="no_kuitansi" value="<?php echo $this->biaya->no_kuitansi; ?>"> 
+            <div id="wno_kuitansi"></div>
+            <label class="isian">Tgl. Kuitansi</label>
+            <?php
+            $tgl_kuitansi = date('d-m-Y', strtotime($this->biaya->tgl_kuitansi));
+            if ($tgl_kuitansi != "01-01-1970" && $tgl_kuitansi != "00-00-0000") {
+                $tgl_kuitansi_ = $tgl_kuitansi;
+            } else {
+                $tgl_kuitansi_ = "";
+            }
+            ?>
+            <input type="text" size="30" name="tgl_kuitansi" id="tgl_kuitansi" 
+                   value="<?php echo $tgl_kuitansi_; ?>" readonly>
+            <div id="wtgl_kuitansi"></div>
+            <label class="isian">File Kuitansi</label>
+            <?php
+            $file_kuitansi = $this->biaya->file_kuitansi;
+            if ($file_kuitansi != "") {
+                $file_kuitansi_ = $file_kuitansi;
+            } else {
+                $file_kuitansi_ = "";
+            }
+            ?>
+            <ul class="inline">
+                <li><input type="file" name="file_kuitansi" id="file_kuitansi"></li>
+                <li><a href="<?php echo URL . "kontrak/fileKuitansi/" . $file_kuitansi_; ?>"target="file_kuitansi" onClick="cetak_dokumen('file_kuitansi');"><?php if ($file_kuitansi_ != "") echo "lihat file"; ?></a></li>
+            </ul>
+            <div id="wfile_kuitansi"></div>
+        </div>
         <ul class="inline">
-            <li><input type="file" name="file_bast" id="file_bast"/></li>
-            <li><a href="<?php echo URL . "kontrak/fileBast/" . $file_bast_; ?>"target="file_bast" onClick="cetak_dokumen('file_bast');"><?php if ($file_bast_ != "") echo "lihat file"; ?></a></li>
+            <li>Data Penerima :</li> 
+            <li id="tambah_penerima">(tambah)</li>
+            <li id="wjml_penerima"></li>
+
         </ul>
-        <div id="wfile_bast"></div>
 
-        <label class="isian">No. BAP</label>
-        <input type="text" size="30" name="no_bap" id="no_bap" value="<?php echo $this->biaya->no_bap; ?>">
-        <div id="wno_bap"></div>
-        <label class="isian">Tgl. BAP</label>
-        <?php
-        $tgl_bap = date('d-m-Y', strtotime($this->biaya->tgl_bap));
-        if ($tgl_bap != "01-01-1970" && $tgl_bap != "00-00-0000") {
-            $tgl_bap_ = $tgl_bap;
-        } else {
-            $tgl_bap_ = "";
-        }
-        ?>
-        <input type="text" size="20" name="tgl_bap" id="tgl_bap" value="<?php echo $tgl_bap_; ?>" readonly>            
-        <div id="wtgl_bap"></div>
-        <label class="isian">File BAP</label>
-        <?php
-        $file_bap = $this->biaya->file_bap;
-        if ($file_bap != "") {
-            $file_bap_ = $file_bap;
-        } else {
-            $file_bap_ = "";
-        }
-        ?>
-        <ul class="inline">
-            <li><input type="file" name="file_bap" id="file_bap"/></li>
-            <li><a href="<?php echo URL . "kontrak/fileBap/" . $file_bap_; ?>"target="file_bap" onClick="cetak_dokumen('file_bap');"><?php if ($file_bap_ != "") echo "lihat file"; ?></a></li>
-        </ul>
-        <div id="wfile_bap"></div>
+        <div class="kolom4" id="tabel_penerima_biaya">
+        </div>
+
+        <div>
+            <input type="hidden" id="jml_peg" name="jml_peg" value="<?php echo $this->biaya->jml_pegawai_bayar; ?>">
+            <input type="hidden" id="kd_kontrak" name="kd_kontrak" value="<?php echo $this->biaya->kd_kontrak; ?>">
+            <input type="hidden" id="kd_biaya" name="kd_biaya" value="<?php echo $this->biaya->kd_biaya; ?>">
+            <input type="hidden" name="file_bast_lama" id="file_bast_lama" value="<?php echo $this->biaya->file_bast; ?>">
+            <input type="hidden" name="file_bap_lama" id="file_bap_lama" value="<?php echo $this->biaya->file_bap; ?>">
+            <input type="hidden" name="file_ring_kon_lama" id="file_ring_kon_lama" value="<?php echo $this->biaya->file_ring_kontrak; ?>">
+            <input type="hidden" name="file_kuitansi_lama" id="file_kuitansi_lama" value="<?php echo $this->biaya->file_kuitansi; ?>">
+
+            <ul class="inline" style="float: right; margin-right: 20px">
+                <li><button type="submit" name="simpan" class="sukses" onClick="formSubmit();"/><i class="icon-ok icon-white"></i>Simpan</button></li>
+                <li><button type="reset" name="batal" id="batal2" class="normal"><i class="icon-remove icon-white"></i>Batal</li>
+            </ul>
+
+        </div>
+    </form>
+
+    <div id="dialog_form" title="Menambahkan Penerima Beasiswa ke Tagihan">
+
     </div>
-
-    <div class="kolom2">
-        <label class="isian">No. Ringkasan Kontrak</label>
-        <input type="text" size="30" name="no_ring_kon" id="no_ring_kon" value="<?php echo $this->biaya->no_ring_kontrak; ?>">
-        <div id="wno_ring_kon"></div>
-        <label class="isian">Tgl Ringkasan Kontrak</label>
-        <?php
-        $tgl_ring_kontrak = date('d-m-Y', strtotime($this->biaya->tgl_ring_kontrak));
-        if ($tgl_ring_kontrak != "01-01-1970" && $tgl_ring_kontrak != "00-00-0000") {
-            $tgl_ring_kontrak_ = $tgl_ring_kontrak;
-        } else {
-            $tgl_ring_kontrak_ = "";
-        }
-        ?>
-        <input type="text"name="tgl_ring_kon" id="tgl_ring_kon" value="<?php echo $tgl_ring_kontrak_; ?>" readonly>
-        <div id="wtgl_ring_kon"></div>
-        <label class="isian">File. Ringkasan Kontrak</label>
-        <?php
-        $file_ring_kontrak = $this->biaya->file_ring_kontrak;
-        if ($file_ring_kontrak != "") {
-            $file_ring_kontrak_ = $file_ring_kontrak;
-        } else {
-            $file_ring_kontrak_ = "";
-        }
-        ?>
-        <ul class="inline">
-            <li><input type="file"size="30" name="file_ring_kon" id="file_ring_kon"></li>
-            <li><a href="<?php echo URL . "kontrak/fileRingKontrak/" . $file_ring_kontrak_; ?>"target="file_ring" onClick="cetak_dokumen('file_ring');"><?php if ($file_ring_kontrak_ != "") echo "lihat file"; ?></a></li>
-        </ul>
-        <div id="wfile_ring_kon"></div>
-
-        <label class="isian">No. Kuitansi</label>
-        <input type="text" size="30" name="no_kuitansi" id="no_kuitansi" value="<?php echo $this->biaya->no_kuitansi; ?>"> 
-        <div id="wno_kuitansi"></div>
-        <label class="isian">Tgl. Kuitansi</label>
-        <?php
-        $tgl_kuitansi = date('d-m-Y', strtotime($this->biaya->tgl_kuitansi));
-        if ($tgl_kuitansi != "01-01-1970" && $tgl_kuitansi != "00-00-0000") {
-            $tgl_kuitansi_ = $tgl_kuitansi;
-        } else {
-            $tgl_kuitansi_ = "";
-        }
-        ?>
-        <input type="text" size="30" name="tgl_kuitansi" id="tgl_kuitansi" 
-               value="<?php echo $tgl_kuitansi_; ?>" readonly>
-        <div id="wtgl_kuitansi"></div>
-        <label class="isian">File Kuitansi</label>
-        <?php
-        $file_kuitansi = $this->biaya->file_kuitansi;
-        if ($file_kuitansi != "") {
-            $file_kuitansi_ = $file_kuitansi;
-        } else {
-            $file_kuitansi_ = "";
-        }
-        ?>
-        <ul class="inline">
-            <li><input type="file" name="file_kuitansi" id="file_kuitansi"></li>
-            <li><a href="<?php echo URL . "kontrak/fileKuitansi/" . $file_kuitansi_; ?>"target="file_kuitansi" onClick="cetak_dokumen('file_kuitansi');"><?php if ($file_kuitansi_ != "") echo "lihat file"; ?></a></li>
-        </ul>
-        <div id="wfile_kuitansi"></div>
-    </div>
-    <ul class="inline">
-        <li>Data Penerima :</li> 
-        <li id="tambah_penerima">(tambah)</li>
-        <li id="wjml_penerima"></li>
-
-    </ul>
-    
-    <div class="kolom4" id="tabel_penerima_biaya">
-    </div>
-
-    <div>
-        <input type="hidden" id="jml_peg" name="jml_peg" value="<?php echo $this->biaya->jml_pegawai_bayar; ?>">
-        <input type="hidden" id="kd_kontrak" name="kd_kontrak" value="<?php echo $this->biaya->kd_kontrak; ?>">
-        <input type="hidden" id="kd_biaya" name="kd_biaya" value="<?php echo $this->biaya->kd_biaya; ?>">
-        <input type="hidden" name="file_bast_lama" id="file_bast_lama" value="<?php echo $this->biaya->file_bast; ?>">
-        <input type="hidden" name="file_bap_lama" id="file_bap_lama" value="<?php echo $this->biaya->file_bap; ?>">
-        <input type="hidden" name="file_ring_kon_lama" id="file_ring_kon_lama" value="<?php echo $this->biaya->file_ring_kontrak; ?>">
-        <input type="hidden" name="file_kuitansi_lama" id="file_kuitansi_lama" value="<?php echo $this->biaya->file_kuitansi; ?>">
-        <input type="submit" class="sukses" value="SIMPAN" id="update_tagihan" onClick="return konfirmasi_tagihan();">
-    </div>
-</form>
-
-<div id="dialog_form" title="Menambahkan Penerima Beasiswa ke Tagihan">
-
 </div>
 
 <script>
@@ -439,8 +447,21 @@
         }
             
     }
-    
-   
-    
+       
+    $('#batal2').click(function(){
+        removeError('wno_bast');       
+        removeError('wtgl_bast');  
+        removeError('wfile_bast');
+        removeError('wno_bap');       
+        removeError('wtgl_bap');  
+        removeError('wfile_bap');
+        removeError('wno_ring_kon');       
+        removeError('wtgl_ring_kon');  
+        removeError('wfile_ring_kon'); 
+        removeError('wno_kuitansi');       
+        removeError('wtgl_kuitansi');  
+        removeError('wfile_kuitansi');     
+             
+    })        
     
 </script>

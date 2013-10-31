@@ -3,10 +3,11 @@
 <div id="proses_biaya" title="Informasi" style="display:none">
     <p> Sistem sedang melakukan proses update data biaya.....</p>
 </div>
-<form method="POST" id="form_biaya" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/updateBiaya' ?>">
+<form method="POST" id="form_biaya" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/updateBiaya' ?>" onSubmit="return konfirmasi_biaya();">
     <input type="hidden" name="update_biaya" size="50">
-<!--    <label class="isian">Nomor Kontrak</label>-->
-<!--    <input type="text" size="50" name="kontrak" id="kontrak" value="<? echo $this->kontrak->no_kontrak; ?>" readonly disabled>-->
+    <input type="hidden" name="tab" value="0">
+    <!--    <label class="isian">Nomor Kontrak</label>-->
+    <!--    <input type="text" size="50" name="kontrak" id="kontrak" value="<? echo $this->kontrak->no_kontrak; ?>" readonly disabled>-->
     <label class="isian">Nama Biaya</label><input type="text" size="50" name="nama_biaya" id="nama_biaya" value="<?php echo $this->biaya->nama_biaya; ?>">
     <div id="wnama_biaya"></div>
     <label class="isian">Biaya per Pegawai</label><input type="text" size="12" name="biaya_per_peg" id="biaya_per_peg" value="<?php echo $this->biaya->biaya_per_pegawai; ?>" maxlength="14">
@@ -19,21 +20,23 @@
     <div id="wjadwal_bayar"></div>
     <input type="hidden" id="kd_biaya" name="kd_biaya" value="<?php echo $this->biaya->kd_biaya; ?>">
     <input type="hidden" name="kd_kontrak" id="kd_kontrak" value="<? echo $this->kontrak->kd_kontrak; ?>" readonly>
-    <input type="submit" class="sukses" value="SIMPAN" id="update_biaya" onClick="return konfirmasi_biaya();">
+    <ul class="inline" style="float: right; margin-right: 20px">
+        <li><button type="submit" name="simpan" class="sukses" onClick="formSubmit();"/><i class="icon-ok icon-white"></i>Simpan</button></li>
+        <li><button type="reset" name="batal" id="batal" class="normal"><i class="icon-remove icon-white"></i>Batal</li>
+    </ul>
+
 </form>
 
 <script>
     //****
     // memproses update data utama biaya
     //****
+    //mengubah inputan nilai biaya per pegawai dan jumlah biaya dengan memunculkan separator ribuan
+    $('#biaya_per_peg').number(true,0);
+    $('#jml_biaya').number(true,0);
     
     $(document).ready(function(){  //mulai jquery
-              
-       
-        //mengubah inputan nilai biaya per pegawai dan jumlah biaya dengan memunculkan separator ribuan
-        $('#biaya_per_peg').number(true,0);
-        $('#jml_biaya').number(true,0);
-        
+                     
         //validasi inputan jumlah pegawai harus angka ketika diinput
         $('#jml_peg').keyup(function() {   
             if(cekAngka($('#jml_peg').val())== false){
@@ -127,4 +130,13 @@
         }
                     
     }
+   
+    $('#batal').click(function(){
+        removeError('wnama_biaya');       
+        removeError('wbiaya_per_peg');  
+        removeError('wjml_peg');   
+        removeError('wjml_biaya');  
+        removeError('wjadwal_bayar');     
+    })
+    
 </script>
