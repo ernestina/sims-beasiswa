@@ -676,6 +676,9 @@ class Notifikasi{
         }
     }
     
+    /*
+     * selisih bulan
+     */
     private function diff_month($endDate,$startDate){
         $end = explode('-', $endDate);
         $start = explode('-',$startDate);
@@ -698,6 +701,9 @@ class Notifikasi{
         
     }
     
+    /*
+     * mendapatkan notifikasi data
+     */
     public function get_notifikasi(){
         $this->get_data_jadup();
         $this->get_data_skripsi();
@@ -719,6 +725,9 @@ class Notifikasi{
         }
     }
     
+    /*
+     * pengurutan
+     */
     private function sort_data_notif(){
         $return = array();
         $tmp_data = $this->create_data_sort($this->_notif_data);
@@ -729,6 +738,9 @@ class Notifikasi{
         return $return;
     }
     
+    /*
+     * membuat temporari data, agar bisa diurutkan
+     */
     public function create_data_sort($data){
         $strtime_array = array();
 //        $no = 1;
@@ -754,7 +766,10 @@ class Notifikasi{
         }
         return $strtime_array;
     }
-
+    
+    /*
+     * bulan jadup terakhir dibayarkan
+     */
     public function cek_bulan_bayar_jadup_terakhir($kode_st){
         $sql = "SELECT CONCAT(a.THN_D_ELEM_BEASISWA,'-',a.BLN_D_ELEM_BEASISWA) as BULAN
             FROM d_elemen_beasiswa a 
@@ -827,6 +842,10 @@ class Notifikasi{
         return $return;
     }
     
+    /*
+     * cek pb sudah lulus semua di st
+     * dari kolom tanggal lapor
+     */
     public function is_complete_gradute_st($kd_st){
         $sql = "SELECT KD_PB,TGL_LAPOR_PB FROM d_pb WHERE KD_ST=".$kd_st;
         $count=0;
@@ -845,6 +864,9 @@ class Notifikasi{
         return $count>0?false:true;
     }
     
+    /*
+     * cek apakah st memiliki child->perpanjangan
+     */
     private function cek_st_child($kd_pb,$st){
         $sql = "SELECT a.KD_PB, b.KD_ST FROM d_pb a 
                 LEFT JOIN d_srt_tugas b ON a.KD_PB=b.KD_PB

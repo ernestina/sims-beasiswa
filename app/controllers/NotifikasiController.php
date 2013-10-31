@@ -16,6 +16,11 @@ class NotifikasiController extends BaseController{
         $this->view->load('notifikasi');
     }
     
+    public function display_notif(){
+        $this->view->d_notif = $this->get_notifikasi();
+        $this->view->load('informasi/notifikasi');
+    }
+    
     private function get_notifikasi(){
         $notif = new Notifikasi($this->registry);
         $data_notif = $notif->get_notifikasi();
