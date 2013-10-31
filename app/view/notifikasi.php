@@ -45,7 +45,7 @@
                 var jenis = '';
                 var judul_notif = ''; //judul notifikasi
                 var pesan = ''; //detail pesan notifikasi
-                var jatuh_tempo = (data_notif[i].bulan).substr(0,3)+" "+data_notif[i].tahun
+                var jatuh_tempo = data_notif[i].tgl+" "+(data_notif[i].bulan).substr(0,3)+" "+data_notif[i].tahun
                 if(data_notif[i].jenis==='buku'){
                     if(data_notif[i].bulan=='ganjil'){
                         jatuh_tempo = "Semester Ganjil "+data_notif[i].tahun

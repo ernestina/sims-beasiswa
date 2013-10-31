@@ -34,7 +34,7 @@ class SuratTugas {
      * method untuk mndapatkan semua surat tugas
      * @param id_sutat_tugas
      */
-    public function get_surat_tugas($kd_user=1,$id = null) {
+    public function get_surat_tugas($kd_user=null,$id = null) {
         $sql = "SELECT * FROM " . $this->_tb_st;
         $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
@@ -75,13 +75,13 @@ class SuratTugas {
      * method untuk mndapatkan surat tugas berdasarkan id
      * @param id_sutat_tugas
      */
-    public function get_surat_tugas_by_id($st = SuratTugas,$kd_user=1) {
+    public function get_surat_tugas_by_id($st = SuratTugas,$kd_user=null) {
         $sql = "SELECT * FROM " . $this->_tb_st; 
         $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
         $sql .= " WHERE a.KD_ST=" . $st->get_kd_st();
-        $sql .= ' AND d.KD_USER='.$kd_user;
+        if(!is_null($kd_user)) $sql .= ' AND d.KD_USER='.$kd_user;
         $result = $this->db->select($sql);
         foreach ($result as $val) {
             $this->set_kd_st($val['KD_ST']);

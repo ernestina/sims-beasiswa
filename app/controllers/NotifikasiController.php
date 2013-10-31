@@ -18,11 +18,11 @@ class NotifikasiController extends BaseController{
     
     private function get_notifikasi(){
         $notif = new Notifikasi($this->registry);
-        $data = $notif->get_notifikasi();
+        $data_notif = $notif->get_notifikasi();
         
         $d_notif = array();
         $i = 0;
-        foreach ($data as $data){
+        foreach ($data_notif as $data){
             $pic = $data->get_pic();
             $nama_pic = $pic['nama'];
             $kode_pic = $pic['kode'];
@@ -41,6 +41,7 @@ class NotifikasiController extends BaseController{
             }
             $temp = array(
                 'jatuh_tempo'=>$data->get_jatuh_tempo(),
+                'tgl'=>$jatuh_tempo[2]==null?1:$jatuh_tempo[2],
                 'bulan'=>  $bulan,
                 'tahun'=>  $thn,
                 'nama_pic'=>$nama_pic,
@@ -55,6 +56,11 @@ class NotifikasiController extends BaseController{
             $d_notif[] = $temp;
             $i++;
         }
+//        $tmp_data = $notif->create_data_sort($data_notif);
+//        ksort($tmp_data);
+//        foreach($tmp_data as $key=>$value){
+//            echo $key." tgl.".$value->get_jatuh_tempo()."</br>";
+//        }
         
         return json_encode($d_notif);
     }
