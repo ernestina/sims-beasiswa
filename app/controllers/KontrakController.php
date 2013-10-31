@@ -52,7 +52,7 @@ class KontrakController extends BaseController {
         $this->view->universitas = $universitas;
         $this->view->load('kontrak/tabel_kontrak');
     }
-    
+
     //menampilkan data kontrak dalam bentuk tabel di tabel_kontrak di halaman data_kontrak
     public function get_data_kontrak2() {
         $kontrak = new Kontrak();
@@ -64,10 +64,10 @@ class KontrakController extends BaseController {
         $universitas = new Universitas($this->registry);
 
         if ($key != "") {
-            $data = $kontrak->get_by_nomor($key,$user);
+            $data = $kontrak->get_by_nomor($key, $user);
             $this->view->data = $data;
             //var_dump($data);
-        } 
+        }
         $this->view->biaya = $biaya;
         $this->view->jurusan = $jurusan;
         $this->view->kontrak = $kontrak;
@@ -368,6 +368,33 @@ class KontrakController extends BaseController {
             //echo $file;
             if (file_exists($file)) {
                 unlink($file);
+            }
+            $biaya = new Biaya();
+            $data_biaya = $biaya->get_biaya_by_kontrak($id);
+            foreach ($data_biaya as $del) {
+                $biaya->deleteBiaya($del->kd_biaya);
+                $file_bast = "files/bast/" . $del->file_bast;
+                $file_bap = "files/bap/" . $del->file_bap;
+                $file_ring_kon = "files/ringkasan_kontrak/" . $del->file_ring_kontrak;
+                $file_kuitansi = "files/kuitansi/" . $del->file_kuitansi;
+                $file_sp2d = "files/sp2d/" . $del->file_sp2d;
+                //echo $file;
+                if (file_exists($file_bast)) {
+                    unlink($file_bast);
+                }
+                if (file_exists($file_bap)) {
+                    unlink($file_bap);
+                }
+                if (file_exists($file_ring_kon)) {
+                    unlink($file_ring_kon);
+                }
+                
+                if (file_exists($file_kuitansi)) {
+                    unlink($file_kuitansi);
+                }
+                if (file_exists($file_sp2d)) {
+                    unlink($file_sp2d);
+                }
             }
 
             //echo "berhasil hapus";

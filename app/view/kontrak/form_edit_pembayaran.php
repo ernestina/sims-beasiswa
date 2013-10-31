@@ -26,7 +26,7 @@
     ?>
     <ul class="inline">
         <li><input type="file" name="file_sp2d" id="file_sp2d"></li>
-        <li><a href="<?php echo URL . "kontrak/fileSp2d/" . $file_sp2d_; ?>"target="_blank"><?php if($file_sp2d_ !="") echo "lihat file"; ?></a></li>
+        <li><a href="<?php echo URL . "kontrak/fileSp2d/" . $file_sp2d_; ?>"target="file_sp2d" onClick="cetak_dokumen('file_sp2d');"><?php if($file_sp2d_ !="") echo "lihat file"; ?></a></li>
     </ul>
 <!--            <label>Jumlah dibayar</label><input type="text" size="14">-->
 
