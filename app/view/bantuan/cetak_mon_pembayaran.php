@@ -51,7 +51,7 @@
 
             if ($this->tahun != 0) {
                 echo " TAHUN " . strtoupper($this->tahun) . "<br />";
-            } else {echo "</br/>";}
+            } 
             
             ?>
             <?php echo PER." ".strtoupper(Tanggal::getTglSekarangIndo()); ?>
