@@ -6,9 +6,9 @@
             <th width= '25%'>Nama</th>
             <th width= '10%'>Gol</th>
             <th width= '10%'>Status</th>
-            <th width= '12%' style="display:none">Jumlah Kehadiran (persentase)</th>
+            <th width= '10%' style="display:none">Jumlah Kehadiran (persentase)</th>
 <!--            <th width= '10%'>Jumlah Kotor</th>-->
-            <th width= '12%' style="font-size: 80%">Pajak (persentase)</th>
+            <th width= '10%' style="font-size: 80%">Pajak (persentase)</th>
 <!--            <th width= '10%'>Jumlah Bersih</th>-->
             <th width= '10%'>Bank Penerima</th>
             <th width= '10%'>No. Rekening</th>
@@ -38,7 +38,7 @@
 		</ul>
 		</td>
     <!--            <td><input class="mini" type="text" id="<?php echo 'jml_kotor' . $i; ?>" name="jml_kotor" value="0"></td>-->
-            <td><ul class="inline" style="margin-left: -40px"><li><input class="mini" type="text" id="<?php echo 'pajak' . $i; ?>" name="<?php echo 'pajak' . $i; ?>" value="<?php if ($pb_el != false) {
+            <td><input class="mini" type="text" id="<?php echo 'pajak' . $i; ?>" name="<?php echo 'pajak' . $i; ?>" value="<?php if ($pb_el != false) {
         echo $pb_el->pajak;
     } else {
         if ($value->get_gol() > 30) {
@@ -46,8 +46,8 @@
         } else {
             echo "0";
         }
-    } ?>" style="text-align: right"></li>
-			<li style="padding: 5px; vertical-align: top;"></li>
+    } ?>" style="text-align: right; margin-left: 20px">
+			<!--li style="padding: 5px; vertical-align: top;"></li-->
 		</td>
     <!--            <td><input class="mini" type="text" id="<?php echo 'jml_bersih' . $i; ?>" name="jml_bersih" value="0"></td>-->
             <td><?php echo $bank->get_nama(); ?></td>

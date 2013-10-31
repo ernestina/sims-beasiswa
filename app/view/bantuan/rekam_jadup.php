@@ -1,9 +1,10 @@
 <div id="top">
     <h2><a href="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'elemenBeasiswa/viewJadup' ?>">BIAYA TUNJANGAN HIDUP</a> > TAMBAH</h2> <!-- memakai breadcrumb -->
-</div>
+
 
 <div class="fitur">
     <fieldset><legend>Rekam Biaya Hidup</legend>
+	<div class="kolom1">
         <form method="POST" onSubmit="return cekField();" action="<?php echo URL; ?>elemenBeasiswa/saveJadup" enctype="multipart/form-data">
             <noscript>
             <input  type="hidden" name="js" value="1" />
@@ -13,7 +14,7 @@
             <div>
                 <div id="wkode_univ"></div>
                 <label class="isian">Universitas : </label>
-                <select id="kode_univ" name="kode_univ">
+                <select id="kode_univ" name="kode_univ" type="text">
                     <option value="">Pilih Universitas</option>
                     <?php
                     foreach ($this->univ as $val) {
@@ -23,19 +24,19 @@
                 </select>
                 <div id="wkode_jur"></div>
                 <label class="isian">Jurusan/Prodi : </label>
-                <select id="kode_jur" name="kode_jur">
+                <select id="kode_jur" name="kode_jur" type="text">
                     <option value="">Pilih Jurusan</option>
                 </select>
                 <div id="wtahun_masuk"></div>
                 <label class="isian">Tahun Masuk : </label>
-                <select id="tahun_masuk" name="tahun_masuk">
+                <select id="tahun_masuk" name="tahun_masuk" type="text">
                     <option value="">Pilih Tahun masuk</option>   
                 </select>
                 <div id="wbln"></div>
                 <div id="wthn"></div>
                 <label class="isian">Bulan dan Tahun : </label>
                 <ul class="inline">
-                    <li><select id="bln" name="bln" style="width: 105px">
+                    <li><select id="bln" name="bln" style="width: 105px" type="text">
                              <option value="">Pilih Bulan</option>
                             <?php
                             for($i=1; $i<=12; $i++){
@@ -63,7 +64,7 @@
                                                         <option value="11">Nopember</option>
                                                         <option value="12">Desember</option>-->
                         </select></li>
-                    <li><select id="thn" name="thn" style="width: 100px">
+                    <li><select id="thn" name="thn" style="width: 100px" type="text">
                             <option value="">Pilih Tahun</option>
                             <?php
 //                            for ($i = 2007; $i < date('Y') + 2; $i++) {
@@ -77,7 +78,8 @@
                         </select></li>
                 </ul>
             </div> <!--end kolom1-->
-            <div>
+		</div>
+            <div class="kolom2">
                 <div id="wbiaya_jadup"></div>
                 <label class="isian">Biaya Per Pegawai : </label>
                 <input type="text" id="biaya_peg" name="biaya_peg" size="12" />
@@ -104,14 +106,16 @@
                     <li><button type="reset" name="batal" class="normal" onClick="location.href='<?php echo URL . "elemenBeasiswa/viewJadup"; ?>'"><i class="icon-remove icon-white"></i>Batal</li>
                 </ul>
             </div>
+		</fieldset>
             <br/>
+		<fieldset><legend>Daftar Penerima Tunjangan Hidup</legend>
             <div id="wtabel_penerima_jadup"> </div>
             <div id="tabel_penerima_jadup"> </div>
-
+		</fieldset>
         </form>
-    </fieldset>
+    
 </div>
-
+</div>
 
 <script type="text/javascript">
     
