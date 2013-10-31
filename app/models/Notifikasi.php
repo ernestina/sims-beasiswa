@@ -225,6 +225,7 @@ class Notifikasi{
             i.NM_USER as NM_USER,
             i.KD_USER as KD_USER,
             i.FOTO_USER as FOTO,
+            e.TGL_SEL_ST as TGL_SEL_ST,
             MONTH(NOW()) as CURR_BULAN,
             'jadup' as JENIS
             FROM d_elemen_beasiswa a
@@ -236,11 +237,11 @@ class Notifikasi{
             LEFT JOIN r_fakul g ON f.KD_FAKUL=g.KD_FAKUL
             LEFT JOIN r_univ h ON g.KD_UNIV=h.KD_UNIV 
             LEFT JOIN d_user i ON h.KD_USER=i.KD_USER
-            WHERE b.KD_R_ELEM_BEASISWA=1 AND e.KD_ST=".$kd_st;
+            WHERE b.KD_R_ELEM_BEASISWA=1 AND e.KD_ST=".$kd_st." AND e.TGL_MUL_ST<CURRENT_DATE() AND e.TGL_SEL_ST>CURRENT_DATE()";
         if(!is_null($bulan)){
             $sql .= " AND a.BLN_D_ELEM_BEASISWA=".$bln_bayar[1]." AND a.THN_D_ELEM_BEASISWA=".$bln_bayar[0];
         }
-//        echo $sql."</br>";
+        echo $sql."</br>";
         $d_jadup = $this->_db->select($sql);
         if(!is_null($bulan)) $notif = new NotifikasiDao();
         foreach ($d_jadup as $val){
