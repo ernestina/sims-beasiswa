@@ -11,7 +11,7 @@
             <input  type="hidden" name="r_elem" value="2"/>
             <fieldset><legend>Parameter Bantuan Buku</legend>
                 <!--div class="tigakolom"-->
-                <div class="kolom1" style="border: 1px solid red" >
+                <div class="kolom1" style="margin-right: -100px" >
                     <div id="wkode_univ"></div>
                     <label class="isian">Universitas : </label>
                     <select type="text" id="kode_univ" name="kode_univ">

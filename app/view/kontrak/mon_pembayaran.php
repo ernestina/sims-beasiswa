@@ -1,7 +1,6 @@
 <div id="top">
     <h2>MONITORING PEMBAYARAN KONTRAK</h2>
 
-    
         <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/cetakBiayaKontrak' ?>" onSubmit="cetak_dokumen('cetak_mon');" target="cetak_mon">
 		<ul class="inline">
             <li><label>Universitas</label></li>

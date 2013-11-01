@@ -1,7 +1,7 @@
-*{
+/*{
 	margin: 0px;
 	padding: 0px;
-}
+}*/
 @font-face {
     font-family: "Nexa";
     src: url("../font/Casper.ttf");
@@ -39,7 +39,6 @@ body {
 h2, legend {
     font-family: "Sub";
     font-size: 24px;
-	padding-top: 20px
 }
 
 a:link {color:#267890;}
@@ -525,7 +524,7 @@ th, td {
     border-radius: 5px;
     padding-left: 5px;
     text-align: center;
-    margin: 10px
+    margin: 10px;
         /*font-weight: bold;*/
 }
 
