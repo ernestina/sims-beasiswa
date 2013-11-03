@@ -7,6 +7,7 @@
 
 class PemberiBeasiswa extends BaseModel {
 
+    public $no;
     public $kd_pemberi;
     public $nama_pemberi;
     public $alamat_pemberi;
@@ -28,14 +29,17 @@ class PemberiBeasiswa extends BaseModel {
      * return array objek 
      */
 
-    public function get_All() {
+    public function get_All($posisi=null, $batas=null) {
         $table = "d_pemb";
-        $sql = "SELECT * FROM $table";
+        $sql = "SELECT * FROM $table ";
+        $urut=$posisi+1;
+        if (!is_null($posisi)AND !is_null($batas)) $sql .= " limit ".$posisi.", ".$batas ;
         $result = $this->db->select($sql);
         //var_dump($result);
         $data = array();
         foreach ($result as $val) {
             $pemberi = new $this();
+            $pemberi->no = $urut++;
             $pemberi->kd_pemberi = $val['KD_PEMB'];
             $pemberi->nama_pemberi = $val['NM_PEMB'];
             $pemberi->alamat_pemberi = $val['ALMT_PEMB'];

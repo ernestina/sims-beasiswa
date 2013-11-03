@@ -7,6 +7,7 @@
 
 class Strata extends BaseModel {
 
+    public $no;
     public $kd_strata;
     public $kode_strata;
     public $nama_strata;
@@ -25,14 +26,17 @@ class Strata extends BaseModel {
      * return array objek 
      */
 
-    public function get_All() {
+    public function get_All($posisi = null, $batas = null) {
         $table = "r_strata";
         $sql = "SELECT * FROM $table";
+        $urut=$posisi+1;
+        if (!is_null($posisi) AND !is_null($batas)) $sql .= " limit " . $posisi . ", " . $batas;
         $result = $this->db->select($sql);
         //var_dump($result);
         $data = array();
         foreach ($result as $val) {
             $strata = new $this();
+            $strata->no = $urut++;
             $strata->kd_strata = $val["KD_STRATA"];
             $strata->kode_strata = $val["STRATA"];
             $strata->nama_strata = $val["NM_STRATA"];

@@ -26,10 +26,8 @@
             </div>
         </fieldset>
     </div>
-
     <div class="kolom4" id="table">
         <fieldset><legend>Daftar Pemberi Beasiswa</legend>
-
             <div id="table-title"></div>
             <div id="table-content">
                 <table class="table-bordered zebra scroll">
@@ -43,25 +41,39 @@
                     <th width="45">Aksi</th>
                     </thead>
                     <tbody>
-                        <?php $i = 1;
-                        foreach ($this->data as $pemberi) { ?>
+                        <?php
+                        foreach ($this->data as $pemberi) {
+                            ?>
                             <tr>
-                                <td><?php echo $i; ?></td>
+                                <td><?php echo $pemberi->no; ?></td>
                                 <td><?php echo $pemberi->nama_pemberi; ?></td>
                                 <td><?php echo $pemberi->alamat_pemberi; ?></td>
                                 <td><?php echo $pemberi->telp_pemberi; ?></td>
                                 <td><?php echo $pemberi->pic_pemberi; ?></td>
                                 <td><?php echo $pemberi->telp_pic_pemberi; ?></td>
                                 <td>
-                                    <?php echo "<a href=" . URL . "admin/delPemberi/" . $pemberi->kd_pemberi . " onclick=\"return del()\"><i class=\"icon-trash\"></i></a>
-                    <a href=" . URL . "admin/editPemberi/" . $pemberi->kd_pemberi . "><i class=\"icon-pencil\"></i></a>" ?>                    
+                                    <?php
+                                    echo "<a href=" . URL . "admin/delPemberi/" . $pemberi->kd_pemberi . " onclick=\"return del()\"><i class=\"icon-trash\"></i></a>
+                                    <a href=" . URL . "admin/editPemberi/" . $pemberi->kd_pemberi . "><i class=\"icon-pencil\"></i></a>"
+                                    ?>                    
                                 </td>
                             </tr>
-    <?php $i++;
-} ?>
+                            <?php
+                            }
+                            ?>
                     </tbody>
                 </table>
             </div>
+            <div>
+                <?php
+                if ($this->jmlData > 0) {
+                    $jmlhal = $this->paging->jml_halaman($this->jmlData);
+                    $paging = $this->paging->navHalaman($jmlhal);
+                    echo $paging;
+                }
+                ?>
+            </div>
+        </fieldset>
     </div>
 </div>
 <script type="text/javascript">

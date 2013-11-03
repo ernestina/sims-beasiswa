@@ -8,6 +8,7 @@
 class Universitas {
 
     private $db;
+    private $_no;
     private $_kd_univ;
     private $_kode_univ;
     private $_kode_pic;
@@ -41,10 +42,12 @@ class Universitas {
         if (!is_null($limit) AND !is_null($batas)) {
             $sql .= " LIMIT " . $limit . "," . $batas;
         }
+        $urut=$limit+1;
         $result = $this->db->select($sql);
         $data = array();
         foreach ($result as $val) {
             $univ = new $this($this->registry);
+            $univ->set_no($urut++);
             $univ->set_kode_in($val['KD_UNIV']);
             $univ->set_kode($val['SINGKAT_UNIV']);
             $user = new User($this->registry);
@@ -173,6 +176,10 @@ class Universitas {
      * setter
      */
 
+    public function set_no($no) {
+        $this->_no = $no;
+    }
+    
     public function set_kode_in($kode) {
         $this->_kd_univ = $kode;
     }
@@ -212,6 +219,10 @@ class Universitas {
     /*
      * getter
      */
+    
+    public function get_no() {
+        return $this->_no;
+    }
 
     public function get_kode_in($where = null) {
         if (!is_null($where)) {
@@ -283,8 +294,8 @@ class Universitas {
         }
         return $this;
     }
-    
-    public function get_univ_by_pic($pic) {
+	
+	public function get_univ_by_pic($pic) {
         $table = "r_univ";
         $where = "KD_USER = '".$pic."'";
         $sql = "SELECT * FROM $table where $where";

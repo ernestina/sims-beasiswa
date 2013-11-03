@@ -27,11 +27,11 @@
                         <th width="70%">Nama</th>
                         <th width="10%">Aksi</th>
                         </thead>
-                        <?php $i = 1;
+                        <?php
                         foreach ($this->data as $strata) {
                             ?>
                             <tr>
-                                <td><?php echo $i; ?></td>
+                                <td><?php echo $strata->no; ?></td>
                                 <td><?php echo $strata->kode_strata; ?></td>
                                 <td><?php echo $strata->nama_strata; ?></td>
                                 <td align="center">
@@ -40,11 +40,23 @@
 									<a href=" . URL . "admin/editStrata/" . $strata->kd_strata . "><i class=\"icon-pencil\"></i></a>" ?>
                                 </td>
                             </tr>
-                            <?php $i++;
+                            <?php
+                            $i++;
                         }
                         ?>
                     </table>
                 </div>
+            </div>
+
+
+            <div>
+                <?php
+                if ($this->jmlData > 0) {
+                    $jmlhal = $this->paging->jml_halaman($this->jmlData);
+                    $paging = $this->paging->navHalaman($jmlhal);
+                    echo $paging;
+                }
+                ?>
             </div>
         </fieldset>
     </div>

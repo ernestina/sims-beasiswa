@@ -19,8 +19,18 @@ class AdminController extends BaseController {
      * tambah referensi universitas
      */
 
-    public function addUniversitas($id = null) {
+    public function addUniversitas($halaman=null,$batas=null,$id = null) {
+        $url = 'admin/addUniversitas';
+        if (is_null($halaman))
+            $halaman = 1;
+        if (is_null($batas))
+            $batas = 5;
+        $url2 = $halaman."/".$batas;
+        $this->view->paging = new Paging($url, $batas, $halaman);
         $univ = new Universitas($this->registry);
+        $this->view->jmlData = count($univ->get_univ());
+        $posisi = $this->view->paging->cari_posisi();
+        $listData = $univ->get_univ($posisi, $batas);
         if (isset($_POST['add_univ'])) {
             $kode = $_POST['kode'];
             $nama = $_POST['nama'];
@@ -44,7 +54,8 @@ class AdminController extends BaseController {
             $this->view->d_ubah = $univ->get_univ_by_id($univ);
         }
         $pic = new User($this->registry);
-        $this->view->data = $univ->get_univ();
+        $this->view->url = $url2;
+        $this->view->data = $listData;
         $this->view->pic = $pic->get_user(TRUE);
 //        var_dump($this->view->pic);
         $this->view->render('admin/universitas');
@@ -55,7 +66,7 @@ class AdminController extends BaseController {
      * @param id_univ
      */
 
-    public function updUniversitas() {
+    public function updUniversitas($halaman=null,$batas=null) {
         $univ = new Universitas($this->registry);
         if (isset($_POST['upd_univ'])) {
             $kd_univ = $_POST['kd_univ'];
@@ -81,7 +92,7 @@ class AdminController extends BaseController {
                 $this->view->pic = $pic->get_user(TRUE);
                 $this->view->render('admin/universitas');
             } else {
-                header('location:' . URL . 'admin/addUniversitas');
+                header('location:' . URL . 'admin/addUniversitas/'.$halaman.'/'.$batas);
             }
         }
     }
@@ -91,7 +102,7 @@ class AdminController extends BaseController {
      * @param id_univ
      */
 
-    public function delUniversitas($id) {
+    public function delUniversitas($halaman=null,$batas=null,$id) {
         $univ = new Universitas($this->registry);
         if (is_null($id)) {
             throw new Exception;
@@ -100,16 +111,26 @@ class AdminController extends BaseController {
         }
         $univ->set_kode_in($id);
         $univ->delete_univ();
-        header('location:' . URL . 'admin/addUniversitas');
+        header('location:' . URL . 'admin/addUniversitas/'.$halaman."/".$batas);
     }
 
     /*
      * tambah referensi fakultas
      */
 
-    public function addFakultas($id = null) {
+    public function addFakultas($halaman=null,$batas=null,$id = null) {
         $fakul = new Fakultas($this->registry);
         $univ = new Universitas($this->registry);
+        $url = 'admin/addFakultas';
+        if (is_null($halaman))
+            $halaman = 1;
+        if (is_null($batas))
+            $batas = 5;
+        $url2 = $halaman."/".$batas;
+        $this->view->paging = new Paging($url, $batas, $halaman);
+        $this->view->jmlData = count($fakul->get_fakul());
+        $posisi = $this->view->paging->cari_posisi();
+        $listData = $fakul->get_fakul($posisi, $batas);
         $this->view->univ = $univ->get_univ();
         if (isset($_POST['add_fak'])) {
             $univ = $_POST['universitas'];
@@ -131,7 +152,8 @@ class AdminController extends BaseController {
             $this->view->d_ubah = $fakul->get_fakul_by_id($fakul);
             $this->view->univ = $univ->get_univ();
         }
-        $this->view->data = $fakul->get_fakul();
+        $this->view->url = $url2;
+        $this->view->data = $listData;
         $this->view->render('admin/fakultas');
     }
 
@@ -140,7 +162,7 @@ class AdminController extends BaseController {
      * @param id_fakultas
      */
 
-    public function updFakultas() {
+    public function updFakultas($halaman=null,$batas=null) {
         $fakul = new Fakultas($this->registry);
         $kd_fakul = $_POST['kd_fakul'];
         $univ = $_POST['universitas'];
@@ -160,7 +182,7 @@ class AdminController extends BaseController {
             $this->view->data = $fakul->get_fakul();
             $this->view->render('admin/fakultas');
         } else {
-            header('location:' . URL . 'admin/addFakultas');
+            header('location:' . URL . 'admin/addFakultas/'.$halaman."/".$batas);
         }
     }
 
@@ -169,7 +191,7 @@ class AdminController extends BaseController {
      * @param id_fakultas
      */
 
-    public function delFakultas($id) {
+    public function delFakultas($halaman=null,$batas=null,$id=null) {
         $fakul = new Fakultas($this->registry);
         if (is_null($id)) {
             throw new Exception;
@@ -178,7 +200,7 @@ class AdminController extends BaseController {
         }
         $fakul->set_kode_fakul($id);
         $fakul->delete_fakul();
-        header('location:' . URL . 'admin/addFakultas');
+        header('location:' . URL . 'admin/addFakultas/'.$halaman."/".$batas);
     }
 
     /*
@@ -283,8 +305,17 @@ class AdminController extends BaseController {
      * tambah referensi strata
      */
 
-    public function addStrata() {
+    public function addStrata($halaman = null, $batas = null) {
+        $url = 'admin/addStrata';
+        if (is_null($halaman))
+            $halaman = 1;
+        if (is_null($batas))
+            $batas = 5;
+        $this->view->paging = new Paging($url, $batas, $halaman);
         $strata = new Strata();
+        $this->view->jmlData = count($strata->get_All());
+        $posisi = $this->view->paging->cari_posisi();
+        $listData = $strata->get_All($posisi, $batas);
         if (isset($_POST['add_strata'])) {
             $strata->kode_strata = $_POST["kode_strata"];
             $strata->nama_strata = $_POST["nama_strata"];
@@ -295,9 +326,9 @@ class AdminController extends BaseController {
                 echo "Isian form belum lengkap";
             }
         }
-        $data = $strata->get_All();
+        //$data = $strata->get_All();
         //var_dump($data);
-        $this->view->data = $data;
+        $this->view->data = $listData;
         $this->view->render('admin/strata');
     }
 
@@ -362,8 +393,17 @@ class AdminController extends BaseController {
      * tambah referensi pemberi beasiswa
      */
 
-    public function addPemberi() {
+    public function addPemberi($halaman = null, $batas = null) {
+        $url = 'admin/addPemberi';
+        if (is_null($halaman))
+            $halaman = 1;
+        if (is_null($batas))
+            $batas = 5;
+        $this->view->paging = new Paging($url, $batas, $halaman);
         $pemberi = new PemberiBeasiswa;
+        $this->view->jmlData = count($pemberi->get_All());
+        $posisi = $this->view->paging->cari_posisi();
+        $listData = $pemberi->get_All($posisi, $batas);
         if (isset($_POST['add_pemberi'])) {
             $pemberi->nama_pemberi = $_POST['nama_pemberi'];
             $pemberi->alamat_pemberi = $_POST['alamat_pemberi'];
@@ -377,9 +417,8 @@ class AdminController extends BaseController {
                 echo "Isian form belum lengkap";
             }
         }
-        $data = $pemberi->get_All();
         //var_dump($data);
-        $this->view->data = $data;
+        $this->view->data = $listData;
         $this->view->render('admin/pemberi');
     }
 
@@ -764,8 +803,8 @@ class AdminController extends BaseController {
 //        var_dump($user->get_user());
         $this->view->render('admin/list_user');
     }
-
-    /*
+	
+	/*
      * menambah data user
      */
 

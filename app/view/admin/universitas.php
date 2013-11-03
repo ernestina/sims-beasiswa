@@ -12,7 +12,7 @@ if (isset($this->d_ubah)) {
             <div id="form-input"><div class="kiri">
                     <form method="POST" action="<?php
                 if (isset($this->d_ubah)) {
-                    echo URL . 'admin/updUniversitas';
+                    echo URL . 'admin/updUniversitas/'.$this->url;
                 } else {
                     $_SERVER['PHP_SELF']; //echo URL.'admin/addUniversitas'
                 }
@@ -93,15 +93,15 @@ if (isset($this->d_ubah)) {
                         $no = 1;
                         foreach ($this->data as $val) {
                             echo "<tr>";
-                            echo "<td>$no</td>";
+                            echo "<td>" . $val->get_no() . "</td>";
                             echo "<td>" . $val->get_kode() . "</td>";
                             echo "<td>" . $val->get_nama() . "</td>";
                             echo "<td>" . $val->get_alamat() . "</td>";
                             echo "<td>" . $val->get_telepon() . "</td>";
                             echo "<td>" . $val->get_lokasi() . "</td>";
                             echo "<td>" . $val->get_pic() . "</td>";
-                            echo "<td><a href=" . URL . "admin/delUniversitas/" . $val->get_kode_in() . " onclick=\"return del('" . $val->get_nama() . "')\"><i class=\"icon-trash\"></i></a>
-                        <a href=" . URL . "admin/addUniversitas/" . $val->get_kode_in() . "><i class=\"icon-pencil\"></i></a></td>";
+                            echo "<td><a href=" . URL . "admin/delUniversitas/" .$this->url."/" . $val->get_kode_in() . " onclick=\"return del('" . $val->get_nama() . "')\"><i class=\"icon-trash\"></i></a>
+                        <a href=" . URL . "admin/addUniversitas/".$this->url."/" . $val->get_kode_in() . "><i class=\"icon-pencil\"></i></a></td>";
                             echo "</tr>";
                             $no++;
                         }
@@ -109,6 +109,16 @@ if (isset($this->d_ubah)) {
                     </tbody>
                 </table>
             </div>
+            <div>
+                <?php
+                if ($this->jmlData > 0) {
+                    $jmlhal = $this->paging->jml_halaman($this->jmlData);
+                    $paging = $this->paging->navHalaman($jmlhal);
+                    echo $paging;
+                }
+                ?>
+            </div>
+        </fieldset>
     </div>
 </div>
 </div>
