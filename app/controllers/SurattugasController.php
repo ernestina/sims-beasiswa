@@ -64,13 +64,18 @@ class SurattugasController extends BaseController{
         $this->view->d_pemb = $pemb->get_All();
         $this->view->d_st_lama = $st->get_surat_tugas();
         $this->view->d_jst = $st->get_st_class();
-        $this->view->d_univ = $univ->get_univ();
+        $this->view->d_univ = $univ->get_univ($this->kd_user);
         $this->view->d_jur = $jur->get_jurusan();
         $this->view->d_th_masuk = $st->get_list_th_masuk(true);
         $this->view->d_th_masuk_input = $st->get_list_th_masuk(false);
         $this->view->d_st = $st->get_surat_tugas($this->kd_user);
         $this->view->aksi = json_encode($aksi);
         $this->view->d_file_exist = json_encode($file);
+        if(!is_null($id)){
+            $jur = $this->view->d_ubah->get_jur();
+            $univ = $univ->get_univ_by_jur($jur);
+            $this->view->univ = $univ->get_kode_in();
+        }
         $this->view->render('riwayat_tb/data_st');
     }
     

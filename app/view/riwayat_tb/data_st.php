@@ -85,7 +85,16 @@
 //                                echo "<option value=".$val->get_kode_in().">".$val->get_nama()."</option>";
 //                            }
 //                        }else{
+                        if(isset($this->d_ubah)){
+                            if($this->univ == $val->get_kode_in()){
+                                echo "<option value=".$val->get_kode_in()." selected>".$val->get_nama()."</option>";
+                            }else{
+                                echo "<option value=".$val->get_kode_in().">".$val->get_nama()."</option>";
+                            }
+                        }else{
                             echo "<option value=".$val->get_kode_in().">".$val->get_nama()."</option>";
+                        }
+                            
 //                        }
                         
                     }
@@ -179,7 +188,7 @@
     $(function(){
         hideErrorId();
         hideWarning();
-        get_jurusan(document.getElementById('univ').value);
+//        get_jurusan(document.getElementById('univ').value);
 //        var file_exist = <?php echo $this->d_file_exist;?>;
 //        console.log(file_exist.file_exist);
         $('#no_st').keyup(function(){

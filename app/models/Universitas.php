@@ -37,8 +37,11 @@ class Universitas {
      * return array objek universitas
      */
 
-    public function get_univ($limit = null, $batas = null) {
+    public function get_univ($kd_user=null, $limit = null, $batas = null) {
         $sql = "SELECT * FROM " . $this->_table . " ";
+        if(!is_null($kd_user)){
+            $sql .= " WHERE KD_USER=".$kd_user;
+        }
         if (!is_null($limit) AND !is_null($batas)) {
             $sql .= " LIMIT " . $limit . "," . $batas;
         }
