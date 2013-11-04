@@ -9,12 +9,11 @@ class Index extends BaseController{
     
     public function __construct($registry) {
         parent::__construct($registry);
+        $this->kd_user = Session::get('kd_user');
     }
     
     public function index(){
-        //$notif = new Notifikasi($this->registry);
-        //$notif->get_notifikasi();
-        //$this->view->d_notif = $this->get_notifikasi();
+        $this->view->d_notif = $this->get_notifikasi();
         $this->view->render('index');
     }
     
@@ -23,7 +22,6 @@ class Index extends BaseController{
         $data = $notif->get_notifikasi();
         
         $d_notif = array();
-        $i = 0;
         foreach ($data as $data){
             $pic = $data->get_pic();
             $nama_pic = $pic['nama'];
@@ -32,6 +30,13 @@ class Index extends BaseController{
             $jatuh_tempo = explode('-',$data->get_jatuh_tempo());
             $count = count($jatuh_tempo)>1;
             $bln = $count?$jatuh_tempo[1]:'';
+            if($data->get_jenis_notif()=='buku'){
+                if($bln==1){
+                    $bln=9;
+                }else{
+                    $bln=3;
+                }
+            }
             $thn = $jatuh_tempo[0];
             $temp = array(
                 'jatuh_tempo'=>$data->get_jatuh_tempo(),
@@ -46,11 +51,14 @@ class Index extends BaseController{
                 'jenis'=>$data->get_jenis_notif(),
                 'status'=>$data->get_status_notif()
             );
-            $d_notif[] = $temp;
-            $i++;
+            $is_notif_for_user = $kode_pic==$this->kd_user;
+            if($is_notif_for_user) {
+                $d_notif[] = $temp;
+            }
         }
         
-        return json_encode($d_notif);
+//        return json_encode($d_notif);
+        return $d_notif;
     }
 }
 ?>
