@@ -67,7 +67,9 @@ class Notifikasi{
                 $cek_bulan = strtotime($bulan."-01")==strtotime($next_month);
                 if($cek_proses){ //jika data telah ada 
                     $cek_bayar = $this->cek_telah_bayar_elem(1,$bulan, $kd_st,true);
+//                    var_dump($cek_bayar);
                     $d_proses = $this->get_jadup_by_st($kd_st,$bulan);
+//                    var_dump($d_proses);
                     if(!$cek_bayar){ //jika data sp2d belum diisi
 //                        if($cek_bulan){
 //                            $is_notif = $this->is_write_notif('jadup', $bulan."-01");
@@ -81,7 +83,8 @@ class Notifikasi{
                                 $notif->set_status_notif($d_proses->get_status_notif());
                                 $notif->set_tahun_masuk($d_proses->get_tahun_masuk());
                                 $notif->set_univ($d_proses->get_univ());
-        //                        echo $kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+                                $pic = $notif->get_pic();
+//                                echo $pic['kode']." ".$kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
                                 $this->_notif_data[] = $notif;
 //                            }
 //                        }else{
@@ -229,14 +232,14 @@ class Notifikasi{
             MONTH(NOW()) as CURR_BULAN,
             'jadup' as JENIS
             FROM d_elemen_beasiswa a
-            LEFT JOIN r_elem_beasiswa b ON a.KD_R_ELEM_BEASISWA=b.KD_R_ELEM_BEASISWA
             LEFT JOIN t_elem_beasiswa c ON a.KD_D_ELEM_BEASISWA=c.KD_D_ELEM_BEASISWA
             LEFT JOIN d_pb d ON c.KD_PB=d.KD_PB
             LEFT JOIN d_srt_tugas e ON d.KD_ST=e.KD_ST
-            LEFT JOIN r_jur f ON d.KD_JUR=d.KD_JUR
+            LEFT JOIN r_jur f ON e.KD_JUR=f.KD_JUR
             LEFT JOIN r_fakul g ON f.KD_FAKUL=g.KD_FAKUL
             LEFT JOIN r_univ h ON g.KD_UNIV=h.KD_UNIV 
             LEFT JOIN d_user i ON h.KD_USER=i.KD_USER
+            LEFT JOIN r_elem_beasiswa b ON a.KD_R_ELEM_BEASISWA=b.KD_R_ELEM_BEASISWA
             WHERE b.KD_R_ELEM_BEASISWA=1 AND e.KD_ST=".$kd_st." AND e.TGL_MUL_ST<CURRENT_DATE() AND e.TGL_SEL_ST>CURRENT_DATE()";
         if(!is_null($bulan)){
             $sql .= " AND a.BLN_D_ELEM_BEASISWA=".$bln_bayar[1]." AND a.THN_D_ELEM_BEASISWA=".$bln_bayar[0];
@@ -544,7 +547,7 @@ class Notifikasi{
                 WHERE b.KD_PB=".$month." AND d.KD_ST=".$surat_tugas." AND KD_R_ELEM_BEASISWA=$kode_elem";
         }
         if($cek_sp2d){
-            $sql .= " AND a.NO_SP2D_D_ELEM_BEASISWA<>''";
+            $sql .= " AND a.NO_SP2D_D_ELEM_BEASISWA<>'' AND a.NO_SP2D_D_ELEM_BEASISWA IS NOT NULL";
         }
 //        echo $sql."</br>";
         $d_cek = count($this->_db->select($sql));

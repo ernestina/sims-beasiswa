@@ -40,12 +40,18 @@
         if(count($tmp)>2){
             $jatuh_tempo = Tanggal::tgl_indo($v['jatuh_tempo']);
         }
+        
+        if($v['status']=='proses'){
+            $img = 'public/icon/purges.png';
+        }else{
+            $img = 'public/icon/notices.png';
+        }
         echo "<ul class='inline noti pic'>";
         echo "<div class='detail'>";
         echo "<h4>$jatuh_tempo : <a style='color: #49afcd' href=''>$judul_notif</a></h4>";
         echo "<div class='noti'>$pesan</div>";
         echo "</div>";
-        echo "<div class='flag'><img class='noti' src='public/icon/notices.png'></div></ul>";
+        echo "<div class='flag'><img class='noti' src='$img'></div></ul>";
 
     }
 ?>
