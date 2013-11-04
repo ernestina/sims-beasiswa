@@ -241,7 +241,7 @@ class Notifikasi{
         if(!is_null($bulan)){
             $sql .= " AND a.BLN_D_ELEM_BEASISWA=".$bln_bayar[1]." AND a.THN_D_ELEM_BEASISWA=".$bln_bayar[0];
         }
-        echo $sql."</br>";
+//        echo $sql."</br>";
         $d_jadup = $this->_db->select($sql);
         if(!is_null($bulan)) $notif = new NotifikasiDao();
         foreach ($d_jadup as $val){
