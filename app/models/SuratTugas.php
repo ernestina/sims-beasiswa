@@ -302,7 +302,62 @@ class SuratTugas {
         }
         return false;
     }
-
+    
+    /*
+     * apakah parent
+     */
+    public function is_parent($kd_st){
+        $sql = "SELECT * FROM d_srt_tugas WHERE KD_ST_LAMA=".$kd_st;
+        $d_st = $this->db->select($sql);
+        $count = count($d_st)>0;
+        if($count) return true;
+        return false;
+    }
+    
+    /*
+     * apakah child
+     */
+    public function is_child($kd_st){
+        $sql = "SELECT * FROM d_srt_tugas WHERE KD_ST_LAMA<>0 AND KD_ST=".$kd_st;
+        $d_st = $this->db->select($sql);
+        $count = count($d_st)>0;
+        if($count) return true;
+        return false;
+    }
+    
+    /*
+     * cari child
+     */
+    public function get_child($kd_st){
+        $sql = "SELECT * FROM d_srt_tugas WHERE KD_ST_LAMA=".$kd_st;
+        $d_st = $this->db->select($sql);
+        $data = array();
+        foreach ($d_st as $val){
+            $st = new SuratTugas($this->registry);
+            $st = new $this($this->registry);
+            $st->set_kd_st($val['KD_ST']);
+            $jur = new Jurusan($this->registry);
+            $jur->set_kode_jur($val['KD_JUR']);
+            $d_jur = $jur->get_jur_by_id($jur);
+            $st->set_jur($d_jur->get_nama());
+            $st->set_nomor($val['NO_ST']);
+            $st->set_pemberi($val['KD_PEMB']);
+            $st->set_st_lama($val['KD_ST_LAMA']);
+            $jst = new JenisSuratTugas($this->registry);
+            $jst->set_kode($val['KD_JENIS_ST']);
+            $d_jst = $jst->get_jst_by_id($jst);
+            $st->set_jenis_st($d_jst->get_nama());
+            $st->set_tgl_st($val['TGL_ST']);
+            $st->set_tgl_mulai($val['TGL_MUL_ST']);
+            $st->set_tgl_selesai($val['TGL_SEL_ST']);
+            $st->set_th_masuk($val['THN_MASUK']);
+            $st->set_file($val['FILE_ST']);
+            unset($jur);
+            unset($jst);
+            $data[] = $st;
+        }
+        return $data;
+    }
 
     /*
      * setter

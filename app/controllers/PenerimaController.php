@@ -171,6 +171,8 @@ class PenerimaController extends BaseController{
         $pb = new Penerima($this->registry);
         $st = new SuratTugas($this->registry);
         $kd = $_POST['st'];
+        $st_lama = $_POST['st_parent'];
+        $kd_peg = $_POST['kd_peg'];
         $bank = $_POST['bank'];
         $nip = $_POST['nip'];
         $nama = $_POST['nama'];
@@ -180,29 +182,48 @@ class PenerimaController extends BaseController{
         $jkel = $_POST['jkel'];
         $gol = $_POST['gol'];
         $unit = $_POST['unit'];
+        $st_lama = $_POST['st_parent'];
         
         /*
          * mendapatkan kode jurusan 
          */
-        $st->set_kd_st($kd);
-        $st->get_surat_tugas_by_id($st,$this->kd_user);
-        $jur = $st->get_jur();
-        $data = array(
-            'KD_ST'=>$kd,
-            'KD_BANK'=>$bank,
-            'NIP_PB'=>$nip,
-            'NM_PB'=>$nama,
-            'TELP_PB'=>$telp,
-            'EMAIL_PB'=>$email,
-            'NO_REKENING_PB'=>$no_rek,
-            'JK_PB'=>$jkel,
-            'KD_GOL'=>  Golongan::golongan_string_int2($gol),
-            'UNIT_ASAL_PB'=>$unit,
-            'KD_JUR'=>$jur,
-            'KD_STS_TB'=>1
-        );
         
-        $pb->add_penerima($data);
+        $is_child = $st_lama!=0;
+        if($is_child){
+            $st = new SuratTugas($this->registry);
+            $cek_child = $st->is_child($st_lama);
+            if($cek_child){
+                $status = 3;
+            }else{
+                $status = 2;
+            }
+            $pb->set_kd_pb($kd_peg);
+            $pb = $pb->get_penerima_by_id($pb);
+            $pb->set_st($kd);
+            $pb->set_status($status);
+            $pb->update_penerima();
+        }else{
+            $st->set_kd_st($kd);
+            $st->get_surat_tugas_by_id($st,$this->kd_user);
+            $jur = $st->get_jur();
+            $data = array(
+                'KD_ST'=>$kd,
+                'KD_BANK'=>$bank,
+                'NIP_PB'=>$nip,
+                'NM_PB'=>$nama,
+                'TELP_PB'=>$telp,
+                'EMAIL_PB'=>$email,
+                'NO_REKENING_PB'=>$no_rek,
+                'JK_PB'=>$jkel,
+                'KD_GOL'=>  Golongan::golongan_string_int2($gol),
+                'UNIT_ASAL_PB'=>$unit,
+                'KD_JUR'=>$jur,
+                'KD_STS_TB'=>1
+            );
+
+            $pb->add_penerima($data);
+        }
+        
     }
     
     /*
@@ -396,20 +417,39 @@ class PenerimaController extends BaseController{
     public function get_nama_peg(){
         $nip = $_POST['nip'];
         $kd_st = $_POST['kd_st'];
-        $peg = new Pegawai($this->registry);
-        $peg->set_nip($nip);
-        $data = $peg->get_peg_by_nip($peg);
-        $nm = $data->get_nama();
-        $jk = $data->get_jkel();
-        $gol = $data->get_golongan();
-        $unit = $data->get_unit_asal();
-        $pb = new Penerima($this->registry);
-        $pb->set_nip($nip);
+        $st_lama = $_POST['st_lama'];
+        $is_child=$st_lama!=0;
+        if($is_child){
+            $pb = new Penerima($this->registry);
+            $pb->set_nip($nip);
+            $pb->set_st($st_lama);
+            $data = $pb->get_penerima_by_st_nip($pb);
+            $nip = $data->get_kd_pb();
+            $nm = $data->get_nama();
+            $jk = $data->get_jkel();
+            $gol = $data->get_gol();
+            $unit = $data->get_unit_asal();
+        }else{
+            $peg = new Pegawai($this->registry);
+            $peg->set_nip($nip);
+            $data = $peg->get_peg_by_nip($peg);
+            $nip = $peg->get_nip();
+            $nm = $data->get_nama();
+            $jk = $data->get_jkel();
+            $gol = $data->get_golongan();
+            $unit = $data->get_unit_asal();
+        }
 //        $d_cek = $pb->cek_exist_pb();
 //        $d_cek = $d_cek['cek'];
-        $d_cek = $pb->is_prn_beasiswa_strata($nip, $kd_st);
+        $d_cek = 0;
+        if(!$is_child){
+            $pb = new Penerima($this->registry);
+            $pb->set_nip($nip);
+            $d_cek = $pb->is_prn_beasiswa_strata($nip, $kd_st);
+        }
         $d_cek = ($d_cek>0)?1:0;
         $return = json_encode(array(
+            'kd_peg'=>$nip,
             'nama'=>$nm,
             'jkel'=>$jk,
             'gol'=>  Golongan::golongan_int_string($gol),
@@ -676,16 +716,30 @@ class PenerimaController extends BaseController{
     
     /*
      * bukan dari penerima tapi dari tabel sik
+     * jika perpanjangan dari tabel d_pb
      */
     public function get_nip_data(){
-        $nip = $_POST['param'];
-        $pb= new Pegawai($this->registry);
-        $pb->set_kd_peg($nip);
-        $d_pb = $pb->get_penerima_by_nip($pb,true);
+        $tmp = $_POST['param'];
+        $tmp = explode(",", $tmp);
+        $nip = $tmp[0];
+        $is_child = $tmp[1]!=0;
         echo "<ul>";
-        foreach ($d_pb as $v){
-            echo "<li onClick=\"fill('".$v->get_kd_peg()."')\">".$v->get_kd_peg()."</br>".$v->get_nama()."</li>";
+        if($is_child){
+            $pb = new Penerima($this->registry);
+            $pb->set_st($tmp[1]);
+            $d_pb = $pb->get_penerima_by_st($pb,$this->kd_user);
+            foreach ($d_pb as $v){
+                echo "<li onClick=\"fill('".$v->get_nip()."')\">".$v->get_nip()."</br>".$v->get_nama()."</li>";
+            }
+        }else{
+            $pb= new Pegawai($this->registry);
+            $pb->set_kd_peg($nip);
+            $d_pb = $pb->get_penerima_by_nip($pb,true);
+            foreach ($d_pb as $v){
+                echo "<li onClick=\"fill('".$v->get_kd_peg()."')\">".$v->get_kd_peg()."</br>".$v->get_nama()."</li>";
+            }
         }
+        
         echo "</ul>";
     }
     

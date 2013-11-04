@@ -185,6 +185,7 @@ class SurattugasController extends BaseController{
         $this->view->d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
         $this->view->d_pb = $pb->get_penerima_by_st($pb,$this->kd_user);
         $this->view->d_th_masuk = $st->get_list_th_masuk();
+//        var_dump($this->view->d_st);
         $this->view->render('riwayat_tb/pb_to_st');
     }
     

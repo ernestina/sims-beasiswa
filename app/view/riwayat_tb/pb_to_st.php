@@ -3,6 +3,7 @@
     <div class="kolom3">
         <fieldset><legend>Detil Surat Tugas</legend>
         <input type="hidden" name="kd_st" id="kd_st" value="<?php echo $this->d_st->get_kd_st();?>">
+        <input type="hidden" name="kd_st" id="st_lama" value="<?php echo $this->d_st->get_st_lama();?>">
             <label>No. Surat Tugas(ST)</label><input type="text" name="no_st" id="no_st" size="30" value="<?php echo isset($this->d_st)?$this->d_st->get_nomor():'';?>" readonly></br>
            
             <label>No. ST Lama</label><input type="text" value="<?php echo $this->d_st->get_nomor(); ?>" readonly>
@@ -40,6 +41,8 @@
         <table>
             <input type="hidden" id="cek" value="">
             <input type="hidden" id="kd_st" name="st" value="<?php echo $this->d_st->get_kd_st();?>">
+            <input type="hidden" id="st_parent" name="st_parent" value="<?php echo $this->d_st->get_st_lama();?>">
+            <input type="hidden" id="kd_peg" name="kd_peg" value="">
             <div id="winput" class="error"></div>
             <tr><td><label>NIP</label></td><td><input type="text" id="t_nip" name="nip" onkeyup="getNama(this.value);"></td></tr>
             <div id="suggestions" style="display:none"><div class="suggestionList"></div></div>
@@ -69,6 +72,7 @@
     $(function(){
         $('.error').fadeOut(0);
 //        $('#atc_nip').fadeOut(0);
+//        alert($("#st_lama").val());
         hideError();
         $('#t_nip').focus();
         $('#t_nip').keyup(function(){
@@ -145,14 +149,16 @@
     }
     
 //    ******from dialog pb to st*****
-function hideError(){
+    function hideError(){
         $('#t_nip').keyup(function(){
             $('.error').fadeOut(100);
         })
     }
     
     function auto_nip(nip){
-        $.post('<?php echo URL;?>penerima/get_nip_data',{param:""+nip+""},
+        var st_lama = document.getElementById("st_lama").value;
+//        console.log(st_lama);
+        $.post('<?php echo URL;?>penerima/get_nip_data',{param:""+nip+","+st_lama+""},
             function(data){
                 $('#suggestions').fadeIn(10);
                 $('.suggestionList').html(data);
@@ -170,9 +176,10 @@ function hideError(){
         $.ajax({
            type:"post",
            url: "<?php echo URL; ?>penerima/get_nama_peg",
-           data:"nip="+nip+"&kd_st="+document.getElementById('kd_st').value,
+           data:"nip="+nip+"&kd_st="+document.getElementById('kd_st').value+"&st_lama="+document.getElementById("st_lama").value,
            dataType:"json",
            success:function(data){
+               $('#kd_peg').val(data.kd_peg);
                $('#t_nm').val(data.nama);
                $('#t_jk').val(data.jkel);
                $('#t_gol').val(data.gol);
@@ -187,6 +194,7 @@ function hideError(){
     
     function goSelect(){
         var kd = document.getElementById('kd_st').value;
+        var st_lama = document.getElementById('st_lama').value;
         var nip = document.getElementById('t_nip').value;
         var nm = document.getElementById('t_nm').value;
         var email = document.getElementById('t_email').value;
@@ -222,26 +230,29 @@ function hideError(){
         
     }
     
-    function validate(nip,kd_st){
-        var cek;
-        $.ajax({
-            type:'POST',
-            url:'<?php echo URL?>surattugas/cek_pb_on_st',
-            data:'nip='+nip+'&kd_st='+kd_st,
-            dataType:'json',
-            success:function(data){
-                if(data.cek==1){
-                    var winput = "pegawai ini pernah terdaftar sebagai penerima beasiswa pada strata yang sama"
-                    $('#winput').html(winput);
-                    return false;
+    if(st_lama==0){
+        function validate(nip,kd_st){
+            var cek;
+            $.ajax({
+                type:'POST',
+                url:'<?php echo URL?>surattugas/cek_pb_on_st',
+                data:'nip='+nip+'&kd_st='+kd_st,
+                dataType:'json',
+                success:function(data){
+                    if(data.cek==1){
+                        var winput = "pegawai ini pernah terdaftar sebagai penerima beasiswa pada strata yang sama"
+                        $('#winput').html(winput);
+                        return false;
+                    }
+    //                $('#cek').val(data.cek);
+    //*******************************
+    //                cek = data.cek;
+    //                return cek;
                 }
-//                $('#cek').val(data.cek);
-//*******************************
-//                cek = data.cek;
-//                return cek;
-            }
-        });
+            });
+        }
     }
+    
     
 //    function cek(){
 //        var string_pattern = '/^[a-zA-Z\s0-9]*$';

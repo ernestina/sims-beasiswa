@@ -115,13 +115,42 @@ class Penerima {
         return $this;
     }
     
-    public function get_penerima_by_st($pb = Penerima,$kd_user=1){
+    public function get_penerima_by_st($pb = Penerima,$kd_user=null){
         $sql = "SELECT * FROM ".$this->_tb_penerima;
         $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
         $sql .= " WHERE a.KD_ST=".$pb->get_st();
-        $sql .= " AND d.KD_USER=".$kd_user;
+        if(!is_null($kd_user)) $sql .= " AND d.KD_USER=".$kd_user;
+        $st = new SuratTugas($this->registry);
+        $is_parent = $st->is_parent($pb->get_st());
+        if($is_parent){
+            $st_child = $st->get_child($pb->get_st());
+            foreach ($st_child as $vst){
+                $sql .= " UNION SELECT * FROM ".$this->_tb_penerima;
+                $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+                        LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
+                        LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
+                $sql .= " WHERE a.KD_ST=".$vst->get_kd_st();
+                if(!is_null($kd_user)) $sql .= " AND d.KD_USER=".$kd_user;
+                
+                $is_parent_second = $st->is_parent($vst->get_kd_st());
+                if($is_parent_second){
+                    $st_child_second = $st->get_child($vst->get_kd_st());
+                    foreach ($st_child_second as $vsts){
+                        $sql .= " UNION SELECT * FROM ".$this->_tb_penerima;
+                        $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+                                LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
+                                LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
+                        $sql .= " WHERE a.KD_ST=".$vsts->get_kd_st();
+                        if(!is_null($kd_user)) $sql .= " AND d.KD_USER=".$kd_user;
+                    }
+                }
+                
+            }
+            
+        }
+//        echo $sql;
         $result = $this->db->select($sql);
         $data = array();
         foreach($result as $val){
@@ -148,6 +177,42 @@ class Penerima {
             $data[] = $penerima;
         }
         return $data;
+    }
+    
+    public function get_penerima_by_st_nip($pb = Penerima,$kd_user=null){
+        $sql = "SELECT * FROM ".$this->_tb_penerima;
+        $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+                LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
+                LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
+        $sql .= " WHERE a.KD_ST=".$pb->get_st()." AND a.NIP_PB=".$pb->get_nip();
+        if(!is_null($kd_user)) $sql .= " AND d.KD_USER=".$kd_user;
+        $result = $this->db->select($sql);
+//        $data = array();
+        $penerima = new $this($this->registry);
+        foreach($result as $val){
+            
+            $penerima->set_kd_pb($val['KD_PB']);
+            $penerima->set_st($val['KD_ST']);
+            $penerima->set_jur($val['KD_JUR']);
+            $penerima->set_bank($val['KD_BANK']);
+            $penerima->set_status($val['KD_STS_TB']);
+            $penerima->set_nip($val['NIP_PB']);
+            $penerima->set_nama($val['NM_PB']);
+            $penerima->set_jkel($val['JK_PB']);
+            $penerima->set_gol($val['KD_GOL']);
+            $penerima->set_unit_asal($val['UNIT_ASAL_PB']);
+            $penerima->set_email($val['EMAIL_PB']);
+            $penerima->set_telp($val['TELP_PB']);
+            $penerima->set_alamat($val['ALMT_PB']);
+            $penerima->set_no_rek($val['NO_REKENING_PB']);
+            $penerima->set_foto($val['FOTO_PB']);
+            $penerima->set_tgl_lapor($val['TGL_LAPOR_PB']);
+            $penerima->set_skl($val['NO_SKL_PB']);
+            $penerima->set_spmt($val['NO_SPMT_PB']);
+            $penerima->set_skripsi($val['JUDUL_SKRIPSI_PB']);
+//            $data[] = $penerima;
+        }
+        return $penerima;
     }
     
     public function get_penerima_by_name($pb = Penerima, $kd_user=1, $filter_st=false){
