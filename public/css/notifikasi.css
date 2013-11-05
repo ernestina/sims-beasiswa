@@ -141,6 +141,11 @@ img.noti {
     margin: 20px 0px 0px -10px;
 }
 
+img.noti.pic {
+    /*height: 40%;*/
+    margin: 5px 0px 0px 20px;
+}
+
 div.noti {
     font-family: Menu;
     margin-top: -10px;
@@ -150,8 +155,17 @@ ul.noti {
     height: 75px; margin: 5px;
     width:100%;
     background-image: url('public/img/bg.png');
-    -webkit-border-radius: 40px 0px 0px 40px;
     border-radius: 40px 0px 0px 40px;
+    -webkit-border-radius: 40px 0px 0px 40px;
+    -moz-border-radius: 40px 0px 0px 40px;
+}
+
+ul.noti.pic {
+    width:90%;
+    height: 40px;
+    border-radius: 0px;
+    background-color: #B2D1FF
+    
 }
 
 ul.noti.jadup{

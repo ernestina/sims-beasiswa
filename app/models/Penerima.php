@@ -672,6 +672,29 @@ class Penerima {
         
         return $data;
     }
+    
+    public function get_jumlah_pegawai($filter,$kode_filter){
+        $sql = "SELECT COUNT(*) as JUMLAH FROM ".$this->_tb_penerima;
+        switch($filter){
+            case 'universitas':
+                $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+                        LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
+                        LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV
+                        WHERE d.KD_UNIV=".$kode_filter." AND ";
+                break;
+            case 'jurusan':
+                $sql .= " WHERE KD_JUR=".$kode_filter." AND ";
+                break;
+            default:
+                throw new Exception();
+        }
+        $sql .= " KD_STS_TB<5";
+//        echo $sql;
+        $d_jumlah = $this->db->select($sql);
+        foreach ($d_jumlah as $v){
+            return $v['JUMLAH'];
+        }
+    }
 
     /*
      * setter

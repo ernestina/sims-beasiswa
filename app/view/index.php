@@ -1,4 +1,4 @@
-<div id="beranda" style="margin: 20px 20px 5px 20px; border: solid 1px ">
+<div id="beranda" style="margin: 20px 20px 5px 20px; border: solid 1px;width:70%;display:inline-block; float:left">
 <?php 
     foreach ($this->d_notif as $v){
         switch($v['jenis']){
@@ -51,8 +51,22 @@
         echo "<h4>$jatuh_tempo : <a style='color: #49afcd' href=''>$judul_notif</a></h4>";
         echo "<div class='noti'>$pesan</div>";
         echo "</div>";
-        echo "<div class='flag'><img class='noti' src='$img'></div></ul>";
+        echo "<div class='flag'><img class='noti pic' src='$img'></div></ul>";
 
     }
 ?>
+</div>
+<div style="float:left; width:24%; margin: 20px 0% 5px 0px;border: solid 1px">
+    <div><img class="frame" src="files/foto/<?php echo $this->d_user->get_foto();?>" style="width:80%;margin: 5px 8% 5px 8%;"></div>
+    <div><h4><?php echo strtoupper($this->d_user->get_nmUser());?></h4></div>
+    <div><h4>Universitas :</h4>
+        <div style="margin:10px 5px 10px 10px">
+        <?php 
+            foreach ($this->d_univ as $univ){
+                echo $univ[0]." ".$univ[1]." pegawai</br>";
+            }
+        ?>
+        </div>
+    </div>
+    
 </div>

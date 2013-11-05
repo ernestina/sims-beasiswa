@@ -13,6 +13,22 @@ class Index extends BaseController{
     }
     
     public function index(){
+        $user = new User($this->registry);
+        $d_user = $user->getUser_id($this->kd_user);
+        $univ = Session::get('univ');
+        $d_univ = array();
+        foreach($univ as $univ){
+            $temp = array();
+            $pb = new Penerima($this->registry);
+            $cuniv = new Universitas($this->registry);
+            $cuniv->set_kode_in($univ);
+            $cuniv = $cuniv->get_univ_by_id($cuniv);
+            $temp[] = $cuniv->get_nama();
+            $temp[] = $pb->get_jumlah_pegawai('universitas', $univ);
+            $d_univ[] = $temp;
+        }
+        $this->view->d_univ = $d_univ;
+        $this->view->d_user = $d_user;
         $this->view->d_notif = $this->get_notifikasi();
         $this->view->render('index');
     }
