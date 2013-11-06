@@ -297,7 +297,10 @@ class AdminController extends BaseController {
             return;
         }
         $jur->set_kode_jur($id);
+        $d_jur = $jur->get_jur_by_id($jur);
+        $nama = $d_jur->get_nama();
         $jur->delete_jurusan();
+        ClassLog::write_log('jurusan','hapus',$nama);
         header('location:' . URL . 'admin/addJurusan');
     }
 

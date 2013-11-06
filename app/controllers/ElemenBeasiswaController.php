@@ -1086,7 +1086,7 @@ class elemenBeasiswaController extends BaseController {
             $jur = $_POST['kd_jurusan'];
             //print_r ($jur);
             $kontrak = new Kontrak();
-            $data = $kontrak->get_list_thn_masuk_by_jur("1");
+            $data = $kontrak->get_list_thn_masuk_by_jur($jur);
             //var_dump($data);
             echo "<option value=''>Pilih Tahun Masuk</option>";
             foreach ($data as $thn) {
@@ -1102,6 +1102,7 @@ class elemenBeasiswaController extends BaseController {
                 }
             }
         } else {
+            //echo "tes";
             echo "<option value=''>Pilih Tahun Masuk</option>";
         }
     }

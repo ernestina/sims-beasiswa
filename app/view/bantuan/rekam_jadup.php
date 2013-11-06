@@ -151,6 +151,7 @@
                 data: {kd_jurusan:$('#kode_jur').val()},
                 success: function(thn_masuk){
                     $('#tahun_masuk').html(thn_masuk);
+                    
                 }
             });
             
