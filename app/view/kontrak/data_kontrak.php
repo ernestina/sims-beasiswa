@@ -3,7 +3,7 @@
 
     <table width=100% style="margin-left: 0px">
         <tr>
-            <td width="10%" ><label >Pilih Universitas :</label></td>
+            <td width="15%" ><label >Pilih Universitas :</label></td>
             <td width="20%"style="padding-top:15px;">
                 <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/display' ?>">
 <!--            <input type="hidden" name="pilih_univ">-->
