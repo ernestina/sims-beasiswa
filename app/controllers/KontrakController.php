@@ -369,33 +369,33 @@ class KontrakController extends BaseController {
             if (file_exists($file)) {
                 unlink($file);
             }
-            $biaya = new Biaya();
-            $data_biaya = $biaya->get_biaya_by_kontrak($id);
-            foreach ($data_biaya as $del) {
-                $biaya->deleteBiaya($del->kd_biaya);
-                $file_bast = "files/bast/" . $del->file_bast;
-                $file_bap = "files/bap/" . $del->file_bap;
-                $file_ring_kon = "files/ringkasan_kontrak/" . $del->file_ring_kontrak;
-                $file_kuitansi = "files/kuitansi/" . $del->file_kuitansi;
-                $file_sp2d = "files/sp2d/" . $del->file_sp2d;
-                //echo $file;
-                if (file_exists($file_bast)) {
-                    unlink($file_bast);
-                }
-                if (file_exists($file_bap)) {
-                    unlink($file_bap);
-                }
-                if (file_exists($file_ring_kon)) {
-                    unlink($file_ring_kon);
-                }
+            // $biaya = new Biaya();
+            // $data_biaya = $biaya->get_biaya_by_kontrak($id);
+            // foreach ($data_biaya as $del) {
+                // $biaya->deleteBiaya($del->kd_biaya);
+                // $file_bast = "files/bast/" . $del->file_bast;
+                // $file_bap = "files/bap/" . $del->file_bap;
+                // $file_ring_kon = "files/ringkasan_kontrak/" . $del->file_ring_kontrak;
+                // $file_kuitansi = "files/kuitansi/" . $del->file_kuitansi;
+                // $file_sp2d = "files/sp2d/" . $del->file_sp2d;
+                // //echo $file;
+                // if (file_exists($file_bast)) {
+                    // unlink($file_bast);
+                // }
+                // if (file_exists($file_bap)) {
+                    // unlink($file_bap);
+                // }
+                // if (file_exists($file_ring_kon)) {
+                    // unlink($file_ring_kon);
+                // }
                 
-                if (file_exists($file_kuitansi)) {
-                    unlink($file_kuitansi);
-                }
-                if (file_exists($file_sp2d)) {
-                    unlink($file_sp2d);
-                }
-            }
+                // if (file_exists($file_kuitansi)) {
+                    // unlink($file_kuitansi);
+                // }
+                // if (file_exists($file_sp2d)) {
+                    // unlink($file_sp2d);
+                // }
+            // }
 
             //echo "berhasil hapus";
         }
