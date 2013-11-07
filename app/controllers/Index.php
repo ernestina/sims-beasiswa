@@ -27,9 +27,11 @@ class Index extends BaseController{
             $temp[] = $pb->get_jumlah_pegawai('universitas', $univ);
             $d_univ[] = $temp;
         }
+        $this->view->is_pic = Session::get('role')==2;
         $this->view->d_univ = $d_univ;
         $this->view->d_user = $d_user;
         $this->view->d_notif = $this->get_notifikasi();
+        $this->view->count_notif = count($this->view->d_notif);
         $this->view->render('index');
     }
     

@@ -1,5 +1,6 @@
+<?php if($this->is_pic){ ?>
 <div id="beranda" style="margin: 20px 20px 5px 20px; border: solid 1px;width:70%;display:inline-block; float:left">
-<?php 
+<?php
     foreach ($this->d_notif as $v){
         switch($v['jenis']){
             case 'jadup':
@@ -70,3 +71,35 @@
     </div>
     
 </div>
+
+<?php } ?>
+<input type="hidden" id="jml_notif" value="10">
+<script type="text/javascript">
+
+$(function(){
+//    display_notif();
+    var time = 10*60*1000;
+    setInterval(function(){
+        count_notif();
+    },time);
+})
+
+function count_notif(){
+    $.post('<?php echo URL; ?>notifikasi/count_notif',{param:""+<?php echo Session::get('kd_user');?>+""},
+    function(data){
+        var old_count = parseInt(document.getElementById('jml_notif').value);
+        if(parseInt(data)>old_count){
+            $('#jml_notif').val(data);
+            display_notif();
+        }
+    })
+}
+
+function display_notif(){
+    $.post('<?php echo URL;?>notifikasi/display_notif_pic',{param:""+<?php echo Session::get('kd_user');?>+""},
+    function(data){
+        $('#beranda').fadeIn(200);
+        $('#beranda').html(data);
+    })
+}
+</script>

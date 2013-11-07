@@ -45,6 +45,8 @@ class SurattugasController extends BaseController{
             
             $st->add_st($data);
             $upload->uploadFile();
+            $ref = " no ST ".$nomor;
+            ClassLog::write_log('surat_tugas','rekam',$ref);
         }
         $aksi = array();
         if(!is_null($id)){
@@ -117,6 +119,8 @@ class SurattugasController extends BaseController{
         }
         $st->set_kd_st($kd_st);
         $st->update_st($data);
+        $ref = " no ST ".$nomor;
+        ClassLog::write_log('surat_tugas','ubah',$ref);
         header('location:'.URL.'surattugas/datast');
         
     }
@@ -128,9 +132,12 @@ class SurattugasController extends BaseController{
         $st = new SuratTugas($this->registry);
         $st->set_kd_st($kd_st);
         $st->get_surat_tugas_by_id($st);
+        $no = $st->get_nomor();
         $file = 'files/'.$st->get_file();
         $st->del_st();
         if(file_exists($file)) unlink($file);
+        $ref = " no ST ".$no;
+        ClassLog::write_log('surat_tugas','hapus',$ref);
         header('location:'.URL.'surattugas/datast');
     }
     
@@ -202,7 +209,12 @@ class SurattugasController extends BaseController{
         $d = explode(",",$d);
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($d[1]);
+        $pb->get_penerima_by_id($pb);
+        $nama = $pb->get_nama();
+        $nip = $pb->get_nip();
         $pb->delete_penerima();
+        $ref = " pegawai ".$nama.":".$nip;
+        ClassLog::write_log('penerima_beasiswa','hapus',$ref);
         header('location:'.URL.'surattugas/addpb/'.$d[0]);
         
     }

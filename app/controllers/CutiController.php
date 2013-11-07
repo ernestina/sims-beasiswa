@@ -59,6 +59,8 @@ class CutiController extends BaseController{
                 $d_pb->set_status(4);
                 $d_pb->update_penerima();
                 $this->registry->upload->uploadFile();
+                $ref = " no SC ".$noct;
+                ClassLog::write_log('cuti','rekam',$ref);
                 header('location:'.URL.'cuti/datasc');
             }else{
                 $this->view->d_rekam = $ct;
@@ -95,7 +97,15 @@ class CutiController extends BaseController{
     public function del_sc($kd_cuti){
         $ct = new Cuti($this->registry);
         $ct->set_kode_cuti($kd_cuti);
+        $ct->get_cuti_by_id($ct, $this->kd_user);
+        $no = $ct->get_no_surat_cuti();
+        $file = $ct->get_file();
         $ct->del_ct();
+        if(file_exists('files/cuti/'.$file)){
+            unlink('files/cuti/'.$file);
+        }
+        $ref = " no SC ".$no;
+        ClassLog::write_log('cuti','hapus',$ref);
         header('location:'.URL.'cuti/datasc');
     }
     
@@ -144,6 +154,8 @@ class CutiController extends BaseController{
         $ct->set_perk_go($perk_go);
         $ct->set_file($file);
         if($ct->update_cuti()){
+            $ref = " no SC ".$no_sc;
+            ClassLog::write_log('cuti','ubah',$ref);
             header('location:'.URL.'cuti/datasc');
         }else{
             $this->view->d_ubah = $ct;

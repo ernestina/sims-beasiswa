@@ -251,4 +251,11 @@ $akses['Notifikasi'] = array('__construct',
                 'display_notif',
                 '__destruct'
                 );
+/*
+ * notifikasi pic
+ */
+$akses['NotifikasiPic'] = array('__construct',
+                'display_notif_pic',
+                'count_notif',
+                '__destruct');
 ?>

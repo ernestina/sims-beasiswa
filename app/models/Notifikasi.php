@@ -244,6 +244,7 @@ class Notifikasi{
         if(!is_null($bulan)){
             $sql .= " AND a.BLN_D_ELEM_BEASISWA=".$bln_bayar[1]." AND a.THN_D_ELEM_BEASISWA=".$bln_bayar[0];
         }
+//        $sql .= " AND e.KD_PEMB>1";
 //        echo $sql."</br>";
         $d_jadup = $this->_db->select($sql);
         if(!is_null($bulan)) $notif = new NotifikasiDao();
@@ -500,6 +501,7 @@ class Notifikasi{
         if(!is_null($bulan)){
             $sql .= " AND a.BLN_D_ELEM_BEASISWA=".$bln_bayar[1]." AND a.THN_D_ELEM_BEASISWA=".$bln_bayar[0];
         }
+//        $sql .= " AND e.KD_PEMB>1";
 //        echo $sql."</br>";
         $d_jadup = $this->_db->select($sql);
         if(!is_null($bulan)) $notif = new NotifikasiDao();
@@ -531,7 +533,8 @@ class Notifikasi{
     private function cek_telah_bayar_elem($kode_elem, $month,$surat_tugas,$cek_sp2d=false){
         if($kode_elem!=3) $month = explode("-",$month);
         $sql = "SELECT a.KD_D_ELEM_BEASISWA as KD_D_ELEM_BEASISWA, 
-                a.NO_SP2D_D_ELEM_BEASISWA as NO_SP2D_ELEM_BEASISWA
+                a.NO_SP2D_D_ELEM_BEASISWA as NO_SP2D_ELEM_BEASISWA,
+                d.KD_PEMB as KD_PEMB
                 FROM d_elemen_beasiswa a 
                 LEFT JOIN t_elem_beasiswa b ON a.KD_D_ELEM_BEASISWA = b.KD_D_ELEM_BEASISWA
                 LEFT JOIN d_pb c ON b.KD_PB = c.KD_PB
@@ -550,7 +553,13 @@ class Notifikasi{
             $sql .= " AND a.NO_SP2D_D_ELEM_BEASISWA<>'' AND a.NO_SP2D_D_ELEM_BEASISWA IS NOT NULL";
         }
 //        echo $sql."</br>";
-        $d_cek = count($this->_db->select($sql));
+        $d_elem = $this->_db->select($sql);
+//        foreach ($d_elem as $elem){
+//            $eksternal = ((int) $elem['KD_PEMB'])>1;
+//            if($eksternal) return true;
+//        }
+        
+        $d_cek = count($d_elem);
         
         return $d_cek>0?true:false;
     }

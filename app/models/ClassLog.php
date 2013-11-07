@@ -9,7 +9,7 @@ class ClassLog{
     
     public static function write_log($modul,$aksi,$referensi){
         $db = new Database();
-        $pesan = "modul ".strtoupper($modul).";aksi ".strtoupper($aksi).";referensi ".$referensi;
+        $pesan = "modul ".strtoupper($modul)." aksi ".strtoupper($aksi)." referensi ".$referensi;
         $ip = '';
         if($_SERVER['HTTP_CLIENT_IP']){
             $ip = $_SERVER['HTTP_CLIENT_IP'];

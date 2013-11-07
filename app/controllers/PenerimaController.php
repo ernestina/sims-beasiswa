@@ -223,7 +223,8 @@ class PenerimaController extends BaseController{
 
             $pb->add_penerima($data);
         }
-        
+        $ref = " no ST ".$st->get_nomor()." pegawai ".$nama.":".$nip;
+        ClassLog::write_log('penerima_beasiswa','rekam',$ref);
     }
     
     /*
@@ -301,6 +302,8 @@ class PenerimaController extends BaseController{
         $norek = $_POST['rekening'];
         $pb->set_kd_pb($kd_pb);
         $pb = $pb->get_penerima_by_id($pb,$this->kd_user);
+        $st->set_kd_st($kd_st);
+        $d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
         /*
          * upload foto
          */
@@ -341,8 +344,8 @@ class PenerimaController extends BaseController{
         if($_POST['tgl_lapor']!=''){
 //            $cek = Tanggal::check_before_a_date($lap_selesai_tb, $tgl_sel_st);
 //            if($cek){
-                $st->set_kd_st($kd_st);
-                $d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
+//                $st->set_kd_st($kd_st);
+//                $d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
                 $status = $pb->get_status_change_pb($d_st,$lap_selesai_tb,$tgl_sel_st);
 //            }
         }
@@ -385,6 +388,8 @@ class PenerimaController extends BaseController{
         }
         
         if($pb->update_penerima()){
+            $ref = " no ST ".$st->get_nomor()." pegawai ".$pb->get_nama().":".$pb->get_nip();
+            ClassLog::write_log('penerima_beasiswa','rekam',$ref);
             header('location:'.URL.'penerima/profil/'.$kd_pb);
         }else{
             /*
@@ -409,8 +414,12 @@ class PenerimaController extends BaseController{
         $pb->set_kd_pb($id);
         $pb->get_penerima_by_id($pb,$this->kd_user);
         $file = 'files/'.$pb->get_foto();
+        $nama = $pb->get_nama();
+        $nip = $pb->get_nip();
         $pb->delete_penerima();
         if(file_exists($file)) unlink($file);
+        $ref = " pegawai ".$nama.":".$nip;
+        ClassLog::write_log('penerima_beasiswa','rekam',$ref);
         header('location:'.URL.'penerima/datapb');
     }
     

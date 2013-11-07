@@ -23,7 +23,7 @@
                     echo "<td>".$no."</td>";
                     echo "<td><a style='cursor:pointer' onCLick='view(\"".$val->get_file()."\")'>".$val->get_no_surat_cuti()."</a></br>".Tanggal::tgl_indo($val->get_tgl_surat_cuti())."</td>";
                     echo "<td>".$val->get_jenis_cuti()."</td>";
-                    echo "<td style='text-align: left'>".$d_pb[0]."</br>".$d_pb[1]."".$val->get_file()."</td>";
+                    echo "<td style='text-align: left'>".$d_pb[0]."</br>".$d_pb[1]."</td>";
                     echo "<td>".(($val->get_prd_mulai()==1)?'ganjil':'genap')."</td>";
                     echo "<td>".Tanggal::bulan_indo($perk_stop[0])." ".$perk_stop[1]."</td>";
                     echo "<td>".Tanggal::bulan_indo($perk_go[0])." ".$perk_go[1]."</td>";
