@@ -87,7 +87,7 @@ class SuratTugas {
             $this->set_kd_st($val['KD_ST']);
             $this->set_jur($val['KD_JUR']);
             $this->set_nomor($val['NO_ST']);
-            $st->set_pemberi($val['KD_PEMB']);
+            $this->set_pemberi($val['KD_PEMB']);
             $this->set_st_lama($val['KD_ST_LAMA']);
             $this->set_jenis_st($val['KD_JENIS_ST']);
             $this->set_tgl_st($val['TGL_ST']);

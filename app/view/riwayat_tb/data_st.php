@@ -76,6 +76,7 @@
             </select>
             <div id="wuniv"  class="error"></div>
             <label>Universitas</label><select name="univ" id="univ" onchange="get_jurusan(this.value)" type="text">
+                <option value="0">--Pilih Universitas--</option>
                 <?php 
                     foreach($this->d_univ as $val){
 //                        if(isset($this->d_ubah)){
@@ -102,6 +103,7 @@
             </select>
             <div id="wjurusan" class="error"></div>
             <label>Jurusan/Prodi</label><select name="jur" id="jur" type="text">
+                <option value="0">--Pilih Jurusan--</option>
                 <?php 
                     foreach($this->d_jur as $val){
                         if(isset($this->d_ubah)){
