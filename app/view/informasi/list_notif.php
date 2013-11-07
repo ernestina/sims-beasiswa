@@ -1,4 +1,5 @@
 <?php
+if($this->is_pic){
     foreach ($this->d_notif as $v){
         switch($v['jenis']){
             case 'jadup':
@@ -53,4 +54,5 @@
         echo "<div class='flag'><img class='noti pic' src='$img'></div></ul>";
 
     }
+}
 ?>

@@ -34,9 +34,9 @@ class ClassLog{
                 'TIME_STAMP_EL'=>$now,
                 'IP_ADDRESS_EL'=>$ip
         );
-        var_dump($data);
-        echo Session::get('user')." ".$pesan." ".$ip." ".$now;
-        var_dump($db->insert('d_entry_log', $data));
+//        var_dump($data);
+//        echo Session::get('user')." ".$pesan." ".$ip." ".$now;
+        $db->insert('d_entry_log', $data);
         
         
     }

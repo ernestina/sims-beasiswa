@@ -116,6 +116,7 @@ class NotifikasiController extends BaseController{
     
     public function display_notif_pic(){
         $kd_user = $_POST['param'];
+        $this->view->is_pic = Session::get('role')==2;
         $this->view->d_notif = $this->get_notifikasi_pic($kd_user);
         $this->view->load('informasi/list_notif');
     }

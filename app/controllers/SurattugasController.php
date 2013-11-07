@@ -27,7 +27,7 @@ class SurattugasController extends BaseController{
             
             $upload = $this->registry->upload;
             $upload->init('fupload');
-            $upload->setDirTo('files/');
+            $upload->setDirTo('files/st/');
             $nama = array($nomor,$tgl_st);
             $upload->changeFileName($upload->getFileName(),$nama);
             $data = array(

@@ -78,7 +78,7 @@
 
 $(function(){
 //    display_notif();
-    var time = 10*60*1000;
+    var time = 5*1000;
     setInterval(function(){
         count_notif();
     },time);
@@ -89,7 +89,10 @@ function count_notif(){
     function(data){
         var old_count = parseInt(document.getElementById('jml_notif').value);
         if(parseInt(data)>old_count){
+            console.log(data);
             $('#jml_notif').val(data);
+            $('<audio id="chatAudio" src="public/sound/sounds-847-office-2.mp3" type="audio/mpeg"></audio>').appendTo('beranda');
+            $('#chatAudio')[0].play();
             display_notif();
         }
     })
