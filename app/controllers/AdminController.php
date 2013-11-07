@@ -19,18 +19,8 @@ class AdminController extends BaseController {
      * tambah referensi universitas
      */
 
-    public function addUniversitas($halaman=null,$batas=null,$id = null) {
-        $url = 'admin/addUniversitas';
-        if (is_null($halaman))
-            $halaman = 1;
-        if (is_null($batas))
-            $batas = 5;
-        $url2 = $halaman."/".$batas;
-        $this->view->paging = new Paging($url, $batas, $halaman);
+    public function addUniversitas($id = null) {
         $univ = new Universitas($this->registry);
-        $this->view->jmlData = count($univ->get_univ());
-        $posisi = $this->view->paging->cari_posisi();
-        $listData = $univ->get_univ($posisi, $batas);
         if (isset($_POST['add_univ'])) {
             $kode = $_POST['kode'];
             $nama = $_POST['nama'];
@@ -54,8 +44,7 @@ class AdminController extends BaseController {
             $this->view->d_ubah = $univ->get_univ_by_id($univ);
         }
         $pic = new User($this->registry);
-        $this->view->url = $url2;
-        $this->view->data = $listData;
+        $this->view->data = $univ->get_univ();
         $this->view->pic = $pic->get_user(TRUE);
 //        var_dump($this->view->pic);
         $this->view->render('admin/universitas');
@@ -66,7 +55,7 @@ class AdminController extends BaseController {
      * @param id_univ
      */
 
-    public function updUniversitas($halaman=null,$batas=null) {
+    public function updUniversitas() {
         $univ = new Universitas($this->registry);
         if (isset($_POST['upd_univ'])) {
             $kd_univ = $_POST['kd_univ'];
@@ -92,7 +81,7 @@ class AdminController extends BaseController {
                 $this->view->pic = $pic->get_user(TRUE);
                 $this->view->render('admin/universitas');
             } else {
-                header('location:' . URL . 'admin/addUniversitas/'.$halaman.'/'.$batas);
+                header('location:' . URL . 'admin/addUniversitas');
             }
         }
     }
@@ -102,7 +91,7 @@ class AdminController extends BaseController {
      * @param id_univ
      */
 
-    public function delUniversitas($halaman=null,$batas=null,$id) {
+    public function delUniversitas($id) {
         $univ = new Universitas($this->registry);
         if (is_null($id)) {
             throw new Exception;
@@ -111,26 +100,16 @@ class AdminController extends BaseController {
         }
         $univ->set_kode_in($id);
         $univ->delete_univ();
-        header('location:' . URL . 'admin/addUniversitas/'.$halaman."/".$batas);
+        header('location:' . URL . 'admin/addUniversitas');
     }
 
     /*
      * tambah referensi fakultas
      */
 
-    public function addFakultas($halaman=null,$batas=null,$id = null) {
+    public function addFakultas($id = null) {
         $fakul = new Fakultas($this->registry);
         $univ = new Universitas($this->registry);
-        $url = 'admin/addFakultas';
-        if (is_null($halaman))
-            $halaman = 1;
-        if (is_null($batas))
-            $batas = 5;
-        $url2 = $halaman."/".$batas;
-        $this->view->paging = new Paging($url, $batas, $halaman);
-        $this->view->jmlData = count($fakul->get_fakul());
-        $posisi = $this->view->paging->cari_posisi();
-        $listData = $fakul->get_fakul($posisi, $batas);
         $this->view->univ = $univ->get_univ();
         if (isset($_POST['add_fak'])) {
             $univ = $_POST['universitas'];
@@ -152,8 +131,7 @@ class AdminController extends BaseController {
             $this->view->d_ubah = $fakul->get_fakul_by_id($fakul);
             $this->view->univ = $univ->get_univ();
         }
-        $this->view->url = $url2;
-        $this->view->data = $listData;
+        $this->view->data = $fakul->get_fakul();
         $this->view->render('admin/fakultas');
     }
 
@@ -162,7 +140,7 @@ class AdminController extends BaseController {
      * @param id_fakultas
      */
 
-    public function updFakultas($halaman=null,$batas=null) {
+    public function updFakultas() {
         $fakul = new Fakultas($this->registry);
         $kd_fakul = $_POST['kd_fakul'];
         $univ = $_POST['universitas'];
@@ -182,7 +160,7 @@ class AdminController extends BaseController {
             $this->view->data = $fakul->get_fakul();
             $this->view->render('admin/fakultas');
         } else {
-            header('location:' . URL . 'admin/addFakultas/'.$halaman."/".$batas);
+            header('location:' . URL . 'admin/addFakultas');
         }
     }
 
@@ -191,7 +169,7 @@ class AdminController extends BaseController {
      * @param id_fakultas
      */
 
-    public function delFakultas($halaman=null,$batas=null,$id=null) {
+    public function delFakultas($id) {
         $fakul = new Fakultas($this->registry);
         if (is_null($id)) {
             throw new Exception;
@@ -200,7 +178,7 @@ class AdminController extends BaseController {
         }
         $fakul->set_kode_fakul($id);
         $fakul->delete_fakul();
-        header('location:' . URL . 'admin/addFakultas/'.$halaman."/".$batas);
+        header('location:' . URL . 'admin/addFakultas');
     }
 
     /*
@@ -297,10 +275,7 @@ class AdminController extends BaseController {
             return;
         }
         $jur->set_kode_jur($id);
-        $d_jur = $jur->get_jur_by_id($jur);
-        $nama = $d_jur->get_nama();
         $jur->delete_jurusan();
-        ClassLog::write_log('jurusan','hapus',$nama);
         header('location:' . URL . 'admin/addJurusan');
     }
 
@@ -308,17 +283,8 @@ class AdminController extends BaseController {
      * tambah referensi strata
      */
 
-    public function addStrata($halaman = null, $batas = null) {
-        $url = 'admin/addStrata';
-        if (is_null($halaman))
-            $halaman = 1;
-        if (is_null($batas))
-            $batas = 5;
-        $this->view->paging = new Paging($url, $batas, $halaman);
+    public function addStrata() {
         $strata = new Strata();
-        $this->view->jmlData = count($strata->get_All());
-        $posisi = $this->view->paging->cari_posisi();
-        $listData = $strata->get_All($posisi, $batas);
         if (isset($_POST['add_strata'])) {
             $strata->kode_strata = $_POST["kode_strata"];
             $strata->nama_strata = $_POST["nama_strata"];
@@ -329,9 +295,9 @@ class AdminController extends BaseController {
                 echo "Isian form belum lengkap";
             }
         }
-        //$data = $strata->get_All();
+        $data = $strata->get_All();
         //var_dump($data);
-        $this->view->data = $listData;
+        $this->view->data = $data;
         $this->view->render('admin/strata');
     }
 
@@ -396,17 +362,8 @@ class AdminController extends BaseController {
      * tambah referensi pemberi beasiswa
      */
 
-    public function addPemberi($halaman = null, $batas = null) {
-        $url = 'admin/addPemberi';
-        if (is_null($halaman))
-            $halaman = 1;
-        if (is_null($batas))
-            $batas = 5;
-        $this->view->paging = new Paging($url, $batas, $halaman);
+    public function addPemberi() {
         $pemberi = new PemberiBeasiswa;
-        $this->view->jmlData = count($pemberi->get_All());
-        $posisi = $this->view->paging->cari_posisi();
-        $listData = $pemberi->get_All($posisi, $batas);
         if (isset($_POST['add_pemberi'])) {
             $pemberi->nama_pemberi = $_POST['nama_pemberi'];
             $pemberi->alamat_pemberi = $_POST['alamat_pemberi'];
@@ -420,8 +377,9 @@ class AdminController extends BaseController {
                 echo "Isian form belum lengkap";
             }
         }
+        $data = $pemberi->get_All();
         //var_dump($data);
-        $this->view->data = $listData;
+        $this->view->data = $data;
         $this->view->render('admin/pemberi');
     }
 
@@ -806,8 +764,8 @@ class AdminController extends BaseController {
 //        var_dump($user->get_user());
         $this->view->render('admin/list_user');
     }
-	
-	/*
+
+    /*
      * menambah data user
      */
 
@@ -831,7 +789,7 @@ class AdminController extends BaseController {
 
                     if (in_array($extension, $allowedExts)) {
 
-                        move_uploaded_file($_FILES["upload"]["tmp_name"], "files/foto/" . $_FILES["upload"]["name"]);
+                        move_uploaded_file($_FILES["upload"]["tmp_name"], "files/foto/" . $_POST['nip'] . "." . $extension);
                     } else {
                         
                     }
@@ -841,7 +799,7 @@ class AdminController extends BaseController {
                     $user->set_nmUser($_POST['nama']);
                     $user->set_pass($_POST['pass']);
                     $user->set_akses($_POST['akses']);
-                    $user->set_foto($_FILES["upload"]["name"]);
+                    $user->set_foto($_POST['nip'] . "." . $extension);
                     $user->addUser($user);
                 }
             }
@@ -877,7 +835,7 @@ class AdminController extends BaseController {
                     echo 'data tidak bisa disimpan karena password berbeda dengan confirm passwordnya';
                 }
 
-                if ($_POST['pass'] == "no_change" || $_POST['cpass'] == "no_change") {
+                if ($_POST['pass'] == "no_change" || $_POST['cpass'] == "no_change") {                  
 
                     if ($_FILES['upload']['name'] == "") {
                                               
@@ -896,7 +854,7 @@ class AdminController extends BaseController {
 
                         if (in_array($extension, $allowedExts)) {
 
-                            move_uploaded_file($_FILES["upload"]["tmp_name"], "files/foto/" . $_FILES["upload"]["name"]);
+                            move_uploaded_file($_FILES["upload"]["tmp_name"], "files/foto/" . $_POST['nip'] . "." . $extension);
                         } else {
                             
                         }
@@ -931,7 +889,7 @@ class AdminController extends BaseController {
 
                         if (in_array($extension, $allowedExts)) {
 
-                            move_uploaded_file($_FILES["upload"]["tmp_name"], "files/foto/" . $_FILES["upload"]["name"]);
+                            move_uploaded_file($_FILES["upload"]["tmp_name"], "files/foto/" . $_POST['nip'] . "." . $extension);
                         } else {
                             
                         }
