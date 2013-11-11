@@ -56,6 +56,7 @@
 
     }
 ?>
+    <?php } ?>
 </div>
 <div style="float:left; width:24%; margin: 20px 0% 5px 0px;border: solid 1px">
     <div><img class="frame" src="files/foto/<?php echo $this->d_user->get_foto();?>" style="width:80%;margin: 5px 8% 5px 8%;"></div>
@@ -72,7 +73,6 @@
     
 </div>
 
-<?php } ?>
 <input type="hidden" id="jml_notif" value="10">
 <script type="text/javascript">
 
@@ -91,8 +91,9 @@ function count_notif(){
         if(parseInt(data)>old_count){
             console.log(data);
             $('#jml_notif').val(data);
-            $('<audio id="chatAudio" src="public/sound/sounds-847-office-2.mp3" type="audio/mpeg"></audio>').appendTo('beranda');
+            $('<audio id="chatAudio"><source src="public/sound/sounds-847-office-2.mp3" type="audio/mpeg"></audio>').appendTo('body');
             $('#chatAudio')[0].play();
+//            document.getElementById("sound").innerHTML="<embed src='"+'public/sound/sounds-847-office-2.mp3'+"' hidden=true autostart=true loop=false>";
             display_notif();
         }
     })
