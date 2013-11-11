@@ -282,6 +282,15 @@ input, select, textarea, button {
     margin-bottom: 7px;
 }
 
+button.paging {
+    border-radius: 0px;
+}
+
+button.paging-kecil {
+    border-radius: 0px;
+    width: 30px;
+}
+
 input.utama,
 select.utama,
 textarea.utama {
