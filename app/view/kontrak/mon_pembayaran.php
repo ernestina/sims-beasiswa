@@ -22,13 +22,8 @@
                 <option value="">- semua -</option>
                 <?php
                 for ($i = 2007; $i <= date('Y') + 1; $i++) {
-                    if($i==date('Y')){
-                        $select="selected";
-                    } else {
-                        $select="";
-                    }
-                    ?>
-                    <option value="<?php echo $i; ?>" <?php echo $select; ?>><?php echo $i; ?></option>
+                                        ?>
+                    <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
                 <?php } ?>
             </select></li>
 		</ul>
@@ -38,6 +33,8 @@
         </form>
     
 <form>
+<div id="tb_biaya">
+</div>
 <table width=99% style="margin-left: 0px">
 <td width="100%">
 <span class=prevnext><input type=button id="last" class=btn value='>|' ></span>
@@ -46,8 +43,6 @@
 <span class=prevnext><input type=button id="first" class=btn value='|<' ></span>
 </td>
 </table>
-<div id="tb_biaya">
-</div>
 </form>
 </div>
 <script>

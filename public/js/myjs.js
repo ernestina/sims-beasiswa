@@ -23,7 +23,7 @@ function cekAngka(val){
 
 //dsiplay popup with target window
 function cetak_dokumen(target){
-    window.open('',target,'toolbar=no, location=no, addressbar=no, directories=no, status=no, menubar=no, width=1000,height=500,scrollbars=yes')
+    window.open('',target,'toolbar=no, location=no, addressbar=no, directories=no, status=no, menubar=no, width=1000,height=500,scrollbars=yes,resizable=yes')
 }
 
 
