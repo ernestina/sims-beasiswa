@@ -22,7 +22,7 @@
     <input type="hidden" name="kd_kontrak" id="kd_kontrak" value="<? echo $this->kontrak->kd_kontrak; ?>" readonly>
     <ul class="inline" style="float: right; margin-right: 20px">
         <li><button type="submit" name="simpan" class="sukses" onClick="formSubmit();"/><i class="icon-ok icon-white"></i>Simpan</button></li>
-        <li><button type="reset" name="batal" id="batal" class="normal"><i class="icon-remove icon-white"></i>Batal</li>
+        <li><button type="reset" name="batal" id="batal" class="normal" onClick="location.href='<?php echo URL . 'kontrak/biaya/'.$this->kontrak->kd_kontrak; ?>'"><i class="icon-remove icon-white"></i>Batal</li>
     </ul>
 
 </form>

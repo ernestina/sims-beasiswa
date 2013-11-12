@@ -41,6 +41,8 @@
 </div>
 
 <form>
+<div id="tb_kontrak">
+</div>
 <table width=99% style="margin-left: 0px">
 <td width="100%">
 <span class=prevnext><input type=button id="last" class=btn value='>|' ></span>
@@ -49,9 +51,6 @@
 <span class=prevnext><input type=button id="first" class=btn value='|<' ></span>
 </td>
 </table>
-<div id="tb_kontrak">
-</div>
-
 </form>
 <?php 
 
@@ -85,6 +84,7 @@
             $('#tb_kontrak').html(data);
         });
         $("#loading").hide();
+		$('#prev,#next,#first,#last').attr("disabled", false);
     }
 	
 	    
@@ -257,6 +257,7 @@
                              
             if($("#cari").val()==""){
                 displayKontrak();
+				$('#prev,#next,#first,#last').attr("disabled", false);
             } else {
                 $.post("<?php echo URL; ?>kontrak/get_data_kontrak2", {key:$('#cari').val()}, 
                 function(data){
@@ -264,6 +265,7 @@
                     $('#tb_kontrak').html(data);
                 });
                 $("#kd_univ").val('');
+				$('#prev,#next,#first,#last').attr("disabled", true);
             }
         });
         

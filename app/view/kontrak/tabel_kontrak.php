@@ -1,7 +1,10 @@
-
+<div id="no_hal">
 <table width=100% style="margin-left: 0px padding-left: 10px">
-<td width=100%><?php echo "HALAMAN ".$this->cur_page." DARI ".$this->page_num; ?></td>
+<td width=100%><?php 
+if($this->cur_page !="" && $this->page_num!="") echo "HALAMAN ".$this->cur_page." DARI ".$this->page_num; 
+?></td>
 </table>
+</div>
 
 
 <input type="hidden" id="cur_page" name="cur_page" value="<?php echo $this->cur_page; ?>"/>
