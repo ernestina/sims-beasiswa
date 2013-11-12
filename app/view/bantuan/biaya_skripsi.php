@@ -50,7 +50,7 @@
             $i = 0;
             foreach ($this->arr as $key => $arr) {
                 if ($arr['jml'] > 0 && $arr['byr'] != $arr['jml']) {
-                    echo "<li title=\"Telah dibayarkan: " . $arr['byr'] . " orang. Proses dibayar: " . $arr['pros'] . "\">" . $arr['jur'] . " " . $arr['thn'] . " (" . $arr['jml'] . " orang)</li>";
+                    echo "<li class=\"hover\" title=\"Telah dibayarkan: " . $arr['byr'] . " orang. Proses dibayar: " . $arr['pros'] . "\">" . $arr['jur'] . " " . $arr['thn'] . " (" . $arr['jml'] . " orang)</li>";
 
                     echo "<br/>";
                     $i++;
@@ -122,6 +122,8 @@
         
        
     })
+	
+	$(".hover").css("cursor","pointer"); 
     
     
 </script>

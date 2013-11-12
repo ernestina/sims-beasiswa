@@ -349,7 +349,7 @@ class ElemenBeasiswa {
         return $data;
     }
 
-    public function get_elem_buku($univ = null, $jurusan = null, $tahun = null) {
+    public function get_elem_buku($univ = null, $jurusan = null, $tahun = null, $user=null) {
 
         $sql = "SELECT 
             a.KD_D_ELEM_BEASISWA AS KD_D_ELEM_BEASISWA,
@@ -369,17 +369,17 @@ class ElemenBeasiswa {
                 LEFT JOIN r_fakul c ON b.KD_FAKUL = c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV
                 WHERE KD_R_ELEM_BEASISWA='" . $this->_buku . "'";
+		
+		if($user != ""){
+			$sql .=" AND d.KD_USER ='".$user."'";
+		}
 
         if ($univ != "") {
             $sql .=" AND d.KD_UNIV ='" . $univ . "'";
         }
 
         if ($jurusan != "") {
-            if ($univ == "") {
-                $sql .=" b.KD_JUR ='" . $jurusan . "'";
-            } else {
-                $sql .=" AND b.KD_JUR ='" . $jurusan . "'";
-            }
+            $sql .=" AND b.KD_JUR ='" . $jurusan . "'";
         }
 
         if ($tahun != "") {
@@ -432,7 +432,10 @@ class ElemenBeasiswa {
                 WHERE KD_R_ELEM_BEASISWA='" . $this->_jadup . "'
                 AND d.KD_USER ='".$user."'
                 ";
-
+		if($user != ""){
+			$sql .=" AND d.KD_USER ='".$user."'";
+		}
+		
         if ($sp2d != "") {
             $sql .=" AND a.NO_SP2D_D_ELEM_BEASISWA LIKE '" . $sp2d . "%'";
         }
@@ -461,7 +464,7 @@ class ElemenBeasiswa {
         return $data;
     }
 
-    public function get_elem_buku_by_sp2d($sp2d) {
+    public function get_elem_buku_by_sp2d($sp2d = null, $user = null) {
 
         $sql = "SELECT 
             a.KD_D_ELEM_BEASISWA AS KD_D_ELEM_BEASISWA,
@@ -481,7 +484,11 @@ class ElemenBeasiswa {
                 LEFT JOIN r_fakul c ON b.KD_FAKUL = c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV
                 WHERE KD_R_ELEM_BEASISWA='" . $this->_buku . "'";
-
+		
+		if($user != ""){
+			$sql .=" AND d.KD_USER ='".$user."'";
+		}
+		
         if ($sp2d != "") {
             $sql .=" AND a.NO_SP2D_D_ELEM_BEASISWA LIKE '" . $sp2d . "%'";
         }
@@ -510,7 +517,7 @@ class ElemenBeasiswa {
         return $data;
     }
 
-    public function get_elem_skripsi_by_sp2d($sp2d = null) {
+    public function get_elem_skripsi_by_sp2d($sp2d = null, $user = null) {
 
         $sql = "SELECT 
             a.KD_D_ELEM_BEASISWA AS KD_D_ELEM_BEASISWA,
@@ -530,7 +537,10 @@ class ElemenBeasiswa {
                 LEFT JOIN r_fakul c ON b.KD_FAKUL = c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV
                 WHERE KD_R_ELEM_BEASISWA='" . $this->_skripsi . "'";
-
+		if($user != ""){
+			$sql .=" AND d.KD_USER ='".$user."'";
+		}
+		
         if ($sp2d != "") {
             $sql .=" AND a.NO_SP2D_D_ELEM_BEASISWA LIKE '" . $sp2d . "%'";
         }
@@ -560,7 +570,7 @@ class ElemenBeasiswa {
         return $data;
     }
 
-    public function get_elem_skripsi($univ = null, $jurusan = null, $tahun = null) {
+    public function get_elem_skripsi($univ = null, $jurusan = null, $tahun = null, $user=null) {
 
         $sql = "SELECT 
             a.KD_D_ELEM_BEASISWA AS KD_D_ELEM_BEASISWA,
@@ -580,17 +590,16 @@ class ElemenBeasiswa {
                 LEFT JOIN r_fakul c ON b.KD_FAKUL = c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV
                 WHERE KD_R_ELEM_BEASISWA='" . $this->_skripsi . "'";
-
+		
+		if($user != ""){
+			$sql .=" AND d.KD_USER ='".$user."'";
+		}
         if ($univ != "") {
             $sql .=" AND d.KD_UNIV ='" . $univ . "'";
         }
 
         if ($jurusan != "") {
-            if ($univ == "") {
-                $sql .=" b.KD_JUR ='" . $jurusan . "'";
-            } else {
-                $sql .=" AND b.KD_JUR ='" . $jurusan . "'";
-            }
+           $sql .=" AND b.KD_JUR ='" . $jurusan . "'";
         }
 
         if ($tahun != "") {

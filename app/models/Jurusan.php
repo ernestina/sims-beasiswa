@@ -321,7 +321,8 @@ class Jurusan {
 
         return $data;
     }
-    
+	
+	    
      public function get_jur_by_pic($kd_pic) {
         $table = "r_jur a, r_fakul b, r_univ c";
         $where = "a.KD_FAKUL = b.KD_FAKUL and b.KD_UNIV = c.KD_UNIV and c.KD_USER=".$kd_pic ;

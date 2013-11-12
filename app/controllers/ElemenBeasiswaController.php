@@ -486,11 +486,12 @@ class elemenBeasiswaController extends BaseController {
             $univ = $_POST['univ'];
             $jurusan = $_POST['jurusan'];
             $tahun = $_POST['tahun'];
+			$user = Session::get('kd_user');
             $elem = new ElemenBeasiswa();
             //echo $univ;
             //echo $jurusan;
             //echo $tahun;
-            $buku = $elem->get_elem_buku($univ, $jurusan, $tahun);
+            $buku = $elem->get_elem_buku($univ, $jurusan, $tahun, $user);
             //var_dump($buku);
             $this->view->buku = $buku;
             $this->view->load('bantuan/tabel_index_buku');
@@ -503,10 +504,11 @@ class elemenBeasiswaController extends BaseController {
             //tinggal nambahin filter di get_elem_jadup
             $sp2d = $_POST['sp2d'];
             $elem = new ElemenBeasiswa();
+			$user = Session::get('kd_user');
             //echo $univ;
             //echo $jurusan;
             //echo $tahun;
-            $buku = $elem->get_elem_buku_by_sp2d($sp2d);
+            $buku = $elem->get_elem_buku_by_sp2d($sp2d, $user);
             //var_dump($buku);
             $this->view->buku = $buku;
             $this->view->load('bantuan/tabel_index_buku');
@@ -755,7 +757,10 @@ class elemenBeasiswaController extends BaseController {
 
         $jur = new Jurusan($this->registry);
         //$jurusan = $jur->get_jur_by_pic($user);
-        $jurusan = $jur->get_jurusan();
+        $jurusan = $jur->get_jur_by_pic($user);
+		//$jurusan = $jur->get_jurusan($user);
+		//var_dump($jurusan);
+		
         //$this->view->jur = $jurusan;
 
 
@@ -788,8 +793,11 @@ class elemenBeasiswaController extends BaseController {
             $sort_byr[] = $key['byr'];
             $sort_pros[] = $key['pros'];
         }
-
-        array_multisort($sort_thn, SORT_DESC, $myArray);
+		
+		if(!empty($myArray)){
+			array_multisort($sort_thn, SORT_DESC, $myArray);
+		}
+        
         $this->view->arr = $myArray;
 
         $this->view->render('bantuan/biaya_skripsi');
@@ -801,8 +809,9 @@ class elemenBeasiswaController extends BaseController {
             $univ = $_POST['univ'];
             $jurusan = $_POST['jurusan'];
             $tahun = $_POST['tahun'];
+			$user = Session::get('kd_user'); 
             $elem = new ElemenBeasiswa();
-            $this->view->skripsi = $elem->get_elem_skripsi($univ, $jurusan, $tahun);
+            $this->view->skripsi = $elem->get_elem_skripsi($univ, $jurusan, $tahun, $user);
 
             $this->view->load('bantuan/tabel_index_skripsi');
         }
@@ -812,9 +821,10 @@ class elemenBeasiswaController extends BaseController {
         if (isset($_POST['sp2d'])) {
             //tinggal nambahin filter di get_elem_jadup
             $sp2d = $_POST['sp2d'];
+			$user = Session::get('kd_user');
 
             $elem = new ElemenBeasiswa();
-            $this->view->skripsi = $elem->get_elem_skripsi_by_sp2d($sp2d);
+            $this->view->skripsi = $elem->get_elem_skripsi_by_sp2d($sp2d, $user);
 
             $this->view->load('bantuan/tabel_index_skripsi');
         }
