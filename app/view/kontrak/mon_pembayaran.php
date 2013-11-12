@@ -17,7 +17,7 @@
                 <option value="proses">proses</option>
                 <option value="selesai">selesai</option>
             </select></li> &nbsp &nbsp
-            <li><label>Jadwal Pembayaran</label></li>
+            <li><label>Tahun Pembayaran</label></li>
             <li><select id="jadwal" name="jadwal" type="text">
                 <option value="">- semua -</option>
                 <?php
