@@ -301,7 +301,7 @@ class Jurusan {
         $table = "r_jur a, r_fakul b";
         $where = "a.KD_FAKUL = b.KD_FAKUL and b.KD_UNIV = " . $kd_univ ;
         $sql = "SELECT * FROM $table where $where";
-        //echo $sql;
+//        echo $sql;
         $result = $this->db->select($sql);
         //var_dump($result);
         $data = array();

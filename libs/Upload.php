@@ -93,10 +93,11 @@ class Upload {
         if ($this->cekFileExist()) {
 //            if($this->cekEkstensi($this->getFileExt())){
             move_uploaded_file($this->getDirFrom(), $this->getDirTo() . $this->getFileTo());
+            echo "berhasil upload";
             return true;
 //            }else{
 //                throw new Exception();
-            return false;
+//            return false;
 //                exit();
 //            }
         } else {

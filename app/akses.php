@@ -241,7 +241,8 @@ $akses['Penerima'] = array(
                 'load_model',
                 'get_nip_data',
                 'filter_pb',
-                'cari'
+                'cari',
+                'set_tidak_lulus'
                 );			
 /*
  * notifikasi

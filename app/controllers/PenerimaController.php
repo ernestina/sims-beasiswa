@@ -76,15 +76,23 @@ class PenerimaController extends BaseController{
         $this->view->render('profil/data_profil');
     }
     
-    public function datapb(){
+    public function datapb($halaman=1,$batas=1){
         $pb = new Penerima($this->registry);
         $univ = new Universitas($this->registry);
         $st = new SuratTugas($this->registry);
         $sts = new Status();
         $this->view->th_masuk = $st->get_list_th_masuk();
-        $this->view->univ = $univ->get_univ();
-        $this->view->d_pb = $pb->get_penerima($this->kd_user);
+        $this->view->univ = $univ->get_univ($this->kd_user);
+        $this->view->d_pb_all = $pb->get_penerima($this->kd_user);
         $this->view->d_sts = $sts->get_status();
+        /**start paging**/
+        $url = 'penerima/datapb';
+        $this->view->url = $url;
+        $this->view->paging = new Paging($url, $batas, $halaman);
+        $this->view->jmlData = count($this->view->d_pb_all);
+        $posisi = $this->view->paging->cari_posisi();
+        $this->view->d_pb = $pb->get_penerima($this->kd_user,$posisi,$batas);
+        /**end paging**/
         $this->view->render('riwayat_tb/data_pb');
     }
     
@@ -295,6 +303,7 @@ class PenerimaController extends BaseController{
         $kd_pb = $_POST['kd_pb'];
         $kd_st = $_POST['kd_st'];
         $no_st = $_POST['no_st'];
+        $asal = $_POST['asal'];
         $alamat = $_POST['alamat'];
         $email = $_POST['email'];
         $telp = $_POST['hp'];
@@ -373,6 +382,7 @@ class PenerimaController extends BaseController{
         
         $data = array($kd_pb,$nip,$no_st,$alamat,$email,$telp,$bank,$norek,$foto,$file_skl,$lap_selesai_tb,$file_spmt,$skripsi);
 //        var_dump($data);
+        $pb->set_unit_asal($asal);
         $pb->set_alamat($alamat);
         $pb->set_email($email);
         $pb->set_telp($telp);
@@ -405,6 +415,16 @@ class PenerimaController extends BaseController{
             $this->view->skripsi = $skripsi;
             $this->for_edit_pb($kd_pb);
         }
+    }
+    
+    public function set_tidak_lulus(){
+        $kd_pb = $_POST['id_pb'];
+        $pb = new Penerima($this->registry);
+        $pb->set_kd_pb($kd_pb);
+        $pb = $pb->get_penerima_by_id($pb);
+        $pb->set_status(9);
+        $pb->update_penerima();
+        echo StatusPB::status_int_string(9);
     }
     /*
      * hapus penerima tb
@@ -756,14 +776,22 @@ class PenerimaController extends BaseController{
      * filter di hal daftar pb
      */
     
-    public function filter_pb(){
+    public function filter_pb($halaman=1,$batas=1){
         $param = $_POST['param'];
         $atr = explode(",", $param);
         $univ = $atr[0];
         $thn_masuk = $atr[1];
         $status = $atr[2];
         $pb = new Penerima($this->registry);
-        $this->view->d_pb = $pb->get_penerima_filter($univ, $thn_masuk, $status,$this->kd_user);
+        $this->view->d_pb_all = $pb->get_penerima_filter($univ, $thn_masuk, $status,$this->kd_user);
+        /**start paging**/
+        $url = 'penerima/filter_pb';
+        $this->view->url = $url;
+        $this->view->paging = new Paging($url, $batas, $halaman);
+        $this->view->jmlData = count($this->view->d_pb_all);
+        $posisi = $this->view->paging->cari_posisi();
+        $this->view->d_pb = $pb->get_penerima_filter($univ, $thn_masuk, $status,$this->kd_user,$posisi,$batas);
+        /**end paging**/
         $this->view->load('riwayat_tb/tabel_d_pb');
     }
     

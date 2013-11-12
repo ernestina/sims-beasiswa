@@ -85,6 +85,67 @@ class Cuti{
         return $data;
     }
     
+    public function get_cuti_limit($posisi, $batas, $kd_user=1,Penerima $pb=null){
+        $sql = "SELECT a.KD_CUTI as KD_CUTI,a.KD_PB as KD_PB,";
+        if(!is_null($pb)){
+            $sql .= " b.NM_PB as KD_PB,";
+        }else{
+            $sql .= "a.KD_PB as KD_PB,";
+        }
+        
+        $sql .= "
+            c.NM_JNS_SRT_CUTI as KD_JNS_SRT_CUTI,
+            a.NO_CUTI as NO_CUTI,
+            a.TGL_CUTI as TGL_CUTI,
+            a.PRD_MUL_CUTI as PRD_MUL_CUTI,
+            a.PRD_SEL_CUTI as PRD_SEL_CUTI,
+            a.PERK_STOP as PERK_STOP,
+            a.PERK_GO as PERK_GO,
+            a.FILE_CUTI as FILE_CUTI
+            FROM ".$this->t_cuti." a ";
+        
+//        if(!is_null($pb)){
+            $sql .= " LEFT JOIN d_pb b ON a.KD_PB=b.KD_PB";
+//        }    
+                
+            $sql .= " LEFT JOIN r_jsc c ON a.KD_JNS_SRT_CUTI=c.KD_JNS_SRT_CUTI";
+            $sql .= " LEFT JOIN r_jur d ON b.KD_JUR=d.KD_JUR
+                    LEFT JOIN r_fakul e ON d.KD_FAKUL=e.KD_FAKUL
+                    LEFT JOIN r_univ f ON e.KD_UNIV=f.KD_UNIV ";
+        if(!is_null($pb)){
+            $sql .= " WHERE a.KD_PB=".$pb->get_kd_pb()." AND f.KD_USER=".$kd_user;
+        }else{
+            $sql .= " WHERE  f.KD_USER=".$kd_user;
+        }
+        $sql .= " LIMIT ".$posisi.",".$batas;
+//        echo $sql;
+        $result = $this->_db->select($sql);
+        $data = array();
+        foreach ($result as $v){
+            $cuti = new $this($this->registry);
+            $cuti->set_kode_cuti($v['KD_CUTI']);
+            $cuti->set_jenis_cuti($v['KD_JNS_SRT_CUTI']);
+            $pb = new Penerima($this->registry);
+            $pb->set_kd_pb($v['KD_PB']);
+            $d_pb = $pb->get_penerima_by_id($pb,$kd_user);
+            $jur = new Jurusan($this->registry);
+            $jur->set_kode_jur($d_pb->get_jur());
+            $d_jur = $jur->get_jur_by_id($jur);
+            $cuti->set_pb($d_pb->get_nama()."-".$d_pb->get_nip()."-".$d_jur->get_nama());
+            $cuti->set_no_surat_cuti($v['NO_CUTI']);
+            $cuti->set_tgl_surat_cuti($v['TGL_CUTI']);
+            $cuti->set_prd_mulai($v['PRD_MUL_CUTI']);
+            $cuti->set_prd_selesai($v['PRD_SEL_CUTI']);
+            $cuti->set_perk_stop($v['PERK_STOP']);
+            $cuti->set_perk_go($v['PERK_GO']);
+            $cuti->set_file($v['FILE_CUTI']);
+            unset($pb);
+            unset($jur);
+            $data[] = $cuti;
+        }
+        return $data;
+    }
+    
     public function get_cuti_by_id(Cuti $ct,$kd_user){
         $sql = "SELECT * FROM ".$this->t_cuti;
         $sql .= " a LEFT JOIN d_pb b ON a.KD_PB=b.KD_PB";

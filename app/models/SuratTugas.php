@@ -32,7 +32,7 @@ class SuratTugas {
 
     /*
      * method untuk mndapatkan semua surat tugas
-     * @param id_sutat_tugas
+     * @param id_surat_tugas
      */
     public function get_surat_tugas($kd_user=null,$id = null) {
         $sql = "SELECT * FROM " . $this->_tb_st;
@@ -43,6 +43,48 @@ class SuratTugas {
             $sql .= ' WHERE a.KD_ST<>' . $id;
             $sql .= ' AND d.KD_USER='.$kd_user;
         }
+        $result = $this->db->select($sql);
+        $data = array();
+        foreach ($result as $val) {
+            $st = new $this($this->registry);
+            $st->set_kd_st($val['KD_ST']);
+            $jur = new Jurusan($this->registry);
+            $jur->set_kode_jur($val['KD_JUR']);
+            $d_jur = $jur->get_jur_by_id($jur);
+            $st->set_jur($d_jur->get_nama());
+            $st->set_nomor($val['NO_ST']);
+            $st->set_pemberi($val['KD_PEMB']);
+            $st->set_st_lama($val['KD_ST_LAMA']);
+            $jst = new JenisSuratTugas($this->registry);
+            $jst->set_kode($val['KD_JENIS_ST']);
+            $d_jst = $jst->get_jst_by_id($jst);
+            $st->set_jenis_st($d_jst->get_nama());
+            $st->set_tgl_st($val['TGL_ST']);
+            $st->set_tgl_mulai($val['TGL_MUL_ST']);
+            $st->set_tgl_selesai($val['TGL_SEL_ST']);
+            $st->set_th_masuk($val['THN_MASUK']);
+            $st->set_file($val['FILE_ST']);
+            unset($jur);
+            unset($jst);
+            $data[] = $st;
+        }
+        return $data;
+    }
+    
+    /*
+     * method untuk mndapatkan semua surat tugas dengan pembatasan posisi, batas
+     * @param id_surat_tugas
+     */
+    public function get_surat_tugas_limit($posisi=1, $batas=10, $kd_user=null) {
+        $sql = "SELECT * FROM " . $this->_tb_st;
+        $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+                LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
+                LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
+        if (!is_null($id)) {
+            $sql .= ' WHERE a.KD_ST<>' . $id;
+            $sql .= ' AND d.KD_USER='.$kd_user;
+        }
+        $sql .= " LIMIT ".$posisi.",".$batas;
         $result = $this->db->select($sql);
         $data = array();
         foreach ($result as $val) {
@@ -241,7 +283,10 @@ class SuratTugas {
     public function get_list_th_masuk($st=true) {
         $data = array();
         if($st){
-            $sql = "SELECT DISTINCT(THN_MASUK) as THN FROM ".$this->_tb_st." ORDER BY THN DESC";
+            $sql = "SELECT DISTINCT(THN_MASUK) as THN FROM ".$this->_tb_st." 
+                a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+                LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
+                LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV WHERE d.KD_USER=".Session::get('kd_user')." ORDER BY THN DESC";
             $d_thn = $this->db->select($sql);
             foreach ($d_thn as $v){
                 $data[$v['THN']] = $v['THN'];

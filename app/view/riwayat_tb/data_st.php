@@ -16,6 +16,24 @@
             ?>
             <div id="wnost" class="error"></div>
             <label>No. Surat Tugas(ST)</label><input type="text" name="no_st" id="no_st" size="30" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_nomor():'';?>">
+            <div id="wjenis" class="error"></div>
+            <label>jenis ST</label><select name="jns_st" id="jenis" type="text">
+                <?php 
+                    foreach($this->d_jst as $val){
+                        if(isset($this->d_ubah)){
+                            if($this->d_ubah->get_jenis_st()==$val->get_kode()){
+                                echo "<option value=".$val->get_kode()." selected>".$val->get_nama()."</option>";
+                            }else{
+                                echo "<option value=".$val->get_kode().">".$val->get_nama()."</option>";
+                            }
+                        }else{
+                            echo "<option value=".$val->get_kode().">".$val->get_nama()."</option>";
+                        }
+                        
+                    }
+                ?>
+            </select>
+            <div id="st_lama_wrapper" <?php if(!isset($this->d_ubah)) echo "style=display:none;";?>>
             <div id="wstlama" class="error"></div>
             <label>No. ST Lama</label><select name="st_lama" id="st_lama" type="text">
                 <option value="0"> Pilih Surat Tugas Lama </option>
@@ -34,23 +52,7 @@
                     }
                 ?>
             </select>
-            <div id="wjenis" class="error"></div>
-            <label>jenis ST</label><select name="jns_st" id="jenis" type="text">
-                <?php 
-                    foreach($this->d_jst as $val){
-                        if(isset($this->d_ubah)){
-                            if($this->d_ubah->get_jenis_st()==$val->get_kode()){
-                                echo "<option value=".$val->get_kode()." selected>".$val->get_nama()."</option>";
-                            }else{
-                                echo "<option value=".$val->get_kode().">".$val->get_nama()."</option>";
-                            }
-                        }else{
-                            echo "<option value=".$val->get_kode().">".$val->get_nama()."</option>";
-                        }
-                        
-                    }
-                ?>
-            </select>
+            </div>
             <div id="wtglst" class="error"></div>
             <label>Tanggal ST</label><input type="text" name="tgl_st" id="datepicker" value="<?php echo isset($this->d_ubah)?  Tanggal::ubahFormatToDatePicker($this->d_ubah->get_tgl_st()):Tanggal::ubahFormatToDatePicker(date('Y-m-d'));?>" readonly>
             <div id="wtglmulai" class="error"></div>
@@ -173,8 +175,14 @@
                 <td><input type="search" id="cari" size="30" placeholder="Cari..."></td>
             </tr>
         </table>
-    
+            
     <div id="tb_st">
+        <?php 
+    if($this->jmlData>0){
+            $jmlhal = $this->paging->jml_halaman($this->jmlData);
+            $paging = $this->paging->navHalaman($jmlhal);
+            echo $paging; }
+?></br>
         <?php 
             $this->load('riwayat_tb/tabel_st');
         ?>
@@ -198,6 +206,15 @@
 //            console.log(nomor);
             cek_exist_nomor(nomor);
 //            console.log('test');
+        })
+        
+        $('#jenis').change(function(){
+            var jst = $('#jenis').val();
+            if(jst>1){
+                $('#st_lama_wrapper').fadeIn();
+            }else{
+                $('#st_lama_wrapper').fadeOut();
+            }
         })
         
         $('#cari').keyup(function(){

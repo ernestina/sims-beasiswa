@@ -14,7 +14,7 @@
             </thead>
 			<tbody style="text-align: center">
             <?php 
-                $no=1;
+                $no=$this->paging->page*$this->paging->batas;
                 foreach($this->d_ct as $val){
                     $d_pb = explode("-",$val->get_pb());
                     $perk_go = explode(" ", $val->get_perk_go());

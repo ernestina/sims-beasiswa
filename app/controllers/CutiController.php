@@ -16,7 +16,7 @@ class CutiController extends BaseController{
         
     }
     
-    public function datasc($id=null){
+    public function datasc($id=0, $halaman=1,$batas=1){
         $ct = new Cuti($this->registry);
         if(isset($_POST['sb_add'])){
             $noct = $_POST['no_sc'];
@@ -68,7 +68,7 @@ class CutiController extends BaseController{
             
         }
         
-        if(!is_null($id)){
+        if($id!=0){
             $ct->set_kode_cuti($id);
             $this->view->d_ubah = $ct->get_cuti_by_id($ct,$this->kd_user);
 //            var_dump($this->view->d_ubah);
@@ -85,12 +85,25 @@ class CutiController extends BaseController{
         $st = new SuratTugas($this->registry);
         $pb = new Penerima($this->registry);
         $this->view->d_pb = $pb->get_penerima($this->kd_user);
-        $this->view->d_ct = $ct->get_cuti($this->kd_user);
-        $this->view->d_univ = $univ->get_univ();
+        $this->view->d_ct_all = $ct->get_cuti($this->kd_user);
+        $this->view->d_univ = $univ->get_univ($this->kd_user);
         $this->view->d_jsc = $jsc->get_jsc();
         $this->view->d_th_masuk = $st->get_list_th_masuk();
         $this->view->curr_year = date('Y');
         $this->view->d_file_exist = json_encode($file);
+        /**start paging**/
+        $url = '';
+        if($id==0){
+            $url = 'cuti/datasc/0';
+        }else{
+            $url = 'cuti/datasc/'.$id;
+        }
+        $this->view->url = $url;
+        $this->view->paging = new Paging($url, $batas, $halaman);
+        $this->view->jmlData = count($this->view->d_ct_all);
+        $posisi = $this->view->paging->cari_posisi();
+        $this->view->d_ct = $ct->get_cuti_limit($posisi, $batas, $this->kd_user);
+        /**end paging**/
         $this->view->render('riwayat_tb/data_cuti');
     }
     
@@ -122,10 +135,12 @@ class CutiController extends BaseController{
         $file = $_FILES['fupload']['name'];
         
         $ct = new Cuti($this->registry);
-        echo $kd_ct."-".$jsc."-".$kd_pb."-".$no_sc."-".$tgl_sc."-".$prd_mul."-".$prd_sel."-".$perk_stop."-".$perk_go."-".$file;
+        $ct->set_kode_cuti($kd_ct);
+//        echo $kd_ct."-".$jsc."-".$kd_pb."-".$no_sc."-".$tgl_sc."-".$prd_mul."-".$prd_sel."-".$perk_stop."-".$perk_go."-".$file;
         /*
          * cek eksistensi file
          */
+        var_dump($_FILES['fupload']);
         $d_ct = $ct->get_cuti_by_id($ct,$this->kd_user);
         if($file!=''){
             $this->registry->upload->init('fupload');
@@ -133,17 +148,24 @@ class CutiController extends BaseController{
             $pb = new Penerima($this->registry);
             $pb->set_kd_pb($kd_pb);
             $d_pb = $pb->get_penerima_by_id($pb);
-            $cname = array('CUTI',$d_pb->get_nip(),end(explode(" ",$prd_mul)));
+            $tmp_prd = explode(" ",$prd_mul);
+            $prd_mulai = $tmp_prd[count($tmp_prd)-1];
+            $cname = array('CUTI',$d_pb->get_nip(),$prd_mulai);
             $this->registry->upload->changeFileName($this->registry->upload->getFileName(),$cname);
             $file = $this->registry->upload->getFileTo();
-            $this->registry->upload->uploadFile;
+            if(file_exists('files/cuti/'.$file)){
+                unlink('files/cuti/'.$file);
+            }
+            $this->registry->upload->uploadFile();
         }else{
+            echo $kd_ct."</br>";
             $file = $d_ct->get_file();
+            echo $file;
         }
         /*
          * set cuti
          */
-        $ct->set_kode_cuti($kd_ct);
+        
         $ct->set_jenis_cuti($jsc);
         $ct->set_pb($kd_pb);
         $ct->set_no_surat_cuti($no_sc);

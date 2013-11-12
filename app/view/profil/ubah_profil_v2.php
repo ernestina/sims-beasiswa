@@ -32,7 +32,7 @@
                         <input type="text" id="pangkat" name="pangkat" disabled value="<?php echo Golongan::golongan_int_string($this->d_pb->get_gol());?>"/>
 			
 			<label class="isian">Unit Asal :</label>
-			<input type="text" id="asal" name="asal" disabled value="<?php echo $this->d_pb->get_unit_asal();?>"/>
+			<input type="text" id="asal" name="asal" value="<?php echo $this->d_pb->get_unit_asal();?>"/>
                         <div id="walamat" class="error" ></div>
 			<label class="isian">Alamat :</label>
 			<textarea type="text" id="alamat" name="alamat" rows="7"/><?php echo isset($this->alamat)?$this->alamat:$this->d_pb->get_alamat();?></textarea>
@@ -110,7 +110,13 @@
 				<option>lulus dengan perpanjangan 1</option>
 				<option>lulus dengan perpanjangan 2</option>
 				<option>tidak lulus</option>-->
-                        <input type="text" disabled value="<?php echo StatusPB::status_int_string($this->d_pb->get_status());?>">
+                        <ul class="inline">
+                            <li><input type="text" id="sts_tb" disabled value="<?php echo StatusPB::status_int_string($this->d_pb->get_status());?>"></li>
+                            <?php if($this->d_pb->get_status()<5) {?>
+                            <li><input class="lihat" type="button" value="<->" id="off" /></li>
+                            <?php } ?>
+                        </ul>
+                        
                                 <?php 
 //                                    foreach ($this->t_jst as $v){
 //                                        if($v->get_kode()==$this->d_jst->get_kode()){
@@ -292,6 +298,15 @@ $(function(){
     $('#add_nilai').click(function(){
         open_dialog(document.getElementById('id_pb').value,'nilai');
     });
+    
+    $('#off').click(function(){
+        var id_pb = document.getElementById('id_pb').value;
+        $.post('<?php echo URL;?>penerima/set_tidak_lulus',{id_pb:id_pb},
+        function(data){
+            document.getElementById('sts_tb').value = data;
+            $('#off').fadeOut();
+        })
+    })
 //    document.write("jvascript gak jalan coii");
     hideErrorId();
     hideWarning();

@@ -58,26 +58,40 @@ class Paging {
     function navHalaman($jmlhalaman) {
         $link_halaman = "<div class=paging>";
         $link_halaman .= "HALAMAN $this->page DARI $jmlhalaman ";
-        // Link ke halaman pertama (first) dan sebelumnya (prev)
-        if ($this->page > 1) {
+// Link ke halaman berikutnya (Next) dan terakhir (Last) 
+        if ($this->page==1){
+            $next = $this->page + 1;
+            
+            $link_halaman .= " <span style='float:right'><a href=" . URL . "$this->url/$next><button id=next class=paging value='Next >' >Next ></button></a></span> 
+                             ";
+        }elseif($this->page < $jmlhalaman AND $this->page!=1) {
+            $next = $this->page + 1;
+            
+            $link_halaman .= " <span style='float:right'><a href=" . URL . "$this->url/$jmlhalaman><button id=next class=paging-kecil value='Next >' >>></button></a>
+                            <a href=" . URL . "$this->url/$next><button id=last class=paging-kecil value='Next >' >></button></a></span> 
+                             ";
+        } 
+//        else {
+//            $link_halaman .= " <span style='float:right'><button class=paging value='Next >' >Next ></button></span>";
+//        }        
+// Link ke halaman pertama (first) dan sebelumnya (prev)
+        if($this->page==$jmlhalaman){
+            $prev = $this->page - 1;
+
+            $link_halaman .= "<span style='float:right'><a href=" . URL . "$this->url/$prev><button id=prev class=paging value='< Prev' >< Prev</button></a></span>";
+        }elseif($this->page > 1 AND $this->page!=$jmlhalaman) {
 
             $prev = $this->page - 1;
 
-            $link_halaman .= "<span class=prevnext><a href=" . URL . "$this->url/$prev><input type=button class=btn value='<' ></a></span>";
-        } else {
-            $link_halaman .= "<span class=disabled><input type=button class=btn value='<' ></span>";
-        }
+            $link_halaman .= "<span style='float:right'><a href=" . URL . "$this->url/$prev><button id=prev class=paging-kecil value='< Prev' ><</button></a>
+                            <a href=" . URL . "$this->url/1><button id=first class=paging-kecil value='< Prev' ><<</button></a></span>";
+        } 
+//        else {
+//            $link_halaman .= "<span style='float:right'><button class=paging value='< Prev' >< Prev</button></span>";
+//        }
 
 
-        // Link ke halaman berikutnya (Next) dan terakhir (Last) 
-        if ($this->page < $jmlhalaman) {
-            $next = $this->page + 1;
-
-            $link_halaman .= " <span class=prevnext><a href=" . URL . "$this->url/$next><input type=button class=btn value='>' ></a></span> 
-                             ";
-        } else {
-            $link_halaman .= " <span class=disabled><input type=button class=btn value='>' ></span>";
-        }
+        
         $link_halaman .="</div>";
         return $link_halaman;
     }

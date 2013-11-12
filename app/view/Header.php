@@ -21,9 +21,15 @@
         <link href="<?php echo URL; ?>public/css/autocomplete.css" rel="stylesheet">
         <script type="text/javascript">
             $(function(){
-                $('#datepicker').datepicker(); 
-                $('#datepicker1').datepicker();
-                $('#datepicker2').datepicker();
+                $('#datepicker').datepicker({
+                    changeMonth: true,changeYear:true
+                }); 
+                $('#datepicker1').datepicker({
+                    changeMonth: true,changeYear:true
+                });
+                $('#datepicker2').datepicker({
+                    changeMonth: true,changeYear:true
+                });
             });
         </script>
     </head>
@@ -39,7 +45,7 @@
                     <p id="jam" onload="jam()"></p>
 
                 </div>
-                <div style="float: top; margin-top: 20px">Willkomnen <?php echo Session::get('user').'</br>anda login sebagai '.  strtoupper((Session::get('role')==1)?'admin':'pic');?></div>
+                <div style="float: top; margin-top: 20px"><?php echo Session::get('user').'</br>anda login sebagai '.  strtoupper((Session::get('role')==1)?'admin':'pic');?></div>
             </div>
 
             <div id="menu">
@@ -86,8 +92,8 @@
                         <a href="<?php echo URL . 'penerima/datapb'; ?>">PROFIL BEASISWA</a>
                         <ul>
                             <li><a href="<?php echo URL . 'surattugas/datast' ?>"><i class="icon-file icon-white"></i>  Surat Tugas</a></li>
-                            <li><a href="<?php echo URL . 'cuti/datasc' ?>"><i class="icon-road icon-white"></i>  Surat Cuti</a></li>
                             <li><a href="<?php echo URL . 'penerima/datapb'; ?>"><i class="icon-user icon-white"></i>  Penerima Beasiswa</a></li>
+                            <li><a href="<?php echo URL . 'cuti/datasc' ?>"><i class="icon-road icon-white"></i>  Surat Cuti</a></li>
                         </ul>
                     </li>
                     <li class="subnav">
@@ -103,9 +109,11 @@
                     <li class="nav">
                         <a href="<?php echo URL . 'auth/logout' ?>">LOGOUT</a>
                     </li>
-                    <li class="nav">
-                        <a class="blok" href="<?php echo URL.'auth/logout';?>" title="logout"><img class="profil" src="<?php echo URL; ?>public/img/pic.jpg" /></a>
-                    </li>
+<!--                    <li class="nav">
+                        <a class="blok" href="<?php echo URL.'auth/logout';?>" title="logout">
+                            <img class="profil" src="<?php echo URL; ?>public/img/pic.jpg" />
+                        </a>
+                    </li>-->
                 </ul>
             </div>
             <script>

@@ -19,7 +19,7 @@ class AdminController extends BaseController {
      * tambah referensi universitas
      */
 
-    public function addUniversitas($id = null) {
+    public function addUniversitas($posisi=null,$batas=null,$id = null) {
         $univ = new Universitas($this->registry);
         if (isset($_POST['add_univ'])) {
             $kode = $_POST['kode'];
@@ -37,6 +37,8 @@ class AdminController extends BaseController {
             if (!$univ->add_univ()) {
                 $this->view->d_rekam = $univ;
                 $this->view->error = $univ->get_error();
+            }else{
+                ClassLog::write_log('universitas','rekam',$nama);
             }
         }
         if (!is_null($id)) {
@@ -81,7 +83,8 @@ class AdminController extends BaseController {
                 $this->view->pic = $pic->get_user(TRUE);
                 $this->view->render('admin/universitas');
             } else {
-                header('location:' . URL . 'admin/addUniversitas');
+                ClassLog::write_log('universitas','ubah',$nama);
+                header('location:' . URL . 'admin/addUniversitas/'.$halaman.'/'.$batas);
             }
         }
     }
@@ -99,8 +102,11 @@ class AdminController extends BaseController {
             return;
         }
         $univ->set_kode_in($id);
+        $d_univ = $univ->get_univ_by_id($univ);
+        $nama = $d_univ->get_nama();
         $univ->delete_univ();
-        header('location:' . URL . 'admin/addUniversitas');
+        ClassLog::write_log('universitas','hapus',$nama);
+        header('location:' . URL . 'admin/addUniversitas/'.$halaman."/".$batas);
     }
 
     /*
@@ -123,6 +129,8 @@ class AdminController extends BaseController {
             if (!$fakul->add_fakul()) {
                 $this->view->d_rekam = $fakul;
                 $this->view->error = $fakul->get_error();
+            }else{
+                ClassLog::write_log('fakultas','rekam',$nama);
             }
         }
         if (!is_null($id)) {
@@ -160,7 +168,8 @@ class AdminController extends BaseController {
             $this->view->data = $fakul->get_fakul();
             $this->view->render('admin/fakultas');
         } else {
-            header('location:' . URL . 'admin/addFakultas');
+            ClassLog::write_log('fakultas','ubah',$nama);
+            header('location:' . URL . 'admin/addFakultas/'.$halaman."/".$batas);
         }
     }
 
@@ -177,8 +186,11 @@ class AdminController extends BaseController {
             return;
         }
         $fakul->set_kode_fakul($id);
+        $d_fakul = $fakul->get_fakul_by_id($fakul);
+        $nama = $d_fakul->get_nama();
         $fakul->delete_fakul();
-        header('location:' . URL . 'admin/addFakultas');
+        ClassLog::write_log('fakultas','hapus',$nama);
+        header('location:' . URL . 'admin/addFakultas/'.$halaman."/".$batas);
     }
 
     /*
@@ -209,6 +221,8 @@ class AdminController extends BaseController {
             if (!$jur->add_jurusan()) {
                 $this->view->d_rekam = $jur;
                 $this->view->error = $jur->get_error();
+            }else{
+                ClassLog::write_log('jurusan','rekam',$nama);
             }
         }
         if (!is_null($id)) {
@@ -258,6 +272,7 @@ class AdminController extends BaseController {
             $this->view->data = $jur->get_jurusan();
             $this->view->render('admin/jurusan');
         } else {
+            ClassLog::write_log('jurusan','ubah',$nama);
             header('location:' . URL . 'admin/addJurusan');
         }
     }

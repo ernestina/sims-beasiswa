@@ -12,7 +12,7 @@ class SurattugasController extends BaseController{
         $this->kd_user = Session::get('kd_user');
     }
     
-    public function datast($id=null){
+    public function datast($id=0, $halaman=1,$batas=2){
         $st = new SuratTugas($this->registry);
         if(isset($_POST['sb_add'])){
             $jur = $_POST['jur'];
@@ -49,7 +49,7 @@ class SurattugasController extends BaseController{
             ClassLog::write_log('surat_tugas','rekam',$ref);
         }
         $aksi = array();
-        if(!is_null($id)){
+        if($id!=0){
             $st->set_kd_st($id);
             $this->view->d_ubah = $st->get_surat_tugas_by_id($st,$this->kd_user);
             $is_exist_file = ($this->view->d_ubah->get_file()!=NULL)?true:false;
@@ -70,14 +70,27 @@ class SurattugasController extends BaseController{
         $this->view->d_jur = $jur->get_jurusan();
         $this->view->d_th_masuk = $st->get_list_th_masuk(true);
         $this->view->d_th_masuk_input = $st->get_list_th_masuk(false);
-        $this->view->d_st = $st->get_surat_tugas($this->kd_user);
+        $this->view->d_st_all = $st->get_surat_tugas($this->kd_user);
         $this->view->aksi = json_encode($aksi);
         $this->view->d_file_exist = json_encode($file);
-        if(!is_null($id)){
+        if($id!=0){
             $jur = $this->view->d_ubah->get_jur();
             $univ = $univ->get_univ_by_jur($jur);
             $this->view->univ = $univ->get_kode_in();
         }
+        /**start paging**/
+        $url = '';
+        if($id==0){
+            $url = 'surattugas/datast/0';
+        }else{
+            $url = 'surattugas/datast/'.$id;
+        }
+        $this->view->url = $url;
+        $this->view->paging = new Paging($url, $batas, $halaman);
+        $this->view->jmlData = count($this->view->d_st_all);
+        $posisi = $this->view->paging->cari_posisi();
+        $this->view->d_st = $st->get_surat_tugas_limit($posisi, $batas, $this->kd_user);
+        /**end paging**/
         $this->view->render('riwayat_tb/data_st');
     }
     
@@ -106,15 +119,18 @@ class SurattugasController extends BaseController{
             'TGL_SEL_ST'=>  Tanggal::ubahFormatTanggal($tgl_selesai),
             'THN_MASUK'=>$th_masuk
         );
-        
-        if(!is_null($_FILES['fupload'])){
-            $upload = $this->registry->upload;
-            $upload->init('fupload');
-            $upload->setDirTo('files/');
+        if($_FILES['fupload']['name']!=''){
+//            $upload = $this->registry->upload;
+            $this->registry->upload->init('fupload');
+            $this->registry->upload->setDirTo('files/st/');
             $nama = array($nomor,$tgl_st);
-            $upload->changeFileName($upload->getFileName(),$nama);
-//            $upload->uploadFile();
-            $data['FILE_ST']=$upload->getFileTo();
+            $this->registry->upload->changeFileName($this->registry->upload->getFileName(),$nama);
+            $data['FILE_ST']=$this->registry->upload->getFileTo();
+            if(file_exists('files/st/'.$data['FILE_ST'])){
+                unlink('files/st/'.$data['FILE_ST']);
+            }
+            $this->registry->upload->uploadFile();
+            
             
         }
         $st->set_kd_st($kd_st);

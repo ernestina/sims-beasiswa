@@ -49,7 +49,7 @@
             <tr><td><label>Nama</label></td><td><input type="text" id="t_nm" name="nama" readonly></td></tr>
             <tr><td><label>Jenis Kelamin</label></td><td><input type="text" id="t_jk" name="jkel" readonly></td></tr>
             <tr><td><label>Golongan</label></td><td><input type="text" id="t_gol" name="gol" readonly></td></tr>
-            <tr><td><label>Unit Asal</label></td><td><input type="text" id="t_unit" name="unit" readonly></td></tr>
+            <tr><td><label>Unit Asal</label></td><td><input type="text" id="t_unit" name="unit"></td></tr>
             <tr><td><label>Email</label></td><td><input type="text" id="t_email" name="email"></td></tr>
             <tr><td><label>No. HP</label></td><td><input type="text" id="t_hp" name="telp"></td></tr>
             <tr><td><label>Bank Penerima</label></td><td>

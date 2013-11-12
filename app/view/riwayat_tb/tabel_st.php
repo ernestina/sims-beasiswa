@@ -13,7 +13,7 @@
             </thead>
 			<tbody style="text-align: center">
             <?php 
-                $no=1;
+                $no=$this->paging->page*$this->paging->batas;
                 if(count($this->d_st)>0){
                     foreach($this->d_st as $val){
                         echo "<tr>";

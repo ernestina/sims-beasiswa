@@ -157,7 +157,14 @@
             </tr>
         </table>
     </div>
+
     <div id="tb_sc">
+        <?php 
+    if($this->jmlData>0){
+            $jmlhal = $this->paging->jml_halaman($this->jmlData);
+            $paging = $this->paging->navHalaman($jmlhal);
+            echo $paging; }
+?></br>
         <?php 
             $this->load('riwayat_tb/tabel_sc');
         ?>

@@ -44,7 +44,7 @@ class Penerima {
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV
                 WHERE d.KD_USER=".$kd_user;
-        if(!is_null($posisi) AND !is_null($batas)){
+        if(!is_null($posisi)){
             $sql .= " LIMIT ".$posisi.",".$batas;
         }
 //        echo $sql;
@@ -556,7 +556,7 @@ class Penerima {
         return $data;
     }
     
-    public function get_penerima_filter($univ, $thn_masuk, $status, $kd_user){
+    public function get_penerima_filter($univ, $thn_masuk, $status, $kd_user, $posisi=null, $batas=null){
         $sql = "SELECT a.KD_PB as KD_PB,";
         $sql .= "a.KD_ST as KD_ST,
             a.KD_JUR as KD_JUR,
@@ -603,6 +603,9 @@ class Penerima {
             $sql .= "WHERE g.KD_UNIV=".$univ."  AND a.KD_STS_TB=".$status;
         }
         $sql .= " AND g.KD_USER=".$kd_user;
+        if(!is_null($posisi)){
+            $sql .= " LIMIT ".$posisi.",".$batas;
+        }
 //        echo $sql;
         $result = $this->db->select($sql);
         $data = array();
