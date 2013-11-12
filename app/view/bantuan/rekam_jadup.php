@@ -3,9 +3,9 @@
 
 
 <div class="fitur">
+	<form method="POST" onSubmit="return cekField();" action="<?php echo URL; ?>elemenBeasiswa/saveJadup" enctype="multipart/form-data">
     <fieldset><legend>Rekam Biaya Hidup</legend>
 	<div class="kolom1">
-        <form method="POST" onSubmit="return cekField();" action="<?php echo URL; ?>elemenBeasiswa/saveJadup" enctype="multipart/form-data">
             <noscript>
             <input  type="hidden" name="js" value="1" />
             </noscript>
@@ -115,6 +115,7 @@
         </form>
     
 </div>
+
 </div>
 
 <script type="text/javascript">

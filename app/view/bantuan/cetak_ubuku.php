@@ -40,7 +40,7 @@ $biaya_per_pegawai = $this->elemen->get_biaya_per_peg();
             SEMESTER <?php echo " " . $semester . " "; ?> TAHUN <?php echo " " . $this->elemen->get_thn() . " "; ?> 
         </p>
 
-        <table border="0" align="center" cellspacing=0 cellpadding=0 width=90% style="border-width: 0px; font-size: 10px;">
+        <table border="0" align="center" cellspacing=0 cellpadding=0 width=97% style="border-width: 0px; font-size: 10px;">
             <tr>
                 <td class="td2" align="right"> 
                     <FORM>
@@ -49,7 +49,7 @@ $biaya_per_pegawai = $this->elemen->get_biaya_per_peg();
                 </td>
             </tr>
         </table>
-        <table align="center" cellspacing=0 cellpadding=4 width=90% style="border-width: 1px; font-size: 10px; border-style: solid; border-color: black;">
+        <table align="center" cellspacing=0 cellpadding=4 width=97% style="border-width: 1px; font-size: 10px; border-style: solid; border-color: black;">
             <tr>
                 <th >No</th>
                 <th >Nama</th>

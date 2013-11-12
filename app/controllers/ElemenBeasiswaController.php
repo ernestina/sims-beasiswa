@@ -256,6 +256,7 @@ class elemenBeasiswaController extends BaseController {
     }
 
     public function saveJadup() {
+		
         if (isset($_POST['rekam_jadup'])) { //if 1
             if (isset($_POST['js']) && $_POST['js'] == 1) {
                 header('location:' . URL . 'elemenBeasiswa/viewJadup');

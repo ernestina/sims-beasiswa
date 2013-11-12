@@ -57,7 +57,7 @@
             <?php echo PER." ".strtoupper(Tanggal::getTglSekarangIndo()); ?>
 
         </p>
-        <table border="0" align="center" cellspacing=0 cellpadding=0 width=90% style="border-width: 0px; font-size: 10px;">
+        <table border="0" align="center" cellspacing=0 cellpadding=0 width=97% style="border-width: 0px; font-size: 10px;">
             <tr>
                 <td class="td2" align="right"> 
                     <FORM>
@@ -66,7 +66,7 @@
                 </td>
             </tr>
         </table>
-        <table align="center" cellspacing=0 cellpadding=4 width=90% style="border-width: 1px; font-size: 10px; border-style: solid; border-color: black;">
+        <table align="center" cellspacing=0 cellpadding=4 width=97% style="border-width: 1px; font-size: 10px; border-style: solid; border-color: black;">
             <thead>
             <th>No</th>
             <?php $k=0; ?>
