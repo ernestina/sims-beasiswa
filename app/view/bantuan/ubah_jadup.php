@@ -141,10 +141,10 @@
         
     //menampilkan datepicker   
     $(function() { 
-        $("#tgl_sp2d").datepicker({dateFormat: "dd-mm-yy"
-            //            buttonImage:'images/calendar.gif',
-            //            buttonImageOnly: true,
-            //            showOn: 'button'
+        $("#tgl_sp2d").datepicker({
+		dateFormat: "dd-mm-yy",
+                changeMonth: true,
+				changeYear: true
         }); 
     });
     
