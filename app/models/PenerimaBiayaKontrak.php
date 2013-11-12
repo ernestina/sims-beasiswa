@@ -128,6 +128,13 @@ class PenerimaBiayaKontrak extends BaseModel {
         //echo $id;
         $this->db->delete($table, $where);
     }
+	
+	public function deleteByBiaya($kd_biaya) {
+        $table = "t_tagihan_kontrak";
+        $where = 'KD_TAGIHAN=' . $kd_biaya;
+        //echo $id;
+        $this->db->delete($table, $where);
+    }
 
 }
 

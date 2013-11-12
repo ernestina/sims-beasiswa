@@ -806,7 +806,7 @@ class KontrakController extends BaseController {
 					$penerima_biaya = new PenerimaBiayaKontrak();	 
 					
 					//menghapus data penerima biaya berdasarkan kd_biaya
-					$penerima_biaya->delete($_POST['kd_penerima_biaya']);
+					$penerima_biaya->deleteByBiaya($biaya->kd_biaya);
 
 					//menambahkan data penerima biaya berdasrkan ceklist.
 					$penerima_biaya->kd_biaya = $biaya->kd_biaya;
@@ -973,7 +973,8 @@ class KontrakController extends BaseController {
             //echo $data->kd_kontrak;
         }
     }
-
+	
+	
     
     //melakukan proses penambahan pb ke dalam data tagihan biaya kontrak
     public function addTagihanPb() {

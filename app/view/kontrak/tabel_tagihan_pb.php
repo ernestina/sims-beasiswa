@@ -10,10 +10,10 @@
 $i = 1;
             foreach ($this->pb as $val) {
                 $penerima_biaya = $this->penerima_biaya->get_by_biaya_pb($this->kd_biaya, $val->get_kd_pb());
-                if($penerima_biaya!=false){
-                    $check = " checked";
-                } else {
+                if($penerima_biaya ==false){
                     $check = "";
+                } else {
+                    $check = " checked";
                 }
                         ?>
                 <tr>
