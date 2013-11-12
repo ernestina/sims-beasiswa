@@ -56,7 +56,7 @@
                 ?></td>
                     <td><?php echo $val->status_bayar; ?></td>
                     <td>
-                        <a href="<?php echo URL . "kontrak/delBiaya/" . $val->kd_biaya; ?>" onClick="return del();" title="hapus"><i class="icon-trash"></i></a> &nbsp
+                        <a href="<?php echo URL . "kontrak/delBiaya/" . $val->kd_biaya; ?>" onClick="return del('<?php echo $val->nama_biaya; ?>');" title="hapus"><i class="icon-trash"></i></a> &nbsp
                         <a href="<?php echo URL . "kontrak/editBiaya/" . $val->kd_biaya; ?> " title="ubah"><i class="icon-pencil"></i></a>
                     </td>
                 </tr>
@@ -79,8 +79,9 @@
 
 <script>
     //konfirmasi hapus biaya
-    function del(){
-        if(confirm('Apakah Anda yakin akan menghapus data ini?'))
+    function del(biaya){
+	 var txt = "Yakin data biaya "+biaya+" akan dihapus?";
+        if(confirm(txt))
             return true;
         else return false
     }

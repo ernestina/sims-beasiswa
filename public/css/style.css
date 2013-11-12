@@ -1126,10 +1126,6 @@ th, td {
     z-index:1000;
 }
 
-/*.ui-widget{
-    font-family: "Nexa";
-    font-size: 97%;
-}*/
 
 .loading {
     position: absolute;
@@ -1272,3 +1268,13 @@ footer p { font-family: Sub;}
 .ui-tabs{
     border: none;
 }
+
+.ui-datepicker select.ui-datepicker-month,
+.ui-datepicker select.ui-datepicker-year {
+        width: 50%;
+		font-size:8pt;
+		display:inline;
+		height: 25px;
+		
+}
+

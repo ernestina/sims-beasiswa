@@ -4,61 +4,37 @@
     <th>NIP</th>
     <th>Nama</th>
     <th>Status</th>
-    <th>Aksi</th>
+    <th>Pilihan</th>
 </thead>
 <?php
 $i = 1;
-$status = new Status();
-//var_dump($this->penerima_biaya);
-foreach ($this->penerima_biaya as $val) {
-    //echo $val->kd_penerima_beasiswa;
-    $this->penerima->set_kd_pb($val->kd_penerima_beasiswa);
-    //var_dump($this->penerima->get_kd_pb());
-    $penerima = $this->penerima->get_penerima_by_id($this->penerima);
-    //var_dump($penerima);
-    $status_pb = $status->get_by_id($penerima->get_status());
-    ?>
-    <tr>
-        <td><?php echo $i; ?></td>
-        <td><?php echo $penerima->get_nip(); ?></td>
-        <td><?php echo $penerima->get_nama(); ?></td>
-        <td><?php echo $status_pb->nm_status; ?></td>
-        <td>
-            <a href="#" onClick="del_tagihan_pb(<?php echo $val->kd_penerima_biaya; ?>); return false;" title="hapus"><i class="icon-trash"></i></a>
-        </td>
-    </tr> 
-    <?php
-    $i++;
-}
-?>
-</table>
-
-<script>
-    
-    function del_tagihan_pb(id){
-        if(confirm('Apakah Anda yakin akan menghapus data ini?')){
-            $.ajax({
-                type:"POST",
-                url: "<?php echo URL; ?>kontrak/delTagihanPb",
-                data: {kd_penerima_biaya: id},
-                cache: false,
-                success: function(){
-                    displayTabelBiayaPb();
-                    $("<div>Data berhasil dihapus.</div>").dialog({
-                        modal: true,
-                        buttons: {
-                            Ok: function() {
-                                $( this ).dialog( "close" );
-                            }
-                        }
-                    }); 
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {                          
-                    alert('tidak dapat memproses saat ini.');
+            foreach ($this->pb as $val) {
+                $penerima_biaya = $this->penerima_biaya->get_by_biaya_pb($this->kd_biaya, $val->get_kd_pb());
+                if($penerima_biaya!=false){
+                    $check = " checked";
+                } else {
+                    $check = "";
                 }
-            });
-                       
-        } else {return false}  
-    }
-    
-</script>
+                        ?>
+                <tr>
+                    <td><?php echo $i; ?></td>
+                    <td><?php echo $val->get_nip(); ?></td>
+                    <td><?php echo $val->get_nama(); ?></td>
+                    <td><?php echo StatusPB::status_int_string($val->get_status()); ?></td>
+                    <td><input type="checkbox" value="<?php echo $val->get_kd_pb(); ?>" name="<?php echo "penerima[]"; ?>" id="<?php echo "penerima[]"; ?>" <?php echo $check; ?>/></td>
+                </tr> 
+                <?php
+                $i++;
+            }
+            ?>
+        </table>
+
+		<script>
+		$(":checkbox").change(function(){
+						
+			if(ceklist() == $('#jml_peg').val()){
+				removeError('wjml_penerima');
+			}
+		})		
+		</script>
+

@@ -146,10 +146,11 @@
         
         //menampilkan datepicker   
         $(function() { 
-            $("#tanggal").datepicker({dateFormat: "dd-mm-yy"
-                //            buttonImage:'images/calendar.gif',
-                //            buttonImageOnly: true,
-                //            showOn: 'button'
+            $("#tanggal").datepicker({
+				dateFormat: "dd-mm-yy",
+                changeMonth: true,
+				changeYear: true
+				
             }); 
         });
         

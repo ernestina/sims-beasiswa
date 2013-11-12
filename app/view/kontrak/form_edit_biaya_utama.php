@@ -75,11 +75,11 @@
         
         //menampilkan datepicker   
         $(function() { 
-            $("#jadwal_bayar").datepicker({dateFormat: "dd-mm-yy"
-                //            buttonImage:'images/calendar.gif',
-                //            buttonImageOnly: true,
-                //            showOn: 'button'
-            }); 
+            $("#jadwal_bayar").datepicker({
+				dateFormat: "dd-mm-yy",
+                changeMonth: true,
+				changeYear: true
+            });
         });
         
     }) //selesai jquery

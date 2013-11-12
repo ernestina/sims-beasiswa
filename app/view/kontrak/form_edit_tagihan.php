@@ -69,8 +69,8 @@
         </div>
 
         <div class="kolom2">
-            <label class="isian">No. Ringkasan Kontrak</label>
-            <input type="text" size="30" name="no_ring_kon" id="no_ring_kon" value="<?php echo $this->biaya->no_ring_kontrak; ?>">
+            <!-- label class="isian">No. Ringkasan Kontrak</label -->
+            <input type="hidden" size="30" name="no_ring_kon" id="no_ring_kon" value="ring_kon">
             <div id="wno_ring_kon"></div>
             <label class="isian">Tgl Ringkasan Kontrak</label>
             <?php
@@ -93,13 +93,13 @@
             }
             ?>
             <ul class="inline">
-                <li><input type="file"size="30" name="file_ring_kon" id="file_ring_kon"></li>
+                <li><input type="file" name="file_ring_kon" id="file_ring_kon"></li>
                 <li><a href="<?php echo URL . "kontrak/fileRingKontrak/" . $file_ring_kontrak_; ?>"target="file_ring" onClick="cetak_dokumen('file_ring');"><?php if ($file_ring_kontrak_ != "") echo "lihat file"; ?></a></li>
             </ul>
             <div id="wfile_ring_kon"></div>
 
-            <label class="isian">No. Kuitansi</label>
-            <input type="text" size="30" name="no_kuitansi" id="no_kuitansi" value="<?php echo $this->biaya->no_kuitansi; ?>"> 
+            <!-- label class="isian">No. Kuitansi</label -->
+            <input type="hidden" size="30" name="no_kuitansi" id="no_kuitansi" value="kuitansi"> 
             <div id="wno_kuitansi"></div>
             <label class="isian">Tgl. Kuitansi</label>
             <?php
@@ -128,13 +128,19 @@
             </ul>
             <div id="wfile_kuitansi"></div>
         </div>
-        <ul class="inline">
-            <li>Data Penerima :</li> 
-            <li id="tambah_penerima">(tambah)</li>
-            <li id="wjml_penerima"></li>
+		<br/>
+		<div class="kolom4">
+		<table width="100%">
+		<tr>
+		<td>
+		Daftar Penerima Tagihan<div id="wjml_penerima"></div>
 
         </ul>
-
+		</td>
+		</tr>
+		</table>
+		</div>
+				
         <div class="kolom4" id="tabel_penerima_biaya">
         </div>
 
@@ -219,113 +225,36 @@
         
         //menampilkan datepicker   
         $(function() { 
-            $("#tgl_bast").datepicker({dateFormat: "dd-mm-yy"
-                //            buttonImage:'images/calendar.gif',
-                //            buttonImageOnly: true,
-                //            showOn: 'button'
+            $("#tgl_bast").datepicker({
+			dateFormat: "dd-mm-yy",
+                changeMonth: true,
+				changeYear: true
             }); 
         });
         $(function() { 
-            $("#tgl_bap").datepicker({dateFormat: "dd-mm-yy"
-                //            buttonImage:'images/calendar.gif',
-                //            buttonImageOnly: true,
-                //            showOn: 'button'
+            $("#tgl_bap").datepicker({
+			dateFormat: "dd-mm-yy",
+                changeMonth: true,
+				changeYear: true
             }); 
         });
         $(function() { 
-            $("#tgl_ring_kon").datepicker({dateFormat: "dd-mm-yy"
-                //            buttonImage:'images/calendar.gif',
-                //            buttonImageOnly: true,
-                //            showOn: 'button'
+            $("#tgl_ring_kon").datepicker({
+			dateFormat: "dd-mm-yy",
+                changeMonth: true,
+				changeYear: true
             }); 
         });
         $(function() { 
-            $("#tgl_kuitansi").datepicker({dateFormat: "dd-mm-yy"
-                //            buttonImage:'images/calendar.gif',
-                //            buttonImageOnly: true,
-                //            showOn: 'button'
+            $("#tgl_kuitansi").datepicker({
+			dateFormat: "dd-mm-yy",
+                changeMonth: true,
+				changeYear: true
             }); 
         });
         
-        $("#tambah_penerima").mouseover(function() {
-            $(this).css('cursor', 'pointer');
-        });
-        
-        
-        $("#tambah_penerima").click(function() {
-            $.ajax({
-                type:"POST",
-                url: "<?php echo URL; ?>kontrak/viewAddTagihanPb",
-                data: {kd_kontrak:$("#kd_kontrak").val(),kd_biaya:$("#kd_biaya").val()},
-                cache: false,
-                success: function(penerima){
-                    $('#dialog_form').fadeIn(100);
-                    $('#dialog_form').html(penerima);
-                }
-            });
-            $( "#dialog_form" ).dialog( "open" );
-        });  
-        
-        function ceklist(){
-            var chks = document.getElementsByName('penerima[]');
-            var hasChecked = false;
-            for (var i = 0; i < chks.length; i++){
-                if (chks[i].checked){
-                    hasChecked = true;
-                    break;
-                }
-            }
-            return hasChecked;
-        }
-        
-        $("#dialog_form").dialog({
-            autoOpen: false,
-            height: 600,
-            width: 800,
-            modal: true,
-            bgiframe: true,
-            position: 'top',
-            draggable: false,
-            buttons: {
-                "Tambahkan ke tagihan": function() {
-                    if(ceklist()==true){
-                        //var penerima = document.getElementsByName('penerima[]');
-                        var kd_biaya =  $("#kd_biaya").val();
-                        var vals = []
-                        $('input:checkbox[name="penerima[]"]').each(function() {
-                            if (this.checked) {
-                                vals.push(this.value);
-                            }
-                        });
-                       
-                        $.ajax({
-                            type:"POST",
-                            url: "<?php echo URL; ?>kontrak/addTagihanPb",
-                            data: {penerima:vals,kd_biaya:kd_biaya},
-                            cache: false,
-                            dataType: 'json',
-                            success: function(msg){
-                                if(msg.respon=="sukses"){
-                                    displayTabelBiayaPb();
-                                    alert('Data berhasil ditambahkan');   
-                                }
-                            },
-                            error: function(XMLHttpRequest, textStatus, errorThrown) {                          
-                                alert('tidak dapat memproses saat ini.');
-                            }
-                        });
-                        $( this ).dialog( "close" );
-                    } else {
-                        alert("Pilihan ceklist belum diisi.");
-                    }
-                    
-                },
-                Cancel: function() {
-                    $( this ).dialog( "close" );
-                }
-            }
-        });
-          
+               
+                  
     })
     
     //menampilkan data penerima biaya
@@ -333,7 +262,7 @@
         $.ajax({
             type:"POST",
             url: "<?php echo URL; ?>kontrak/getTagihanPbByBiaya",
-            data: {kd_biaya:$("#kd_biaya").val()},
+            data: {kd_kontrak:$("#kd_kontrak").val(),kd_biaya:$("#kd_biaya").val()},
             cache: false,
             success: function(penerima){
                 $('#tabel_penerima_biaya').fadeIn(100);
@@ -397,14 +326,14 @@
             jml++;
         }
             
-        if($('#tgl_no_ring_kon').val()==''){
-            viewError('wtgl_no_ring_kon','Tanggal ringkasan kontrak harus diisi.');
+        if($('#tgl_ring_kon').val()==''){
+            viewError('wtgl_ring_kon','Tanggal ringkasan kontrak harus diisi.');
             jml++;
         }
             
-        if($('#file_no_ring_kon').val()==''){
-            if($('#file_no_ring_kon_lama').val()==''){
-                viewError('wfile_no_ring_kon','File ringkasan kontrak harus diisi.');
+        if($('#file_ring_kon').val()==''){
+            if($('#file_ring_kon_lama').val()==''){
+                viewError('wfile_ring_kon','File ringkasan kontrak harus diisi.');
                 jml++;
             }
         }
@@ -425,28 +354,31 @@
                 jml++;
             }
         }
-        
-        var cek = "";
-        $.ajax({
-            type:"POST",
-            url: "<?php echo URL; ?>kontrak/cekTagihanPbByBiaya",
-            data: {kd_biaya:$("#kd_biaya").val()},
-            dataType: 'json',
-            async: false,
-            success: function(hasil){                 
-                cek = hasil.respon; 
-            }
-        });
-        if(cek == false){
-            viewError('wjml_penerima','Jumlah data penerima tagihan tidak cocok dengan biaya utama.');
+		
+		if(ceklist() != $('#jml_peg').val()){
+			viewError('wjml_penerima','Jumlah penerima tagihan tidak sesuai dengan data utama biaya.');
             jml++;
-        }
-        
+		} 
+                
+                
         if(jml>0){
             return false;
         }
             
     }
+	
+	function ceklist(){
+            var chks = document.getElementsByName('penerima[]');
+            var j =0;
+            for (var i = 0; i < chks.length; i++){
+                if (chks[i].checked){
+                    j++;
+                }
+            }
+            return j;
+        }
+	
+	
        
     $('#batal2').click(function(){
         removeError('wno_bast');       
@@ -460,7 +392,8 @@
         removeError('wfile_ring_kon'); 
         removeError('wno_kuitansi');       
         removeError('wtgl_kuitansi');  
-        removeError('wfile_kuitansi');     
+        removeError('wfile_kuitansi');
+		removeError('wjml_penerima');		
              
     })        
     

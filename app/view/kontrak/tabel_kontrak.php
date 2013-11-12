@@ -79,7 +79,7 @@ if($this->cur_page !="" && $this->page_num!="") echo "HALAMAN ".$this->cur_page.
                     <td>
                         <a href="#" onClick="edit(<?php echo $val->kd_kontrak; ?>); return false;"><i class=\"icon-pencil\"></i></a>
                         <?php
-                        echo "<a href=" . URL . "kontrak/delKontrak/" . $val->kd_kontrak . " onClick=\"return del();\" title=\"hapus\"><i class=\"icon-trash\"></i></a> &nbsp
+                        echo "<a href=" . URL . "kontrak/delKontrak/" . $val->kd_kontrak . " onClick=\"return del('".$val->no_kontrak."');\" title=\"hapus\"><i class=\"icon-trash\"></i></a> &nbsp
                      <a href=\"#\" onClick=\"edit(" . $val->kd_kontrak . "); return false;\"><i class=\"icon-pencil\" title=\"ubah\"></i></a> &nbsp
                      <a href=" . URL . "kontrak/biaya/" . $val->kd_kontrak . "><i class=\"icon-tag\" title=\"tambah detail biaya\"></i></a>";
                         //echo $val->kd_kontrak;
@@ -98,8 +98,9 @@ if($this->cur_page !="" && $this->page_num!="") echo "HALAMAN ".$this->cur_page.
 
 </div>
 <script>
-    function del(){
-        if(confirm('Apakah Anda yakin akan menghapus data ini?'))
+    function del(kontrak){
+        var txt = "Yakin data kontrak "+kontrak+" akan dihapus?";
+        if(confirm(txt))
             return true;
         else return false
     }

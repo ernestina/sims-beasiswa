@@ -29,6 +29,7 @@
         <li><input type="file" name="file_sp2d" id="file_sp2d"></li>
         <li><a href="<?php echo URL . "kontrak/fileSp2d/" . $file_sp2d_; ?>"target="file_sp2d" onClick="cetak_dokumen('file_sp2d');"><?php if($file_sp2d_ !="") echo "lihat file"; ?></a></li>
     </ul>
+	<div id="wfile_sp2d"></div>
 <!--            <label>Jumlah dibayar</label><input type="text" size="14">-->
 
     <input type="hidden" id="kd_biaya" name="kd_biaya" value="<?php echo $this->biaya->kd_biaya; ?>">
@@ -59,10 +60,10 @@
     $(document).ready(function(){  //mulai jquery
       
         $(function() { 
-            $("#tgl_sp2d").datepicker({dateFormat: "dd-mm-yy"
-                //            buttonImage:'images/calendar.gif',
-                //            buttonImageOnly: true,
-                //            showOn: 'button'
+            $("#tgl_sp2d").datepicker({
+			dateFormat: "dd-mm-yy",
+                changeMonth: true,
+				changeYear: true
             }); 
         });
 

@@ -513,13 +513,16 @@ class KontrakController extends BaseController {
                     $biaya->addBiaya($biaya);
                     //header('location:' . URL . 'kontrak/biaya/' . $biaya->kd_kontrak);
                     $url = URL . 'kontrak/biaya/' . $biaya->kd_kontrak;
-                    header("refresh:1;url=" . $url);
-                    echo "Data biaya berhasil disimpan.";
+                    //header("refresh:1;url=" . $url);
+                    //echo "Data biaya berhasil disimpan.";                   
+                    echo '<script> alert("Data biaya berhasil disimpan") </script>';
+                    echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
                 } else {
                     $url = URL . 'kontrak/rekamBiaya/' . $biaya->kd_kontrak;
                     header("refresh:1;url=" . $url);
                     echo "Isian Biaya per pegawai, jumlah pegawai dan jumlah biaya harus diisi angka.";
                     //header('location:' . URL . 'kontrak/rekamBiaya/'.$biaya->kd_kontrak); 
+					
                 }
             } else {
                 $url = URL . 'kontrak/rekamBiaya/' . $biaya->kd_kontrak;
@@ -595,7 +598,7 @@ class KontrakController extends BaseController {
     //melakukan proses update biaya pada halaman edit_biaya
     public function updateBiaya() {
         if (isset($_POST['update_biaya'])) {
-            sleep(1);
+            //sleep(1);
             $biaya = new Biaya();
             $biaya->kd_biaya = $_POST['kd_biaya'];
             $biaya->kd_kontrak = $_POST['kd_kontrak'];
@@ -737,7 +740,6 @@ class KontrakController extends BaseController {
                 //echo count($penerima_biaya);
                 //echo $biaya->jml_pegawai_bayar;
                 //exit();
-                if (count($penerima_biaya) == $biaya->jml_pegawai_bayar) {
                     $upload = new Upload();
                     if ($_FILES['file_bast']['name'] != "") {
                         $upload->init('file_bast');
@@ -745,6 +747,13 @@ class KontrakController extends BaseController {
                         $nama = array($biaya->no_bast, $biaya->tgl_bast);
                         $upload->uploadFile2("", $nama);
                         $biaya->file_bast = $upload->getFileTo();
+						if($_POST['file_bast_lama']!=""){
+							$file1 = "files/bast/" . $_POST['file_bast_lama'];
+							//echo $file;
+							if (file_exists($file1)) {
+							unlink($file1);
+							}
+						}
                     }
 
                     if ($_FILES['file_bap']['name'] != "") {
@@ -753,6 +762,13 @@ class KontrakController extends BaseController {
                         $nama = array($biaya->no_bap, $biaya->tgl_bap);
                         $upload->uploadFile2("", $nama);
                         $biaya->file_bap = $upload->getFileTo();
+						if($_POST['file_bap_lama']!=""){
+							$file2 = "files/bap/" . $_POST['file_bap_lama'];
+							//echo $file;
+							if (file_exists($file2)) {
+							unlink($file2);
+							}
+						}
                     }
 
                     if ($_FILES['file_ring_kon']['name'] != "") {
@@ -761,6 +777,13 @@ class KontrakController extends BaseController {
                         $nama = array($biaya->no_ring_kontrak, $biaya->tgl_ring_kontrak);
                         $upload->uploadFile2("", $nama);
                         $biaya->file_ring_kontrak = $upload->getFileTo();
+						if($_POST['file_ring_kon__lama']!=""){
+							$file3 = "files/ringkasan_kontrak/" . $_POST['file_ring_kon_lama'];
+							//echo $file;
+							if (file_exists($file3)) {
+							unlink($file3);
+							}
+						}
                     }
 
                     if ($_FILES['file_kuitansi']['name'] != "") {
@@ -769,29 +792,37 @@ class KontrakController extends BaseController {
                         $nama = array($biaya->no_kuitansi, $biaya->tgl_kuitansi);
                         $upload->uploadFile2("", $nama);
                         $biaya->file_kuitansi = $upload->getFileTo();
+						if($_POST['file_kuitansi_lama']!=""){
+							$file4 = "files/kwitansi/" . $_POST['file_kuitansi_lama'];
+							//echo $file;
+							if (file_exists($file4)) {
+							unlink($file4);
+							}
+						}
                     }
-
                     $biaya->updateTagihan($biaya);
-                    //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
+					
+					$penerima = $_POST['penerima'];					
+					$penerima_biaya = new PenerimaBiayaKontrak();	 
+					
+					//menghapus data penerima biaya berdasarkan kd_biaya
+					$penerima_biaya->delete($_POST['kd_penerima_biaya']);
+
+					//menambahkan data penerima biaya berdasrkan ceklist.
+					$penerima_biaya->kd_biaya = $biaya->kd_biaya;
+					foreach ($penerima as $pb) {
+						$penerima_biaya->kd_penerima_beasiswa = $pb;
+						$penerima_biaya->add($penerima_biaya);
+					}
+					
                     $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya."/1";
-//                    header("refresh:1;url=" . $url);
-//                    echo "Perubahan data tagihan berhasil disimpan.";
                     echo '<script> alert("Perubahan data tagihan berhasil disimpan") </script>';
                     echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
-                } else {
-                    //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
-                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya."/1";
-//                    header("refresh:1;url=" . $url);
-//                    echo "Jumlah pegawai yang akan dibayarkan dengan data penerima pada tagihan tidak sama.";
-                    echo '<script> alert("Jumlah pegawai yang akan dibayarkan dengan data penerima pada tagihan tidak sama") </script>';
-                    echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
-                }
+                
             } else {
                 //echo "kosong";
                 //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
                 $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya."/1";
-//                header("refresh:1;url=" . $url);
-//                echo "Isian form belum lengkap.";
                 echo '<script> alert("Isian form belum lengkap") </script>';
                 echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
             }
@@ -802,7 +833,7 @@ class KontrakController extends BaseController {
 
     //melakukan proses update pembayaran tagihan pada halaman edit_biaya
     public function updatePembayaran() {
-        sleep(1);
+        //sleep(1);
         if (isset($_POST['update_pembayaran'])) {
             $biaya = new Biaya();
             $biaya->kd_biaya = $_POST['kd_biaya'];
@@ -836,19 +867,22 @@ class KontrakController extends BaseController {
                         $nama = array($biaya->no_sp2d, $biaya->tgl_sp2d);
                         $upload->uploadFile2("", $nama);
                         $biaya->file_sp2d = $upload->getFileTo();
+						if($_POST['file_sp2d_lama']!=""){
+							$file = "files/sp2d/" . $_POST['file_sp2d_lama'];
+							//echo $file;
+							if (file_exists($file)) {
+							unlink($file);
+							}
+						}
                     }
                     $biaya->updatePembayaranTagihan($biaya);
-                    //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
                     $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya."/2";
-//                    header("refresh:1;url=" . $url);
-//                    echo "Perubahan data Pembayaran tagihan berhasil disimpan.";
                     echo '<script> alert("Perubahan data Pembayaran tagihan berhasil disimpan") </script>';
                     echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
                 } else {
                     //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
-                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya."/2";
-//                    header("refresh:1;url=" . $url);
-//                    echo "Isian form pembayaran tagihan biaya belum lengkap.";
+					
+                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya."/2"; //angka 2 menunjukan id tab dari pembayaran 
                     echo '<script> alert("Isian form pembayaran tagihan biaya belum lengkap") </script>';
                     echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
                 }
@@ -872,15 +906,42 @@ class KontrakController extends BaseController {
 
     //menampilkan data pb pada tabel_tagihan_pb di form_edit_tagihan yang telah masuk tagihan kontrak
     public function getTagihanPbByBiaya() {
-        if (isset($_POST['kd_biaya'])) {
-            $kd_biaya = $_POST['kd_biaya'];
-            $penerima_biaya_kontrak = new PenerimaBiayaKontrak();
-            $penerima_biaya = $penerima_biaya_kontrak->get_by_biaya($kd_biaya);
-            //var_dump($penerima_biaya);
-            $this->view->penerima_biaya = $penerima_biaya;
+        // if (isset($_POST['kd_biaya'])) {
+            // $kd_biaya = $_POST['kd_biaya'];
+            // $penerima_biaya_kontrak = new PenerimaBiayaKontrak();
+            // $penerima_biaya = $penerima_biaya_kontrak->get_by_biaya($kd_biaya);
+            // //var_dump($penerima_biaya);
+            // $this->view->penerima_biaya = $penerima_biaya;
+            // $penerima = new Penerima($this->registry);
+            // $this->view->penerima = $penerima;
+            // $this->view->load('kontrak/tabel_tagihan_pb');
+        // }
+		
+		 if (isset($_POST['kd_kontrak']) && isset($_POST['kd_biaya'])) {
+            $kontrak = new Kontrak();
+            $data_kontrak = $kontrak->get_by_id($_POST['kd_kontrak']);
             $penerima = new Penerima($this->registry);
-            $this->view->penerima = $penerima;
+            $pb = $penerima->get_penerima_by_kd_jur_thn_masuk($data_kontrak->kd_jurusan, $data_kontrak->thn_masuk_kontrak);
+            $penerima_biaya = new PenerimaBiayaKontrak();
+            $this->view->pb = $pb;
+            $this->view->penerima_biaya = $penerima_biaya;
+            $this->view->kd_biaya = $_POST['kd_biaya'];
             $this->view->load('kontrak/tabel_tagihan_pb');
+        }
+    }
+	
+	//menampilkan form add_pb_to_tagihan_dialog untuk dialog menambahkan pb ke tagihan di form_edit_tagihan
+    public function viewAddTagihanPb() {
+        if (isset($_POST['kd_kontrak']) && isset($_POST['kd_biaya'])) {
+            $kontrak = new Kontrak();
+            $data_kontrak = $kontrak->get_by_id($_POST['kd_kontrak']);
+            $penerima = new Penerima($this->registry);
+            $pb = $penerima->get_penerima_by_kd_jur_thn_masuk($data_kontrak->kd_jurusan, $data_kontrak->thn_masuk_kontrak);
+            $penerima_biaya = new PenerimaBiayaKontrak();
+            $this->view->pb = $pb;
+            $this->view->penerima_biaya = $penerima_biaya;
+            $this->view->kd_biaya = $_POST['kd_biaya'];
+            $this->view->load('kontrak/add_pb_to_tagihan_dialog');
         }
     }
 
@@ -913,21 +974,7 @@ class KontrakController extends BaseController {
         }
     }
 
-    //menampilkan form add_pb_to_tagihan_dialog untuk dialog menambahkan pb ke tagihan di form_edit_tagihan
-    public function viewAddTagihanPb() {
-        if (isset($_POST['kd_kontrak']) && isset($_POST['kd_biaya'])) {
-            $kontrak = new Kontrak();
-            $data_kontrak = $kontrak->get_by_id($_POST['kd_kontrak']);
-            $penerima = new Penerima($this->registry);
-            $pb = $penerima->get_penerima_by_kd_jur_thn_masuk($data_kontrak->kd_jurusan, $data_kontrak->thn_masuk_kontrak);
-            $penerima_biaya = new PenerimaBiayaKontrak();
-            $this->view->pb = $pb;
-            $this->view->penerima_biaya = $penerima_biaya;
-            $this->view->kd_biaya = $_POST['kd_biaya'];
-            $this->view->load('kontrak/add_pb_to_tagihan_dialog');
-        }
-    }
-
+    
     //melakukan proses penambahan pb ke dalam data tagihan biaya kontrak
     public function addTagihanPb() {
         if (isset($_POST['penerima']) && isset($_POST['kd_biaya'])) {
