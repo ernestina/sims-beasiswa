@@ -1,3 +1,11 @@
+<table width=100% style="margin-left: 0px padding-left: 10px">
+<td width=100%><?php echo "HALAMAN ".$this->cur_page." DARI ".$this->page_num; ?></td>
+</table>
+
+
+<input type="hidden" id="cur_page" name="cur_page" value="<?php echo $this->cur_page; ?>"/>
+<input type="hidden" id="last_page" name="last_page" value="<?php echo $this->page_num; ?>"/>
+
 <table class="table-bordered zebra scroll" id="table">
     <thead>
     <th width="5%">No</th>
@@ -22,7 +30,7 @@ foreach ($this->data_biaya as $val) {
     $data_universitas = $this->universitas->get_univ_by_jur($data_kontrak->kd_jurusan);
     ?>
     <tr>
-        <td style="text-align: center"><?php echo $i; ?></td>
+        <td style="text-align: center"><?php echo $i+($this->per_page*($this->cur_page-1)); ?></td>
         <td><?php echo $data_kontrak->no_kontrak." (".$data_kontrak->tgl_kontrak.")"; ?></td>
         <td><?php echo $data_jurusan->get_nama()." ".$data_universitas->get_kode()." ".$data_kontrak->thn_masuk_kontrak; ?></td>
         <td><?php echo $val->nama_biaya; ?></td>

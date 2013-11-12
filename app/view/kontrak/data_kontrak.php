@@ -3,7 +3,7 @@
 
     <table width=100% style="margin-left: 0px">
         <tr>
-            <td width="15%" ><label >Pilih Universitas :</label></td>
+            <td width="11%" ><label >Pilih Universitas :</label></td>
             <td width="20%"style="padding-top:15px;">
                 <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/display' ?>">
 <!--            <input type="hidden" name="pilih_univ">-->
@@ -39,8 +39,23 @@
 
 
 </div>
+
+<form>
+<table width=99% style="margin-left: 0px">
+<td width="100%">
+<span class=prevnext><input type=button id="last" class=btn value='>|' ></span>
+<span class=prevnext><input type=button id="next" class=btn value='>' ></span>
+<span class=prevnext><input type=button id="prev" class=btn value='<' ></span>
+<span class=prevnext><input type=button id="first" class=btn value='|<' ></span>
+</td>
+</table>
 <div id="tb_kontrak">
 </div>
+
+</form>
+<?php 
+
+?>
 <div class="fitur">
     <br/>
     <p style="margin-left: 30px">
@@ -71,7 +86,8 @@
         });
         $("#loading").hide();
     }
-    
+	
+	    
     //ketika link edit diklik pada halaman tabel_kontrak.php
     function edit(id){
         $("#dialog_rekam_kontrak, #dialog_edit_kontrak").empty();
@@ -83,20 +99,58 @@
     $(document).ready(function(){ 
         //jika ada event onchange ambil data dari database
         $("#kd_univ").change(function(){
-            //ambil nilai univ dan url dari form
-            $("#loading").show();
-            univ = $("#kd_univ").val();
-            //url = $("#url").val();
-            $.post("<?php echo URL; ?>kontrak/get_data_kontrak", {univ:univ},
-            function(data){                
-                $('#tb_kontrak').fadeIn(100);
-                $('#tb_kontrak').html(data);
-            });
-            $("#loading").hide();
+            displayKontrak();
             $("#cari").val('');
             
         });
-        
+		
+		$("#next").click(function(){
+            $("#loading").show();
+			var page = parseInt($("#cur_page").val())+ 1;
+			$.post("<?php echo URL; ?>kontrak/get_data_kontrak", {univ:$("#kd_univ").val(), cur_page:page},
+			function(data){                
+            $('#tb_kontrak').fadeIn(100);
+            $('#tb_kontrak').html(data);
+			});
+			$("#loading").hide();
+            
+        });
+		
+		$("#prev").click(function(){
+            $("#loading").show();
+			var page = parseInt($("#cur_page").val())- 1;
+			$.post("<?php echo URL; ?>kontrak/get_data_kontrak", {univ:$("#kd_univ").val(), cur_page:page},
+			function(data){                
+            $('#tb_kontrak').fadeIn(100);
+            $('#tb_kontrak').html(data);
+			});
+			$("#loading").hide();
+            
+        });
+		
+		$("#first").click(function(){
+            $("#loading").show();
+			var page = 1;
+			$.post("<?php echo URL; ?>kontrak/get_data_kontrak", {univ:$("#kd_univ").val(), cur_page:page},
+			function(data){                
+            $('#tb_kontrak').fadeIn(100);
+            $('#tb_kontrak').html(data);
+			});
+			$("#loading").hide();
+            
+        });
+		$("#last").click(function(){
+            $("#loading").show();
+			var page = parseInt($("#last_page").val())
+			$.post("<?php echo URL; ?>kontrak/get_data_kontrak", {univ:$("#kd_univ").val(), cur_page:page},
+			function(data){                
+            $('#tb_kontrak').fadeIn(100);
+            $('#tb_kontrak').html(data);
+			});
+			$("#loading").hide();
+            
+        });
+		        
         //trigger ketika tombol tambah diklik akan menampilkan modal form rekam
         $("#tambah_kontrak").click(function() {
             $("#dialog_rekam_kontrak, #dialog_edit_kontrak").empty();

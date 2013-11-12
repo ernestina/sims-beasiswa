@@ -1,3 +1,12 @@
+
+<table width=100% style="margin-left: 0px padding-left: 10px">
+<td width=100%><?php echo "HALAMAN ".$this->cur_page." DARI ".$this->page_num; ?></td>
+</table>
+
+
+<input type="hidden" id="cur_page" name="cur_page" value="<?php echo $this->cur_page; ?>"/>
+<input type="hidden" id="last_page" name="last_page" value="<?php echo $this->page_num; ?>"/>
+
 <div id="table-content" >
     <table class="table-bordered zebra scroll">
         <thead>
@@ -18,7 +27,7 @@
             foreach ($this->data as $val) {
                 ?>
                 <tr>
-                    <td><?php echo $i; ?></td>
+                    <td><?php echo $i+($this->per_page*($this->cur_page-1)); ?></td>
                     <td style="text-align: left">
                         <a href="<?php echo URL . "kontrak/file/" . $val->file_kontrak; ?>" target="file_kontrak" onClick="cetak_dokumen('file_kontrak');"><?php echo $val->no_kontrak; ?></a>
                         <?php

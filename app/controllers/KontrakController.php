@@ -35,17 +35,29 @@ class KontrakController extends BaseController {
         $univ = $_POST['univ'];
         $user = Session::get('kd_user');
         //echo $user;
+		
         $biaya = new Biaya();
         $jurusan = new Jurusan($this->registry);
         $universitas = new Universitas($this->registry);
 
         if ($univ == "") {
             $data = $kontrak->get_All($user);
-            $this->view->data = $data;
+            
             //var_dump($data);
         } else {
-            $this->view->data = $kontrak->get_by_univ($univ);
+            $data = $kontrak->get_by_univ($univ);
         }
+		
+		if(isset($_POST['cur_page'])){
+			$cur_page = $_POST['cur_page'];
+		} else {
+			$cur_page = 1;
+		}
+		$paging = new MyPaging($cur_page, $data);
+		$this->view->data = $paging->getData();
+		$this->view->cur_page = $paging->getCurPage();
+		$this->view->per_page = $paging->getPerPage();
+		$this->view->page_num = $paging->getPageNum();
         $this->view->biaya = $biaya;
         $this->view->jurusan = $jurusan;
         $this->view->kontrak = $kontrak;
@@ -482,8 +494,8 @@ class KontrakController extends BaseController {
 
     //melakukan proses rekam biaya baru pada halaman rekam_biaya
     public function rekamBiaya() {
-        var_dump($_POST);
-        exit();
+        //var_dump($_POST);
+        //exit();
         if (isset($_POST['rekam_biaya'])) {
             $biaya = new Biaya();
             $biaya->kd_kontrak = $_POST['kd_kontrak'];
@@ -964,7 +976,17 @@ class KontrakController extends BaseController {
             $this->view->biaya = $biaya;
             //echo "aaaa";
             //var_dump($biaya);
-            $this->view->data_biaya = $data_biaya;
+			
+			if(isset($_POST['cur_page'])){
+			$cur_page = $_POST['cur_page'];
+			} else {
+			$cur_page = 1;
+			}
+			$paging = new MyPaging($cur_page, $data_biaya);
+			$this->view->cur_page = $paging->getCurPage();
+			$this->view->per_page = $paging->getPerPage();
+			$this->view->page_num = $paging->getPageNum();
+            $this->view->data_biaya = $paging->getData();
             $this->view->load('kontrak/tabel_biaya');
         }
     }

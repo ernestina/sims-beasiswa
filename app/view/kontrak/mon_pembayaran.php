@@ -37,10 +37,18 @@
             </table>
         </form>
     
-
+<form>
+<table width=99% style="margin-left: 0px">
+<td width="100%">
+<span class=prevnext><input type=button id="last" class=btn value='>|' ></span>
+<span class=prevnext><input type=button id="next" class=btn value='>' ></span>
+<span class=prevnext><input type=button id="prev" class=btn value='<' ></span>
+<span class=prevnext><input type=button id="first" class=btn value='|<' ></span>
+</td>
+</table>
 <div id="tb_biaya">
-
 </div>
+</form>
 </div>
 <script>
     
@@ -53,8 +61,8 @@
     
     //menampilkan data biaya kontrak jika user memilih pilihan universitas dan/atau status 
     $(document).ready(function(){ 
-        //jika ada event onchange pilihan universitas ambil data dari database
-        $("#univ").change(function(){
+        //jika ada event onchange pilihan universitas, status dan jadwal ambil data dari database
+        $("#univ, #status, #jadwal").change(function(){
             $.post("<?php echo URL; ?>kontrak/dataBiayaKontrak", {univ:$('#univ').val(),status:$('#status').val(),jadwal:$('#jadwal').val()},
             function(data){                
                 $('#tb_biaya').fadeIn(100);
@@ -62,27 +70,46 @@
             });
             
         });
-        
-        //jika ada event onchange pilihan status ambil data dari database
-        $("#status").change(function(){
-            $.post("<?php echo URL; ?>kontrak/dataBiayaKontrak", {univ:$('#univ').val(),status:$('#status').val(),jadwal:$('#jadwal').val()},
+		
+		$("#next").click(function(){
+            var page = parseInt($("#cur_page").val())+ 1;
+			$.post("<?php echo URL; ?>kontrak/dataBiayaKontrak", {univ:$('#univ').val(),status:$('#status').val(),jadwal:$('#jadwal').val(), cur_page:page},
             function(data){                
                 $('#tb_biaya').fadeIn(100);
                 $('#tb_biaya').html(data);
             });
             
         });
-        
-        //jika ada event onchange pilihan tahun ambil data dari database
-        $("#jadwal").change(function(){
-            $.post("<?php echo URL; ?>kontrak/dataBiayaKontrak", {univ:$('#univ').val(),status:$('#status').val(),jadwal:$('#jadwal').val()},
+		
+		$("#prev").click(function(){
+			var page = parseInt($("#cur_page").val())- 1;
+			$.post("<?php echo URL; ?>kontrak/dataBiayaKontrak", {univ:$('#univ').val(),status:$('#status').val(),jadwal:$('#jadwal').val(), cur_page:page},
             function(data){                
                 $('#tb_biaya').fadeIn(100);
                 $('#tb_biaya').html(data);
             });
             
         });
-        
+		
+		$("#first").click(function(){
+			var page = 1;
+			$.post("<?php echo URL; ?>kontrak/dataBiayaKontrak", {univ:$('#univ').val(),status:$('#status').val(),jadwal:$('#jadwal').val(), cur_page:page},
+            function(data){                
+                $('#tb_biaya').fadeIn(100);
+                $('#tb_biaya').html(data);
+            });
+            
+        });
+		$("#last").click(function(){
+			var page = parseInt($("#last_page").val())
+			$.post("<?php echo URL; ?>kontrak/dataBiayaKontrak", {univ:$('#univ').val(),status:$('#status').val(),jadwal:$('#jadwal').val(), cur_page:page},
+            function(data){                
+                $('#tb_biaya').fadeIn(100);
+                $('#tb_biaya').html(data);
+            });
+            
+        });
+                
     })
     
 </script>
