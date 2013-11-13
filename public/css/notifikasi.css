@@ -125,6 +125,11 @@ div .content_notif p{
     float: left;
     margin-right: 0%;
     height: 100%;
+	
+}
+#halpic {
+	margin-left: -20px;
+	margin-top: -3px;
 }
 .flag {
     float: left;
@@ -133,7 +138,7 @@ div .content_notif p{
     /*background-image:url('public/icon/notice.png');*/
     background-repeat: no-repeat;
     /*background-color: #F0F0F0;*/
-    margin-left: 0px;
+    margin-left: 60px;
 }
 
 img.noti {
@@ -147,7 +152,8 @@ img.noti.pic {
 }
 
 div.noti {
-    font-family: Menu;
+    font-family: Nexa;
+	font-size: 13px;
     margin-top: -10px;
     margin-left: 10px;
 }
@@ -162,10 +168,10 @@ ul.noti {
 
 ul.noti.pic {
     width:90%;
-    height: 40px;
+    height: 60px;
     border-radius: 0px;
-    background-color: #B2D1FF
-    
+    background-color: #EEEEEE;
+	margin-left: 18px;
 }
 
 ul.noti.jadup{

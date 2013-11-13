@@ -48,7 +48,7 @@
             $img = 'public/icon/notices.png';
         }
         echo "<ul class='inline noti pic'>";
-        echo "<div class='detail'>";
+        echo "<div class='detail' id='halpic'>";
         echo "<h4>$jatuh_tempo : <a style='color: #49afcd' href=''>$judul_notif</a></h4>";
         echo "<div class='noti'>$pesan</div>";
         echo "</div>";
@@ -73,7 +73,7 @@
     
 </div>
 
-<input type="hidden" id="jml_notif" value="10">
+<input type="hidden" id="jml_notif" value="<?php echo $this->count_notif; ?>">
 <script type="text/javascript">
 
 $(function(){
