@@ -69,7 +69,7 @@ $(function(){
         filter(document.getElementById('univ').value,document.getElementById('thn').value,status);
     })
     
-    filter(univ,thn_masuk,status);
+//    filter(univ,thn_masuk,status);
     
 })
 
