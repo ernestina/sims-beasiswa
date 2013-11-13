@@ -56,7 +56,7 @@
 
     }
 ?>
-    <?php } ?>
+    
 </div>
 <div style="float:left; width:24%; margin: 20px 0% 5px 0px;border: solid 1px">
     <div><img class="frame" src="files/foto/<?php echo $this->d_user->get_foto();?>" style="width:80%;margin: 5px 8% 5px 8%;"></div>
@@ -72,8 +72,8 @@
     </div>
     
 </div>
-
-<input type="hidden" id="jml_notif" value="<?php echo $this->count_notif; ?>">
+<?php } ?>
+<input type="hidden" id="jml_notif" value="<?php echo $this->count_notif;?>">
 <script type="text/javascript">
 
 $(function(){
