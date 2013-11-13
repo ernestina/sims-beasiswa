@@ -103,13 +103,13 @@ class Kontrak extends BaseModel {
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV 
                 WHERE                
-                a.NO_KON LIKE '" . $key . "%'              
+                a.NO_KON LIKE '%" . $key . "%'              
                 AND d.KD_USER ='" . $user . "'
                 UNION
                 SELECT l.* FROM
                 (SELECT j.* from d_kontrak j
                 LEFT JOIN d_kontrak k ON j.KONTRAK_LAMA = k.KD_KON
-                WHERE k.NO_KON LIKE '" . $key . "%') l
+                WHERE k.NO_KON LIKE '%" . $key . "%') l
                 LEFT JOIN r_jur m ON  l.KD_JUR=m.KD_JUR
                 LEFT JOIN r_fakul n ON m.KD_FAKUL=n.KD_FAKUL
                 LEFT JOIN r_univ o ON n.KD_UNIV = o.KD_UNIV 

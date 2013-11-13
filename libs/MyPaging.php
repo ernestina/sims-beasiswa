@@ -3,7 +3,7 @@
 
 class MyPaging{
 	
-	public $per_page = 2;
+	public $per_page = 5;
     public $cur_page;
 	public $page_num;
 	public $data_sel;

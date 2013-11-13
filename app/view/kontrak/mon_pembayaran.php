@@ -1,46 +1,61 @@
 <div id="top">
     <h2>MONITORING PEMBAYARAN KONTRAK</h2>
-
+		
+		<div id="dropdown-menu">
         <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/cetakBiayaKontrak' ?>" onSubmit="cetak_dokumen('cetak_mon');" target="cetak_mon">
-		<ul class="inline">
-            <li><label>Universitas</label></li>
-            <li><select name="univ" id="univ" type="text">
-                <option value="">- semua -</option>
-                <?php foreach ($this->univ as $univ) { ?>
-                    <option value="<?php echo $univ->get_kode_in(); ?>"><?php echo $univ->get_nama(); ?></option>
-                <?php } ?>
-            </select></li> &nbsp &nbsp 
-            <li><label>Status pembayaran</label></li>
-            <li><select id="status" name="status" type="text">
-                <option value="">- semua -</option>
-                <option value="belum">belum</option>
-                <option value="proses">proses</option>
-                <option value="selesai">selesai</option>
-            </select></li> &nbsp &nbsp
-            <li><label>Tahun Pembayaran</label></li>
-            <li><select id="jadwal" name="jadwal" type="text">
-                <option value="">- semua -</option>
-                <?php
-                for ($i = 2007; $i <= date('Y') + 1; $i++) {
-                                        ?>
-                    <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                <?php } ?>
-            </select></li>
-		</ul>
-            <table width="97%">
-                <tr><td><input class="sukses" type="submit" value="CETAK"></td></tr>
+		<table width="100%">
+                <tr>
+                    <td>
+                       <label>Universitas</label>
+						<select name="univ" id="univ" type="text">
+							<option value="">- semua -</option>
+							<?php foreach ($this->univ as $univ) { ?>
+								<option value="<?php echo $univ->get_kode_in(); ?>"><?php echo $univ->get_nama(); ?></option>
+							<?php } ?>
+						</select>					   
+                    </td>
+                    <td>
+                        <label>Status pembayaran</label>
+						<select id="status" name="status" type="text">
+							<option value="">- semua -</option>
+							<option value="belum">belum</option>
+							<option value="proses">proses</option>
+							<option value="selesai">selesai</option>
+						</select>
+                    </td>
+                    <td>
+                       <label>Tahun Pembayaran</label>
+						<select id="jadwal" name="jadwal" type="text">
+							<option value="">- semua -</option>
+							<?php
+							for ($i = 2007; $i <= date('Y') + 1; $i++) {
+													?>
+								<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+							<?php } ?>
+						</select>
+
+                    </td>
+                    
+                    <td>
+                        <div style="margin-right: 20px">
+                            <button onClick="formSubmit" style="margin-right:20px"><i class="icon-print icon-white"></i>  CETAK</button>
+                        </div>
+                    </td>
+                </tr>
             </table>
+
         </form>
+		</div>
     
 <form>
 <div id="tb_biaya">
 </div>
 <table width=99% style="margin-left: 0px">
 <td width="100%">
-<span class=prevnext><input type=button id="last" class=btn value='>|' ></span>
-<span class=prevnext><input type=button id="next" class=btn value='>' ></span>
-<span class=prevnext><input type=button id="prev" class=btn value='<' ></span>
-<span class=prevnext><input type=button id="first" class=btn value='|<' ></span>
+<input type=button id="last" class="paging-kecil" value='>>' title="Halaman Terakhir">
+<input type=button id="next" class="paging-kecil" value='>' title="Halaman Berikutnya">
+<input type=button id="prev" class="paging-kecil" value='<' title="Halaman Sebelumnya">
+<input type=button id="first" class="paging-kecil" value='<<' title="Halaman Pertama">
 </td>
 </table>
 </form>

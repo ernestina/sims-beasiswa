@@ -1,14 +1,13 @@
 <div id="top">
     <h2>DATA KONTRAK KERJASAMA</h2>
 
-    <table width=100% style="margin-left: 0px">
+	<div>
+	
+    <table width=98% style="margin-left: 0px">
         <tr>
-            <td width="11%" ><label >Pilih Universitas :</label></td>
-            <td width="20%"style="padding-top:15px;">
-                <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/display' ?>">
-<!--            <input type="hidden" name="pilih_univ">-->
-<!--                    <input type="hidden" id="user" name="user" value="<?php echo Session::get('kd_user'); ?>">-->
-                    <select name="universitas" id="kd_univ" type="text">
+			<td width="1%"></td>
+            <td width="11%" ><label >Pilih Universitas :</label>
+                       <select name="universitas" id="kd_univ" type="text">
                         <option value="">- semua -</option>
                         <?php
                         foreach ($this->kd_univ as $univ) {
@@ -24,37 +23,30 @@
         <!--            <input type="button" value="SUBMIT">-->
 
             </td>
-            <td width="20%" style="float: left"><input type="search" name="cari" id="cari" placeholder="cari dengan kata kunci nomor kontrak" title="Cari"></td>
+            <td width="20%" style="float: left"><input type="search" name="cari" id="cari" placeholder="cari" title="Cari dengan kata kunci nomor kontrak"></td>
 
-            <td width="40%">
+            <td width="45%">
 <!--                <input type="button" value="TAMBAH" onClick="location.href='<?php echo URL . 'kontrak/rekamKontrak'; ?>'"style="margin-top:0px; margin-right: -8px">-->
-                <input type="button" id="tambah_kontrak" value="TAMBAH" style="margin-top:0px; margin-right: -8px">
-                </form>
+                <button type="button" id="tambah_kontrak" style="margin-top:0px; margin-right: -8px" title="Rekam kontrak baru"><i class="icon-plus icon-white"></i> Tambah</button>
+                
             </td>
         </tr>
     </table>
 
-
-
-
-
-</div>
+	</div>
 
 <form>
-<div id="tb_kontrak">
+<div id="tb_kontrak" >
 </div>
 <table width=99% style="margin-left: 0px">
 <td width="100%">
-<span class=prevnext><input type=button id="last" class=btn value='>|' ></span>
-<span class=prevnext><input type=button id="next" class=btn value='>' ></span>
-<span class=prevnext><input type=button id="prev" class=btn value='<' ></span>
-<span class=prevnext><input type=button id="first" class=btn value='|<' ></span>
+<input type=button id="last" class="paging-kecil" value='>>' title="Halaman Terakhir">
+<input type=button id="next" class="paging-kecil" value='>' title="Halaman Berikutnya">
+<input type=button id="prev" class="paging-kecil" value='<' title="Halaman Sebelumnya">
+<input type=button id="first" class="paging-kecil" value='<<' title="Halaman Pertama">
 </td>
 </table>
 </form>
-<?php 
-
-?>
 <div class="fitur">
     <br/>
     <p style="margin-left: 30px">
@@ -69,7 +61,7 @@
     <div id="dialog_edit_kontrak" title="Ubah Data Kontrak Kerja Sama" > </div>
 </div>
 
-
+</div>
 <script>
     
     //menjalankan fungsi displayKontrak() ketika halaman diload.

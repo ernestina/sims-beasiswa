@@ -13,9 +13,9 @@ if($this->cur_page !="" && $this->page_num!="") echo "HALAMAN ".$this->cur_page.
 <div id="table-content" >
     <table class="table-bordered zebra scroll">
         <thead>
-        <th width="5%">No</th>
+        <th width="4%">No</th>
         <th width="20%">No. Kontrak</th>
-        <th width="7%">Tgl. Kontrak</th>
+        <th width="8%">Tgl. Kontrak</th>
         <th width="20%">Jurusan</th>
         <th width="5%">Tahun Masuk</th>
         <th width="5%">Jml Pegawai</th>
@@ -32,14 +32,14 @@ if($this->cur_page !="" && $this->page_num!="") echo "HALAMAN ".$this->cur_page.
                 <tr>
                     <td><?php echo $i+($this->per_page*($this->cur_page-1)); ?></td>
                     <td style="text-align: left">
-                        <a href="<?php echo URL . "kontrak/file/" . $val->file_kontrak; ?>" target="file_kontrak" onClick="cetak_dokumen('file_kontrak');"><?php echo $val->no_kontrak; ?></a>
+                        <a href="<?php echo URL . "kontrak/file/" . $val->file_kontrak; ?>" target="file_kontrak" onClick="cetak_dokumen('file_kontrak');" title="Lihat atau unduh file <?php echo $val->no_kontrak; ?>"><?php echo $val->no_kontrak; ?></a>
                         <?php
                         $kontrak_lama = $this->kontrak->get_by_id($val->kontrak_lama);
                         //var_dump($kontrak_lama);
                         if ($kontrak_lama != false) {
-                            echo "<br /> (Adendum: ";
+                            echo "<br /> (Adendum ";
                             ?>
-                            <a href="<?php echo URL . "kontrak/file/" . $kontrak_lama->file_kontrak; ?>" target="kontrak_lama" onClick="cetak_dokumen('kontrak_lama');">><?php echo $kontrak_lama->no_kontrak; ?></a>
+                            <a href="<?php echo URL . "kontrak/file/" . $kontrak_lama->file_kontrak; ?>" target="kontrak_lama" onClick="cetak_dokumen('kontrak_lama');" title="Lihat atau unduh file <?php echo $kontrak_lama->no_kontrak; ?>"><?php echo $kontrak_lama->no_kontrak; ?></a>
                             <?php
                             echo ")";
                         }
@@ -81,7 +81,7 @@ if($this->cur_page !="" && $this->page_num!="") echo "HALAMAN ".$this->cur_page.
                         <?php
                         echo "<a href=" . URL . "kontrak/delKontrak/" . $val->kd_kontrak . " onClick=\"return del('".$val->no_kontrak."');\" title=\"hapus\"><i class=\"icon-trash\"></i></a> &nbsp
                      <a href=\"#\" onClick=\"edit(" . $val->kd_kontrak . "); return false;\"><i class=\"icon-pencil\" title=\"ubah\"></i></a> &nbsp
-                     <a href=" . URL . "kontrak/biaya/" . $val->kd_kontrak . "><i class=\"icon-tag\" title=\"tambah detail biaya\"></i></a>";
+                     <a href=" . URL . "kontrak/biaya/" . $val->kd_kontrak . "><i class=\"icon-tag\" title=\"detil biaya kontrak\"></i></a>";
                         //echo $val->kd_kontrak;
                         ?>   
                 </tr>

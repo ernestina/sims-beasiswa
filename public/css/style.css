@@ -291,6 +291,10 @@ button.paging-kecil {
     width: 30px;
 }
 
+input[type="button"].paging-kecil, button.paging-kecil {
+    border-radius: 0px;
+    width: 30px;
+}
 input.utama,
 select.utama,
 textarea.utama {
