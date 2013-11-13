@@ -19,7 +19,7 @@ class AdminController extends BaseController {
      * tambah referensi universitas
      */
 
-    public function addUniversitas($posisi=null,$batas=null,$id = null) {
+    public function addUniversitas($id = null) {
         $univ = new Universitas($this->registry);
         if (isset($_POST['add_univ'])) {
             $kode = $_POST['kode'];

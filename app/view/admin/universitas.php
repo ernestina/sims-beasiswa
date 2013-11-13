@@ -105,7 +105,7 @@ if (isset($this->d_ubah)) {
                             echo "<td>" . $val->get_lokasi() . "</td>";
                             echo "<td>" . $val->get_pic() . "</td>";
                             echo "<td><a href=" . URL . "admin/delUniversitas/" .$this->url."/" . $val->get_kode_in() . " onclick=\"return del('" . $val->get_nama() . "')\"><i class=\"icon-trash\"></i></a>
-                        <a href=" . URL . "admin/addUniversitas/".$this->url."/" . $val->get_kode_in() . "><i class=\"icon-pencil\"></i></a></td>";
+                        <a href=" . URL . "admin/addUniversitas/". $val->get_kode_in() . "><i class=\"icon-pencil\"></i></a></td>";
                             echo "</tr>";
                             $no++;
                         }
