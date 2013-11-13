@@ -58,7 +58,11 @@
 				<label>Telepon</label><input type="text" name="telepon" id="telepon" size="15" value="<?php echo isset($this->d_ubah)?$this->d_ubah->get_telepon():(isset($this->d_rekam)?$this->d_rekam->get_telepon():'');?>">
         
 			<ul class="inline tengah">
-				<li><input class="normal" type="submit" onclick="" value="BATAL"></li>
+				<?php if(isset($this->d_ubah)){?>
+                                    <li><input class="normal" type="button" onclick="window.history.back()" value="BATAL"></li>
+                                <?php }else{?>
+                                    <li><input class="normal" type="RESET" onclick="" value="RESET"></li>
+                                <?php }?>
 				<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'upd_fak':'add_fak';?>" value="SIMPAN" onClick="return cek();"></li>
 			</ul>
         </div>

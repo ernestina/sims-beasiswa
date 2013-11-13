@@ -88,7 +88,11 @@
 			</select>
         
 		<ul class="inline tengah">
-			<li><input class="normal" type="submit" onclick="" value="BATAL"></li>
+			<?php if(isset($this->d_ubah)){?>
+                            <li><input class="normal" type="button" onclick="window.history.back()" value="BATAL"></li>
+                        <?php }else{?>
+                            <li><input class="normal" type="RESET" onclick="" value="RESET"></li>
+                        <?php }?>
 			<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'upd_jur':'add_jur';?>" value="SIMPAN" onClick="return cek();"></li>
 		</ul>
         </form>

@@ -722,7 +722,8 @@ class PenerimaController extends BaseController{
         $return = json_encode(array(
             'kd_pb'=>$d_pb->get_kd_pb(),
             'nip'=>$d_pb->get_nip(),
-            'nama'=>$d_pb->get_nama()
+            'nama'=>$d_pb->get_nama(),
+            'jk'=>$d_pb->get_jkel()
         ));
         
         echo $return;

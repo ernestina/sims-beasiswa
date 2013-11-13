@@ -18,7 +18,7 @@
                     foreach($this->d_st as $val){
                         echo "<tr>";
                         echo "<td>".$no."</td>";
-                        echo "<td style='text-align: left'><a style='cursor:pointer;' onClick='view(\"".$val->get_file()."\")'>".$val->get_nomor()."</a></td>";
+                        echo "<td style='text-align: left'><a style='cursor:pointer;' onClick='view(\"".$val->get_file()."\")' title='lihat surat tugas'>".$val->get_nomor()."</a></td>";
                         echo "<td>".$val->get_tgl_st()."</td>";
                         echo "<td>".$val->get_tgl_mulai()."</td>";
                         echo "<td>".$val->get_tgl_selesai()."</td>";

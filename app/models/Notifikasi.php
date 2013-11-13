@@ -311,7 +311,8 @@ class Notifikasi{
             LEFT JOIN r_jur c ON b.KD_JUR=c.KD_JUR
             LEFT JOIN r_fakul d ON c.KD_FAKUL=d.KD_FAKUL
             LEFT JOIN r_univ e ON d.KD_UNIV=e.KD_UNIV
-            LEFT JOIN d_user f ON e.KD_USER=f.KD_USER WHERE a.JUDUL_SKRIPSI_PB<>''";
+            LEFT JOIN d_user f ON e.KD_USER=f.KD_USER WHERE a.JUDUL_SKRIPSI_PB<>''
+            WHERE b.KD_PEMB=1";
 //        echo $sql."</br>";
         $d_skripsi = $this->_db->select($sql);
         foreach($d_skripsi as $skripsi){
@@ -382,7 +383,12 @@ class Notifikasi{
     
     private function get_list_kode_st($is_selesai=false){
         $sql = "SELECT KD_ST FROM d_srt_tugas";
-        if($is_selesai) $sql .= " WHERE TGL_SEL_ST>NOW()";
+        if($is_selesai){
+            $sql .= " WHERE TGL_SEL_ST>NOW() AND KD_PEMB=1";
+        }else{
+            $sql .= " WHERE KD_PEMB=1";
+        }
+        
 //        echo $sql;
         $d_st = $this->_db->select($sql);
         return $d_st;
@@ -578,6 +584,7 @@ class Notifikasi{
         */
         $sql = "SELECT 
             a.KD_KON as KD_KON,
+            g.KD_ST as KD_ST,
             b.KD_TAGIHAN as KD_TAGIHAN,
             b.NM_TAGIHAN as NM_TAGIHAN,
             b.JADWAL_BAYAR_TAGIHAN as DATE_BAYAR,
@@ -613,14 +620,14 @@ class Notifikasi{
                     $notif->set_jurusan($kontrak['NM_JUR']);
                     $notif->set_kode_link('');
                     $notif->set_link($kontrak['SELISIH']);
-                    $pic = array('kode'=>$kontrak['KD_ST'],'nama'=>$kontrak['NM_USER'],'foto'=>$kontrak['FOTO']);
+                    $pic = array('kode'=>$kontrak['KD_USER'],'nama'=>$kontrak['NM_USER'],'foto'=>$kontrak['FOTO']);
                     $notif->set_pic($pic);
                     $notif->set_status_notif($kontrak['STS_TAGIHAN']);
                     $notif->set_tahun_masuk($kontrak['THN_MASUK']);
                     $notif->set_univ($kontrak['SINGKAT_UNIV']);
                     $notif->set_jatuh_tempo($kontrak['DATE_BAYAR']);
                     $this->_notif_data[] = $notif;
-//                    echo $kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+//                    echo $kontrak['KD_ST']."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
                 }
             }
         }

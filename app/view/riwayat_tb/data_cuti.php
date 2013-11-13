@@ -43,6 +43,7 @@
             <input style="<?php echo isset($this->d_ubah)?'':'display:none';?>" type="text" name="nip_pb" id="nip_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb_ubah->get_nip():'';?>" readonly>
             <input style="<?php echo isset($this->d_ubah)?'':'display:none';?>" type="text" name="nama_pb" id="nama_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb_ubah->get_nama():'';?>" readonly>
             <input type="hidden" name="kd_pb" id="kd_pb" value="<?php echo isset($this->d_ubah)?$this->d_pb_ubah->get_kd_pb():'';?>">
+            <input type="hidden" name="jk" id="jk" value="<?php echo isset($this->d_ubah)?$this->d_pb_ubah->get_jkel():'';?>">
 <!--            </br><label>Universitas</label><select id="univ" name="univ" onChange="get_jurusan(this.value);">
                 <option value="0">-Pilih Universitas-</option>
                 <?php 
@@ -122,7 +123,11 @@
             <label>Unggah SC</label><input type="file" name="fupload" id="file">
         
 		<ul class="inline tengah">
-			<li><input class="normal" type="submit" onclick="" value="BATAL"></li>
+                    <?php if(isset($this->d_ubah)){?>
+                        <li><input class="normal" type="button" onclick="window.history.back()" value="BATAL"></li>
+                    <?php }else{?>
+			<li><input class="normal" type="RESET" onclick="" value="RESET"></li>
+                    <?php }?>
 			<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'sb_upd':'sb_add';?>" value="SIMPAN" onClick="return cek();"></li>
 		</ul>
 <!--            <label></label><input type="reset" value="RESET"><input type="submit" name="<?php echo isset($this->d_ubah)?'sb_upd':'sb_add';?>" value="SIMPAN" onClick="return cek();">-->
@@ -202,6 +207,12 @@
 //                $('#wnosc').fadeOut(200);
 //            }
         })
+        
+        var jk = document.getElementById('jk').value;
+        var jsc = document.getElementById('jsc').value;
+        
+        console.log(jk);
+        console.log(jsc);
     });
     
     function hideErrorId(){
@@ -267,6 +278,7 @@
                $('#nip_pb').val(data.nip);
                $('#nama_pb').val(data.nama);
                $('#kd_pb').val(data.kd_pb);
+               $('#jk').val(data.jk);
                $('#bt_pb').fadeOut(200);
                $('#nip_pb').fadeIn(200);
                $('#nama_pb').fadeIn(200);
@@ -316,6 +328,8 @@
         var pb = document.getElementById('kd_pb').value;
 //        var jur = document.getElementById('jur').value;
         var sfile = document.getElementById('file').value;
+        var jk = document.getElementById('jk').value;
+        var jsc = document.getElementById('jsc').value;
         var jml =0;
         if(no_sc==''){
             var wnosc = 'Nomor surat harus diisi!';
@@ -333,6 +347,13 @@
         
         if(pb==''){
             var wpb = 'Penerima beasiswa belum dipilih!';
+            $('#wpb').fadeIn(0);
+            $('#wpb').html(wpb);
+            jml++;
+        }
+        
+        if(jk=='L' && jsc=='1'){
+            var wpb = 'Cuti melahirkan untuk perempuan!';
             $('#wpb').fadeIn(0);
             $('#wpb').html(wpb);
             jml++;

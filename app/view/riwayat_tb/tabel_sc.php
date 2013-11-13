@@ -21,7 +21,7 @@
                     $perk_stop = explode(" ", $val->get_perk_stop());;
                     echo "<tr>";
                     echo "<td>".$no."</td>";
-                    echo "<td><a style='cursor:pointer' onCLick='view(\"".$val->get_file()."\")'>".$val->get_no_surat_cuti()."</a></br>".Tanggal::tgl_indo($val->get_tgl_surat_cuti())."</td>";
+                    echo "<td><a style='cursor:pointer' onCLick='view(\"".$val->get_file()."\")' title='lihat surat cuti'>".$val->get_no_surat_cuti()."</a></br>".Tanggal::tgl_indo($val->get_tgl_surat_cuti())."</td>";
                     echo "<td>".$val->get_jenis_cuti()."</td>";
                     echo "<td style='text-align: left'>".$d_pb[0]."</br>".$d_pb[1]."</td>";
                     echo "<td>".(($val->get_prd_mulai()==1)?'ganjil':'genap')."</td>";

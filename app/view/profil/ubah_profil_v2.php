@@ -301,11 +301,15 @@ $(function(){
     
     $('#off').click(function(){
         var id_pb = document.getElementById('id_pb').value;
-        $.post('<?php echo URL;?>penerima/set_tidak_lulus',{id_pb:id_pb},
-        function(data){
-            document.getElementById('sts_tb').value = data;
-            $('#off').fadeOut();
-        })
+        var quest = "Anda yakin merubah status pegawai ini menjadi TIDAK LULUS?";
+        if(confirm(quest)){
+            $.post('<?php echo URL;?>penerima/set_tidak_lulus',{id_pb:id_pb},
+            function(data){
+                document.getElementById('sts_tb').value = data;
+                $('#off').fadeOut();
+            })
+        }
+        
     })
 //    document.write("jvascript gak jalan coii");
     hideErrorId();
@@ -561,7 +565,8 @@ $( "#dialog_add_problem" ).dialog({
                         async: false,
                         success: function () {
                                 callFromDialog(kd_pb,'problem'); //or use //window.opener.document.getElementById(idFromCallPage).value = data;
-
+                                document.getElementById('uraian').value='';
+                                document.getElementById('sumber').value='';
                         },
                         cache: false,
                         contentType: false,
@@ -622,7 +627,8 @@ $( "#dialog_add_problem" ).dialog({
                             async: false,
                             success: function (data) {
                                     callFromDialog(kd_pb,'nilai'); //or use //window.opener.document.getElementById(idFromCallPage).value = data;
-                                    
+                                    document.getElementById('ips').value='';
+                                    document.getElementById('ipk').value='';
                             },
                             cache: false,
                             contentType: false,
