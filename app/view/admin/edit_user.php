@@ -17,8 +17,14 @@
                         <label>Confirm Password</label><input type="password" name="cpass" id="cpass" value="no_change" size="30"/>
                         <label>AKSES</label>
                         <select type="text" name="akses">
-                            <option value="1">Admin</option>
-                            <option value="2">User</option>                          
+                            <?php if($this->data->get_akses()=="2"){ ?>
+                              <option value="2">User</option>
+                              <option value="1">Admin</option>
+                           <?php  } else { ?>
+                                <option value="1">Admin</option>
+                                <option value="2">User</option>
+                           <?php } ?>
+                                                     
                         </select>
                         <label>Upload Foto</label><input type="file" name="upload" id="upload" value="" size="30"/>
                         <ul class="inline tengah">
