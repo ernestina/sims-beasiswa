@@ -16,7 +16,7 @@ class CutiController extends BaseController{
         
     }
     
-    public function datasc($id=0, $halaman=1,$batas=1){
+    public function datasc($id=0, $halaman=1,$batas=10){
         $ct = new Cuti($this->registry);
         if(isset($_POST['sb_add'])){
             $noct = $_POST['no_sc'];

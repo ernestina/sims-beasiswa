@@ -185,6 +185,7 @@
     if($this->jmlData>0){
             $jmlhal = $this->paging->jml_halaman($this->jmlData);
             $paging = $this->paging->navHalaman($jmlhal);
+            if($this->jmlData>$this->paging->batas)
             echo $paging; }
 ?></br>
         <?php 

@@ -5,11 +5,13 @@
         switch($v['jenis']){
             case 'jadup':
                 $jenis = 'Pembayaran Jadup ';
+                $url = URL.'elemenBeasiswa/addJadup';
                 $judul_notif = 'JADUP';
                 $pesan = $jenis." ".$v['univ']." - ".$v['jurusan']." ".$v['tahun_masuk']." bulan ".$v['bulan']." ".$v['tahun'];
                 break;
             case 'buku':
                 $tmp = $v['jatuh_tempo'];
+                $url = URL.'elemenBeasiswa/addUangBuku';
                 $jenis = 'Pembayaran Uang Buku ';
                 $judul_notif = 'UANG BUKU';
                 $sem = (int) Tanggal::bulan_num($v['bulan']);
@@ -22,16 +24,19 @@
                 break;
             case 'skripsi':
                 $jenis = 'Pembayaran Uang Skripsi ';
+                $url = URL.'elemenBeasiswa/addSkripsi';
                 $judul_notif = 'UANG SKRIPSI';
                 $pesan = $jenis." ".$v['univ']." - ".$v['jurusan']." ".$v['tahun_masuk'];
                 break;
             case 'lulus':
                 $jenis = 'Pegawai TB dari ';
+                $url = URL.'penerima/datapb';
                 $judul_notif = 'MASA TUGAS BELAJAR';
                 $pesan = $jenis." ".$v['univ']." - ".$v['jurusan']." ".$v['tahun_masuk']." selesai bulan ".$v['bulan']." ".$v['tahun'];
                 break;
             case 'kontrak':
                 $jenis = 'Tagihan Kontrak ';
+                $url = URL.'kontrak/display';
                 $judul_notif = 'PEMBAYARAN KONTRAK';
                 $pesan = $jenis." ".$v['univ']." - ".$v['jurusan']." ".$v['tahun_masuk']." bulan ".$v['bulan']." ".$v['tahun'];
                 break;
@@ -49,7 +54,7 @@
         }
         echo "<ul class='inline noti pic'>";
         echo "<div class='detail' id='halpic'>";
-        echo "<h4>$jatuh_tempo : <a style='color: #49afcd' href=''>$judul_notif</a></h4>";
+        echo "<h4>$jatuh_tempo : <a style='color: #49afcd' href='$url'>$judul_notif</a></h4>";
         echo "<div class='noti'>$pesan</div>";
         echo "</div>";
         echo "<div class='flag'><img class='noti pic' src='$img'></div></ul>";

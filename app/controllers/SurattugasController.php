@@ -12,7 +12,7 @@ class SurattugasController extends BaseController{
         $this->kd_user = Session::get('kd_user');
     }
     
-    public function datast($id=0, $halaman=1,$batas=2){
+    public function datast($id=0, $halaman=1,$batas=10){
         $st = new SuratTugas($this->registry);
         if(isset($_POST['sb_add'])){
             $jur = $_POST['jur'];

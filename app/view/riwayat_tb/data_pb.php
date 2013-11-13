@@ -35,10 +35,13 @@
 </div>
 <div id="tb_pb">
     <?php 
-//    if($this->jmlData>0){
-//            $jmlhal = $this->paging->jml_halaman($this->jmlData);
-//            $paging = $this->paging->navHalaman($jmlhal);
-//            echo $paging; }
+    if($this->jmlData>0){
+            $jmlhal = $this->paging->jml_halaman($this->jmlData);
+            $paging = $this->paging->navHalaman($jmlhal);
+            if($this->jmlData>$this->paging->batas)
+                echo $paging; 
+            
+            }
 ?>
 <!--    </br>-->
     <?php 
@@ -58,6 +61,7 @@ $(function(){
     })
     $('#univ').change(function(){
         univ = $('#univ').val();
+        console.log(univ);
         filter(univ,document.getElementById('thn').value,document.getElementById('status').value);
     })
     $('#thn').change(function(){
@@ -81,7 +85,7 @@ function cari(key){
 }
 
 function filter(univ,thn_masuk,status){
-    $.post('<?php echo URL;?>penerima/filter_pb/',{param:""+univ+","+thn_masuk+","+status+""},
+    $.post('<?php echo URL;?>penerima/filter_pb/',{univ:univ,thn_masuk:thn_masuk,status:status},
         function(data){
             $('#tb_pb').fadeIn(200);
             $('#tb_pb').html(data);

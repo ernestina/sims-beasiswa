@@ -43,6 +43,7 @@ class Jurusan {
     public function get_jurusan($limit = null, $batas = null) {
         $sql = "SELECT a.KD_JUR as KD_JUR,
                 b.NM_FAKUL as KD_FAKUL,
+                c.SINGKAT_UNIV as NM_UNIV,
                 a.KD_STRATA as KD_STRATA,
                 a.NM_JUR as NM_JUR,
                 a.ALMT_JUR as ALMT_JUR,
@@ -51,7 +52,8 @@ class Jurusan {
                 a.TELP_PIC_JUR as TELP_PIC_JUR,
                 a.STS_JUR as STS_JUR
                 FROM " . $this->_table . " a
-                LEFT JOIN " . $this->_tb_fakul . " b ON a.KD_FAKUL=b.KD_FAKUL";
+                LEFT JOIN " . $this->_tb_fakul . " b ON a.KD_FAKUL=b.KD_FAKUL
+                LEFT JOIN r_univ c ON b.KD_UNIV=c.KD_UNIV ";
         if (!is_null($limit) AND !is_null($batas)) {
             $sql .= " LIMIT " . $limit . "," . $batas;
         }
@@ -60,7 +62,7 @@ class Jurusan {
         foreach ($result as $val) {
             $jur = new $this($this->registry);
             $jur->set_kode_jur($val['KD_JUR']);
-            $jur->set_kode_fakul($val['KD_FAKUL']);
+            $jur->set_kode_fakul($val['KD_FAKUL'].','.$val['NM_UNIV']);
             $strata = new Strata();
             $str_jur = $strata->get_by_id($val['KD_STRATA']);
             $jur->set_kode_strata($str_jur->nama_strata);

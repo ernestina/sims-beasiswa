@@ -108,13 +108,13 @@
         <table class="table-bordered zebra scroll">
             <thead>
                 <th>No</th>
-                <th width="70">Fakultas</th>
+                <th width="70">Universitas/Fakultas</th>
                 <th width="30">Strata</th>
                 <th width="70">Jurusan</th>
                 <th width="200">Alamat</th>
                 <th width="70">Telepon</th>
                 <th>PIC Jurusan</th>
-                <th width="50">Telp PIC Jurusan</th>
+<!--                <th width="50">Telp PIC Jurusan</th>-->
                 <th>Status</th>
                 <th width="70">Aksi</th>
             </thead>
@@ -122,15 +122,16 @@
             <?php
                 $no=1;
                 foreach ($this->data as $val){
+                    $temp = explode(",", $val->get_kode_fakul());
                     echo "<tr>";
                     echo "<td>".$no."</td>";
-                    echo "<td>".$val->get_kode_fakul()."</td>";
+                    echo "<td><b>".$temp[1]."</b></br>".$temp[0]."</td>";
                     echo "<td>".$val->get_kode_strata()."</td>";
                     echo "<td>".$val->get_nama()."</td>";
                     echo "<td>".$val->get_alamat()."</td>";
                     echo "<td>".$val->get_telepon()."</td>";
-                    echo "<td>".$val->get_pic()."</td>";
-                    echo "<td>".$val->get_telp_pic()."</td>";
+                    echo "<td>".$val->get_pic()."</br>(".$val->get_telp_pic().")</td>";
+//                    echo "<td>".$val->get_telp_pic()."</td>";
                     echo "<td>";
                     echo ($val->get_status()==1)?"Aktif":"Non-aktif";
                     echo "</td>";

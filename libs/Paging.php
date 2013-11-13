@@ -64,6 +64,8 @@ class Paging {
             
             $link_halaman .= " <span style='float:right'><a href=" . URL . "$this->url/$next><button id=next class=paging value='Next >' >Next ></button></a></span> 
                              ";
+//            $link_halaman .= " <span style='float:right'><button id=next class=paging value='Next >' >Next ></button></span> 
+//                             ";
         }elseif($this->page < $jmlhalaman AND $this->page!=1) {
             $next = $this->page + 1;
             
