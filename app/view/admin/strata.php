@@ -24,8 +24,8 @@
                         <thead>
                         <th>No</th>
                         <th width="20%">Kode</th>
-                        <th width="70%">Nama</th>
-                        <th width="10%">Aksi</th>
+                        <th width="60%">Nama</th>
+                        <th width="20%">Aksi</th>
                         </thead>
                         <?php
                         foreach ($this->data as $strata) {
@@ -36,7 +36,7 @@
                                 <td><?php echo $strata->nama_strata; ?></td>
                                 <td align="center">
                                     <?php echo "<a href=" . URL . "admin/delStrata/" . $strata->kd_strata . " onclick=\"return del()\"><i class=\"icon-trash\"></i></a>
-									&nbsp &nbsp
+									&nbsp
 									<a href=" . URL . "admin/editStrata/" . $strata->kd_strata . "><i class=\"icon-pencil\"></i></a>" ?>
                                 </td>
                             </tr>
