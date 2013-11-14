@@ -93,10 +93,10 @@
 			</ul>
 	</fieldset>
 </div>
-<div class="kolom2">
+<div class="kolom2" style="max-height: 300px">
 	<fieldset><legend>Riwayat Pembayaran</legend>
 		
-			<table class="table-bordered zebra scroll">
+			<table class="table-bordered zebra scroll" style="overflow-y: scroll;">
 				<thead>
 					<th width="5%">No</th>
 					<th width="60%">Keterangan Pembayaran</th>
@@ -146,7 +146,7 @@
 			
 		</div>
 		
-			<label class="isian">IPK :</label>
+<!--			<label class="isian">IPK :</label>-->
 			<!--input type="text" id="IPK" name="IPK" value="<?php echo $this->d_cur_ipk->get_ipk()/100;?>" disabled />
 			
 

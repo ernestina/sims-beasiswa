@@ -82,9 +82,10 @@ class SuratTugas {
                 LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
 //        if (!is_null($id)) {
 //            $sql .= ' WHERE a.KD_ST<>' . $id;
-            $sql .= ' AND d.KD_USER='.$kd_user;
+            $sql .= ' WHERE d.KD_USER='.$kd_user;
 //        }
         $sql .= " LIMIT ".$posisi.",".$batas;
+//        echo $sql;
         $result = $this->db->select($sql);
         $data = array();
         foreach ($result as $val) {

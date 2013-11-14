@@ -311,8 +311,8 @@ class Notifikasi{
             LEFT JOIN r_jur c ON b.KD_JUR=c.KD_JUR
             LEFT JOIN r_fakul d ON c.KD_FAKUL=d.KD_FAKUL
             LEFT JOIN r_univ e ON d.KD_UNIV=e.KD_UNIV
-            LEFT JOIN d_user f ON e.KD_USER=f.KD_USER WHERE a.JUDUL_SKRIPSI_PB<>''
-            WHERE b.KD_PEMB=1";
+            LEFT JOIN d_user f ON e.KD_USER=f.KD_USER WHERE a.JUDUL_SKRIPSI_PB<>'' AND a.JUDUL_SKRIPSI_PB IS NOT NULL
+            AND b.KD_PEMB=1";
 //        echo $sql."</br>";
         $d_skripsi = $this->_db->select($sql);
         foreach($d_skripsi as $skripsi){
@@ -341,7 +341,7 @@ class Notifikasi{
 //                    var_dump($cek_selesai);
                     if(!$cek_selesai){ //jika data sp2d telah ada
                         $notif->set_status_notif('proses');
-//                   echo $kd_st."-".$skripsi['NM_PB']."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+//                        echo $kd_st."-".$skripsi['NM_PB']."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."-".$skripsi['KD_USER']."</br>";
                         $data_skripsi[]=$notif;
                     }
                 }else{ // jika data tidak ditemukan 
@@ -371,7 +371,7 @@ class Notifikasi{
                 $notif->set_link($data[$i]->get_link());
 //                $pic = array('kode'=>$skripsi['KD_USER'],'nama'=>$skripsi['NM_USER'],'foto'=>$skripsi['FOTO_USER']);
                 $notif->set_pic($data[$i]->get_pic());
-                $notif->set_status_notif('');
+                $notif->set_status_notif($data[$i]->get_status_notif());
                 $notif->set_tahun_masuk($data[$i]->get_tahun_masuk());
                 $notif->set_univ($data[$i]->get_univ());
                 $this->_notif_data[]=$notif;
@@ -421,7 +421,7 @@ class Notifikasi{
                         $notif = $this->get_data_buku_by_st($kd_st, $bulan);
                         $notif->set_link($bulan);
                         $notif->set_status_notif('proses');
-                        echo $kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+//                        echo $kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
 //                        print_r($notif);
                         $this->_notif_data[] = $notif;
                     }
@@ -557,6 +557,7 @@ class Notifikasi{
         }
         if($cek_sp2d){
             $sql .= " AND a.NO_SP2D_D_ELEM_BEASISWA<>'' AND a.NO_SP2D_D_ELEM_BEASISWA IS NOT NULL";
+//            echo $sql."</br>";
         }
 //        echo $sql."</br>";
         $d_elem = $this->_db->select($sql);
@@ -564,9 +565,18 @@ class Notifikasi{
 //            $eksternal = ((int) $elem['KD_PEMB'])>1;
 //            if($eksternal) return true;
 //        }
-        
         $d_cek = count($d_elem);
+//        if($kode_elem==3){
+//            $sql = "SELECT KD_PB FROM d_pb WHERE KD_ST=".$surat_tugas;
+//            $d_itung = count($this->_db->select($sql));
+//            if($d_cek==$d_itung){
+//                return true;
+//            }else{
+//                return false;
+//            }
+//        }
         
+//        echo $d_cek."</br>";
         return $d_cek>0?true:false;
     }
     
@@ -675,21 +685,24 @@ class Notifikasi{
             $notif = new NotifikasiDao();
 //            $sebulan = $st['SELISIH']<31;
             $is_notif = $this->is_write_notif('lulus',$st['TGL_SEL_ST']);
+//            var_dump($is_notif);
             $notif->set_jenis_notif($st['JENIS']);
             $notif->set_jurusan($st['NM_JUR']);
             $notif->set_kode_link('');
             $notif->set_link($st['SELISIH']);
-            $pic = array('kode'=>$st['KD_ST'],'nama'=>$st['NM_USER'],'foto'=>$st['FOTO']);
+            $pic = array('kode'=>$st['KD_USER'],'nama'=>$st['NM_USER'],'foto'=>$st['FOTO']);
             $notif->set_pic($pic);
-            $notif->set_status_notif('akan lulus');
+            $notif->set_status_notif('proses');
             $notif->set_tahun_masuk($st['THN_MASUK']);
             $notif->set_univ($st['SINGKAT_UNIV']);
             $notif->set_jatuh_tempo($st['TGL_SEL_ST']);
             if($is_notif){
+//                echo $kontrak['KD_ST']."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
                 $this->_notif_data[] = $notif;
             }else{
                 $complete = $this->is_complete_gradute_st($st['KD_ST']);
                 if(!$complete){
+//                    echo $kontrak['KD_ST']."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
                     $this->_notif_data[] = $notif;
                 }
             }
@@ -741,7 +754,8 @@ class Notifikasi{
     
     private function dump_data(){
         foreach ($this->_notif_data as $v){
-            echo $v->get_jenis_notif().":".$v->get_status_notif().":".$v->get_jatuh_tempo().":".$v->get_tahun_masuk().":".$v->get_univ().":".$v->get_link()."</br>";
+            $pic = $v->get_pic();
+            echo $v->get_jenis_notif().":".$v->get_status_notif().":".$v->get_jatuh_tempo().":".$v->get_tahun_masuk().":".$v->get_univ().":".$v->get_link().":".$pic['kode']."</br>";
         }
     }
     
@@ -857,9 +871,9 @@ class Notifikasi{
         }
         
         $is_notif = $now>=$duedate;
-        if($is_notif) $return = true;
+        if($is_notif) return true;
         
-        return $return;
+        return false;
     }
     
     /*

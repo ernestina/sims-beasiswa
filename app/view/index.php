@@ -15,7 +15,7 @@
                 $jenis = 'Pembayaran Uang Buku ';
                 $judul_notif = 'UANG BUKU';
                 $sem = (int) Tanggal::bulan_num($v['bulan']);
-                if($bln==9){
+                if($sem==9){
                     $sem = 'ganjil';
                 }else{
                     $sem = 'genap';
@@ -46,7 +46,6 @@
         if(count($tmp)>2){
             $jatuh_tempo = Tanggal::tgl_indo($v['jatuh_tempo']);
         }
-        
         if($v['status']=='proses'){
             $img = 'public/icon/purges.png';
         }else{
@@ -93,8 +92,9 @@ function count_notif(){
     $.post('<?php echo URL; ?>notifikasi/count_notif',{param:""+<?php echo Session::get('kd_user');?>+""},
     function(data){
         var old_count = parseInt(document.getElementById('jml_notif').value);
-        if(parseInt(data)>old_count){
+        if(parseInt(data)!=old_count){
             console.log(data);
+            console.log(old_count);
             $('#jml_notif').val(data);
             $('<audio id="chatAudio"><source src="public/sound/sounds-847-office-2.mp3" type="audio/mpeg"></audio>').appendTo('body');
             $('#chatAudio')[0].play();

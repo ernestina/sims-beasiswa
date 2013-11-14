@@ -53,7 +53,10 @@ class Penerima {
         foreach($result as $val){
             $penerima = new $this($this->registry);
             $penerima->set_kd_pb($val['KD_PB']);
-            $penerima->set_st($val['KD_ST']);
+            $st = new SuratTugas($this->registry);
+            $st->set_kd_st($val['KD_ST']);
+            $d_st = $st->get_surat_tugas_by_id($st);
+            $penerima->set_st($d_st->get_tgl_mulai().";".$d_st->get_tgl_selesai());
             $jur = new Jurusan($this->registry);
             $jur->set_kode_jur($val['KD_JUR']);
             $d_jur = $jur->get_jur_by_id($jur);

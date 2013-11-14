@@ -86,7 +86,7 @@
                 </div>
                 <input type="hidden" id="kd_el" name="kd_el" value="<?php echo $this->elemen->get_kd_d(); ?>">
                 <div>
-                <ulclass="inline" style="float: right; margin-right: 20px">
+                <ul class="inline" style="float: right; margin-right: 20px">
                     <li><button type="submit" name="simpan" class="sukses" onClick="formSubmit();"/><i class="icon-ok icon-white"></i>Simpan</button></li>
                     <li><button type="reset" name="batal" class="normal" onClick="location.href='<?php echo URL . "elemenBeasiswa/viewUangBuku"; ?>'"><i class="icon-remove icon-white"></i>Batal</li>
                 </ul>
