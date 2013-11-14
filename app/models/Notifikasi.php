@@ -698,14 +698,19 @@ class Notifikasi{
             $notif->set_jatuh_tempo($st['TGL_SEL_ST']);
             if($is_notif){
 //                echo $kontrak['KD_ST']."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
-                $this->_notif_data[] = $notif;
-            }else{
                 $complete = $this->is_complete_gradute_st($st['KD_ST']);
+                var_dump($complete);
                 if(!$complete){
-//                    echo $kontrak['KD_ST']."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
                     $this->_notif_data[] = $notif;
                 }
             }
+//            else{
+//                $complete = $this->is_complete_gradute_st($st['KD_ST']);
+//                if(!$complete){
+//                    echo $kontrak['KD_ST']."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+//                    $this->_notif_data[] = $notif;
+//                }
+//            }
         }
     }
     
@@ -894,7 +899,6 @@ class Notifikasi{
                 }
             }
         }
-        
         return $count>0?false:true;
     }
     
