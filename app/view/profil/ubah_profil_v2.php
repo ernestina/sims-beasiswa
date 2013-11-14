@@ -113,7 +113,7 @@
                         <ul class="inline">
                             <li><input type="text" id="sts_tb" disabled value="<?php echo StatusPB::status_int_string($this->d_pb->get_status());?>"></li>
                             <?php if($this->d_pb->get_status()<5) {?>
-                            <li><input class="lihat" type="button" value="<->" id="off" /></li>
+                            <li><input class="lihat" type="button" value="<->" id="off" title="ubah status tidak lulus"/></li>
                             <?php } ?>
                         </ul>
                         
