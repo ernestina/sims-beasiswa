@@ -400,11 +400,18 @@ button.normal[type="reset"] :focus, button.normal[type="reset"]:hover {
     border-color: #bd362f;
 }
 
+input.normal[type="button"] :focus, input.normal[type="button"]:hover {
+    color: #ffffff;
+    background-color: #bd362f;
+    border-color: #bd362f;
+}
+
 button :focus, button:hover {
     color: #ffffff;
     background-color: #2f96b4;
     border-color: #2f96b4;
 }
+
 input.lihat[type="button"] :focus, input.lihat[type="button"] :hover {
     color: #ffffff;
     background-color: #2f96b4;

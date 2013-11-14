@@ -244,7 +244,7 @@ class Notifikasi{
         if(!is_null($bulan)){
             $sql .= " AND a.BLN_D_ELEM_BEASISWA=".$bln_bayar[1]." AND a.THN_D_ELEM_BEASISWA=".$bln_bayar[0];
         }
-//        $sql .= " AND e.KD_PEMB>1";
+        $sql .= " GROUP BY a.KD_D_ELEM_BEASISWA";
 //        echo $sql."</br>";
         $d_jadup = $this->_db->select($sql);
         if(!is_null($bulan)) $notif = new NotifikasiDao();
@@ -421,7 +421,7 @@ class Notifikasi{
                         $notif = $this->get_data_buku_by_st($kd_st, $bulan);
                         $notif->set_link($bulan);
                         $notif->set_status_notif('proses');
-//                        echo $kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+                        echo $kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
 //                        print_r($notif);
                         $this->_notif_data[] = $notif;
                     }
@@ -499,7 +499,7 @@ class Notifikasi{
             LEFT JOIN t_elem_beasiswa c ON a.KD_D_ELEM_BEASISWA=c.KD_D_ELEM_BEASISWA
             LEFT JOIN d_pb d ON c.KD_PB=d.KD_PB
             LEFT JOIN d_srt_tugas e ON d.KD_ST=e.KD_ST
-            LEFT JOIN r_jur f ON d.KD_JUR=d.KD_JUR
+            LEFT JOIN r_jur f ON e.KD_JUR=f.KD_JUR
             LEFT JOIN r_fakul g ON f.KD_FAKUL=g.KD_FAKUL
             LEFT JOIN r_univ h ON g.KD_UNIV=h.KD_UNIV 
             LEFT JOIN d_user i ON h.KD_USER=i.KD_USER
@@ -585,22 +585,22 @@ class Notifikasi{
         $sql = "SELECT 
             a.KD_KON as KD_KON,
             g.KD_ST as KD_ST,
-            b.KD_TAGIHAN as KD_TAGIHAN,
-            b.NM_TAGIHAN as NM_TAGIHAN,
-            b.JADWAL_BAYAR_TAGIHAN as DATE_BAYAR,
-            (b.BIAYA_PER_PEG_TAGIHAN*b.JML_PEG_BAYAR_TAGIHAN) as BIAYA,
+            a.KD_TAGIHAN as KD_TAGIHAN,
+            a.NM_TAGIHAN as NM_TAGIHAN,
+            a.JADWAL_BAYAR_TAGIHAN as DATE_BAYAR,
+            (a.BIAYA_PER_PEG_TAGIHAN*a.JML_PEG_BAYAR_TAGIHAN) as BIAYA,
             c.NM_JUR as NM_JUR,
             e.SINGKAT_UNIV as SINGKAT_UNIV,
-            b.STS_TAGIHAN as STS_TAGIHAN,
-            DATEDIFF(b.JADWAL_BAYAR_TAGIHAN,DATE(NOW())) as SELISIH,
+            a.STS_TAGIHAN as STS_TAGIHAN,
+            DATEDIFF(a.JADWAL_BAYAR_TAGIHAN,DATE(NOW())) as SELISIH,
             f.NM_USER as NM_USER,
             f.KD_USER as KD_USER,
             f.FOTO_USER as FOTO,
             g.THN_MASUK as THN_MASUK,
             'kontrak' as JENIS
-            FROM d_kontrak a
-            LEFT JOIN d_tagihan b ON a.KD_KON=b.KD_KON
-            LEFT JOIN r_jur c ON a.KD_JUR=c.KD_JUR
+            FROM  d_tagihan a
+            LEFT JOIN d_kontrak b ON a.KD_KON=b.KD_KON
+            LEFT JOIN r_jur c ON b.KD_JUR=c.KD_JUR
             LEFT JOIN r_fakul d ON c.KD_FAKUL=d.KD_FAKUL
             LEFT JOIN r_univ e ON d.KD_UNIV=e.KD_UNIV
             LEFT JOIN d_user f ON e.KD_USER=f.KD_USER

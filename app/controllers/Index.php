@@ -32,6 +32,7 @@ class Index extends BaseController{
         $this->view->d_user = $d_user;
         $this->view->d_notif = $this->get_notifikasi();
         $this->view->count_notif = count($this->view->d_notif);
+//        print_r($this->view->d_notif);
         $this->view->render('index');
     }
     

@@ -80,10 +80,10 @@ class SuratTugas {
         $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
-        if (!is_null($id)) {
-            $sql .= ' WHERE a.KD_ST<>' . $id;
+//        if (!is_null($id)) {
+//            $sql .= ' WHERE a.KD_ST<>' . $id;
             $sql .= ' AND d.KD_USER='.$kd_user;
-        }
+//        }
         $sql .= " LIMIT ".$posisi.",".$batas;
         $result = $this->db->select($sql);
         $data = array();
