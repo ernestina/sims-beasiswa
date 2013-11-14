@@ -63,7 +63,13 @@
     
 </div>
 <div style="float:left; width:24%; margin: 20px 0% 5px 0px;border: solid 1px">
-    <div><img class="frame" src="files/foto/<?php echo $this->d_user->get_foto();?>" style="width:80%;margin: 5px 8% 5px 8%;"></div>
+    <div><img class="frame" src="<?php 
+        if($this->d_user->get_foto()!='' && !is_null($this->d_user->get_foto()) && file_exists('files/foto/'.$this->d_user->get_foto())){
+            echo 'files/foto/'.$this->d_user->get_foto();
+        }else{
+            echo 'public/img/kisanak.png';
+        }
+?>" style="width:80%;margin: 5px 8% 5px 8%;"></div>
     <div><h4><?php echo strtoupper($this->d_user->get_nmUser());?></h4></div>
     <div><h4>Universitas :</h4>
         <div style="margin:10px 5px 10px 10px">

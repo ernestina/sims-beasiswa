@@ -1,7 +1,15 @@
 <div id="top"> <!-- FORM -->
     <h2>DATA SURAT TUGAS</h2>
     <div class="kolom3">
-        <fieldset><legend>Tambah Surat Tugas</legend>
+        <fieldset><legend>
+                <?php 
+                    if(isset($this->d_ubah)){
+                        echo "Ubah Surat Tugas";
+                    }else{
+                        echo "Tambah Surat Tugas";
+                    }
+                ?>
+                </legend>
 		<div class="kiri">
         <form method="POST" action="<?php 
                 if(isset($this->d_ubah)){
@@ -139,7 +147,7 @@
                 ?>
             </select>
             <div id="wfile" class="error"></div>
-            <label>Unggah ST</label><input type="file" name="fupload" id="file">
+            <label>Unggah ST</label><input type="file" name="fupload" id="file"><?php  if(isset($this->d_ubah)){ ?><a style="cursor: pointer;"onClick="viewUbah('<?php echo $this->d_ubah->get_file();?>')">lihat file</a><?php } ?>
             <ul class="inline tengah">
                     <?php if(isset($this->d_ubah)){?>
                         <li><input class="normal" type="button" onclick="window.history.back()" value="BATAL"></li>
@@ -176,7 +184,7 @@
                             }
                         ?>
                     </select></td>
-                <td><input type="search" id="cari" size="30" placeholder="Cari..."></td>
+                <td><input type="search" id="cari" size="30" placeholder="Cari berdasarkan nomor surat" title="pencarian surat tugas"></td>
             </tr>
         </table>
             
@@ -406,5 +414,16 @@
         
         
     }
+    
+function viewUbah(file){
+    var url = "<?php echo URL;?>surattugas/view_st/"+file;
+    
+    var w = 800;
+    var h = 500;
+    var left = (screen.width/2)-(w/2);
+    var top = (screen.height/2)-(h/2);
+    var title = "tampilan surat tugas";
+    window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+}
 </script>
     

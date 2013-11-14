@@ -66,7 +66,8 @@
 				<input class="unggah" type="text" id="filefoto" disabled /></li>
 				<li><input type="button" class="lihat" value="Pilih..." id="fakeBrowse" onclick="BrowseFoto();"/>
 				</li>
-				<li><input type="button" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_foto();?>','foto');" value="Lihat Foto"></li>
+<!--				<li><input type="button" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_foto();?>','foto');" value="Lihat Foto"></li>-->
+                                <li><a style="cursor:pointer;color:blue" onclick="view_file('<?php echo $this->d_pb->get_foto();?>','foto');" >lihat foto</a></li>
 			</ul>
                         
 
@@ -145,7 +146,8 @@
 				<input class="unggah" type="text" id="filename" disabled /></li>
 				<li><input class="lihat" type="button" value="Pilih..." id="fakeBrowse" onclick="HandleBrowseClick();"/>
 				</li>
-				<li><input type="button" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');" value="Lihat SKL"></li>
+<!--				<li><input type="button" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');" value="Lihat SKL"></li>-->
+                                <li><a style="cursor:pointer;color: blue" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');">lihat skl</a></li>
                         </ul>
                         
 			<div class="error" id="wspmt"></div>
@@ -157,7 +159,8 @@
 				<li><input class="lihat" type="button" value="Pilih..." id="fakeBrowse" onclick="BrowseClick();"/>
 				</li>
 				<!--li><input class="lihat" type="button" value="Lihat SPMT" id="" onclick="view_file('<?php //echo $this->d_pb->get_spmt();?>','skl');"/></li-->
-				<li><input type="button" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','spmt');" value="Lihat SPMT"></li>
+<!--				<li><input type="button" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','spmt');" value="Lihat SPMT"></li>-->
+                                <li><a style="cursor:pointer;color:blue" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','spmt');" value="Lihat SPMT">lihat spmt</a></li>
 			</ul>
                         
 	</fieldset>

@@ -212,7 +212,7 @@ class CutiController extends BaseController{
         $thn_masuk = $param[1];
         $this->view->d_ct=array();
         if($univ==0 AND $thn_masuk==0){
-            $this->view->d_ct = $sc->get_cuti();
+            $this->view->d_ct = $sc->get_cuti($this->kd_user);
         }else{
             $this->view->d_ct = $sc->get_cuti_by_univ_thn_masuk($univ, $thn_masuk,$this->kd_user);
         }
@@ -248,7 +248,7 @@ class CutiController extends BaseController{
         }
     }
     
-    public function view_sc($file){
+    public function view_sc($file='null'){
         $this->view->file = $file;
         $this->view->load('riwayat_tb/display_sc');
     }

@@ -535,7 +535,7 @@ class PenerimaController extends BaseController{
         $st->set_kd_st($this->view->d_pb->get_st());
         $this->view->d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
         $this->view->d_bank = $bank->get_bank_id($this->view->d_pb->get_bank());
-        $this->view->t_bank = $bank->get_bank();
+        $this->view->t_bank = $bank->get_bank(); echo $this->view->t_bank;
         $jur->set_kode_jur($this->view->d_pb->get_jur());
         $this->view->d_jur = $jur->get_jur_by_id($jur);
         $jst->set_kode($this->view->d_st->get_jenis_st());
@@ -632,22 +632,22 @@ class PenerimaController extends BaseController{
         $this->view->load('profil/tabel_nilai');
     }
     
-    public function view_transkrip($file){
+    public function view_transkrip($file='null'){
         $this->view->file = $file;
         $this->view->load('profil/display_transkrip');
     }
     
-    public function view_foto($file){
+    public function view_foto($file='null'){
         $this->view->file = $file;
         $this->view->load('profil/display_foto');
     }
     
-    public function view_skl($file){
+    public function view_skl($file='null'){
         $this->view->file = $file;
         $this->view->load('profil/display_skl');
     }
     
-    public function view_spmt($file){
+    public function view_spmt($file='null'){
         $this->view->file = $file;
         $this->view->load('profil/display_spmt');
     }

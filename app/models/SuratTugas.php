@@ -42,6 +42,8 @@ class SuratTugas {
         if (!is_null($id)) {
             $sql .= ' WHERE a.KD_ST<>' . $id;
             $sql .= ' AND d.KD_USER='.$kd_user;
+        }else{
+            $sql .= ' WHERE d.KD_USER='.$kd_user;
         }
         $result = $this->db->select($sql);
         $data = array();

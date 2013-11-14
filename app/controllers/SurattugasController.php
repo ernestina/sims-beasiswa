@@ -169,7 +169,7 @@ class SurattugasController extends BaseController{
         $kd_user = $param[2];
         $this->view->d_st=array();
         if($univ==0 AND $thn==0){
-            $this->view->d_st = $st->get_surat_tugas();
+            $this->view->d_st = $st->get_surat_tugas($this->kd_user);
         }else{
             $this->view->d_st = $st->get_surat_tugas_by_univ_thn_masuk($univ, $thn, $kd_user);
         }
@@ -253,7 +253,7 @@ class SurattugasController extends BaseController{
         echo $return;
     }
 
-    public function view_st($file){
+    public function view_st($file='null'){
         $this->view->file = $file;
         $this->view->load('riwayat_tb/display_st');
     }

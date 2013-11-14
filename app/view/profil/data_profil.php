@@ -6,7 +6,13 @@
 	<h1>PROFIL PENERIMA BEASISWA</h1>
 	<fieldset><legend>Profil Penerima Beasiswa</legend>
 		<div class="foto">
-			<img class="frame" src="<?php echo URL; ?>files/foto/<?php echo $this->d_pb->get_foto();?>" width="185" height="220">
+			<img class="frame" src="<?php 
+                            if($this->d_pb->get_foto()!='' && !is_null($this->d_pb->get_foto()) && file_exists('files/foto/'.$this->d_pb->get_foto())){
+                                echo URL; ?>files/foto/<?php echo $this->d_pb->get_foto();
+                            }else{
+                                echo URL.'public/img/unknown.png';
+                            } 
+                            ?>" width="185" height="220">
 			</div>
 		<form action="#" method="post">
 			<label class="isian">NIP :</label>
@@ -82,13 +88,15 @@
 			<label class="isian">Tanggal Lapor Selesai TB :</label>
 			<ul class="inline">
                             <li><input class="unggah" type="text" id="tgl_lapor" disabled value="<?php echo ($this->d_pb->get_tgl_lapor()=='0000-00-00' OR $this->d_pb->get_tgl_lapor()=='')?'':(Tanggal::tgl_indo($this->d_pb->get_tgl_lapor()))?>"/></li>
-				<li><input type="button" value="Lihat" id="fileSP" class="lihat"/><!--View file SPMT-->
+<!--				<li><input type="button" value="Lihat" id="fileSP" class="lihat"/>View file SPMT-->
 				</li>
 			</ul>
                         <label class="isian"></label>
 			<ul class="inline">
-                            <li><input type="button" value="Lihat SPMT" id="fileSPMT" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','spmt');"/></li>
-				<li><input type="button" value="Lihat SKL" id="fileSKL" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');"/><!--View file SPMT-->
+<!--                            <li><input type="button" value="Lihat SPMT" id="fileSPMT" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','spmt');"/></li>-->
+                                <li><a style="cursor: pointer;color:blue" id="fileSPMT" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','spmt');">[lihat spmt]</a></li>
+<!--				<li><input type="button" value="Lihat SKL" id="fileSKL" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');"/>View file SPMT-->
+                                <li><a style="cursor: pointer;color:blue" id="fileSKL" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');">[lihat skl]</a>
 				</li>
 			</ul>
 	</fieldset>

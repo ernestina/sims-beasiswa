@@ -1,7 +1,14 @@
 <div id="top"> <!-- FORM -->
     <h2>DATA SURAT CUTI</h2>
     <div class="kolom3">
-        <fieldset><legend>Tambah Surat Cuti</legend>
+        <fieldset><legend><?php 
+                            if(isset($this->d_ubah)){
+                                echo "Ubah Surat Cuti";
+                            }else{
+                                echo "Tambah Surat Cuti";
+                            }
+                        ?>
+                    </legend>
 		<div class="kiri">
         <form method="POST" action="<?php 
                 if(isset($this->d_ubah)){
@@ -120,7 +127,7 @@
                 <option value="<?php echo (int) $this->curr_year+1;?>" <?php echo isset($this->d_ubah)?($perk_go[1]==(int)$this->curr_year+1)?'selected':'':'';?>><?php echo (int) $this->curr_year+1;?></option>
             </select>
             <div id="wfile" class="error"></div>
-            <label>Unggah SC</label><input type="file" name="fupload" id="file">
+            <label>Unggah SC</label><input type="file" name="fupload" id="file"><?php  if(isset($this->d_ubah)){ ?><a style="cursor: pointer;"onClick="viewUbah('<?php echo $this->d_ubah->get_file();?>')">lihat file</a><?php } ?>
         
 		<ul class="inline tengah">
                     <?php if(isset($this->d_ubah)){?>
@@ -158,7 +165,7 @@
                             }
                         ?>
                     </select></td>
-                <td><input type="search" id="cari" size="30" placeholder="Cari..."></td>
+                <td><input type="search" id="cari" size="30" placeholder="Cari berdasarkan nama pegawai" title="pencarian surat cuti"></td>
             </tr>
         </table>
     </div>
@@ -444,5 +451,17 @@
         callFromDialog(kd_pb);
         $('#dialog_add_pb').dialog( "close" );
     }
+    
+    function viewUbah(file){
+    console.log(file);
+    var url = "<?php echo URL;?>cuti/view_sc/"+file;
+    
+    var w = 800;
+    var h = 500;
+    var left = (screen.width/2)-(w/2);
+    var top = (screen.height/2)-(h/2);
+    var title = "tampilan surat tugas";
+    window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+}
 </script>
     
