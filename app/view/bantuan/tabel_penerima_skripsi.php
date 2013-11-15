@@ -63,8 +63,11 @@
 <!--</fieldset>-->
 
 <script>
-    $(":checkbox").change(function(){
-        var cks = document.getElementsByName('setuju[]');
+	
+	cekListSkrip();
+	
+	function cekListSkrip(){
+		var cks = document.getElementsByName('setuju[]');
         var cek=0;
         for (var j = 0; j < cks.length; j++){
             if (cks[j].checked){
@@ -77,7 +80,9 @@
             removeError('wtotal_biaya');
             $('#total_bayar').val(cek*$('#biaya_skripsi').val());
         }
-        
+	}
+    $(":checkbox").change(function(){
+        cekListSkrip();
     })
     
     
