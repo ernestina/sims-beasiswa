@@ -333,7 +333,7 @@ class PenerimaController extends BaseController{
         /*
          * upload skl
          */
-        var_dump($_FILES['sklinput']);
+//        var_dump($_FILES['sklinput']);
         if($_FILES['sklinput']['name']!=''){
             $upload_skl = $this->registry->upload;
             $upload_skl->init('sklinput');
@@ -535,7 +535,7 @@ class PenerimaController extends BaseController{
         $st->set_kd_st($this->view->d_pb->get_st());
         $this->view->d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
         $this->view->d_bank = $bank->get_bank_id($this->view->d_pb->get_bank());
-        $this->view->t_bank = $bank->get_bank(); echo $this->view->t_bank;
+        $this->view->t_bank = $bank->get_bank();
         $jur->set_kode_jur($this->view->d_pb->get_jur());
         $this->view->d_jur = $jur->get_jur_by_id($jur);
         $jst->set_kode($this->view->d_st->get_jenis_st());

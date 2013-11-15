@@ -48,7 +48,7 @@
                         <select id="bank" name="bank" type="text">
                             <?php 
                                 foreach ($this->t_bank as $v){
-                                    if($v->get_id()==$this->d_bank){
+                                    if($v->get_id()==$this->d_pb->get_bank()){
                                         echo "<option value=".$v->get_id()." selected>".$v->get_nama()."</option>";
                                     }else{
                                         echo "<option value=".$v->get_id().">".$v->get_nama()."</option>";

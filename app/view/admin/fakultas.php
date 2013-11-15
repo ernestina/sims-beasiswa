@@ -181,7 +181,13 @@ function cek(){
         $('#wtelepon').fadeIn(0);
         $('#wtelepon').html(wtelepon);
         jml++;
-    }
+    }else if(!telepon.match('^[0-9]*$')){
+            var wtelepon= 'Format telepon salah!';
+            $('#wtelepon').fadeIn(0);
+            $('#wtelepon').html(wtelepon);
+            jml++;
+        
+        }
     
     if(jml>0){
         return false

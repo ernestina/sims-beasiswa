@@ -244,7 +244,13 @@ function cek(){
         $('#wtelepon').fadeIn(0);
         $('#wtelepon').html(wtelepon);
         jml++;
-    }
+    }else if(!telepon.match('^[0-9]*$')){
+            var wtelepon= 'Format telepon salah!';
+            $('#wtelepon').fadeIn(0);
+            $('#wtelepon').html(wtelepon);
+            jml++;
+        
+        }
     
     if(pic_jur==''){
         var wpic_jur= 'PIC perguruan tinggi harus diisi!';
@@ -258,7 +264,13 @@ function cek(){
         $('#wtelp_pic_jur').fadeIn(0);
         $('#wtelp_pic_jur').html(wtelp_pic_jur);
         jml++;
-    }
+    }else if(!telp_pic_jur.match('^[0-9]*$')){
+            var wtelp_pic_jur= 'Format telepon salah!';
+            $('#wtelp_pic_jur').fadeIn(0);
+            $('#wtelp_pic_jur').html(wtelp_pic_jur);
+            jml++;
+        
+        }
     
     if(status==''){
         var wstatus= 'status harus diisi!';

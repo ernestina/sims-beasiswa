@@ -28,7 +28,7 @@
                         }
                     ?>
                 </select></td>
-            <td><input type="search" name="cari" id="cari" size="30" placeholder="Cari..."></td>
+            <td><input type="search" name="cari" id="cari" size="30" placeholder="Cari berdasarkan nama pegawai" title="pencarian penerima beasiswa"></td>
         </tr>
         <!--tr><td colspan="3"></td><td style="padding-right: 45px; padding-top: 0px"><input type="button" value="TAMBAH" onclick="location.href='<?php echo URL.'penerima/penerima'?>'"></td></tr-->
     </table>

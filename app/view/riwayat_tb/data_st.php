@@ -147,7 +147,7 @@
                 ?>
             </select>
             <div id="wfile" class="error"></div>
-            <label>Unggah ST</label><input type="file" name="fupload" id="file"><?php  if(isset($this->d_ubah)){ ?><a style="cursor: pointer;"onClick="viewUbah('<?php echo $this->d_ubah->get_file();?>')">lihat file</a><?php } ?>
+            <label>Unggah ST</label><input type="file" name="fupload" id="file"><?php  if(isset($this->d_ubah)){ ?><a style="cursor: pointer;color:blue"onClick="viewUbah('<?php echo $this->d_ubah->get_file();?>')">lihat file</a><?php } ?>
             <ul class="inline tengah">
                     <?php if(isset($this->d_ubah)){?>
                         <li><input class="normal" type="button" onclick="window.history.back()" value="BATAL"></li>

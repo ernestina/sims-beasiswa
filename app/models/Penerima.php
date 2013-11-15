@@ -584,28 +584,30 @@ class Penerima {
             a.JUDUL_SKRIPSI_PB as JUDUL_SKRIPSI_PB
             FROM ".$this->_tb_penerima." a ";
         $sql .= "LEFT JOIN d_srt_tugas b ON a.KD_ST=b.KD_ST
-            LEFT JOIN r_jur c ON a.KD_JUR=c.KD_JUR
-            LEFT JOIN r_stb d ON a.KD_STS_TB=d.KD_STS_TB
-            LEFT JOIN r_bank e ON a.KD_BANK=e.KD_BANK 
+            LEFT JOIN r_jur c ON b.KD_JUR=c.KD_JUR
             LEFT JOIN r_fakul f ON c.KD_FAKUL=f.KD_FAKUL
             LEFT JOIN r_univ g ON f.KD_UNIV=g.KD_UNIV
+            LEFT JOIN r_stb d ON a.KD_STS_TB=d.KD_STS_TB
+            LEFT JOIN r_bank e ON a.KD_BANK=e.KD_BANK 
             LEFT JOIN r_strata h ON c.KD_STRATA=h.KD_STRATA ";
         if($univ==0 && $thn_masuk==0 &&$status!=0){
-            $sql .= "WHERE a.KD_STS_TB=".$status;
+            $sql .= "WHERE a.KD_STS_TB=".$status." AND g.KD_USER=".$kd_user;
         }else if($univ==0 && $thn_masuk!=0 &&$status!=0){
-            $sql .= "WHERE b.THN_MASUK=".$thn_masuk." AND a.KD_STS_TB=".$status;
+            $sql .= "WHERE b.THN_MASUK=".$thn_masuk." AND a.KD_STS_TB=".$status." AND g.KD_USER=".$kd_user;
         }else if($univ!=0 && $thn_masuk!=0 &&$status!=0){
-            $sql .= "WHERE g.KD_UNIV=".$univ." AND b.THN_MASUK=".$thn_masuk." AND a.KD_STS_TB=".$status;
+            $sql .= "WHERE g.KD_UNIV=".$univ." AND b.THN_MASUK=".$thn_masuk." AND a.KD_STS_TB=".$status." AND g.KD_USER=".$kd_user;
         }else if($univ!=0 && $thn_masuk!=0 &&$status==0){
-            $sql .= "WHERE g.KD_UNIV=".$univ." AND b.THN_MASUK=".$thn_masuk;
+            $sql .= "WHERE g.KD_UNIV=".$univ." AND b.THN_MASUK=".$thn_masuk." AND g.KD_USER=".$kd_user;
         }else if($univ!=0 && $thn_masuk==0 &&$status==0){
-            $sql .= "WHERE g.KD_UNIV=".$univ;
+            $sql .= "WHERE g.KD_UNIV=".$univ." AND g.KD_USER=".$kd_user;
         }else if($univ==0 && $thn_masuk!=0 &&$status==0){
-            $sql .= "WHERE b.THN_MASUK=".$thn_masuk;
+            $sql .= "WHERE b.THN_MASUK=".$thn_masuk." AND g.KD_USER=".$kd_user;
         }else if($univ!=0 && $thn_masuk==0 &&$status!=0){
-            $sql .= "WHERE g.KD_UNIV=".$univ."  AND a.KD_STS_TB=".$status;
+            $sql .= "WHERE g.KD_UNIV=".$univ."  AND a.KD_STS_TB=".$status." AND g.KD_USER=".$kd_user;
+        }else{
+            $sql .= " WHERE g.KD_USER=".$kd_user;
         }
-        $sql .= " AND g.KD_USER=".$kd_user;
+        
         if(!is_null($posisi)){
             $sql .= " LIMIT ".$posisi.",".$batas;
         }
@@ -699,6 +701,85 @@ class Penerima {
         $d_jumlah = $this->db->select($sql);
         foreach ($d_jumlah as $v){
             return $v['JUMLAH'];
+        }
+    }
+    
+    /*
+     * cek hubungan pb dengan cuti dan surat tugas perpanjangan
+     * param Penerima pb, jenis cek [cuti, st, all], luaran [false=boolean, true=status]
+     */
+    public function cek_pb_konek_st_ct(Penerima $pb,$jenis_cek='all',$is_lulus=false,$luaran=false){
+        if($pb->get_st()=='' || is_null($pb->get_st())){
+            $pb = $pb->get_penerima_by_id($pb);
+        }
+        $kd_st = $pb->get_st();
+        $status = 1;
+        switch($jenis_cek){
+            case 'all':
+                if(!$is_lulus){
+                    $sts_cuti = $this->cek_pb_konek_st_ct($pb, 'cuti',true);
+                    if($sts_cuti){
+                        $status = $this->cek_pb_konek_st_ct($pb, 'cuti',false,true);
+                        if($luaran){
+                            return $status;
+                        } 
+                        return true;
+                    }else{
+                        $status = $this->cek_pb_konek_st_ct($pb, 'st', true, true);
+                    }
+                }else{
+                    $sts_cuti = $this->cek_pb_konek_st_ct($pb, 'cuti');
+                    $sts_st = $this->cek_pb_konek_st_ct($pb, 'st', false, true);
+                }
+                break;
+            case 'cuti':
+                $ct = new Cuti($this->registry);
+                $d_ct = $ct->get_cuti(Session::get('kd_user'), $pb);
+                $exist_data = count($d_ct)>0;
+                if($exist_data){
+                    if($is_lulus){
+                        $status = $this->cek_pb_konek_st_ct($pb, 'st', true, true);
+                    }else{
+                        $status = 4;
+                    }
+                }
+                break;
+            case 'st':
+                $st = new SuratTugas($this->registry);
+                $st->set_kd_st($kd_st);
+                $st = $st->get_surat_tugas_by_id($st);
+                $tgl_sel_st = $st->get_tgl_selesai();
+                $child = $st->is_child($kd_st);
+                if($child){
+                    $second_child = $st->is_child($kd_st);
+                    if($second_child){
+                        if($is_lulus) {
+                            if($pb->get_tgl_lapor()=='' || is_null($pb->get_tgl_lapor())){
+                                $tgl_lapor = date('Y-m-d');
+                            }else{
+                                $tgl_lapor = $pb->get_tgl_lapor();
+                            }
+                            $status = $pb->get_status_change_pb($st, $tgl_lapor, $tgl_sel_st);
+                        }else{
+                            $status = 3;
+                        }
+                        
+                    }else{
+                        if($is_lulus){
+                            if($pb->get_tgl_lapor()=='' || is_null($pb->get_tgl_lapor())){
+                                $tgl_lapor = date('Y-m-d');
+                            }else{
+                                $tgl_lapor = $pb->get_tgl_lapor();
+                            }
+                            $status = $pb->get_status_change_pb($st, $tgl_lapor, $tgl_sel_st);
+                        }else{
+                            $status = 2;
+                        }
+                    }
+                }
+                break;
+            default:
+                throw new Exception();
         }
     }
 
