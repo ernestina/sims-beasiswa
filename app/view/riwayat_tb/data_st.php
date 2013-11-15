@@ -147,11 +147,24 @@
                 ?>
             </select>
             <div id="wfile" class="error"></div>
+<!--<<<<<<< .mine -->
+            <label>Unggah ST</label>
+				<ul class="inline">
+				<li><input type="file" name="fupload" id="file" style="width: 150px; margin-left: -40px; "> </li> &nbsp <li>
+				<?php  if(isset($this->d_ubah)){ ?>
+				
+				<a style="cursor: pointer;"onClick="viewUbah('<?php echo $this->d_ubah->get_file();?>')" href="#" class="lihat">lihat file</a></li>
+				</ul><?php } ?>
+           
+<!--=======
             <label>Unggah ST</label><input type="file" name="fupload" id="file"><?php  if(isset($this->d_ubah)){ ?><a style="cursor: pointer;color:blue"onClick="viewUbah('<?php echo $this->d_ubah->get_file();?>')">lihat file</a><?php } ?>
             <ul class="inline tengah">
+>>>>>>> .r384 -->
                     <?php if(isset($this->d_ubah)){?>
-                        <li><input class="normal" type="button" onclick="window.history.back()" value="BATAL"></li>
+					<ul class="inline tengah">
+						<li><input class="normal" type="button" onclick="window.history.back()" value="BATAL"></li>
                     <?php }else{?>
+			<ul class="inline tengah" style="margin-left: -40px; margin-top: 10px">
 			<li><input class="normal" type="RESET" onclick="" value="RESET"></li>
                     <?php }?>
 			<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'sb_upd':'sb_add';?>" value="SIMPAN" onClick="return cek();"></li>
