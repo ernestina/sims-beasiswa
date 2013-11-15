@@ -707,6 +707,7 @@ class Penerima {
     /*
      * cek hubungan pb dengan cuti dan surat tugas perpanjangan
      * param Penerima pb, jenis cek [cuti, st, all], luaran [false=boolean, true=status]
+     * 
      */
     public function cek_pb_konek_st_ct(Penerima $pb,$jenis_cek='all',$is_lulus=false,$luaran=false){
         if($pb->get_st()=='' || is_null($pb->get_st())){
@@ -717,7 +718,7 @@ class Penerima {
         switch($jenis_cek){
             case 'all':
                 if(!$is_lulus){
-                    $sts_cuti = $this->cek_pb_konek_st_ct($pb, 'cuti',true);
+                    $sts_cuti = $this->cek_pb_konek_st_ct($pb, 'cuti',false);
                     if($sts_cuti){
                         $status = $this->cek_pb_konek_st_ct($pb, 'cuti',false,true);
                         if($luaran){
@@ -737,11 +738,25 @@ class Penerima {
                 $d_ct = $ct->get_cuti(Session::get('kd_user'), $pb);
                 $exist_data = count($d_ct)>0;
                 if($exist_data){
-                    if($is_lulus){
-                        $status = $this->cek_pb_konek_st_ct($pb, 'st', true, true);
+                    if($luaran){
+                        return 4; //saat cuti tidak boleh lulus
                     }else{
-                        $status = 4;
+                        return true;
                     }
+                }else{
+                    if($is_lulus){
+                        if($luaran){
+                            $status = $this->cek_pb_konek_st_ct($pb, 'st', true, true); //kode untuk lulus
+                            return $status;
+                        }
+                    }else{
+                        if($luaran){
+                            $status = $this->cek_pb_konek_st_ct($pb, 'st', false, true); //kode sebelum lulus
+                            return $status;
+                        }
+                    }
+                    
+                    if(!$luaran) return false;
                 }
                 break;
             case 'st':

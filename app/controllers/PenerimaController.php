@@ -357,6 +357,24 @@ class PenerimaController extends BaseController{
 //                $d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
                 $status = $pb->get_status_change_pb($d_st,$lap_selesai_tb,$tgl_sel_st);
 //            }
+        }else{
+            $st = new SuratTugas($this->registry);
+            $is_child = $st->is_child($kd_st);
+            if($is_child){
+                $kd_parent = $st->get_st_lama();
+                if($kd_parent!=''){
+                    $status = 3;
+                }else{
+                    $status = 2;
+                } 
+            }else{
+                $status = 1;
+            }
+            $ct = new Cuti($this->registry);
+            $d_cuti = $ct->get_cuti($this->kd_user, $pb);
+            if(count($d_cuti)>0){
+                $status = 4;
+            }
         }
 //        var_dump($upload_skl);
         
