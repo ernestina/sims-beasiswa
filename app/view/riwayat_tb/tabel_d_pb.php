@@ -4,7 +4,7 @@
 //            $paging = $this->paging->navHalaman($jmlhal);
 //            echo $paging; }
 ?>
-    </br>
+    
     <div id="tb_pb_child">
 <table class="table-bordered zebra scroll" >
         <thead>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>.:SIMS OKE:.</title>   
+        <title>.:Treascho:.</title>   
         <script src="<?php echo URL; ?>public/js/jquery-2.0.3.min.js"></script>
         <link rel="stylesheet" href="<?php echo URL; ?>public/js/jquery-ui-1.10.3/themes/base/jquery.ui.all.css">
         <script src="<?php echo URL; ?>public/js/jquery-ui.js"></script>

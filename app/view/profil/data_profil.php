@@ -87,16 +87,16 @@
 			
 			<label class="isian">Tanggal Lapor Selesai TB :</label>
 			<ul class="inline">
-                            <li><input class="unggah" type="text" id="tgl_lapor" disabled value="<?php echo ($this->d_pb->get_tgl_lapor()=='0000-00-00' OR $this->d_pb->get_tgl_lapor()=='')?'':(Tanggal::tgl_indo($this->d_pb->get_tgl_lapor()))?>"/></li>
+                            <li><input type="text" id="tgl_lapor" disabled value="<?php echo ($this->d_pb->get_tgl_lapor()=='0000-00-00' OR $this->d_pb->get_tgl_lapor()=='')?'':(Tanggal::tgl_indo($this->d_pb->get_tgl_lapor()))?>"/></li>
 <!--				<li><input type="button" value="Lihat" id="fileSP" class="lihat"/>View file SPMT-->
 				</li>
 			</ul>
                         <label class="isian"></label>
 			<ul class="inline">
 <!--                            <li><input type="button" value="Lihat SPMT" id="fileSPMT" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','spmt');"/></li>-->
-                                <li><a style="cursor: pointer;color:blue" id="fileSPMT" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','spmt');">[lihat spmt]</a></li>
+                                <li><a href="#" id="fileSPMT" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','spmt');">[lihat spmt]</a></li>
 <!--				<li><input type="button" value="Lihat SKL" id="fileSKL" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');"/>View file SPMT-->
-                                <li><a style="cursor: pointer;color:blue" id="fileSKL" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');">[lihat skl]</a>
+                                <li><a href="#" id="fileSKL" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');">[lihat skl]</a>
 				</li>
 			</ul>
 	</fieldset>
@@ -159,8 +159,7 @@
 			
 
 		<label class="isian">Unggah Transkrip:</label>-->
-			<br>
-			<br>
+			
 			<?php 
                             $this->load("profil/tabel_nilai");
                         ?>
@@ -221,7 +220,7 @@
 		
 	</fieldset>
 </div> <!--div level 4-->
-<input class="sukses" id="bt_edit" type="button" value="UBAH"  style="font-size: 130%; margin-top:20px"/>
+<input class="sukses" id="bt_edit" type="button" value="UBAH"  style="margin-top:20px"/>
 
 
 </div> <!--top-->

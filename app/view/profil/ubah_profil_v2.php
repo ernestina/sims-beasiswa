@@ -43,7 +43,7 @@
 			<label class="isian">No. HP :</label>
 			<input type="text" id="hp" name="hp" value="<?php echo isset($this->telp)?$this->telp:$this->d_pb->get_telp();?>"/>
 			
-			<label class="isian">Bank Penerima</label>
+			<label class="isian">Bank Penerima :</label>
 <!--			<input type="text" id="bank" name="bank" value="<?php echo isset($this->bank)?$this->bank:$this->d_bank->get_id();?>"/>-->
                         <select id="bank" name="bank" type="text">
                             <?php 
@@ -56,18 +56,18 @@
                                 }
                             ?>
                         </select>
-			<label class="isian">No Rekening</label>
+			<label class="isian">No Rekening :</label>
 			<input type="text" id="rekening" name="rekening" value="<?php echo isset($this->no_rek)?$this->no_rek:$this->d_pb->get_no_rek();?>"/>
 			<div class="error" id="wfoto"></div>
-			<label class="isian">Unggah Foto:</label>
+			<label class="isian">Unggah Foto :</label>
 <!--                        <input type="file" id="foto" name="fotoinput">-->
 			<ul class="inline">
 				<li><input type="file" id="foto" name="fotoinput" style="display: none" onChange="FotoChange();"/>
 				<input class="unggah" type="text" id="filefoto" disabled /></li>
 				<li><input type="button" class="lihat" value="Pilih..." id="fakeBrowse" onclick="BrowseFoto();"/>
-				</li>
+				</li> &nbsp
 <!--				<li><input type="button" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_foto();?>','foto');" value="Lihat Foto"></li>-->
-                                <li><a style="cursor:pointer;color:blue" onclick="view_file('<?php echo $this->d_pb->get_foto();?>','foto');" >lihat foto</a></li>
+                                <li><a href="#" onclick="view_file('<?php echo $this->d_pb->get_foto();?>','foto');">lihat foto</a></li>
 			</ul>
                         
 
@@ -114,7 +114,7 @@
                         <ul class="inline">
                             <li><input type="text" id="sts_tb" disabled value="<?php echo StatusPB::status_int_string($this->d_pb->get_status());?>"></li>
                             <?php if($this->d_pb->get_status()<5) {?>
-                            <li><input class="lihat" type="button" value="<->" id="off" title="ubah status tidak lulus"/></li>
+                            <li><input class="lihat" type="button" value="Tidak lulus" id="off" title="ubah status tidak lulus"/></li>
                             <?php } ?>
                         </ul>
                         
@@ -147,7 +147,7 @@
 				<li><input class="lihat" type="button" value="Pilih..." id="fakeBrowse" onclick="HandleBrowseClick();"/>
 				</li>
 <!--				<li><input type="button" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');" value="Lihat SKL"></li>-->
-                                <li><a style="cursor:pointer;color: blue" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');">lihat skl</a></li>
+                                <li><a href="#" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');">lihat skl</a></li>
                         </ul>
                         
 			<div class="error" id="wspmt"></div>
@@ -160,7 +160,7 @@
 				</li>
 				<!--li><input class="lihat" type="button" value="Lihat SPMT" id="" onclick="view_file('<?php //echo $this->d_pb->get_spmt();?>','skl');"/></li-->
 <!--				<li><input type="button" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','spmt');" value="Lihat SPMT"></li>-->
-                                <li><a style="cursor:pointer;color:blue" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','spmt');" value="Lihat SPMT">lihat spmt</a></li>
+                                <li><a href="#" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','spmt');" value="Lihat SPMT">lihat spmt</a></li>
 			</ul>
                         
 	</fieldset>

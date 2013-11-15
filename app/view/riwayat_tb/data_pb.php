@@ -44,10 +44,11 @@
             }
 ?>
 <!--    </br>-->
+</div><br><br><br>
     <?php 
         $this->load('riwayat_tb/tabel_d_pb');
     ?>
-</div>
+
 </div>
 
 <script type="text/javascript">

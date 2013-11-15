@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>.:SIMS - LOGIN:.</title>
+        <title>.:Treascho:.</title>
         <script src="<?php echo URL; ?>public/js/jquery-2.0.3.min.js"></script>
         <link rel="stylesheet" href="<?php echo URL; ?>public/js/jquery-ui-1.10.3/themes/base/jquery.ui.all.css">
 
@@ -31,34 +31,38 @@
             </div>
         </div>-->
         <div class="login-container">
-            <a class="logo" href="<?php echo URL;?>notifikasi"><img title="SIMS" height="64" src="<?php echo URL; ?>public/img/treascho-new.png" alt="SIMS" /></a><div class="form login">
+            <center><a class="logo" href="<?php echo URL;?>notifikasi"><img title="SIMS" height="64" src="<?php echo URL; ?>public/img/treascho-new.png" alt="SIMS" /></a></center>
+			<div class="form login">
             <?php 
                 if(isset($this->error)){
                     echo "<div style='color:red' id=notfound><h2>".$this->error."<h2></div>";
                 }
             ?>
-            <h1>Login</h1>
-            <form id="login-form" action="<?php echo URL;?>auth/login" method="post">	<div class="row">
-                            <label>Username <input name="user" id="nuser" type="text" /> </label>
+            <center><h1>LOGIN</h1></center>
+			<form id="login-form" action="<?php echo URL;?>auth/login" method="post">	<div class="row">
+                            <input class="log" name="user" id="nuser" type="text" placeholder="Username"/>
                             <div class="error" id="wuser" style="display:none"></div>	</div>
                     <div class="row">
-                            <label>Password <input style="" name="pass" id="pass" type="password" /> </label>
+                            <input class="log" style="" name="pass" id="pass" type="password" placeholder="Password" />
                                             <div class="error" id="wpass" style="display:none"></div>	</div>
                     <div class="row buttons">
                             <label> <input id="button" type="submit" name="yt0" value="Login" onClick="return cek()"/> </label>
                     </div>
             </form>
+			
             <div class="clearfix"></div>
             <div class="copyright">
-                                            Scholarship Information Management System - Bag Pengembangan Pegawai Setditjen PBN.<br />
-                                            Copyright &copy; 2013 by <a class="djpbn" title="Direktorat Jenderal Perbendaharaan" href="http://www.perbendaharaan.go.id/">Direktorat Jenderal Perbendaharaan</a>.<br/>
-                                            All Rights Reserved.<br/>
-
-                                    </div>
-            </div>
-            <?php 
+			<BR><BR><BR>
+                                            Copyright &copy; 2013
+											Treasury Scholarship. <br>Pengembangan Pegawai - 
+                                            <a class="djpbn" title="Direktorat Jenderal Perbendaharaan" href="http://www.perbendaharaan.go.id/">Ditjen Perbendaharaan</a>
+<?php 
                 echo Hash::create('sha1', 'admin',HASH_SALT_KEY);
             ?>
+                                    </div>
+            
+			</div>
+            
             </div>
     </body>
 </html>

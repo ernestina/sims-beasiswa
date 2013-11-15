@@ -74,6 +74,20 @@ a:active {color:#A4D7E6}
     padding: 0px 20px 0px 20px;
 }
 
+#login-form {
+	margin: 45px;
+	font-family: "Nexa";
+	font-size: 14px;
+	
+}
+.copyright {
+	margin-left: 30px;
+	font-family: "Nexa";
+	
+	margin-right: 30px;
+	text-align: center;
+}
+
 /*Dropdown menu*/
 #menu {
     padding: 0; margin: 0; 
@@ -239,10 +253,11 @@ a:active {color:#A4D7E6}
 
 }
 
-.sukses {
+.sukses, input[type="button"].sukses {
     border: 1px solid #5bb75b;
     background-color: #5bb75b;
 }
+
 
 .warning {
     border: 1px solid #faa732;
@@ -257,6 +272,10 @@ a:active {color:#A4D7E6}
 .biru {
     border: 1px solid #49afcd;
     background-color: #49afcd;
+}
+input.normal[type="button"] {
+	border: 1px solid #da4f49;
+    background-color: #da4f49;
 }
 
 fieldset{
@@ -295,6 +314,12 @@ input[type="button"].paging-kecil, button.paging-kecil {
     border-radius: 0px;
     width: 30px;
 }
+
+input.log {
+	width: 300px;
+	margin: 20px;
+}
+
 input.utama,
 select.utama,
 textarea.utama {
@@ -303,7 +328,7 @@ textarea.utama {
 input.unggah, select.unggah {
     width: 140px;
     margin-top: 0px;
-    margin-bottom: 0px;}
+    }
 
 input.keterangan{
     width: 210px;
@@ -363,8 +388,7 @@ input[type="button"], button, a .btn{
     width: 100px;
     cursor: pointer;
     float: right;
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-top: 10px;
     border: 1px solid #49afcd
 }
 
@@ -400,13 +424,19 @@ button.normal[type="reset"] :focus, button.normal[type="reset"]:hover {
     border-color: #bd362f;
 }
 
+input.normal[type="reset"] :focus, input.normal[type="reset"]:hover {
+    color: #ffffff;
+    background-color: #bd362f;
+    border-color: #bd362f;
+}
+
 input.normal[type="button"] :focus, input.normal[type="button"]:hover {
     color: #ffffff;
     background-color: #bd362f;
     border-color: #bd362f;
 }
 
-button :focus, button:hover {
+button :focus, button :hover {
     color: #ffffff;
     background-color: #2f96b4;
     border-color: #2f96b4;
@@ -1288,4 +1318,3 @@ footer p { font-family: Sub;}
 		height: 25px;
 		
 }
-

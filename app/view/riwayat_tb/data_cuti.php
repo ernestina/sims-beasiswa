@@ -127,8 +127,17 @@
                 <option value="<?php echo (int) $this->curr_year+1;?>" <?php echo isset($this->d_ubah)?($perk_go[1]==(int)$this->curr_year+1)?'selected':'':'';?>><?php echo (int) $this->curr_year+1;?></option>
             </select>
             <div id="wfile" class="error"></div>
+<!--<<<<<< .mine-->
+            <label>Unggah SC</label>
+			<ul class="inline">
+			<li><input type="file" name="fupload" id="file" style="width: 150px; margin-left: -40px; "><?php  if(isset($this->d_ubah)){ ?>
+			</li> &nbsp <li>
+			<a style="cursor: pointer;" onClick="viewUbah('<?php echo $this->d_ubah->get_file();?>')" href="#">lihat file</a><?php } ?>
+			</li></ul>
+<!--=======
             <label>Unggah SC</label><input type="file" name="fupload" id="file"><?php  if(isset($this->d_ubah)){ ?><a style="cursor: pointer;color:blue"onClick="viewUbah('<?php echo $this->d_ubah->get_file();?>')">lihat file</a><?php } ?>
         
+>>>>>>> .r384-->
 		<ul class="inline tengah">
                     <?php if(isset($this->d_ubah)){?>
                         <li><input class="normal" type="button" onclick="window.history.back()" value="BATAL"></li>

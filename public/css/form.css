@@ -43,7 +43,7 @@ div.form textarea,
 div.form select
 {
 	margin: 0.2em 0 0.5em 0;
-	font-family:"Droid Sans", 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif !important;
+	/*font-family:"Droid Sans", 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif !important;*/
 }
 
 div.form fieldset
@@ -63,7 +63,7 @@ div.form label
 	font-weight: bold;
 	font-size: 0.9em;
 	display: block;
-	font-family:"Droid Sans", 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif !important;
+	/*font-family:"Droid Sans", 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif !important;*/
 }
 
 div.form .row
@@ -169,14 +169,14 @@ div.wide.form .buttons, div.wide.form .hint, div.wide.form .errorMessage
 div.login-container{
 	width:460px;
 	margin:auto;
-	margin-top:5%;
+	/*margin-top:5%;*/
 }
 div.login-container .logo{
 	margin-bottom:1em;
 }
 div.form.login{
 	background-color:#fafbfc;
-	padding:10px;
+	padding:20px;
 	border: 1px solid #DDD;
 	-webkit-border-radius:5px;
 	-moz-border-radius:5px;
@@ -207,25 +207,24 @@ div.form.login label{
 	font-size: 1em;
 }
 div.form.login input[type="text"], div.form.login input[type="password"]{
-	padding:.5em;
+	padding: 1em;
 	border: 1px solid #A7A6AA;
 }
 div.form.login input[type="submit"]{
-	padding:.5em;
+	padding:.7em;
 	border: 1px solid #09c;
 	border-top: 1px solid #0ad;
 	border-bottom: 1px solid #08b;
 	-webkit-border-radius:2px;
 	-moz-border-radius:2px;
-	border-radius:2px;
+	border-radius:4px;
 	background-color:#09c;
 	color:#fff;
 }
 div.form.login input[type="submit"]:hover,div.form.login input[type="submit"]:focus{
-	border: 1px solid #8b0;
-	background-color:#9c0;
-	border-top: 1px solid #ad0;
-	border-bottom: 1px solid #8b0;
+	border: 1px solid #2f96b4;
+	background-color:#2f96b4;
+	
 	-webkit-box-shadow:0px 0px 2px rgba(153, 204, 0, .5);
 	-moz-box-shadow:0px 0px 2px rgba(153, 204, 0, .5);
 	box-shadow:0px 0px 2px rgba(153, 204, 0, .5);
