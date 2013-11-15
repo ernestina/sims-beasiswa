@@ -56,38 +56,32 @@
 <!--</fieldset>-->
 
 <script>
+	
+	cekListBuku();
+	
+	function cekListBuku(){
+	
+		var cks = document.getElementsByName('setuju[]');
+			var cek=0;
+			for (var j = 0; j < cks.length; j++){
+				if (cks[j].checked){
+					cek++;
+				}
+			}
+			
+			if(cek>0){
+				removeError('wtabel_penerima_buku');
+				removeError('wtotal_biaya');
+				$('#total_bayar').val(cek*$('#biaya_buku').val());
+			}
+	
+	}
     $(":checkbox").change(function(){
-        var cks = document.getElementsByName('setuju[]');
-        var cek=0;
-        for (var j = 0; j < cks.length; j++){
-            if (cks[j].checked){
-                cek++;
-            }
-        }
-        
-        if(cek>0){
-            removeError('wtabel_penerima_buku');
-            removeError('wtotal_biaya');
-            $('#total_bayar').val(cek*$('#biaya_buku').val());
-        }
-        
+        cekListBuku();        
     })
     
     $("#biaya_buku").keyup(function(){
-        var cks = document.getElementsByName('setuju[]');
-        var cek=0;
-        for (var j = 0; j < cks.length; j++){
-            if (cks[j].checked){
-                cek++;
-            }
-        }
-        
-        if(cek>0){
-            removeError('wtabel_penerima_buku');
-            removeError('wtotal_biaya');
-            $('#total_bayar').val(cek*$('#biaya_buku').val());
-        }
-        
+        cekListBuku();        
     })
     
 </script>
