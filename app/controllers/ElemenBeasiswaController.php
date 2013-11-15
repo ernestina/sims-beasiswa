@@ -457,7 +457,8 @@ class elemenBeasiswaController extends BaseController {
                     //}
                 }
 
-                $url = URL . 'elemenBeasiswa/editJadup/' . $elem->get_kd_d();
+                //$url = URL . 'elemenBeasiswa/editJadup/' . $elem->get_kd_d();
+				$url = URL . 'elemenBeasiswa/viewJadup';
                 echo '<script> alert("Data berhasil disimpan") </script>';
                 echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
             } else {
@@ -710,7 +711,8 @@ class elemenBeasiswaController extends BaseController {
                 }
 
                 //header('location:' . URL . 'elemenBeasiswa/viewUangBuku');
-                $url = URL . 'elemenBeasiswa/editUangBuku/' . $elem->get_kd_d();
+                $url = URL . 'elemenBeasiswa/viewUangBuku';
+				//$url = URL . 'elemenBeasiswa/editUangBuku/' . $elem->get_kd_d();
                 echo '<script> alert("Data berhasil disimpan") </script>';
                 echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
             } else {
@@ -1048,8 +1050,9 @@ class elemenBeasiswaController extends BaseController {
                     $penerima_elemen->add($penerima_elemen);
                 }
 
-                //header('location:' . URL . 'elemenBeasiswa/viewUangBuku');
-                $url = URL . 'elemenBeasiswa/editSkripsi/' . $elem->get_kd_d();
+               
+                //$url = URL . 'elemenBeasiswa/editSkripsi/' . $elem->get_kd_d();
+				$url = URL . 'elemenBeasiswa/viewSkripsi';
                 echo '<script> alert("Data berhasil disimpan") </script>';
                 echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
             } else {

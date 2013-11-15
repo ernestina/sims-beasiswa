@@ -12,7 +12,13 @@ class Database extends PDO{
     protected $_fetchMode = PDO::FETCH_ASSOC;
     
     public function __construct(){
-        parent::__construct(DB_TYPE.':host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
+		try{
+			parent::__construct(DB_TYPE.':host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
+		} catch(Exception $e) { 
+		   //header('location:error');
+		   echo "Tidak dapat terhubung ke database.";
+		   exit(1);
+		} 
     }
         
     public function select($sql,$array=array()){

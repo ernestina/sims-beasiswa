@@ -88,18 +88,20 @@
                 <option value="<?php echo $kon->kd_kontrak; ?>" <?php echo $select; ?>><?php echo $kon->no_kontrak; ?></option>
                 <?php } ?>
             </select>
-            <div id="wkontrak_lama" name="wkontrak_lama">
+            <div id="wkontrak_lama" name="wkontrak_lama"></div>
                 
-				<label>File Kontrak </label>
-			<table style="margin-left: -10px">
+				<label>File Kontrak </label>			
+			<table style="margin-left: -9px">
 				<tr>
 					<td>
-					<div id="wfupload"></div>
-					<input type="file" name="fupload" id="fupload">
+					<input type="file" name="fupload" id="fupload" />
 					</td>
-					<td><a href="<?php echo URL . "kontrak/file/" . $this->data->file_kontrak; ?>" target="kontrak_edit" onClick="cetak_dokumen('kontrak_edit');" style="background-color: #49afcd; padding: 12px 10px 7px; border-radius: 3px" title="Lihat atau uduh file kontrak"><i class="icon-search icon-white"></i></a></td>
+					<td>	
+					<a title="Lihat atau download file" href="<?php echo URL . "kontrak/file/" . $this->data->file_kontrak; ?>" target="kontrak_edit" onClick="cetak_dokumen('kontrak_edit');"><span class="span">Lihat File</span></a>
+					</td>
 				</tr>
 			</table>
+			<div id="wfupload"></div>
 				<!--input type="file" name="fupload" id="fupload" class="unggah">
 				<div id="wfupload"></div>
                 

@@ -32,6 +32,8 @@
             } else {
                 echo " checked";
             }
+        }else {
+            echo " onclick='return false' title='Tidak berhak dibayar.'";
         }
         ?>/></td>
         <?php

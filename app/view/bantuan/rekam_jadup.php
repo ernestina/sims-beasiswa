@@ -3,7 +3,7 @@
 
 
 <div class="fitur">
-	<form method="POST" onSubmit="return cekField();" action="<?php echo URL; ?>elemenBeasiswa/saveJadup" enctype="multipart/form-data">
+	<form method="POST" autocomplete="off" onSubmit="return cekField();" action="<?php echo URL; ?>elemenBeasiswa/saveJadup" enctype="multipart/form-data">
     <fieldset><legend>Rekam Biaya Hidup</legend>
 	<div class="kolom1">
             <noscript>

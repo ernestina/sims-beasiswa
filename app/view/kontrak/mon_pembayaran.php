@@ -7,7 +7,7 @@
                 <tr>
                     <td>
                        <label>Universitas</label>
-						<select name="univ" id="univ" type="text">
+						<select name="univ" id="univ" style="width:auto;">
 							<option value="">- semua -</option>
 							<?php foreach ($this->univ as $univ) { ?>
 								<option value="<?php echo $univ->get_kode_in(); ?>"><?php echo $univ->get_nama(); ?></option>

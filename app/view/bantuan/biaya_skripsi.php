@@ -7,7 +7,7 @@
             <tr>
                 <td>
                     <label>Universitas</label>
-                    <select name="universitas" id="universitas" type="text">
+                    <select name="universitas" id="universitas" style="width:auto;">
                         <option value="">- semua -</option>>
                         <?php
                         foreach ($this->univ as $val) {
@@ -30,7 +30,7 @@
                         
                     </select>
                 </td>
-                <td ><input type="search" name="cari" id="cari" placeholder="Cari dengan kata kunci nomor SP2D..." style="float: right"> </td>
+                <td ><input type="hidden" name="cari" id="cari" placeholder="Cari dengan kata kunci nomor SP2D..." style="float: right"> </td>
             </tr>
         </table>
 
@@ -54,10 +54,16 @@
 
                     echo "<br/>";
                     $i++;
+					
                 }
             }
             ?>
         </ul>
+		<?php 
+		if($i==0){
+		echo "(tidak ada)";
+		}
+		?>
     </div>
 
 </div>

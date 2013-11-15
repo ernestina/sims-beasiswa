@@ -14,7 +14,10 @@
             <form method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/viewRekamBiaya' ?>">
             <input type="hidden" id="kd_kontrak" name="kd_kontrak" value="<?php echo $this->data_kontrak->kd_kontrak; ?>">
 		<table width="95%">
-			<tr><td><input class="biru" type="submit" value="TAMBAH"></td></tr>
+			<tr><td align="right">
+			<button onClick="formSubmit" id="tambah_kontrak" style="margin-top:0px; margin-right: -8px" title="Rekam biaya kontrak"><i class="icon-plus icon-white"></i> Tambah</button>
+			<!--input class="biru" type="submit" value="TAMBAH" -->
+			</td></tr>
 		</table>
             </form>
        
@@ -22,7 +25,7 @@
     <div id="table-content">
         <table class="table-bordered zebra scroll" id="table">
             <thead>
-            <th width="5%">No</th>
+            <th width="4%">No</th>
             <th width="20%">Nama Biaya</th>
             <th width="10%">Biaya per Pegawai</th>
             <th width="5%">Jumlah Pegawai <br/>dibayarkan</th>

@@ -7,7 +7,7 @@
         <tr>
 			<td width="1%"></td>
             <td width="11%" ><label >Pilih Universitas :</label>
-                       <select name="universitas" id="kd_univ" type="text">
+                       <select name="universitas" id="kd_univ" style="width:auto;">
                         <option value="">- semua -</option>
                         <?php
                         foreach ($this->kd_univ as $univ) {
@@ -234,7 +234,7 @@
                                 alert('Jquery error. Status: ' + status + ' - Message: ' + message);
                             }
                         });
-                        //$( this ).dialog( "close" );
+                        $( this ).dialog( "close" );
                     }
                 },
                 Batal: function() {

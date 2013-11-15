@@ -174,7 +174,7 @@ $biaya_per_pegawai = $this->elemen->get_biaya_per_peg();
                 </td>
                 <td class="td2" width="30%" align="right">
                     Jakarta, &nbsp; &nbsp; &nbsp; &nbsp;   <?php echo Tanggal::bulan_indo($this->elemen->get_bln()) . " " . $this->elemen->get_thn(); ?><br />
-                    Lunas dibayar
+                    Lunas dibayar,<br/>
                     <?php echo $this->bdr->nama_jabatan; ?><br/>
                     <br/>
                     <br/>

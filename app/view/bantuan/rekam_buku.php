@@ -2,7 +2,7 @@
     <h2><a href="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'elemenBeasiswa/viewUangBuku' ?>">BIAYA BUKU</a> > TAMBAH</h2> <!-- memakai breadcrumb -->
 
 
-    <form method="POST" onSubmit="return cekField();" action="<?php echo URL . 'elemenBeasiswa/saveUangBuku' ?> " enctype="multipart/form-data">
+    <form method="POST" autocomplete="off" onSubmit="return cekField();" action="<?php echo URL . 'elemenBeasiswa/saveUangBuku' ?> " enctype="multipart/form-data">
         <div>
             <noscript>
             <input  type="hidden" name="js" value="1" />
