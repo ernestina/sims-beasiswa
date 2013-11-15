@@ -89,9 +89,11 @@
 $(function(){
 //    display_notif();
     var time = 5*1000;
+<?php if(Session::get('role')==2){?>
     setInterval(function(){
         count_notif();
     },time);
+<?php }?>
 })
 
 function count_notif(){
