@@ -111,6 +111,32 @@ class CutiController extends BaseController{
         $ct = new Cuti($this->registry);
         $ct->set_kode_cuti($kd_cuti);
         $ct->get_cuti_by_id($ct, $this->kd_user);
+        
+        /*
+         * update penerima
+         */
+        $pb = new Penerima($this->registry);
+        $kd_pb_ct = $ct->get_pb();
+        $pb->set_kd_pb($kd_pb_ct);
+        $pb->get_penerima_by_id($pb);
+        $kd_st = $pb->get_st();
+        $st = new SuratTugas($this->registry);
+        $is_child = $st->is_child($kd_st);
+        if($is_child){
+            $kd_parent = $st->get_st_lama();
+            if($kd_parent!=''){
+                $pb->set_status(3);
+            }else{
+                $pb->set_status(2);
+            } 
+        }else{
+            $pb->set_status(1);
+        }
+        $pb->update_penerima();
+        unlink($pb);
+        /*
+         * end 
+         */
         $no = $ct->get_no_surat_cuti();
         $file = $ct->get_file();
         $ct->del_ct();
