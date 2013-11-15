@@ -140,14 +140,41 @@ class CutiController extends BaseController{
         /*
          * cek eksistensi file
          */
-        var_dump($_FILES['fupload']);
+//        var_dump($_FILES['fupload']);
         $d_ct = $ct->get_cuti_by_id($ct,$this->kd_user);
+        /*
+         * sementara dulu
+         * untuk update status tb, sambil nunggu fungsi yg benar :(
+         */
+        $pb = new Penerima($this->registry);
+        $kd_pb_ct = $ct->get_pb();
+        $pb->set_kd_pb($kd_pb_ct);
+        $pb->get_penerima_by_id($pb);
+        $kd_st = $pb->get_st();
+        $st = new SuratTugas($this->registry);
+        $is_child = $st->is_child($kd_st);
+        if($is_child){
+            $kd_parent = $st->get_st_lama();
+            if($kd_parent!=''){
+                $pb->set_status(3);
+            }else{
+                $pb->set_status(2);
+            } 
+        }else{
+            $pb->set_status(1);
+        }
+        $pb->update_penerima();
+        unlink($pb);
+        /*
+         * end update status
+         */
+        
+        $pb = new Penerima($this->registry);
+        $pb->set_kd_pb($kd_pb);
+        $d_pb = $pb->get_penerima_by_id($pb);
         if($file!=''){
             $this->registry->upload->init('fupload');
             $this->registry->upload->setDirTo('files/cuti/');
-            $pb = new Penerima($this->registry);
-            $pb->set_kd_pb($kd_pb);
-            $d_pb = $pb->get_penerima_by_id($pb);
             $tmp_prd = explode(" ",$prd_mul);
             $prd_mulai = $tmp_prd[count($tmp_prd)-1];
             $cname = array('CUTI',$d_pb->get_nip(),$prd_mulai);
@@ -160,6 +187,14 @@ class CutiController extends BaseController{
         }else{
             echo $kd_ct."</br>";
             $file = $d_ct->get_file();
+            if($kd_pb!=$kd_pb_ct){
+                $tmp = explode("_",$file);
+                $file_baru = $tmp[0]."_".$pb->get_nip()."_".$tmp[2];
+                rename("files/cuti/".$file,"files/cuti/".$file_baru);
+                $file=$file_baru;
+            }else{
+                $file = $d_ct->get_file();
+            }
             echo $file;
         }
         /*
@@ -176,6 +211,8 @@ class CutiController extends BaseController{
         $ct->set_perk_go($perk_go);
         $ct->set_file($file);
         if($ct->update_cuti()){
+            $pb->set_status(4);
+            $pb->update_penerima();
             $ref = " no SC ".$no_sc;
             ClassLog::write_log('cuti','ubah',$ref);
             header('location:'.URL.'cuti/datasc');
