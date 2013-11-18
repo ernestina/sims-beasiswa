@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>monitoring_kontrak_<?php echo Tanggal::getTimeSekarang(); ?></title>   
+        <title>daftar_penerima_beasiswa_<?php echo Tanggal::getTimeSekarang(); ?></title>   
         <style>
             td, th {
                 border: 1px solid black;
@@ -22,19 +22,21 @@
     </head>
     <body style="font-family:arial;color:black;font-size:10px;">
         <p align="center" style="font-weight: bold; font-size:13px;">
-            MONITORING KONTRAK KERJASAMA <br />
+            DAFTAR PENERIMA BEASISWA <br />
             BEASISWA INTERNAL DIREKTORAT JENDERAL PERBENDAHARAAN <br />
             <?php
             if ($this->univ != "") {
-                echo strtoupper($this->data_univ->get_nama()) . "<br />";
-            }
-            if ($this->status != "") {
-                echo strtoupper($this->status) ." DIBAYAR<br />";
+                echo strtoupper($this->univ) . "<br />";
             }
             
-            if ($this->jadwal != "") {
-                echo "JADWAL PEMBAYARAN TAHUN " . strtoupper($this->jadwal) . "<br />";
+            if ($this->thn != "") {
+                echo " " . strtoupper($this->thn) . "<br />";
             }
+            
+            if ($this->status != "") {
+                echo "STATUS ".strtoupper($this->status) ."<br />";
+            }
+            
             
             echo "PER ".strtoupper(Tanggal::getTglSekarangIndo());
             echo "<br />";
@@ -55,60 +57,29 @@
         <table align="center" cellspacing=0 cellpadding=4 width=95% style="border-width: 1px; font-size: 10px; border-style: solid; border-color: black;">
             <thead bgcolor="#E6F9ED">
             <th>No</th>
-            <th>No & Tgl Kontrak</th>
+            <th>NIP/Nama</th>
+            <th>Golongan/Unit Asal</th>
             <th>Jurusan</th>
-            <th>Nama Biaya</th>
-            <th>Jumlah Biaya</th>
-            <th>Jadwal <br />dibayarkan</th>
-<!--            <th>Jumlah dibayarkan</th>-->
-            <th>Status <br />Pembayaran</th>
-            <th>No dan Tgl SP2D</th>
+            <th>Masa TB</th>
+            <th>Status</th>
         </thead>
 
         <?php
-        $i = 1;
-        $total = 0;
-        foreach ($this->data_biaya as $val) {
-            $data_kontrak = $this->kontrak->get_by_id($val->kd_kontrak);
-            //var_dump($data_kontrak);
-            //echo $data_kontrak->kd_jurusan;
-            $this->jurusan->set_kode_jur($data_kontrak->kd_jurusan);
-            $data_jurusan = $this->jurusan->get_jur_by_id($this->jurusan);
-            $data_universitas = $this->universitas->get_univ_by_jur($data_kontrak->kd_jurusan);
-            ?>
-            <tr>
-                <td><?php echo $i; ?></td>
-                <td><?php echo $data_kontrak->no_kontrak . " (" . $data_kontrak->tgl_kontrak . ")"; ?></td>
-                <td><?php echo $data_jurusan->get_nama() . " " . $data_universitas->get_kode() . " " . $data_kontrak->thn_masuk_kontrak; ?></td>
-                <td><?php echo $val->nama_biaya; ?></td>
-                <td align="right"><?php echo number_format($val->jml_biaya); ?></td>
-                <td><?php echo $val->jadwal_bayar; ?></td>
-<!--                <td><?php echo number_format($this->biaya->get_biaya_by_kontrak_dibayar($val->kd_kontrak)); ?></td>-->
-                <td>
-                    <?php echo $val->status_bayar; ?>
-                </td>
-                <td>
-                    <?php
-                    if ($val->tgl_sp2d != "01-01-1970") {
-                        echo $val->no_sp2d . " (" . $val->tgl_sp2d . ")";
-                    } else {
-                        echo "-";
-                    }
-                    ?>
-                </td>
-            </tr>
-            <?php
-            $i++;
-            $total = $total + $val->jml_biaya;
-        }
+        $no=1;
+            foreach($this->d_pb as $v){
+                $tmp = explode(";",$v->get_st());
+                echo "<tr>";
+                echo "<td style=\"text-align: center\">".$no."</td>";
+                //echo "<td><a href=".URL."penerima/profil/".$v->get_kd_pb().">".$v->get_nip()."</a></td>";
+                echo "<td>".$v->get_nip()."</br>".$v->get_nama()."</td>";
+                echo "<td>".Golongan::golongan_int_string($v->get_gol())."</br>".$v->get_unit_asal()."</td>";
+                echo "<td>".$v->get_jur()."</td>";
+                echo "<td>dari : ".Tanggal::tgl_indo($tmp[0])."</br>sampai : ".Tanggal::tgl_indo($tmp[1])."</td>";
+                echo "<td>".$v->get_status()."</td>";
+                echo "</tr>";
+                $no++;
+            }
         ?>
-            <tr>
-                <td colspan="4"></td>
-                <td align="right"><?php echo number_format($total); ?></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
     </table>
 </body>
 </html>

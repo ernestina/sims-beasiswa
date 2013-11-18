@@ -886,10 +886,34 @@ class PenerimaController extends BaseController{
     }
     
     public function cetak_daftar_penerima(){
-        $univ = $_POST['univ'];
+        $kd_univ = $_POST['univ'];
         $thn = $_POST['thn'];
         $status = $_POST['status'];
-        echo $univ.$thn.$status;
+        $this->view->univ = '';
+        $this->view->thn = '';
+        $this->view->status = '';
+        $pb = new Penerima($this->registry);
+        if($kd_univ==0 && $thn==0 && $status==0){
+            $this->view->d_pb = $pb->get_penerima($this->kd_user);
+        }else{
+            $this->view->d_pb = $pb->get_penerima_filter($kd_univ, $thn, $status, $this->kd_user);
+        }
+        
+        if($kd_univ!=0){
+            $univ = new Universitas($this->registry);
+            $univ->set_kode_in($kd_univ);
+            $univ = $univ->get_univ_by_id($univ);
+            $this->view->univ = $univ->get_nama();
+        }
+        if($thn!=0){
+            $this->view->thn = $thn;
+        }
+        if($status!=0){
+            $sts = new Status();
+            $status = $sts->get_by_id($status);
+            $this->view->status = $status->nm_status;
+        }
+        $this->view->load('riwayat_tb/cetak_daftar_penerima');
     }
 
     public function __destruct() {

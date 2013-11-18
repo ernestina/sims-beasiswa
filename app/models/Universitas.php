@@ -79,7 +79,7 @@ class Universitas {
             return false;
         }
         $sql = "SELECT * FROM " . $univ->_table . " WHERE KD_UNIV=" . $univ->get_kode_in();
-//        var_dump($sql);
+//        echo $sql;
         $result = $this->db->select($sql);
         foreach ($result as $val) {
             $this->set_kode_in($val['KD_UNIV']);
