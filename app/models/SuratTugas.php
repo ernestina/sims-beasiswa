@@ -161,11 +161,17 @@ class SuratTugas {
         foreach ($result as $val) {
             $tmp = new $this($this->registry);
             $tmp->set_kd_st($val['KD_ST']);
-            $tmp->set_jur($val['KD_JUR']);
+            $jur = new Jurusan($this->registry);
+            $jur->set_kode_jur($val['KD_JUR']);
+            $jur = $jur->get_jur_by_id($jur);
+            $tmp->set_jur($jur->get_nama());
             $tmp->set_nomor($val['NO_ST']);
             $tmp->set_pemberi($val['KD_PEMB']);
             $tmp->set_st_lama($val['KD_ST_LAMA']);
-            $tmp->set_jenis_st($val['KD_JENIS_ST']);
+            $jst = new JenisSuratTugas($this->registry);
+            $jst->set_kode($val['KD_JENIS_ST']);
+            $jst = $jst->get_jst_by_id($jst);
+            $tmp->set_jenis_st($jst->get_nama());
             $tmp->set_tgl_st($val['TGL_ST']);
             $tmp->set_tgl_mulai($val['TGL_MUL_ST']);
             $tmp->set_tgl_selesai($val['TGL_SEL_ST']);
