@@ -23,12 +23,15 @@ class PenerimaController extends BaseController{
         $nilai = new Nilai($this->registry);
         $cuti = new Cuti($this->registry);
         $mas = new MasalahPenerima($this->registry);
+        $pemb = new PemberiBeasiswa();
         $beaya = new Biaya();
         if(!is_null($id)){
             $pb->set_kd_pb($id);
             $this->view->d_pb = $pb->get_penerima_by_id($pb,$this->kd_user);
             $st->set_kd_st($this->view->d_pb->get_st());
             $this->view->d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
+            $pemb = $pemb->get_by_id($this->view->d_st->get_pemberi());
+            $this->view->d_pemb = $pemb->nama_pemberi;
             $this->view->d_bank = $bank->get_bank_id($this->view->d_pb->get_bank());
             $jur->set_kode_jur($this->view->d_pb->get_jur());
             $this->view->d_jur = $jur->get_jur_by_id($jur);
@@ -601,10 +604,13 @@ class PenerimaController extends BaseController{
         $nilai = new Nilai($this->registry);
         $cuti = new Cuti($this->registry);
         $mas = new MasalahPenerima($this->registry);
+        $pemb = new PemberiBeasiswa();
         $pb->set_kd_pb($kode_pb);
         $this->view->d_pb = $pb->get_penerima_by_id($pb,$this->kd_user);
         $st->set_kd_st($this->view->d_pb->get_st());
         $this->view->d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
+        $pemb = $pemb->get_by_id($this->view->d_st->get_pemberi());
+        $this->view->d_pemb = $pemb->nama_pemberi;
         $this->view->d_bank = $bank->get_bank_id($this->view->d_pb->get_bank());
         $this->view->t_bank = $bank->get_bank();
         $jur->set_kode_jur($this->view->d_pb->get_jur());

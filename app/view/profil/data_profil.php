@@ -62,7 +62,7 @@
 			<input type="text" id="tgl_akhir_st" name="tgl_akhir_st" disabled value="<?php echo Tanggal::tgl_indo($this->d_st->get_tgl_selesai());?>"/>
 			
 			<label class="isian">Jenis Beasiswa :</label>
-			<input type="text" id="jenis_beasiswa" name="jenis_beasiswa" disabled value="<?php echo $this->d_st->get_nomor();?>"/>
+			<input type="text" id="jenis_beasiswa" name="jenis_beasiswa" disabled value="<?php echo $this->d_pemb;?>"/>
 			
 			<label class="isian">Universitas :</label>
 			<input type="text" id="universitas" name="universitas" disabled value="<?php echo $this->d_univ->get_nama();?>"/>
