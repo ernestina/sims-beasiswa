@@ -203,7 +203,9 @@ class SuratTugas {
             a.FILE_ST as FILE_ST
             FROM " . $this->_tb_st . " a";
         if ($univ == 0 AND $thn != 0) {
-            $sql .=" WHERE a.THN_MASUK=" . $thn;
+            $sql .=" LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
+                LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
+                LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV WHERE a.THN_MASUK=" . $thn;
         } else if ($univ != 0 AND $thn == 0) {
             $sql .=" LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
@@ -219,6 +221,7 @@ class SuratTugas {
         if(!is_null($kd_user)){
             $sql .= ' AND d.KD_USER='.$kd_user;
         }
+//        echo $sql;
         $result = $this->db->select($sql);
         $data = array();
         foreach ($result as $val) {

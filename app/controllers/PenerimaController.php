@@ -884,6 +884,13 @@ class PenerimaController extends BaseController{
         $this->view->d_pb = $pb->get_penerima_by_name($pb,$this->kd_user);
         $this->view->load('riwayat_tb/tabel_d_pb');
     }
+    
+    public function cetak_daftar_penerima(){
+        $univ = $_POST['univ'];
+        $thn = $_POST['thn'];
+        $status = $_POST['status'];
+        echo $univ.$thn.$status;
+    }
 
     public function __destruct() {
         parent::__destruct();

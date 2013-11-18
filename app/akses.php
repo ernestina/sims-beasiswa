@@ -242,7 +242,8 @@ $akses['Penerima'] = array(
                 'get_nip_data',
                 'filter_pb',
                 'cari',
-                'set_status_lulus'
+                'set_status_lulus',
+                'cetak_daftar_penerima'
                 );			
 /*
  * notifikasi
