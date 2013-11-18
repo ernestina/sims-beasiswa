@@ -45,7 +45,13 @@
                     <p id="jam" onload="jam()"></p>
 
                 </div>
-                <div style="float: top; margin-top: 20px"><?php echo Session::get('user').'</br>anda login sebagai '.  strtoupper((Session::get('role')==1)?'admin':'pic');?></div>
+				<?php
+				$role="";
+				if(Session::get('role')==1){$role="admin";}
+				if(Session::get('role')==2){$role="pic";}
+				if(Session::get('role')==3){$role="umum";}
+				?>
+                <div style="float: top; margin-top: 20px"><?php echo Session::get('user').'</br>anda login sebagai '.  strtoupper($role);?></div>
             </div>
 
             <div id="menu">
@@ -80,7 +86,7 @@
                     </li>
                     <?php } 
                     
-                    if(Auth::is_role('2')){ ?>
+                    if(Auth::is_role('2') || Auth::is_role('3')){ ?>
                     <li class="subnav">
                         <a href="<?php echo URL . 'kontrak/display'; ?>">KONTRAK</a>
                         <ul>
@@ -88,6 +94,10 @@
                             <li><a href="<?php echo URL . 'kontrak/monitoring'; ?>"><i class="icon-eye-open icon-white"></i>  Monitoring Kontrak</a></li>
                         </ul>
                     </li>
+					<?php } ?>
+					
+					<?php
+					if(Auth::is_role('2')){ ?>
                     <li class="subnav">
                         <a href="<?php echo URL . 'penerima/datapb'; ?>">PROFIL BEASISWA</a>
                         <ul>
@@ -96,6 +106,10 @@
                             <li><a href="<?php echo URL . 'cuti/datasc' ?>"><i class="icon-road icon-white"></i>  Surat Cuti</a></li>
                         </ul>
                     </li>
+					<?php } ?>
+					
+					<?php
+					if(Auth::is_role('2') || Auth::is_role('3')){ ?>
                     <li class="subnav">
                         <a href="<?php echo URL . 'elemenBeasiswa/mon_pembayaran' ?>">ELEMEN BEASISWA</a>
                         <ul>

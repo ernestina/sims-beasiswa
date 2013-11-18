@@ -1,7 +1,6 @@
 <div id="top">
     <h2>DAFTAR BIAYA TUNJANGAN HIDUP</h2>
 
-    <form method="POST">
         <div id="dropdown-menu">
 
             <table width="97%">
@@ -38,8 +37,11 @@
                 <tr>
                     <td colspan="4" style="padding-top: 0px">
                         <!--input type="button" id="add" value="TAMBAH" onClick="location.href='<?php echo URL . 'elemenBeasiswa/addJadup' ?>'"-->
-                        <button type="button" onClick="location.href='<?php echo URL . "elemenBeasiswa/addJadup"; ?>'"><i class="icon-plus icon-white"></i>  TAMBAH</button>
-                    </td>
+                        <?php 
+						if(Session::get('role')==2){ ?>
+						<button type="button" onClick="location.href='<?php echo URL . "elemenBeasiswa/addJadup"; ?>'"><i class="icon-plus icon-white"></i>  TAMBAH</button>
+						<?php } ?>
+					</td>
                 </tr>
 
             </table>
@@ -48,9 +50,19 @@
 
             </div>
         </div>
-    </form>
-    <div id="tabel_index_jadup">
+    
+	<form>
+	<div id="tabel_index_jadup">
     </div>
+	<table width=99% style="margin-left: 0px">
+	<td width="100%">
+	<input type="button" id="last" class="paging-kecil" value='>>' title="Halaman Terakhir">
+	<input type="button" id="next" class="paging-kecil" value='>' title="Halaman Berikutnya">
+	<input type="button" id="prev" class="paging-kecil" value='<' title="Halaman Sebelumnya">
+	<input type="button" id="first" class="paging-kecil" value='<<' title="Halaman Pertama">
+	</td>
+	</table>
+	</form>
 </div>
 <script type="text/javascript">
     
@@ -88,13 +100,52 @@
                     $('#tahun_masuk').html(thn_masuk);
                 }
             }); 
-        })
-        
-        //agar ketika universitas berubah karena dipilih, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
-        $("#tahun_masuk").change(function(){           
-            displayElemen();
         });
-        
+		
+		
+		$("#next").click(function(){
+            $("#loading").show();
+			var page = parseInt($("#cur_page").val())+ 1;
+			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_jadup", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),cur_page:page}, 
+			function(data){                
+				$('#tabel_index_jadup').html(data);
+			});
+			$("#loading").hide();
+            
+        });
+		
+		$("#prev").click(function(){
+            $("#loading").show();
+			var page = parseInt($("#cur_page").val())- 1;
+			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_jadup", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),cur_page:page},
+			function(data){                
+				$('#tabel_index_jadup').html(data);
+			});
+			$("#loading").hide();
+            
+        });
+		
+		$("#first").click(function(){
+            $("#loading").show();
+			var page = 1;
+			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_jadup", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),cur_page:page},
+			function(data){                
+				$('#tabel_index_jadup').html(data);
+			});
+			$("#loading").hide();
+            
+        });
+		$("#last").click(function(){
+            $("#loading").show();
+			var page = parseInt($("#last_page").val())
+			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_jadup", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),cur_page:page},
+			function(data){                
+				$('#tabel_index_jadup').html(data);
+			});
+			$("#loading").hide();
+            
+        });
+                
         $("#cari").keyup(function(){
                           
             if($("#cari").val()==""){

@@ -226,37 +226,45 @@ class ElemenBeasiswa {
                 LEFT JOIN r_jur b ON a.KD_JUR = b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL = c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV
-                WHERE d.KD_USER = '".$user."'
                 ";
-
+		
+		if ($user!= "" ) {
+            $sql .=" WHERE d.KD_USER = '".$user."'";
+        }
+		
         if ($univ != "" ) {
-            $sql .=" AND d.KD_UNIV ='" . $univ . "'";
+			if ($user!= "" ) {
+				$sql .=" AND d.KD_UNIV ='" . $univ . "'";
+			} else{
+				$sql .=" WHERE d.KD_UNIV ='" . $univ . "'";
+			}
+            
         }
 
         if ($jurusan != "") {
-//            if ($univ == "") {
-//                $sql .=" WHERE b.KD_JUR ='" . $jurusan . "'";
-//            } else {
+            if ($univ != "" || $univ != "") {
                 $sql .=" AND b.KD_JUR ='" . $jurusan . "'";
-//            }
+            } else {
+                $sql .=" WHERE b.KD_JUR ='" . $jurusan . "'";
+            }
         }
 
         if ($tahun != "") {
-//            if($univ == "" && $jurusan == ""){
-//               $sql .=" WHERE a.TAHUN_MASUK ='" . $tahun . "'"; 
-//            } else {
-                $sql .=" AND a.TAHUN_MASUK ='" . $tahun . "'";
-//            }
+           if ($univ != "" || $univ != "" || $jurusan != "") {
+               $sql .=" AND a.TAHUN_MASUK ='" . $tahun . "'"; 
+            } else {
+                $sql .=" WHERE a.TAHUN_MASUK ='" . $tahun . "'";
+            }
             
         }
         
                
         if ($elemen != "") {
-//            if($univ == "" && $jurusan == "" && $tahun == "" ){
-//               $sql .=" WHERE a.KD_R_ELEM_BEASISWA ='" . $elemen . "'"; 
-//            } else {
-                $sql .=" AND a.KD_R_ELEM_BEASISWA ='" . $elemen . "'";
-//            }
+            if ($univ != "" || $univ != "" || $jurusan != "" || $tahun != "") {
+               $sql .=" AND a.KD_R_ELEM_BEASISWA ='" . $elemen . "'"; 
+            } else {
+                $sql .=" WHERE a.KD_R_ELEM_BEASISWA ='" . $elemen . "'";
+            }
             
         }
         
@@ -306,9 +314,12 @@ class ElemenBeasiswa {
                 LEFT JOIN r_fakul c ON b.KD_FAKUL = c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV
                 WHERE KD_R_ELEM_BEASISWA='" . $this->_jadup . "'
-                AND d.KD_USER ='".$user."'
                 ";
-
+		
+		if ($user != "") {
+            $sql .=" AND d.KD_USER ='".$user."'";
+        }
+		
         if ($univ != "") {
             $sql .=" AND d.KD_UNIV ='" . $univ . "'";
         }

@@ -55,9 +55,18 @@
 
         </form>
     </div>
-
+	<form>
     <div id="tabel_index_mon">    
     </div>
+	<table width=99% style="margin-left: 0px">
+	<td width="100%">
+	<input type="button" id="last" class="paging-kecil" value='>>' title="Halaman Terakhir">
+	<input type="button" id="next" class="paging-kecil" value='>' title="Halaman Berikutnya">
+	<input type="button" id="prev" class="paging-kecil" value='<' title="Halaman Sebelumnya">
+	<input type="button" id="first" class="paging-kecil" value='<<' title="Halaman Pertama">
+	</td>
+	</table>
+	</form>
 
 </div>
 <script type="text/javascript">
@@ -101,6 +110,49 @@
         //agar ketika universitas berubah karena dipilih, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
         $("#tahun_masuk, #elemen").change(function(){           
             displayMonElemen();
+        });
+		
+		$("#next").click(function(){
+            $("#loading").show();
+			var page = parseInt($("#cur_page").val())+ 1;
+			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),elemen:$('#elemen').val(),cur_page:page}, 
+			function(data){                
+				$('#tabel_index_mon').html(data);
+			});
+			$("#loading").hide();
+            
+        });
+		
+		$("#prev").click(function(){
+            $("#loading").show();
+			var page = parseInt($("#cur_page").val())- 1;
+			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),elemen:$('#elemen').val(),cur_page:page}, 
+			function(data){                
+				$('#tabel_index_mon').html(data);
+			});
+			$("#loading").hide();
+            
+        });
+		
+		$("#first").click(function(){
+            $("#loading").show();
+			var page = 1;
+			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),elemen:$('#elemen').val(),cur_page:page}, 
+			function(data){                
+				$('#tabel_index_mon').html(data);
+			});
+			$("#loading").hide();
+            
+        });
+		$("#last").click(function(){
+            $("#loading").show();
+			var page = parseInt($("#last_page").val())
+			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),elemen:$('#elemen').val(),cur_page:page}, 
+			function(data){                
+				$('#tabel_index_mon').html(data);
+			});
+			$("#loading").hide();
+            
         });
         
         

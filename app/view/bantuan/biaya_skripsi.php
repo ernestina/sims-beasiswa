@@ -33,15 +33,27 @@
                 <td ><input type="hidden" name="cari" id="cari" placeholder="Cari dengan kata kunci nomor SP2D..." style="float: right"> </td>
             </tr>
         </table>
-
+		<?php
+		if(Session::get('role')==2){
+		?>
         <button onClick="location.href='<?php echo URL . "elemenBeasiswa/addSkripsi"; ?>'" style="margin-right:20px"><i class="icon-plus icon-white"></i>  TAMBAH</button>
-
+		<?php } ?>
         <!--input type="button" id="add" value="TAMBAH" onClick="location.href=''"-->
 
     </div>
-    <BR><BR><br>
-    <div id="tabel_index_skripsi" class="kolom4"></div>
-
+	<div class="kolom4">
+	<form>
+	<div id="tabel_index_skripsi"></div>
+	<table width=99% style="margin-left: 0px">
+	<td width="100%">
+	<input type="button" id="last" class="paging-kecil" value='>>' title="Halaman Terakhir">
+	<input type="button" id="next" class="paging-kecil" value='>' title="Halaman Berikutnya">
+	<input type="button" id="prev" class="paging-kecil" value='<' title="Halaman Sebelumnya">
+	<input type="button" id="first" class="paging-kecil" value='<<' title="Halaman Pertama">
+	</td>
+	</table>
+	</form>
+	</div>
     <div class="kolom3" align="right">
         Jumlah Mahasiswa sedang penelitian:
         <ul>
@@ -109,6 +121,49 @@
         $("#tahun_masuk").change(function(){
                   
             displayElemenSkripsi();
+        });
+		
+		$("#next").click(function(){
+            $("#loading").show();
+			var page = parseInt($("#cur_page").val())+ 1;
+			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_skripsi", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),cur_page:page}, 
+			function(data){                
+				$('#tabel_index_skripsi').html(data);
+			});
+			$("#loading").hide();
+            
+        });
+		
+		$("#prev").click(function(){
+            $("#loading").show();
+			var page = parseInt($("#cur_page").val())- 1;
+			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_skripsi", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),cur_page:page},
+			function(data){                
+				$('#tabel_index_skripsi').html(data);
+			});
+			$("#loading").hide();
+            
+        });
+		
+		$("#first").click(function(){
+            $("#loading").show();
+			var page = 1;
+			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_skripsi", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),cur_page:page},
+			function(data){                
+				$('#tabel_index_skripsi').html(data);
+			});
+			$("#loading").hide();
+            
+        });
+		$("#last").click(function(){
+            $("#loading").show();
+			var page = parseInt($("#last_page").val())
+			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_skripsi", { univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),cur_page:page},
+			function(data){                
+				$('#tabel_index_skripsi').html(data);
+			});
+			$("#loading").hide();
+            
         });
                
         

@@ -17,19 +17,19 @@ class KontrakController extends BaseController {
 
     //menampilkan halaman data_kontrak
     public function display() {
-        //$kontrak = new Kontrak();
-        //$data = $kontrak->get_All();
         $universitas = new Universitas($this->registry);
         $kd_user = Session::get('kd_user');
-        //echo $kd_user;
-        $univ = $universitas->get_univ_by_pic($kd_user);
-        //var_dump($univ);
+        if(Session::get('role')==2){
+			$univ = $universitas->get_univ_by_pic($kd_user);
+		}
+		if(Session::get('role')==3){
+			$univ = $universitas->get_univ();
+		}
         $this->view->kd_univ = $univ;
-        //$this->view->data = $data;
         $this->view->render('kontrak/data_kontrak');
     }
 
-    //menampilkan data kontrak dalam bentuk tabel di tabel_kontrak di halaman data_kontrak
+    //menampilkan data kontrak dalam bentuk tabel di tabel_kontrak di halaman data_kontrak berdasarkan universitas
     public function get_data_kontrak() {
         $kontrak = new Kontrak();
         $univ = $_POST['univ'];
@@ -41,9 +41,13 @@ class KontrakController extends BaseController {
         $universitas = new Universitas($this->registry);
 
         if ($univ == "") {
-            $data = $kontrak->get_All($user);
+			if(Session::get('role')==2){
+				$data = $kontrak->get_All($user);
+			}
+			if(Session::get('role')==3){
+				$data = $kontrak->get_All();
+			}
             
-            //var_dump($data);
         } else {
             $data = $kontrak->get_by_univ($univ);
         }
@@ -54,10 +58,10 @@ class KontrakController extends BaseController {
 			$cur_page = 1;
 		}
 		$paging = new MyPaging($cur_page, $data);
-		$this->view->data = $paging->getData();
 		$this->view->cur_page = $paging->getCurPage();
 		$this->view->per_page = $paging->getPerPage();
 		$this->view->page_num = $paging->getPageNum();
+		$this->view->data = $paging->getData();
         $this->view->biaya = $biaya;
         $this->view->jurusan = $jurusan;
         $this->view->kontrak = $kontrak;
@@ -65,7 +69,7 @@ class KontrakController extends BaseController {
         $this->view->load('kontrak/tabel_kontrak');
     }
 
-    //menampilkan data kontrak dalam bentuk tabel di tabel_kontrak di halaman data_kontrak
+    //menampilkan data kontrak dalam bentuk tabel di tabel_kontrak di halaman data_kontrak berdasarkan no kontrak
     public function get_data_kontrak2() {
         $kontrak = new Kontrak();
         $key = $_POST['key'];
@@ -76,7 +80,13 @@ class KontrakController extends BaseController {
         $universitas = new Universitas($this->registry);
 
         if ($key != "") {
-            $data = $kontrak->get_by_nomor($key, $user);
+			if(Session::get('role')==2){
+				$data = $kontrak->get_by_nomor($key, $user);
+			}
+			if(Session::get('role')==3){
+				$data = $kontrak->get_by_nomor($key);
+			}
+            
             $this->view->data = $data;
             //var_dump($data);
         }
@@ -89,6 +99,10 @@ class KontrakController extends BaseController {
 
     //menampilkan halaman rekam_kontrak dan melakukan proses rekam kontrak (pada halaman baru)
     public function rekamKontrak() {
+		if(Session::get('role')!=2){
+			$this->display();
+			exit();
+		}
         if (!isset($_POST['rekam_kontrak'])) {
             $universitas = new Universitas($this->registry);
             $kd_user = Session::get('kd_user');
@@ -153,6 +167,10 @@ class KontrakController extends BaseController {
 
     //menampilkan halaman rekam_kontrak_dialog dalam bentuk modal (pada halaman data_kontrak)
     public function viewRekamKontrak() {
+		if(Session::get('role')!=2){
+			$this->display();
+			exit();
+		}
         $universitas = new Universitas($this->registry);
         $kd_user = Session::get('kd_user');
         //echo $kd_user;
@@ -189,6 +207,10 @@ class KontrakController extends BaseController {
 
     //melakukan proses rekam kontrak pada modal rekam_kontrak_dialog (pada halaman data_kontrak)
     public function rekamKontrak2() {
+		if(Session::get('role')!=2){
+			$this->display();
+			exit();
+		}
         if (isset($_POST['rekam_kontrak'])) {
             $kontrak = new Kontrak();
             //sleep(5);
@@ -249,6 +271,10 @@ class KontrakController extends BaseController {
 
     //menampilkan halaman edit_kontrak pada halaman baru
     public function editKontrak($id = null) {
+		if(Session::get('role')!=2){
+			$this->display();
+			exit();
+		}
         if ($id != "") {
             $kontrak = new Kontrak();
             $data = $kontrak->get_by_id($id);
@@ -316,7 +342,10 @@ class KontrakController extends BaseController {
 
     //menampilkan halaman edit_kontrak_dialog dalam bentuk modal pada halaman data_kontrak
     public function viewEditKontrak($id = null) {
-
+		if(Session::get('role')!=2){
+			$this->display();
+			exit();
+		}
         if ($id != "") {
             $kontrak = new Kontrak();
             $data = $kontrak->get_by_id($id);
@@ -371,6 +400,10 @@ class KontrakController extends BaseController {
 
     //menghapus data kontrak berdasarkan kd_kontrak
     public function delKontrak($id = null) {
+		if(Session::get('role')!=2){
+			$this->display();
+			exit();
+		}
         if ($id != "") {
             $kontrak = new Kontrak();
             $data_kontrak = $kontrak->get_by_id($id);
@@ -458,6 +491,10 @@ class KontrakController extends BaseController {
 
     //menampilkan halaman rekam_biaya pada halaman baru
     public function viewRekamBiaya() {
+		if(Session::get('role')!=2){
+			$this->display();
+			exit();
+		}
         if (isset($_POST['kd_kontrak'])) {
             $kontrak = new Kontrak();
             $id = $_POST['kd_kontrak'];
@@ -496,6 +533,7 @@ class KontrakController extends BaseController {
     public function rekamBiaya() {
         //var_dump($_POST);
         //exit();
+		
         if (isset($_POST['rekam_biaya'])) {
             $biaya = new Biaya();
             $biaya->kd_kontrak = $_POST['kd_kontrak'];
@@ -554,6 +592,10 @@ class KontrakController extends BaseController {
 
     //menampilkan master halaman edit biaya berdasarkan id=kd_biaya pada halaman baru
     public function editBiaya($id = null,$tab=null) {
+		if(Session::get('role')!=2){
+			$this->display();
+			exit();
+		}
         if ($id != "") {
             $biaya = new Biaya();
             $data_biaya = $biaya->get_by_id($id); //mendapatkan data biaya berdasarkan id=kd_biaya
@@ -894,6 +936,10 @@ class KontrakController extends BaseController {
 
     //menghapus data biaya berdasarkan id=kd_biaya pada halaman data_biaya
     public function delBiaya($id = null) {
+		if(Session::get('role')!=2){
+			$this->display();
+			exit();
+		}
         if ($id != "") {
             $biaya = new Biaya();
             $data = $biaya->get_by_id($id);
@@ -906,17 +952,7 @@ class KontrakController extends BaseController {
 
     //menampilkan data pb pada tabel_tagihan_pb di form_edit_tagihan yang telah masuk tagihan kontrak
     public function getTagihanPbByBiaya() {
-        // if (isset($_POST['kd_biaya'])) {
-            // $kd_biaya = $_POST['kd_biaya'];
-            // $penerima_biaya_kontrak = new PenerimaBiayaKontrak();
-            // $penerima_biaya = $penerima_biaya_kontrak->get_by_biaya($kd_biaya);
-            // //var_dump($penerima_biaya);
-            // $this->view->penerima_biaya = $penerima_biaya;
-            // $penerima = new Penerima($this->registry);
-            // $this->view->penerima = $penerima;
-            // $this->view->load('kontrak/tabel_tagihan_pb');
-        // }
-		
+       		
 		 if (isset($_POST['kd_kontrak']) && isset($_POST['kd_biaya'])) {
             $kontrak = new Kontrak();
             $data_kontrak = $kontrak->get_by_id($_POST['kd_kontrak']);
@@ -974,7 +1010,6 @@ class KontrakController extends BaseController {
         }
     }
 	
-	
     
     //melakukan proses penambahan pb ke dalam data tagihan biaya kontrak
     public function addTagihanPb() {
@@ -997,9 +1032,12 @@ class KontrakController extends BaseController {
     public function monitoring() {
         $universitas = new Universitas($this->registry);
         $kd_user = Session::get('kd_user');
-        //echo $kd_user;
-        $univ = $universitas->get_univ_by_pic($kd_user);
-        //var_dump($univ);
+        if(Session::get('role')==2){
+			$univ = $universitas->get_univ_by_pic($kd_user);
+		}
+		if(Session::get('role')==3){
+			$univ = $universitas->get_univ();
+		}
         $this->view->univ = $univ;
         $this->view->render('kontrak/mon_pembayaran');
     }
@@ -1014,7 +1052,13 @@ class KontrakController extends BaseController {
             //print_r ($tahun);
             $user = Session::get('kd_user');
             $biaya = new Biaya();
-            $data_biaya = $biaya->get_by_filter($univ, $status, $tahun, $user);
+			if(Session::get('role')==2){
+				$data_biaya = $biaya->get_by_filter($univ, $status, $tahun, $user);
+			}
+			if(Session::get('role')==3){
+				$data_biaya = $biaya->get_by_filter($univ, $status, $tahun);
+			}
+            
             $universitas = new Universitas($this->registry);
             $jurusan = new Jurusan($this->registry);
             $kontrak = new Kontrak();
@@ -1050,7 +1094,12 @@ class KontrakController extends BaseController {
             $biaya = new Biaya();
             $user = Session::get('kd_user');
             $biaya = new Biaya();
-            $data_biaya = $biaya->get_by_filter($univ, $status, $tahun, $user);
+            if(Session::get('role')==2){
+				$data_biaya = $biaya->get_by_filter($univ, $status, $tahun, $user);
+			}
+			if(Session::get('role')==3){
+				$data_biaya = $biaya->get_by_filter($univ, $status, $tahun);
+			}
 
             $universitas = new Universitas($this->registry);
             $universitas->set_kode_in($univ);

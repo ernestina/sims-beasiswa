@@ -1,3 +1,12 @@
+<div id="no_hal">
+<table width=100% style="margin-left: 0px padding-left: 10px">
+<td width=100%><?php 
+if($this->cur_page !="" && $this->page_num!="") echo "HALAMAN ".$this->cur_page." DARI ".$this->page_num; 
+?></td>
+</table>
+</div>
+<input type="hidden" id="cur_page" name="cur_page" value="<?php echo $this->cur_page; ?>"/>
+<input type="hidden" id="last_page" name="last_page" value="<?php echo $this->page_num; ?>"/>
 <table class="table-bordered zebra">
     <thead>
     <th>No</th>
@@ -16,8 +25,9 @@
     $no = 1;
     //var_dump($this->data);
     foreach ($this->data as $val4) {
+		$num=$no+($this->per_page*($this->cur_page-1));
         echo "<tr>";
-        echo "<td style='text-align: center'>$no</td>";
+        echo "<td style='text-align: center'>".$num."</td>";
         $jns_elem = $val4->get_kd_r();
         
         $bulan = $val4->get_bln();

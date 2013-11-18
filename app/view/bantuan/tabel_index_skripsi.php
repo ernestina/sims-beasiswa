@@ -1,3 +1,12 @@
+<div id="no_hal">
+<table width=100% style="margin-left: 0px padding-left: 10px">
+<td width=100%><?php 
+if($this->cur_page !="" && $this->page_num!="") echo "HALAMAN ".$this->cur_page." DARI ".$this->page_num; 
+?></td>
+</table>
+</div>
+<input type="hidden" id="cur_page" name="cur_page" value="<?php echo $this->cur_page; ?>"/>
+<input type="hidden" id="last_page" name="last_page" value="<?php echo $this->page_num; ?>"/>
 <table class="table-bordered zebra">
     <thead>
     <th width="2%">No</th>
@@ -13,8 +22,9 @@
     <?php
     $no = 1;
     foreach ($this->skripsi as $val) {
+        $num=$no+($this->per_page*($this->cur_page-1));
         echo "<tr>";
-        echo "<td>$no</td>";
+        echo "<td>".$num."</td>";
         $tgl = "";
         if (date('d-m-Y', strtotime($val->get_tgl_sp2d())) != "01-01-1970" && date('d-m-Y', strtotime($val->get_tgl_sp2d())) != "00-00-0000") {
             $tgl = date('d-m-Y', strtotime($val->get_tgl_sp2d()));
@@ -29,10 +39,16 @@
         echo "<td>" . $val->get_jml_peg() . "</td>";
 
         echo "<td style=\"text-align: right\">" . number_format($val->get_total_bayar()) . "</td>";
-        echo "<td><a href=" . URL . "elemenBeasiswa/delSkripsi/" . $val->get_kd_d() . " onClick=\"return del();\" title='hapus'><i class=\"icon-trash\"></i></a> &nbsp 
+        
+		if(Session::get('role')==2){
+		echo "<td><a href=" . URL . "elemenBeasiswa/delSkripsi/" . $val->get_kd_d() . " onClick=\"return del();\" title='hapus'><i class=\"icon-trash\"></i></a> &nbsp 
                         <a href=" . URL . "elemenBeasiswa/editSkripsi/" . $val->get_kd_d() . " title='ubah'><i class=\"icon-pencil\"></i></a> &nbsp 
                             <a href='#' onClick='cetak_uskripsi(" . $val->get_kd_d() . "); return false;' title='cetak'><i class=\"icon-print\"></i></a>
-</td>";
+		</td>";}
+		if(Session::get('role')==3){
+		echo "<td><a href='#' onClick='cetak_uskripsi(" . $val->get_kd_d() . "); return false;' title='cetak'><i class=\"icon-print\"></i></a>
+		</td>";}
+		
         echo "</tr>";
         $no++;
     }

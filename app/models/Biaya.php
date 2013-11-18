@@ -240,19 +240,35 @@ class Biaya extends BaseModel {
             LEFT JOIN r_jur c ON b.KD_JUR = c.KD_JUR
             LEFT JOIN r_fakul d ON c.KD_FAKUL = d.KD_FAKUL
             LEFT JOIN r_univ e ON d.KD_UNIV = e.KD_UNIV
-            WHERE e.KD_USER='" . $user . "'
             ";
-
+		
+		if ($user != "") {
+            $sql .= " WHERE e.KD_USER='" . $user . "'";
+        }
+		
         if ($kd_univ != "") {
-            $sql .= " AND e.KD_UNIV='" . $kd_univ . "'";
+			if($user != ""){
+				$sql .= " AND e.KD_UNIV='" . $kd_univ . "'";
+			} else {
+				$sql .= " WHERE e.KD_UNIV='" . $kd_univ . "'";
+			}
         }
 
         if ($status != "") { 
-                $sql .= " AND a.STS_TAGIHAN='" . $status . "'";
-        }
+			if($user != "" || $kd_univ != ""){
+				$sql .= " AND a.STS_TAGIHAN='" . $status . "'";
+			} else {
+				$sql .= " WHERE a.STS_TAGIHAN='" . $status . "'";
+			}
+                        }
 
-        if ($jadwal != "") {  
-                $sql .= " AND YEAR(a.JADWAL_BAYAR_TAGIHAN)='" . $jadwal . "'";  
+        if ($jadwal != "") { 
+			if($user != "" || $kd_univ != "" || $status != ""){
+				$sql .= " AND YEAR(a.JADWAL_BAYAR_TAGIHAN)='" . $jadwal . "'";
+			} else {
+				$sql .= " WHERE YEAR(a.JADWAL_BAYAR_TAGIHAN)='" . $jadwal . "'";
+			}
+                 
         }
 
         $sql .= " ORDER BY a.JADWAL_BAYAR_TAGIHAN asc";

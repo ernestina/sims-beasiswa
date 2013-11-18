@@ -83,6 +83,21 @@
     
 </div>
 <?php } ?>
+
+<?php if(Session::get('role')==3) {?>
+<div id="beranda" style="margin: 20px 20px 5px 20px; border: solid 1px;width:70%;display:inline; float:left">
+</div>
+<div style="float:left; width:24%; margin: 20px 0% 5px 0px;border: solid 1px">
+    <div><img class="frame" src="<?php 
+        if($this->d_user->get_foto()!='' && !is_null($this->d_user->get_foto()) && file_exists('files/foto/'.$this->d_user->get_foto())){
+            echo 'files/foto/'.$this->d_user->get_foto();
+        }else{
+            echo 'public/img/kisanak.png';
+        }
+?>" style="width:80%;margin: 5px 8% 5px 8%;"></div>
+        
+</div>
+<?php } ?>
 <input type="hidden" id="jml_notif" value="<?php echo $this->count_notif;?>">
 <script type="text/javascript">
 

@@ -13,8 +13,13 @@ class elemenBeasiswaController extends BaseController {
 
     public function index() {
         $univ = new Universitas($this->registry);
-        $user = Session::get('kd_user');
-        $univ2 = $univ->get_univ_by_pic($user);
+        $user = Session::get('kd_user');      
+		if(Session::get('role')==2){
+				$univ2 = $univ->get_univ_by_pic($user);
+			}
+		if(Session::get('role')==3){
+				$univ2 = $univ->get_univ();
+			}
         $this->view->univ = $univ2;
         
         $this->view->render('bantuan/mon_pembayaran');
@@ -30,7 +35,24 @@ class elemenBeasiswaController extends BaseController {
             $user = Session::get('kd_user');
 
             $elem = new ElemenBeasiswa($this->registry);
-            $this->view->data = $elem->get_list_elem($univ, $jurusan, $tahun, $elemen, $user);
+            //$this->view->data = $elem->get_list_elem($univ, $jurusan, $tahun, $elemen, $user);
+			if(Session::get('role')==2){
+				$data = $elem->get_list_elem($univ, $jurusan, $tahun, $elemen, $user);
+			}
+			if(Session::get('role')==3){
+				$data = $elem->get_list_elem($univ, $jurusan, $tahun, $elemen);
+			}
+			if(isset($_POST['cur_page'])){
+			$cur_page = $_POST['cur_page'];
+			} else {
+				$cur_page = 1;
+			}
+			$paging = new MyPaging($cur_page, $data);
+			$this->view->cur_page = $paging->getCurPage();
+			$this->view->per_page = $paging->getPerPage();
+			$this->view->page_num = $paging->getPageNum();
+			
+            $this->view->data = $paging->getData();
             $this->view->jurusan = new Jurusan($this->registry);
             $this->view->pb = new Penerima($this->registry);
             $this->view->load('bantuan/tabel_index_mon_pembayaran');
@@ -181,7 +203,14 @@ class elemenBeasiswaController extends BaseController {
             $this->view->data_jurusan = $data_jur;
             $this->view->pb = new Penerima($this->registry);
             $user = Session::get('kd_user');
-            $this->view->data = $elem->get_list_elem($univ, $jur, $tahun, $elemen, $user);
+            
+			if(Session::get('role')==2){
+				$data = $elem->get_list_elem($univ, $jurusan, $tahun, $elemen, $user);
+			}
+			if(Session::get('role')==3){
+				$data = $elem->get_list_elem($univ, $jurusan, $tahun, $elemen);
+			}
+			$this->view->data = $data;
             $this->view->univ = $univ;
             $this->view->jur = $jur;
             $this->view->tahun = $tahun;
@@ -194,7 +223,13 @@ class elemenBeasiswaController extends BaseController {
 
         $univ = new Universitas($this->registry);
         $user = Session::get('kd_user');
-        $this->view->univ = $univ->get_univ_by_pic($user);
+		if(Session::get('role')==2){
+				$data = $univ->get_univ_by_pic($user);
+			}
+		if(Session::get('role')==3){
+				$data = $univ->get_univ();
+			}
+        $this->view->univ = $data;
         $this->view->render('bantuan/jadup');
     }
 
@@ -207,14 +242,28 @@ class elemenBeasiswaController extends BaseController {
             $tahun = $_POST['tahun'];
             $user = Session::get('kd_user');
             $elem = new ElemenBeasiswa();
-            $this->view->elem = $elem->get_elem_jadup($univ, $jurusan, $tahun, $user);
+			if(Session::get('role')==2){
+				$data_jadup = $elem->get_elem_jadup($univ, $jurusan, $tahun, $user);
+			}
+			if(Session::get('role')==3){
+				$data_jadup = $elem->get_elem_jadup($univ, $jurusan, $tahun);
+			}
+			if(isset($_POST['cur_page'])){
+			$cur_page = $_POST['cur_page'];
+			} else {
+				$cur_page = 1;
+			}
+			$paging = new MyPaging($cur_page, $data_jadup);
+			$this->view->cur_page = $paging->getCurPage();
+			$this->view->per_page = $paging->getPerPage();
+			$this->view->page_num = $paging->getPageNum();
+            $this->view->elem = $paging->getData();
 
             $this->view->load('bantuan/tabel_index_jadup');
         }
     }
 
     public function data_index_jadup2() {
-
         if (isset($_POST['sp2d'])) {
             //tinggal nambahin filter di get_elem_jadup
             $sp2d = $_POST['sp2d'];
@@ -248,10 +297,13 @@ class elemenBeasiswaController extends BaseController {
     }
 
     public function addJadup() {
+		if(Session::get('role')!=2){
+			$this->viewJadup();
+			exit();
+		}
         $univ = new Universitas($this->registry);
         $user = Session::get('kd_user');
         $this->view->univ = $univ->get_univ_by_pic($user);
-
         $this->view->render('bantuan/rekam_jadup');
     }
 
@@ -315,6 +367,10 @@ class elemenBeasiswaController extends BaseController {
 
     //menghapus data jadup
     public function delJadup($id = null) {
+		if(Session::get('role')!=2){
+			$this->viewJadup();
+			exit();
+		}
         if ($id != "") {
             $elem = new ElemenBeasiswa($this->registry);
             //echo $id;
@@ -335,7 +391,10 @@ class elemenBeasiswaController extends BaseController {
     }
 
     public function editJadup($id = null) {
-
+		if(Session::get('role')!=2){
+			$this->viewJadup();
+			exit();
+		}
         if ($id != "") {
 
             $elemen = new ElemenBeasiswa();
@@ -475,7 +534,13 @@ class elemenBeasiswaController extends BaseController {
 
         $univ = new Universitas($this->registry);
         $user = Session::get('kd_user');
-        $this->view->univ = $univ->get_univ_by_pic($user);
+		if(Session::get('role')==2){
+				$data = $univ->get_univ_by_pic($user);
+			}
+		if(Session::get('role')==3){
+				$data = $univ->get_univ();
+			}
+        $this->view->univ = $data;
 
         $this->view->render('bantuan/buku');
     }
@@ -489,12 +554,23 @@ class elemenBeasiswaController extends BaseController {
             $tahun = $_POST['tahun'];
 			$user = Session::get('kd_user');
             $elem = new ElemenBeasiswa();
-            //echo $univ;
-            //echo $jurusan;
-            //echo $tahun;
-            $buku = $elem->get_elem_buku($univ, $jurusan, $tahun, $user);
-            //var_dump($buku);
-            $this->view->buku = $buku;
+            
+            if(Session::get('role')==2){
+				$data_buku = $elem->get_elem_buku($univ, $jurusan, $tahun, $user);
+			}
+			if(Session::get('role')==3){
+				$data_buku = $elem->get_elem_buku($univ, $jurusan, $tahun);
+			}
+			if(isset($_POST['cur_page'])){
+			$cur_page = $_POST['cur_page'];
+			} else {
+				$cur_page = 1;
+			}
+			$paging = new MyPaging($cur_page, $data_buku);
+			$this->view->cur_page = $paging->getCurPage();
+			$this->view->per_page = $paging->getPerPage();
+			$this->view->page_num = $paging->getPageNum();
+            $this->view->buku = $paging->getData();
             $this->view->load('bantuan/tabel_index_buku');
         }
     }
@@ -506,9 +582,7 @@ class elemenBeasiswaController extends BaseController {
             $sp2d = $_POST['sp2d'];
             $elem = new ElemenBeasiswa();
 			$user = Session::get('kd_user');
-            //echo $univ;
-            //echo $jurusan;
-            //echo $tahun;
+            
             $buku = $elem->get_elem_buku_by_sp2d($sp2d, $user);
             //var_dump($buku);
             $this->view->buku = $buku;
@@ -533,7 +607,10 @@ class elemenBeasiswaController extends BaseController {
     }
 
     public function addUangBuku($id = null) {
-
+		if(Session::get('role')!=2){
+			$this->viewUangBuku();
+			exit();
+		}
         $univ = new Universitas($this->registry);
         $user = Session::get('kd_user');
         $this->view->univ = $univ->get_univ_by_pic($user);
@@ -592,6 +669,10 @@ class elemenBeasiswaController extends BaseController {
     }
 
     public function delUangBuku($id = null) {
+		if(Session::get('role')!=2){
+			$this->viewUangBuku();
+			exit();
+		}
         if ($id != "") {
             $elem = new ElemenBeasiswa($this->registry);
             //echo $id;
@@ -614,7 +695,10 @@ class elemenBeasiswaController extends BaseController {
     }
 
     public function editUangBuku($id = null) {
-
+		if(Session::get('role')!=2){
+			$this->viewUangBuku();
+			exit();
+		}
         if ($id != "") {
 
             $elemen = new ElemenBeasiswa();
@@ -753,19 +837,24 @@ class elemenBeasiswaController extends BaseController {
     public function viewSkripsi() {
         $univ = new Universitas($this->registry);
         $user = Session::get('kd_user');
-        $univ = $univ->get_univ_by_pic($user);
+		if(Session::get('role')==2){
+				$data = $univ->get_univ_by_pic($user);
+			}
+		if(Session::get('role')==3){
+				$data = $univ->get_univ();
+			}
          
-        $this->view->univ = $univ;
+        $this->view->univ = $data;
 
         $jur = new Jurusan($this->registry);
-        //$jurusan = $jur->get_jur_by_pic($user);
-        $jurusan = $jur->get_jur_by_pic($user);
-		//$jurusan = $jur->get_jurusan($user);
-		//var_dump($jurusan);
 		
-        //$this->view->jur = $jurusan;
-
-
+		if(Session::get('role')==2){
+				$jurusan = $jur->get_jur_by_pic($user);
+			}
+		if(Session::get('role')==3){
+				$jurusan = $jur->get_jurusan();
+			}
+		
         $myArray = array();
         foreach ($jurusan as $val2) {
             $st = new SuratTugas($this->registry);
@@ -813,8 +902,23 @@ class elemenBeasiswaController extends BaseController {
             $tahun = $_POST['tahun'];
 			$user = Session::get('kd_user'); 
             $elem = new ElemenBeasiswa();
-            $this->view->skripsi = $elem->get_elem_skripsi($univ, $jurusan, $tahun, $user);
-
+			if(Session::get('role')==2){
+				$data_skripsi = $elem->get_elem_skripsi($univ, $jurusan, $tahun, $user);
+			}
+			if(Session::get('role')==3){
+				$data_skripsi = $elem->get_elem_skripsi($univ, $jurusan, $tahun);
+			}
+			if(isset($_POST['cur_page'])){
+			$cur_page = $_POST['cur_page'];
+			} else {
+				$cur_page = 1;
+			}
+			$paging = new MyPaging($cur_page, $data_skripsi);
+			$this->view->cur_page = $paging->getCurPage();
+			$this->view->per_page = $paging->getPerPage();
+			$this->view->page_num = $paging->getPageNum();
+            			
+			$this->view->skripsi = $paging->getData();
             $this->view->load('bantuan/tabel_index_skripsi');
         }
     }
@@ -833,6 +937,10 @@ class elemenBeasiswaController extends BaseController {
     }
 
     public function addSkripsi($id = null) {
+		if(Session::get('role')!=2){
+			$this->viewSkripsi();
+			exit();
+		}
         $univ = new Universitas($this->registry);
         $user = Session::get('kd_user');
         $this->view->univ = $univ->get_univ_by_pic($user);
@@ -914,6 +1022,10 @@ class elemenBeasiswaController extends BaseController {
     }
 
     public function delSkripsi($id = null) {
+		if(Session::get('role')!=2){
+			$this->viewSkripsi();
+			exit();
+		}
         if ($id != "") {
             $elem = new ElemenBeasiswa($this->registry);
             //echo $id;
@@ -928,7 +1040,10 @@ class elemenBeasiswaController extends BaseController {
     }
 
     public function editSkripsi($id = null) {
-
+		if(Session::get('role')!=2){
+			$this->viewSkripsi();
+			exit();
+		}
         if ($id != "") {
 
             $elemen = new ElemenBeasiswa();

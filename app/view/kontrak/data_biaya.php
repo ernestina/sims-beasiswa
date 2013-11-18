@@ -15,7 +15,11 @@
             <input type="hidden" id="kd_kontrak" name="kd_kontrak" value="<?php echo $this->data_kontrak->kd_kontrak; ?>">
 		<table width="95%">
 			<tr><td align="right">
+			<?php 
+					if(Session::get('role')==2){
+					?>
 			<button onClick="formSubmit" id="tambah_kontrak" style="margin-top:0px; margin-right: -8px" title="Rekam biaya kontrak"><i class="icon-plus icon-white"></i> Tambah</button>
+			<?php } ?>
 			<!--input class="biru" type="submit" value="TAMBAH" -->
 			</td></tr>
 		</table>
@@ -34,7 +38,11 @@
             <th width="5%">No SP2D</th>
             <th width="5%">Tgl SP2D</th>
             <th width="5%">Status <br />Pembayaran</th>
+			<?php 
+			if(Session::get('role')==2){
+			?>
             <th width="7%">Aksi</th>
+			<?php } ?>
             </thead>
 		<tbody style="text-align: center">
 
@@ -58,10 +66,14 @@
             }
                 ?></td>
                     <td><?php echo $val->status_bayar; ?></td>
+					<?php 
+					if(Session::get('role')==2){
+					?>
                     <td>
                         <a href="<?php echo URL . "kontrak/delBiaya/" . $val->kd_biaya; ?>" onClick="return del('<?php echo $val->nama_biaya; ?>');" title="hapus"><i class="icon-trash"></i></a> &nbsp
                         <a href="<?php echo URL . "kontrak/editBiaya/" . $val->kd_biaya; ?> " title="ubah"><i class="icon-pencil"></i></a>
                     </td>
+					<?php } ?>
                 </tr>
                 <?php
                 $i++;

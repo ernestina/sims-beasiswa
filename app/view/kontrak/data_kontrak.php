@@ -27,8 +27,9 @@
 
             <td width="45%">
 <!--                <input type="button" value="TAMBAH" onClick="location.href='<?php echo URL . 'kontrak/rekamKontrak'; ?>'"style="margin-top:0px; margin-right: -8px">-->
+				<?php if(Session::get('role')==2){ ?>
                 <button type="button" id="tambah_kontrak" style="margin-top:0px; margin-right: -8px" title="Rekam kontrak baru"><i class="icon-plus icon-white"></i> Tambah</button>
-                
+                <?php } ?>
             </td>
         </tr>
     </table>
@@ -40,10 +41,10 @@
 </div>
 <table width=99% style="margin-left: 0px">
 <td width="100%">
-<input type=button id="last" class="paging-kecil" value='>>' title="Halaman Terakhir">
-<input type=button id="next" class="paging-kecil" value='>' title="Halaman Berikutnya">
-<input type=button id="prev" class="paging-kecil" value='<' title="Halaman Sebelumnya">
-<input type=button id="first" class="paging-kecil" value='<<' title="Halaman Pertama">
+<input type="button" id="last" class="paging-kecil" value='>>' title="Halaman Terakhir">
+<input type="button" id="next" class="paging-kecil" value='>' title="Halaman Berikutnya">
+<input type="button" id="prev" class="paging-kecil" value='<' title="Halaman Sebelumnya">
+<input type="button" id="first" class="paging-kecil" value='<<' title="Halaman Pertama">
 </td>
 </table>
 </form>

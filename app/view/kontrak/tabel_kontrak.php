@@ -79,9 +79,11 @@ if($this->cur_page !="" && $this->page_num!="") echo "HALAMAN ".$this->cur_page.
                     <td>
                         <a href="#" onClick="edit(<?php echo $val->kd_kontrak; ?>); return false;"><i class=\"icon-pencil\"></i></a>
                         <?php
+						if(Session::get('role')==2){
                         echo "<a href=" . URL . "kontrak/delKontrak/" . $val->kd_kontrak . " onClick=\"return del('".$val->no_kontrak."');\" title=\"hapus\"><i class=\"icon-trash\"></i></a> &nbsp
-                     <a href=\"#\" onClick=\"edit(" . $val->kd_kontrak . "); return false;\"><i class=\"icon-pencil\" title=\"ubah\"></i></a> &nbsp
-                     <a href=" . URL . "kontrak/biaya/" . $val->kd_kontrak . "><i class=\"icon-tag\" title=\"detil biaya kontrak\"></i></a>";
+						<a href=\"#\" onClick=\"edit(" . $val->kd_kontrak . "); return false;\"><i class=\"icon-pencil\" title=\"ubah\"></i></a> &nbsp";
+						}
+						echo "<a href=" . URL . "kontrak/biaya/" . $val->kd_kontrak . "><i class=\"icon-tag\" title=\"detil biaya kontrak\"></i></a>";
                         //echo $val->kd_kontrak;
                         ?>   
                 </tr>

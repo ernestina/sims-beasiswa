@@ -28,7 +28,7 @@
 						<select id="jadwal" name="jadwal" type="text">
 							<option value="">- semua -</option>
 							<?php
-							for ($i = 2007; $i <= date('Y') + 1; $i++) {
+							for ($i = date('Y') + 1; $i >= 2007; $i--) {
 													?>
 								<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
 							<?php } ?>
