@@ -30,8 +30,16 @@
             </form>
             </div>
         </div>-->
-        <div class="login-container">
-            <center><a class="logo" href="<?php echo URL;?>notifikasi"><img title="SIMS" height="64" src="<?php echo URL; ?>public/img/treascho-new.png" alt="SIMS" /></a></center>
+        <center><a class="logo" href="<?php echo URL;?>notifikasi"><img title="SIMS" height="64" src="<?php echo URL; ?>public/img/treascho-new.png" alt="SIMS" style="padding-top: 40px"/></a></center>
+		<div class="login-container">
+		<div id="menu">
+		<ul>
+		<li class="nav"><a> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp </a></li>
+		<li class="nav"><a href="<?php echo URL; ?>notifikasi"> NOTIFIKASI</a></li>
+		<li class="nav"><a href="<?php echo URL; ?>index"> PEGAWAI</a></li>
+		</ul>
+		</div>
+            
 			<div class="form login">
             <?php 
                 if(isset($this->error)){
