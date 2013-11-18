@@ -32,9 +32,9 @@ class CutiController extends BaseController{
             $thn_stop = $_POST['thn_stop'];
             $bln_go = $_POST['bln_go'];
             $thn_go = $_POST['thn_go'];
-//            $data = $noct." ".$jsc." ".$tgl_sc." ".$kd_pb." ".$jur." ".$sem_mul." ".$sem_sel." ".$thn_mul." ".$thn_sel
-//                    ." ".$bln_stop." ".$bln_go." ".$thn_stop." ".$thn_go." ".$_FILES['fupload']['name'];
-//            echo $data;
+            $data = $noct." ".$jsc." ".$tgl_sc." ".$kd_pb." ".$jur." ".$sem_mul." ".$sem_sel." ".$thn_mul." ".$thn_sel
+                    ." ".$bln_stop." ".$bln_go." ".$thn_stop." ".$thn_go." ".$_FILES['fupload']['name'];
+            echo $data;
             $pb = new Penerima($this->registry);
             $pb->set_kd_pb($kd_pb);
             $d_pb = $pb->get_penerima_by_id($pb);
