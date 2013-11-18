@@ -142,7 +142,7 @@
                     <?php if(isset($this->d_ubah)){?>
                         <li><input class="normal" type="button" onclick="window.history.back()" value="BATAL"></li>
                     <?php }else{?>
-			<li><input class="normal" type="RESET" onclick="" value="RESET"></li>
+			<li><input class="normal" id="reset" type="RESET" onclick="" value="RESET"></li>
                     <?php }?>
 			<li><input class="sukses" type="submit" name="<?php echo isset($this->d_ubah)?'sb_upd':'sb_add';?>" value="SIMPAN" onClick="return cek();"></li>
 		</ul>
@@ -228,6 +228,10 @@
         var jk = document.getElementById('jk').value;
         var jsc = document.getElementById('jsc').value;
         
+        $('#reset').click(function(){
+            $('#nip_pb').fadeOut(200);
+            $('#nama_pb').fadeOut(200);
+        });
         console.log(jk);
         console.log(jsc);
     });

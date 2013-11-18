@@ -435,14 +435,67 @@ class PenerimaController extends BaseController{
         }
     }
     
-    public function set_tidak_lulus(){
+    public function set_status_lulus(){
         $kd_pb = $_POST['id_pb'];
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($kd_pb);
         $pb = $pb->get_penerima_by_id($pb);
-        $pb->set_status(9);
+        $status = $pb->get_status();
+        $blm_lulus = $status!=9;
+        $tdk_lulus = $status==9;
+        $data;
+        if($blm_lulus){
+            $pb->set_status(9);
+            $data = array('str_status'=>StatusPB::status_int_string(9),'kd_status'=>9);
+        }elseif($tdk_lulus){
+            /*
+            * sementara dulu
+            * untuk update status tb, sambil nunggu fungsi yg benar :(
+            */
+            $curr_month = (int) date('m');
+            $curr_year = (int) date('Y');
+            $name = $pb->get_nama();
+            $ct = new Cuti($this->registry);
+            $ct->get_cuti_by_pb_name($name, $this->kd_user);
+            $tmp_mul = explode(" ",$ct->get_prd_mulai());
+            $tmp_sel = explode(" ",$ct->get_prd_selesai());
+            $bul_mul = (int) $tmp_mul[0];
+            $thn_mul = (int) $tmp_mul[1];
+            $bul_sel = (int) $tmp_mul[0];
+            $thn_sel = (int) $tmp_sel[1];
+            $is_cuti = $bul_mul<=$curr_month && $thn_mul<=$curr_year && $bul_sel>=$curr_year && $thn_sel>=$curr_year;
+            if($is_cuti){
+                $pb->set_status(4);
+                $data = array('str_status'=>StatusPB::status_int_string(4),'kd_status'=>4);
+            }else{
+                /*
+                * st
+                */
+                $kd_st = $pb->get_st();
+                $st = new SuratTugas($this->registry);
+                $is_child = $st->is_child($kd_st);
+                if($is_child){
+                    $kd_parent = $st->get_st_lama();
+                    if($kd_parent!=''){
+                        $pb->set_status(3);
+                        $data = array('str_status'=>StatusPB::status_int_string(3),'kd_status'=>3);
+                    }else{
+                        $pb->set_status(2);
+                        $data = array('str_status'=>StatusPB::status_int_string(2),'kd_status'=>2);
+                    } 
+                }else{
+                    $pb->set_status(1);
+                    $data = array('str_status'=>StatusPB::status_int_string(1),'kd_status'=>1);
+                }
+            }
+            
+            /*
+            * end update status
+            */
+        }
         $pb->update_penerima();
-        echo StatusPB::status_int_string(9);
+        
+        echo json_encode($data);
     }
     /*
      * hapus penerima tb

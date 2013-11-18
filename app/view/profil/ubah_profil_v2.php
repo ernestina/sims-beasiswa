@@ -111,6 +111,7 @@
 				<option>lulus dengan perpanjangan 1</option>
 				<option>lulus dengan perpanjangan 2</option>
 				<option>tidak lulus</option>-->
+                        <input type="hidden" id="kd_sts_pb" value="<?php echo $this->d_pb->get_status()?>">
                         <ul class="inline">
                             <li><input type="text" id="sts_tb" disabled value="<?php echo StatusPB::status_int_string($this->d_pb->get_status());?>"></li>
                             <?php if($this->d_pb->get_status()<5) {?>
@@ -304,13 +305,36 @@ $(function(){
     
     $('#off').click(function(){
         var id_pb = document.getElementById('id_pb').value;
-        var quest = "Anda yakin merubah status pegawai ini menjadi TIDAK LULUS?";
+        var kd_sts = document.getElementById('kd_sts_pb').value;
+        console.log(kd_sts);
+        var quest;
+        if(kd_sts!=9){
+            quest = "Anda yakin merubah status pegawai ini menjadi TIDAK LULUS?";
+        }else{
+            quest = "Anda yakin akan mengembalikan status pegawai ini?";
+        }
         if(confirm(quest)){
-            $.post('<?php echo URL;?>penerima/set_tidak_lulus',{id_pb:id_pb},
-            function(data){
-                document.getElementById('sts_tb').value = data;
-                $('#off').fadeOut();
+            $.ajax({
+                type:'post',
+                url:'<?php echo URL;?>penerima/set_status_lulus',
+                data:"id_pb="+id_pb,
+                dataType:'json',
+                success:function(data){
+                    document.getElementById('sts_tb').value = data.str_status;
+                    document.getElementById('kd_sts_pb').value = data.kd_status;
+                    if(data.kd_status==9){
+                       document.getElementById('off').value = "Kembali"; 
+                    }else{
+                       document.getElementById('off').value = "Tidak lulus";  
+                    }
+                }
             })
+//            $.post('<?php echo URL;?>penerima/set_status_lulus',{id_pb:id_pb},
+//            function(data){
+//                document.getElementById('sts_tb').value = data.str_status;
+//                document.getElementById('kd_sts_tb').value = data.kd_status;
+////                $('#off').fadeOut();
+//            })
         }
         
     })
