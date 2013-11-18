@@ -39,7 +39,7 @@ class Index extends BaseController{
     private function get_notifikasi(){
         $notif = new Notifikasi($this->registry);
         $data = $notif->get_notifikasi();
-        
+//        print_r($data);
         $d_notif = array();
         foreach ($data as $data){
             $pic = $data->get_pic();

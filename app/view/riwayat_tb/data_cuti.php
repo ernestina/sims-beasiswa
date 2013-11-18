@@ -296,7 +296,7 @@
                $('#nama_pb').val(data.nama);
                $('#kd_pb').val(data.kd_pb);
                $('#jk').val(data.jk);
-               $('#bt_pb').fadeOut(200);
+//               $('#bt_pb').fadeOut(200);
                $('#nip_pb').fadeIn(200);
                $('#nama_pb').fadeIn(200);
             }

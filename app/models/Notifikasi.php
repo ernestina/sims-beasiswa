@@ -136,11 +136,11 @@ class Notifikasi{
                     if($cek_bulan){
                         $is_notif = $this->is_write_notif('jadup', $bulan."-01");
                         if($is_notif){
-        //                    echo $kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+//                            echo $kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
                             $this->_notif_data[] = $notif;
                         }
                     }else{
-    //                    echo $kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+//                        echo $kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
                         $this->_notif_data[] = $notif;
                     }
                     
@@ -204,7 +204,6 @@ class Notifikasi{
                 break;
             }
         }
-        
         return $d_bulan;
     }
 
@@ -384,7 +383,7 @@ class Notifikasi{
     private function get_list_kode_st($is_selesai=false){
         $sql = "SELECT KD_ST FROM d_srt_tugas";
         if($is_selesai){
-            $sql .= " WHERE TGL_SEL_ST>NOW() AND KD_PEMB=1";
+            $sql .= " WHERE TGL_MUL_ST<NOW() AND TGL_SEL_ST>NOW() AND KD_PEMB=1";
         }else{
             $sql .= " WHERE KD_PEMB=1";
         }
@@ -773,13 +772,47 @@ class Notifikasi{
      * pengurutan
      */
     private function sort_data_notif(){
-        $return = array();
-        $tmp_data = $this->create_data_sort($this->_notif_data);
-        ksort($tmp_data);
-        foreach ($tmp_data as $key=>$value){
-            $return[] = $value;
+        $return = $this->_notif_data;
+        $count_data = count($return);
+        for($i=0;$i<$count_data;$i++){
+            $time_i = $this->jatuh_tempo_to_time($return[$i]);
+            for($j=0;$j<$count_data;$j++){
+                $time_j = $this->jatuh_tempo_to_time($return[$j]);
+                $less_than = $time_j<$time_i;
+                if($less_than){
+                    $tmp = $return[$i];
+                    $return[$i] = $return[$j];
+                    $return[$j] = $tmp;
+                }
+            }
         }
+//        $return = array();
+//        $tmp_data = $this->create_data_sort($this->_notif_data);
+//        ksort($tmp_data);
+//        foreach ($tmp_data as $key=>$value){
+//            $return[] = $value;
+//        }
         return $return;
+    }
+    
+    private function jatuh_tempo_to_time($data){
+        $jatuh_tempo = $data->get_jatuh_tempo();
+        $tmp = explode("-",$jatuh_tempo);
+        $is_buku = $data->get_jenis_notif()=='buku'; 
+        if($is_buku){
+            $bulan = $tmp[1]==1?9:3;
+            $date = $tmp[0]."-".$bulan."-01";
+//                $v->set_jatuh_tempo($date);
+            $jatuh_tempo = date('Y-m-d',  strtotime($date));
+        }else{
+            if(count($tmp)<3){
+                $date = $jatuh_tempo ."-01";
+//                    $v->set_jatuh_tempo($date);
+                $jatuh_tempo = date('Y-m-d',  strtotime($date));
+            }
+        }
+        
+        return strtotime($jatuh_tempo);
     }
     
     /*
@@ -793,7 +826,7 @@ class Notifikasi{
             $tmp = explode("-",$jatuh_tempo);
             $is_buku = $v->get_jenis_notif()=='buku'; 
             if($is_buku){
-                $bulan = $tmp[1]==1?3:9;
+                $bulan = $tmp[1]==1?9:3;
                 $date = $tmp[0]."-".$bulan."-01";
 //                $v->set_jatuh_tempo($date);
                 $jatuh_tempo = date('Y-m-d',  strtotime($date));
@@ -805,6 +838,7 @@ class Notifikasi{
                 }
             }
             $tgl = strtotime($jatuh_tempo);
+//            print_r($v);echo "</br>";
             $strtime_array[$tgl] = $v;
 //            $no++;
         }
