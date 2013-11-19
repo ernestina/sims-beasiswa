@@ -25,11 +25,13 @@ class PenerimaController extends BaseController{
         $mas = new MasalahPenerima($this->registry);
         $pemb = new PemberiBeasiswa();
         $beaya = new Biaya();
+        $role = Session::get('role');
         if(!is_null($id)){
             $pb->set_kd_pb($id);
             $this->view->d_pb = $pb->get_penerima_by_id($pb,$this->kd_user);
             $st->set_kd_st($this->view->d_pb->get_st());
             $this->view->d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
+            if($role==3) $this->view->d_st = $st->get_surat_tugas_by_id($st);
             $pemb = $pemb->get_by_id($this->view->d_st->get_pemberi());
             $this->view->d_pemb = $pemb->nama_pemberi;
             $this->view->d_bank = $bank->get_bank_id($this->view->d_pb->get_bank());
@@ -41,7 +43,9 @@ class PenerimaController extends BaseController{
             $this->view->d_nil = $nilai->get_nilai($pb);
             $this->view->d_cur_ipk = $nilai->get_current_ipk($pb);
             $this->view->d_cuti = $cuti->get_cuti($this->kd_user,$pb);
+            if($role==3) $this->view->d_cuti = $cuti->get_cuti(0,$pb);
             $this->view->d_rwt_beas = $pb->get_penerima_by_column($pb,$this->kd_user,'nip',true);
+            if($role==3) $this->view->d_rwt_beas = $pb->get_penerima_by_column($pb,0,'nip',true);
             $elem = $el->get_elem_per_pb($pb, false);
             $bea = $beaya->get_cost_per_pb($pb,false);
             $this->view->d_mas = $mas->get_masalah($pb);
@@ -84,9 +88,15 @@ class PenerimaController extends BaseController{
         $univ = new Universitas($this->registry);
         $st = new SuratTugas($this->registry);
         $sts = new Status();
+        $role = Session::get('role');
         $this->view->th_masuk = $st->get_list_th_masuk();
-        $this->view->univ = $univ->get_univ($this->kd_user);
-        $this->view->d_pb_all = $pb->get_penerima($this->kd_user);
+        if($role==2){
+            $this->view->univ = $univ->get_univ($this->kd_user);
+            $this->view->d_pb_all = $pb->get_penerima($this->kd_user);
+        }else{
+            $this->view->univ = $univ->get_univ();
+            $this->view->d_pb_all = $pb->get_penerima();
+        }
         $this->view->d_sts = $sts->get_status();
         /**start paging**/
         $url = 'penerima/datapb';
@@ -94,7 +104,11 @@ class PenerimaController extends BaseController{
         $this->view->paging = new Paging($url, $batas, $halaman);
         $this->view->jmlData = count($this->view->d_pb_all);
         $posisi = $this->view->paging->cari_posisi();
-        $this->view->d_pb = $pb->get_penerima($this->kd_user,$posisi,$batas);
+        if($role==2){
+            $this->view->d_pb = $pb->get_penerima($this->kd_user,$posisi,$batas);
+        }else{
+            $this->view->d_pb = $pb->get_penerima(0,$posisi,$batas);
+        }
         /**end paging**/
         $this->view->render('riwayat_tb/data_pb');
     }
@@ -899,10 +913,19 @@ class PenerimaController extends BaseController{
         $this->view->thn = '';
         $this->view->status = '';
         $pb = new Penerima($this->registry);
+        $role = Session::get('role');
         if($kd_univ==0 && $thn==0 && $status==0){
-            $this->view->d_pb = $pb->get_penerima($this->kd_user);
+            if($role==2){
+                $this->view->d_pb = $pb->get_penerima($this->kd_user);
+            }else{
+                $this->view->d_pb = $pb->get_penerima();
+            }
         }else{
-            $this->view->d_pb = $pb->get_penerima_filter($kd_univ, $thn, $status, $this->kd_user);
+            if($role==2){
+                $this->view->d_pb = $pb->get_penerima_filter($kd_univ, $thn, $status, $this->kd_user);
+            }else{
+                $this->view->d_pb = $pb->get_penerima_filter($kd_univ, $thn, $status, $this->kd_user);
+            }
         }
         
         if($kd_univ!=0){
@@ -935,11 +958,13 @@ class PenerimaController extends BaseController{
         $mas = new MasalahPenerima($this->registry);
         $pemb = new PemberiBeasiswa();
         $beaya = new Biaya();
-        
+        $role = Session::get('role');
         $pb->set_kd_pb($id);
         $this->view->d_pb = $pb->get_penerima_by_id($pb,$this->kd_user);
+        if($role==3) $this->view->d_pb = $pb->get_penerima_by_id($pb);
         $st->set_kd_st($this->view->d_pb->get_st());
         $this->view->d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
+        if($role==3) $this->view->d_st = $st->get_surat_tugas_by_id($st);
         $pemb = $pemb->get_by_id($this->view->d_st->get_pemberi());
         $this->view->d_pemb = $pemb->nama_pemberi;
         $this->view->d_bank = $bank->get_bank_id($this->view->d_pb->get_bank());
@@ -951,7 +976,9 @@ class PenerimaController extends BaseController{
         $this->view->d_nil = $nilai->get_nilai($pb);
         $this->view->d_cur_ipk = $nilai->get_current_ipk($pb);
         $this->view->d_cuti = $cuti->get_cuti($this->kd_user,$pb);
+        if($role==3) $this->view->d_cuti = $cuti->get_cuti(0,$pb);
         $this->view->d_rwt_beas = $pb->get_penerima_by_column($pb,$this->kd_user,'nip',true);
+        if($role==0) $this->view->d_rwt_beas = $pb->get_penerima_by_column($pb,0,'nip',true);
         $elem = $el->get_elem_per_pb($pb, false);
         $bea = $beaya->get_cost_per_pb($pb,false);
         $this->view->d_mas = $mas->get_masalah($pb);

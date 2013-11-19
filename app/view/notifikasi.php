@@ -54,9 +54,11 @@
                 var jatuh_tempo = data_notif[i].tgl+" "+(data_notif[i].bulan).substr(0,3)+" "+data_notif[i].tahun
                 if(data_notif[i].jenis==='buku'){
                     if(data_notif[i].bulan=='ganjil'){
-                        jatuh_tempo = "Semester Ganjil "+data_notif[i].tahun
+//                        jatuh_tempo = "Semester Ganjil "+data_notif[i].tahun
+                        jatuh_tempo = "1 Sep "+data_notif[i].tahun
                     }else{
-                        jatuh_tempo = "Semester Genap "+data_notif[i].tahun
+//                        jatuh_tempo = "Semester Genap "+data_notif[i].tahun
+                        jatuh_tempo = "1 Mar "+data_notif[i].tahun
                     }
                 }
                 var bul_sem = data_notif[i].jatuh_tempo; //bulan untuk semester
@@ -169,11 +171,11 @@
     }
     
     var add_keyframe = function(num_elemen){
-        var div = split_persen(num_elemen); 
-        var cssAnimation = document.createElement('style');
+        var div = split_persen(num_elemen); //persen per grup item
+        var cssAnimation = document.createElement('style'); //menciptakan tag style
         cssAnimation.type = 'text/css';
         var persen = 0;
-        var step_frame = Math.floor(div/5);
+        var step_frame = Math.floor(div/5); //step per frame, dibagi 5 frame animasi per grup
         for(var i=0;i<num_elemen;i++){
             var order = num_to_text(i+1);
             var frame_one = i*div;

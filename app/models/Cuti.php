@@ -25,7 +25,7 @@ class Cuti{
         $this->_db = $registry->db;
     }
     
-    public function get_cuti($kd_user=1,Penerima $pb=null){
+    public function get_cuti($kd_user=0,Penerima $pb=null){
         $sql = "SELECT a.KD_CUTI as KD_CUTI,a.KD_PB as KD_PB,";
         if(!is_null($pb)){
             $sql .= " b.NM_PB as KD_PB,";
@@ -53,9 +53,10 @@ class Cuti{
                     LEFT JOIN r_fakul e ON d.KD_FAKUL=e.KD_FAKUL
                     LEFT JOIN r_univ f ON e.KD_UNIV=f.KD_UNIV ";
         if(!is_null($pb)){
-            $sql .= " WHERE a.KD_PB=".$pb->get_kd_pb()." AND f.KD_USER=".$kd_user;
+            $sql .= " WHERE a.KD_PB=".$pb->get_kd_pb();
+            if($kd_user!=0) $sql .= " AND f.KD_USER=".$kd_user;
         }else{
-            $sql .= " WHERE  f.KD_USER=".$kd_user;
+            if($kd_user!=0)  $sql .= " WHERE  f.KD_USER=".$kd_user;
         }
 //        echo $sql;
         $result = $this->_db->select($sql);

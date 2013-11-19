@@ -38,12 +38,14 @@ class Penerima {
         $this->registry = $registry;
     }
 
-    public function get_penerima($kd_user=1,$posisi=null,$batas=null){
+    public function get_penerima($kd_user=0,$posisi=null,$batas=null){
         $sql = "SELECT * FROM ".$this->_tb_penerima;
         $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
-                LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV
-                WHERE d.KD_USER=".$kd_user;
+                LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV";
+        if($kd_user!=0){
+            $sql .= " WHERE d.KD_USER=".$kd_user;
+        }        
         if(!is_null($posisi)){
             $sql .= " LIMIT ".$posisi.",".$batas;
         }
@@ -266,7 +268,7 @@ class Penerima {
         return $data;
     }
     
-    public function get_penerima_by_column($pb = Penerima, $kd_user=1, $cat="",$info = false){
+    public function get_penerima_by_column($pb = Penerima, $kd_user=0, $cat="",$info = false){
         $sql = "SELECT a.KD_PB as KD_PB,";
         if($info){
             $sql .= "CONCAT(b.NO_ST,',',b.TGL_ST,',',b.THN_MASUK) as KD_ST,
@@ -306,9 +308,9 @@ class Penerima {
 //        }
         if($cat=='nip'){
             $sql .= "WHERE a.NIP_PB =".$pb->get_nip();
-            $sql .= " AND g.KD_USER=".$kd_user;
+            if($kd_user!=0) $sql .= " AND g.KD_USER=".$kd_user;
         }else{
-            $sql .= " WHERE g.KD_USER=".$kd_user;
+            if($kd_user!=0) $sql .= " WHERE g.KD_USER=".$kd_user;
         }
         
         $result = $this->db->select($sql);
@@ -559,7 +561,7 @@ class Penerima {
         return $data;
     }
     
-    public function get_penerima_filter($univ, $thn_masuk, $status, $kd_user, $posisi=null, $batas=null){
+    public function get_penerima_filter($univ, $thn_masuk, $status, $kd_user=0, $posisi=null, $batas=null){
         $sql = "SELECT a.KD_PB as KD_PB,";
         $sql .= "a.KD_ST as KD_ST,
             a.KD_JUR as KD_JUR,
@@ -591,21 +593,28 @@ class Penerima {
             LEFT JOIN r_bank e ON a.KD_BANK=e.KD_BANK 
             LEFT JOIN r_strata h ON c.KD_STRATA=h.KD_STRATA ";
         if($univ==0 && $thn_masuk==0 &&$status!=0){
-            $sql .= "WHERE a.KD_STS_TB=".$status." AND g.KD_USER=".$kd_user;
+            $sql .= "WHERE a.KD_STS_TB=".$status;
+            if($kd_user!=0) $sql .=" AND g.KD_USER=".$kd_user;
         }else if($univ==0 && $thn_masuk!=0 &&$status!=0){
-            $sql .= "WHERE b.THN_MASUK=".$thn_masuk." AND a.KD_STS_TB=".$status." AND g.KD_USER=".$kd_user;
+            $sql .= "WHERE b.THN_MASUK=".$thn_masuk." AND a.KD_STS_TB=".$status;
+            if($kd_user!=0) $sql .=" AND g.KD_USER=".$kd_user;
         }else if($univ!=0 && $thn_masuk!=0 &&$status!=0){
-            $sql .= "WHERE g.KD_UNIV=".$univ." AND b.THN_MASUK=".$thn_masuk." AND a.KD_STS_TB=".$status." AND g.KD_USER=".$kd_user;
+            $sql .= "WHERE g.KD_UNIV=".$univ." AND b.THN_MASUK=".$thn_masuk." AND a.KD_STS_TB=".$status;
+            if($kd_user!=0) $sql .=" AND g.KD_USER=".$kd_user;
         }else if($univ!=0 && $thn_masuk!=0 &&$status==0){
-            $sql .= "WHERE g.KD_UNIV=".$univ." AND b.THN_MASUK=".$thn_masuk." AND g.KD_USER=".$kd_user;
+            $sql .= "WHERE g.KD_UNIV=".$univ." AND b.THN_MASUK=".$thn_masuk;
+            if($kd_user!=0) $sql .=" AND g.KD_USER=".$kd_user;
         }else if($univ!=0 && $thn_masuk==0 &&$status==0){
-            $sql .= "WHERE g.KD_UNIV=".$univ." AND g.KD_USER=".$kd_user;
+            $sql .= "WHERE g.KD_UNIV=".$univ;
+            if($kd_user!=0) $sql .=" AND g.KD_USER=".$kd_user;
         }else if($univ==0 && $thn_masuk!=0 &&$status==0){
-            $sql .= "WHERE b.THN_MASUK=".$thn_masuk." AND g.KD_USER=".$kd_user;
+            $sql .= "WHERE b.THN_MASUK=".$thn_masuk;
+            if($kd_user!=0) $sql .=" AND g.KD_USER=".$kd_user;
         }else if($univ!=0 && $thn_masuk==0 &&$status!=0){
-            $sql .= "WHERE g.KD_UNIV=".$univ."  AND a.KD_STS_TB=".$status." AND g.KD_USER=".$kd_user;
+            $sql .= "WHERE g.KD_UNIV=".$univ."  AND a.KD_STS_TB=".$status;
+            if($kd_user!=0) $sql .=" AND g.KD_USER=".$kd_user;
         }else{
-            $sql .= " WHERE g.KD_USER=".$kd_user;
+            if($kd_user!=0) $sql .=" WHERE g.KD_USER=".$kd_user;
         }
         
         if(!is_null($posisi)){
