@@ -190,7 +190,7 @@ class CutiController extends BaseController{
             $pb->set_status(1);
         }
         $pb->update_penerima();
-        unlink($pb);
+//        unlink($pb);
         /*
          * end update status
          */
