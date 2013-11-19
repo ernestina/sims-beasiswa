@@ -108,7 +108,7 @@
                 var a = document.createElement('a');
                 var img = document.createElement('img');
                 
-                pic.style.backgroundImage='url(\'public/img/'+data_notif[i].foto_pic+'\')';
+                pic.style.backgroundImage='url(\'files/foto/'+data_notif[i].foto_pic+'\')';
                 
                 a.style.color = '#49afcd'
                 a.appendChild(document.createTextNode(judul_notif));
