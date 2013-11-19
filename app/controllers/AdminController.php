@@ -803,7 +803,9 @@ class AdminController extends BaseController {
                     $extension = $ext[count($ext) - 1];
 
                     if (in_array($extension, $allowedExts)) {
-
+                        $img_small = new ResizeImage($_FILES["upload"]["tmp_name"]);
+                        $img_small->resizeTo(64, $resizeOption = 'maxwidth');
+                        $img_small->saveImage("files/foto/" . $_POST['nip'] . "_small." . $extension);
                         move_uploaded_file($_FILES["upload"]["tmp_name"], "files/foto/" . $_POST['nip'] . "." . $extension);
                     } else {
                         
@@ -867,8 +869,10 @@ class AdminController extends BaseController {
                         $ext = explode('.', $_FILES['upload']['name']);
                         $extension = $ext[count($ext) - 1];
 
-                        if (in_array($extension, $allowedExts)) {
-
+                        if (in_array($extension, $allowedExts)) {                       
+                            $img_small = new ResizeImage($_FILES["upload"]["tmp_name"]);
+                            $img_small->resizeTo(64, $resizeOption = 'maxwidth');
+                            $img_small->saveImage("files/foto/" . $_POST['nip'] . "_small." . $extension);
                             move_uploaded_file($_FILES["upload"]["tmp_name"], "files/foto/" . $_POST['nip'] . "." . $extension);
                         } else {
                             
@@ -903,8 +907,11 @@ class AdminController extends BaseController {
                         $extension = $ext[count($ext) - 1];
 
                         if (in_array($extension, $allowedExts)) {
-
+                            $img_small = new ResizeImage($_FILES["upload"]["tmp_name"]);
+                            $img_small->resizeTo(64, $resizeOption = 'maxwidth');
+                            $img_small->saveImage("files/foto/" . $_POST['nip'] . "_small." . $extension);
                             move_uploaded_file($_FILES["upload"]["tmp_name"], "files/foto/" . $_POST['nip'] . "." . $extension);
+                            
                         } else {
                             
                         }
