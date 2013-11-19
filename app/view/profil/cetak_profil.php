@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>daftar_penerima_beasiswa_<?php echo Tanggal::getTimeSekarang(); ?></title>   
+        <title>profil_pb_<?php echo $this->d_pb->get_nip(); ?></title>   
         <style>
             td, th {
 /*                border: 1px solid black;*/
@@ -27,7 +27,7 @@
             h4 {
                 font-style: bold;
                 color:blue;
-                margin:0px;
+                margin: 0;
                 border-bottom: 1px solid background;
             }
             </style>
@@ -61,7 +61,8 @@
         <tr><td width="50%">
                 <table>
                     <tr><td width ="25%"></td><td width ="5%"></td><td width ="60%"></td></tr>
-                    <tr><td colspan="3"><h3>INFORMASI PEGAWAI :</h3></td></tr>
+                    <tr><td colspan="3"><h3>INFORMASI PENERIMA BEASISWA :</h3></td></tr>
+                    <tr><td colspan="3"><h4>INFORMASI PEGAWAI :</h4></td></tr>
                     <tr><td>Nama</td><td> : </td><td><?php echo $this->d_pb->get_nama();?></td></tr>
                     <tr><td>NIP</td><td> : </td><td><?php echo $this->d_pb->get_nip();?></td></tr>
                     <tr><td>Jenis Kelamin</td><td> : </td><td><?php echo ($this->d_pb->get_jkel()==1)?'Laki-laki':'Perempuan';?></td></tr>
@@ -77,7 +78,7 @@
                     <tr><td>Jurusan</td><td> : </td><td><?php echo $this->d_jur->get_nama();?></td></tr>
                     <tr><td>Tahun Masuk</td><td> : </td><td><?php echo $this->d_st->get_th_masuk();?></td></tr>
                     <tr><td>Status Tugas Belajar</td><td> : </td><td><?php echo StatusPB::status_int_string($this->d_pb->get_status());?></td></tr>
-                    <tr><td colspan="2">SURAT TUGAS :</td></tr>
+                    <tr><td colspan="3"><h4>SURAT TUGAS :</h4></td></tr>
                     <tr><td>Nomor</td><td> : </td><td><?php echo $this->d_st->get_nomor();?></td></tr>
                     <tr><td>Tanggal</td><td> : </td><td><?php echo Tanggal::tgl_indo($this->d_st->get_tgl_st());?></td></tr>
                     <tr><td>Tanggal Mulai</td><td> : </td><td><?php echo Tanggal::tgl_indo($this->d_st->get_tgl_mulai());?></td></tr>
@@ -100,7 +101,7 @@
         <tr><td colspan="2">
                 <table width="50%">
                     <tr><td colspan="3"><h4>SKRIPSI/TESIS</h4></td></tr>
-                    <tr><td width="25%">Judul</td><td width="5%"> : </td><td width="60%"><?php echo $this->d_pb->get_skripsi()!=''?$this->d_pb->get_skripsi():'belum terdapat judul tugas akhir';?></td></tr>
+                    <tr><td width="25%" valign="top">Judul</td><td width="5%" valign="top"> : </td><td width="60%" valign="top"><?php echo $this->d_pb->get_skripsi()!=''?$this->d_pb->get_skripsi():'belum terdapat judul tugas akhir';?></td></tr>
                 </table>
             </td></tr>
         <tr><td width="50%"><h4>RIWAYAT IPK</h4></td><td width="50%"><h4>RIWAYAT PERMASALAHAN</h4></td></tr>
