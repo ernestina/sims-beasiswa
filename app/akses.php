@@ -243,7 +243,8 @@ $akses['Penerima'] = array(
                 'filter_pb',
                 'cari',
                 'set_status_lulus',
-                'cetak_daftar_penerima'
+                'cetak_daftar_penerima',
+                'cetak_profil'
                 );			
 /*
  * notifikasi

@@ -921,6 +921,72 @@ class PenerimaController extends BaseController{
         }
         $this->view->load('riwayat_tb/cetak_daftar_penerima');
     }
+    
+    public function cetak_profil($id){
+        $pb = new Penerima($this->registry); //mendapatkan informasi pb
+        $st = new SuratTugas($this->registry); //mendapatkan informasi surat tugas
+        $el = new ElemenBeasiswa($this->registry); //mendapatkan pembayaran
+        $bank = new Bank($this->registry); //mendapatkan nama bank
+        $jst = new JenisSuratTugas($this->registry); //mendapatkan jenis surat tugas
+        $jur = new Jurusan($this->registry);
+        $univ = new Universitas($this->registry);
+        $nilai = new Nilai($this->registry);
+        $cuti = new Cuti($this->registry);
+        $mas = new MasalahPenerima($this->registry);
+        $pemb = new PemberiBeasiswa();
+        $beaya = new Biaya();
+        
+        $pb->set_kd_pb($id);
+        $this->view->d_pb = $pb->get_penerima_by_id($pb,$this->kd_user);
+        $st->set_kd_st($this->view->d_pb->get_st());
+        $this->view->d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
+        $pemb = $pemb->get_by_id($this->view->d_st->get_pemberi());
+        $this->view->d_pemb = $pemb->nama_pemberi;
+        $this->view->d_bank = $bank->get_bank_id($this->view->d_pb->get_bank());
+        $jur->set_kode_jur($this->view->d_pb->get_jur());
+        $this->view->d_jur = $jur->get_jur_by_id($jur);
+        $jst->set_kode($this->view->d_st->get_jenis_st());
+        $this->view->d_jst = $jst->get_jst_by_id($jst);
+        $this->view->d_univ = $univ->get_univ_by_jur($this->view->d_jur->get_kode_jur());
+        $this->view->d_nil = $nilai->get_nilai($pb);
+        $this->view->d_cur_ipk = $nilai->get_current_ipk($pb);
+        $this->view->d_cuti = $cuti->get_cuti($this->kd_user,$pb);
+        $this->view->d_rwt_beas = $pb->get_penerima_by_column($pb,$this->kd_user,'nip',true);
+        $elem = $el->get_elem_per_pb($pb, false);
+        $bea = $beaya->get_cost_per_pb($pb,false);
+        $this->view->d_mas = $mas->get_masalah($pb);
+        $d_bea = array();
+        /*
+            * sementara versi dummy dulu ye :p
+            */
+        foreach($elem as $v){
+            $d = new BiayaPenerimaBeasiswa();
+            $is_jadup = ($v->get_kd_r()=='tunjangan hidup');
+            $is_buku = ($v->get_kd_r()=='buku');
+            $nama = $v->get_kd_r();
+            if($is_jadup){
+                $nama .= " ".$v->get_bln()." ".$v->get_thn();
+            }
+            if($is_buku){
+                $bulan = Tanggal::bulan_num($v->get_bln());
+                $bulan = ($bulan==1)?'ganjil':'genap';
+                $nama .= " semester ".$bulan." ".$v->get_thn();
+            }
+            $d->set_nama_biaya($nama);
+            $d->set_jumlah_biaya($v->get_total_bayar());
+            $d_bea[] = $d;
+        }
+
+        foreach($bea as $v){
+            $d = new BiayaPenerimaBeasiswa();
+            $d->set_nama_biaya($v->nama_tagihan);
+            $d->set_jumlah_biaya($v->biaya_per_pegawai);
+            $d_bea[] = $d;
+        }
+        $this->view->d_bea = $d_bea;
+        
+        $this->view->load('profil/cetak_profil');
+    }
 
     public function __destruct() {
         parent::__destruct();

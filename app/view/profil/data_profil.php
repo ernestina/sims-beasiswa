@@ -3,11 +3,13 @@
  
   <div id="top">
   <!--level1: Profil Penerima Beasiswa-->
+  <div>
   <?php if(Session::get('role')==2){?>
     <input style="float:right"class="sukses" id="bt_edit" type="button" value="UBAH"  style="margin-top:20px"/>
+    <button onClick="cetak_profil('<?php echo $this->d_pb->get_kd_pb();?>')" style="margin-right:20px"><i class="icon-print icon-white"></i>  CETAK</button>
 <?php } ?>
 	<h1>PROFIL PENERIMA BEASISWA</h1>
-
+  </div></br>
 	<fieldset><legend>Profil Penerima Beasiswa</legend>
 		<div class="foto">
 			<img class="frame" src="<?php 
@@ -235,6 +237,16 @@ $(function(){
         window.location.href="<?php echo URL;?>penerima/editpb/<?php echo $this->d_pb->get_kd_pb();?>";
     })
 })
+
+function cetak_profil(kd_pb){
+    var url = "<?php echo URL;?>penerima/cetak_profil/"+kd_pb;;
+    var w = 800;
+    var h = 500;
+    var left = (screen.width/2)-(w/2);
+    var top = (screen.height/2)-(h/2);
+    var title = "tampilan transkrip";
+    window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+}
 
 function view_file(file,dokumen){
     var url = '';
