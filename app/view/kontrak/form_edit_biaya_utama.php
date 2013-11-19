@@ -24,6 +24,8 @@
         <li><button type="submit" name="simpan" class="sukses" onClick="formSubmit();"/><i class="icon-ok icon-white"></i>Simpan</button></li>
         <li><button type="reset" name="batal" id="batal" class="normal" onClick="location.href='<?php echo URL . 'kontrak/biaya/'.$this->kontrak->kd_kontrak; ?>'"><i class="icon-remove icon-white"></i>Batal</li>
     </ul>
+	<input type="hidden" name="max_peg" id="max_peg" value="<?php echo $this->kontrak->jml_pegawai_kontrak; ?>">
+	<input type="hidden" name="min_tgl" id="min_tgl" value="<?php echo $this->kontrak->tgl_kontrak; ?>">
 
 </form>
 
