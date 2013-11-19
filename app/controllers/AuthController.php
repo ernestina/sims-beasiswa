@@ -44,6 +44,7 @@ class AuthController extends BaseController {
             Session::set('kd_user', $res[3]);
             Session::set('univ',$d_univ);
             Session::set('jur',$d_jur);
+			ClassLog::write_log("login","login","user ".$user." role:".$res[1]);
             header('location:'.URL);
         }else if((int) $res[0] ==0){
             $this->view->error = "user tidak ditemukan!";
