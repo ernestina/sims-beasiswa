@@ -84,7 +84,7 @@ class Notifikasi{
                                 $notif->set_tahun_masuk($d_proses->get_tahun_masuk());
                                 $notif->set_univ($d_proses->get_univ());
                                 $pic = $notif->get_pic();
-//                                echo $pic['kode']." ".$kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+//                                echo $pic['foto']." ".$kd_st."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
                                 $this->_notif_data[] = $notif;
 //                            }
 //                        }else{
@@ -226,7 +226,7 @@ class Notifikasi{
             e.THN_MASUK as THN_MASUK,
             i.NM_USER as NM_USER,
             i.KD_USER as KD_USER,
-            i.FOTO_USER as FOTO,
+            i.FOTO_USER as FOTO_USER,
             e.TGL_SEL_ST as TGL_SEL_ST,
             MONTH(NOW()) as CURR_BULAN,
             'jadup' as JENIS
@@ -490,7 +490,7 @@ class Notifikasi{
             e.THN_MASUK as THN_MASUK,
             i.NM_USER as NM_USER,
             i.KD_USER as KD_USER,
-            i.FOTO_USER as FOTO,
+            i.FOTO_USER as FOTO_USER,
             MONTH(NOW()) as CURR_BULAN,
             'buku' as JENIS
             FROM d_elemen_beasiswa a
