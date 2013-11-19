@@ -220,8 +220,9 @@
 		
 	</fieldset>
 </div> <!--div level 4-->
-<input class="sukses" id="bt_edit" type="button" value="UBAH"  style="margin-top:20px"/>
-
+<?php if(Session::get('role')==2){?>
+    <input class="sukses" id="bt_edit" type="button" value="UBAH"  style="margin-top:20px"/>
+<?php } ?>
 
 </div> <!--top-->
 </body>
@@ -245,6 +246,9 @@ function view_file(file,dokumen){
             break;
         case 'spmt':
             url = "<?php echo URL;?>penerima/view_spmt/"+file;
+            break;
+        case 'cuti':
+            url = "<?php echo URL;?>cuti/view_sc/"+file;
             break;
     }
     

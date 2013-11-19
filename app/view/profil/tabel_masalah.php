@@ -3,7 +3,8 @@
 					<th width="5%">No</th>
 					<th width="45%">Uraian</th>
 					<th width="40%">Sumber</th>
-                    <th width="10%">Aksi</th>
+                                        <?php if(Session::get('role')==2){?>
+                    <th width="10%">Aksi</th><?php }?>
 				</thead>
 				<tbody>
                                     <?php 
@@ -14,8 +15,9 @@
 						<td style="text-align: center"><?php echo $no;?></td>
 						<td><?php echo $v->get_uraian();?></td>
 						<td><?php echo $v->get_sumber_masalah();?></td>
+                                                <?php if(Session::get('role')==2){?>
                         <td style="text-align: center"><a href="<?php echo URL;?>penerima/delmas/<?php echo $v->get_kode().'/'.$this->d_pb->get_kd_pb().'/'.$this->url; ?>" title="hapus"><i class="icon-trash" onClick="return del_mas('<?php echo $this->d_pb->get_nama();?>')"></i></a>
-                        </td>
+                        </td><?php }?>
 					</tr>
                                     <?php 
                                             $no++;

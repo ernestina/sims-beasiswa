@@ -4,7 +4,8 @@
 					<th width="50%">Keterangan</th>
 					<th width="15%">IP</th>
 					<th width="25%">File</th>
-                    <th width="5%">Aksi</th>
+                                        <?php if(Session::get('role')==2){?>
+                    <th width="5%">Aksi</th><?php }?>
 				</thead>
 				<tbody style="text-align: center">
                                     <?php 
@@ -16,8 +17,9 @@
 						<td style="text-align: left"><?php echo "Semester ".$v->get_semester()." dengan IPS ".($v->get_ips()); ?></td>
 						<td><?php echo $v->get_ipk();?></td>
 						<td><input type="button" value="Transkrip" id="uplod_ip" name="uplod_ip" onClick="view('<?php echo $v->get_file();?>');"/></td>
+                                                <?php if(Session::get('role')==2){?>
                                                 <td><a href="<?php echo URL;?>penerima/delnilai/<?php echo $v->get_kode().'/'.$this->d_pb->get_kd_pb().'/'.$this->url; ?>" title="hapus"><i class="icon-trash" onClick="return del_nil('<?php echo $this->d_pb->get_nama();?>','<?php echo $v->get_semester();?>')"></i></a>
-                                                    </td>
+                                                    </td> <?php } ?>
 					</tr>
                                     <?php 
                                             $no++;

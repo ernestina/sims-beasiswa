@@ -20,7 +20,7 @@
                         <td><?php echo $v->get_prd_mulai();?></td>
 						<td><?php echo $v->get_prd_selesai();?></td>
                         <td style="text-align: left"><?php echo $v->get_jenis_cuti();?></td>
-						<td style="text-align: left"><?php echo $no;?></td>
+						<td style="text-align: left"><?php echo '<a style="cursor:pointer" onClick=view_file(\''.$v->get_file().'\',\'cuti\')>'.$v->get_file().'</a>';?></td>
 					</tr>
                                         <?php $no++; } ?>
 				</tbody>
