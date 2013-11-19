@@ -33,6 +33,7 @@
 <!--            <label>Jumlah dibayar</label><input type="text" size="14">-->
 
     <input type="hidden" id="kd_biaya" name="kd_biaya" value="<?php echo $this->biaya->kd_biaya; ?>">
+	<input type="hidden" id="kd_kontrak" name="kd_kontrak" value="<?php echo $this->biaya->kd_kontrak; ?>">
     <input type="hidden" name="file_sp2d_lama" id="file_sp2d_lama" value="<?php echo $this->biaya->file_sp2d; ?>">
     <ul class="inline" style="float: right; margin-right: 20px">
                 <li><button type="submit" name="simpan" class="sukses" onClick="formSubmit();"/><i class="icon-ok icon-white"></i>Simpan</button></li>

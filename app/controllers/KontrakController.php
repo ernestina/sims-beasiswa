@@ -213,8 +213,6 @@ class KontrakController extends BaseController {
 		}
         if (isset($_POST['rekam_kontrak'])) {
             $kontrak = new Kontrak();
-            //sleep(5);
-            //$kontrak->kd_kontrak =$_POST[''];
             $kontrak->no_kontrak = $_POST['nomor'];
             $kontrak->kd_jurusan = $_POST['jur'];
             $kontrak->tgl_kontrak = date('Y-m-d', strtotime($_POST['tanggal']));
@@ -224,15 +222,6 @@ class KontrakController extends BaseController {
             $kontrak->lama_semester_kontrak = $_POST['lama_semester'];
             $kontrak->kontrak_lama = $_POST['kontrak_lama'];
 
-            //print_r($_POST['nomor']);
-            //print_r($_POST['tanggal']);
-            //print_r($_POST['jur']);
-            //print_r($_POST['jml_peg']);
-//            print_r($_POST['lama_semester']);
-//            print_r($_POST['tahun_masuk']);
-//            print_r($_POST['nilai_kontrak']);
-//            print_r($_POST['kontrak_lama']);
-//            print_r($_FILES['fupload']);
 
             $upload = new Upload();
             $upload->init('fupload');
@@ -242,6 +231,7 @@ class KontrakController extends BaseController {
             $kontrak->file_kontrak = $upload->getFileTo();
             //var_dump($kontrak);
             $kontrak->add($kontrak);
+			ClassLog::write_log("kontrak","rekam kontrak","kontrak no.".$kontrak->no_kontrak);
         }
     }
 
@@ -395,6 +385,7 @@ class KontrakController extends BaseController {
             }
             //print_r($kontrak->kd_kontrak);
             $kontrak->update($kontrak);
+			ClassLog::write_log("kontrak","ubah kontrak","kontrak no.".$kontrak->no_kontrak);
         }
     }
 
@@ -414,35 +405,7 @@ class KontrakController extends BaseController {
             if (file_exists($file)) {
                 unlink($file);
             }
-            // $biaya = new Biaya();
-            // $data_biaya = $biaya->get_biaya_by_kontrak($id);
-            // foreach ($data_biaya as $del) {
-                // $biaya->deleteBiaya($del->kd_biaya);
-                // $file_bast = "files/bast/" . $del->file_bast;
-                // $file_bap = "files/bap/" . $del->file_bap;
-                // $file_ring_kon = "files/ringkasan_kontrak/" . $del->file_ring_kontrak;
-                // $file_kuitansi = "files/kuitansi/" . $del->file_kuitansi;
-                // $file_sp2d = "files/sp2d/" . $del->file_sp2d;
-                // //echo $file;
-                // if (file_exists($file_bast)) {
-                    // unlink($file_bast);
-                // }
-                // if (file_exists($file_bap)) {
-                    // unlink($file_bap);
-                // }
-                // if (file_exists($file_ring_kon)) {
-                    // unlink($file_ring_kon);
-                // }
-                
-                // if (file_exists($file_kuitansi)) {
-                    // unlink($file_kuitansi);
-                // }
-                // if (file_exists($file_sp2d)) {
-                    // unlink($file_sp2d);
-                // }
-            // }
-
-            //echo "berhasil hapus";
+            ClassLog::write_log("kontrak","hapus kontrak","kontrak no.".$data_kontrak->no_kontrak);
         }
         header("Location:" . URL . "kontrak/display");
     }
@@ -549,10 +512,9 @@ class KontrakController extends BaseController {
                         Validasi::validate_number($biaya->jmlh_pegawai_bayar) == TRUE &&
                         Validasi::validate_number($biaya->jumlah_biaya) == TRUE) {
                     $biaya->addBiaya($biaya);
+					ClassLog::write_log("kontrak","rekam biaya kontrak","kode biaya ".$biaya->kd_biaya."kode kontrak".$biaya->kd_kontrak);
                     //header('location:' . URL . 'kontrak/biaya/' . $biaya->kd_kontrak);
-                    $url = URL . 'kontrak/biaya/' . $biaya->kd_kontrak;
-                    //header("refresh:1;url=" . $url);
-                    //echo "Data biaya berhasil disimpan.";                   
+                    $url = URL . 'kontrak/biaya/' . $biaya->kd_kontrak;                  
                     echo '<script> alert("Data biaya berhasil disimpan") </script>';
                     echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
                 } else {
@@ -656,11 +618,10 @@ class KontrakController extends BaseController {
                         Validasi::validate_number($biaya->jmlh_pegawai_bayar) == TRUE &&
                         Validasi::validate_number($biaya->jumlah_biaya) == TRUE) {
                     $biaya->updateBiaya($biaya);
-                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
-                    //header("refresh:1;url=" . $url);
-                    //echo "Perubahan data biaya berhasil disimpan.";
-                    //header('location:' . URL . 'kontrak/editBiaya/' . $biaya->kd_biaya);
-                    echo '<script> alert("Perubahan data biaya berhasil disimpan") </script>';
+					ClassLog::write_log("kontrak","ubah biaya utama kontrak","kode biaya ".$biaya->kd_biaya."kode kontrak".$biaya->kd_kontrak);
+                    //$url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
+					$url = URL . 'kontrak/biaya/' . $biaya->kd_kontrak;
+                    echo '<script> alert("Data biaya berhasil disimpan") </script>';
                     echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
                 } else {
                     $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
@@ -672,6 +633,7 @@ class KontrakController extends BaseController {
                 }
             } else {
                 $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya;
+				
                 //header("refresh:1;url=" . $url);
                 //echo "Isian form belum lengkap.";
                 //header('location:' . URL . 'kontrak/editBiaya/' . $biaya->kd_biaya);
@@ -720,6 +682,7 @@ class KontrakController extends BaseController {
         if (isset($_POST['update_tagihan'])) {
             //sleep(1);
             $biaya = new Biaya();
+			$biaya->kd_kontrak = $_POST['kd_kontrak'];
             $biaya->kd_biaya = $_POST['kd_biaya'];
             $biaya->no_bast = $_POST['no_bast'];
             $biaya->tgl_bast = date('Y-m-d', strtotime($_POST['tgl_bast']));
@@ -857,8 +820,11 @@ class KontrakController extends BaseController {
 						$penerima_biaya->add($penerima_biaya);
 					}
 					
-                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya."/1";
-                    echo '<script> alert("Perubahan data tagihan berhasil disimpan") </script>';
+					ClassLog::write_log("kontrak","simpan tagihan biaya kontrak","kode biaya ".$biaya->kd_biaya."kode kontrak".$biaya->kd_kontrak);
+					
+                    //$url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya."/1";
+					$url = URL . 'kontrak/biaya/' . $biaya->kd_kontrak;
+                    echo '<script> alert("Data tagihan berhasil disimpan") </script>';
                     echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
                 
             } else {
@@ -878,6 +844,7 @@ class KontrakController extends BaseController {
         //sleep(1);
         if (isset($_POST['update_pembayaran'])) {
             $biaya = new Biaya();
+			$biaya->kd_kontrak = $_POST['kd_kontrak'];
             $biaya->kd_biaya = $_POST['kd_biaya'];
             $biaya->no_sp2d = $_POST['no_sp2d'];
             $biaya->tgl_sp2d = date('Y-m-d', strtotime($_POST['tgl_sp2d']));
@@ -918,8 +885,11 @@ class KontrakController extends BaseController {
 						}
                     }
                     $biaya->updatePembayaranTagihan($biaya);
-                    $url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya."/2";
-                    echo '<script> alert("Perubahan data Pembayaran tagihan berhasil disimpan") </script>';
+					ClassLog::write_log("kontrak","simpan pembayaran biaya kontrak","kode biaya ".$biaya->kd_biaya."kode kontrak".$biaya->kd_kontrak);
+					
+                    //$url = URL . 'kontrak/editBiaya/' . $biaya->kd_biaya."/2";
+					$url = URL . 'kontrak/biaya/' . $biaya->kd_kontrak;
+                    echo '<script> alert("Data Pembayaran tagihan berhasil disimpan") </script>';
                     echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
                 } else {
                     //header('location:' . URL . 'kontrak/editBiaya/'.$biaya->kd_biaya);
@@ -944,6 +914,8 @@ class KontrakController extends BaseController {
             $biaya = new Biaya();
             $data = $biaya->get_by_id($id);
             $biaya->deleteBiaya($id);
+			ClassLog::write_log("kontrak","hapus biaya kontrak","kode biaya ".$id."kode kontrak".$data->kd_kontrak);
+					
 
             //echo $data->kd_kontrak;
         }

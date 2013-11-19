@@ -7,7 +7,7 @@
 
 class ClassLog{
     
-    public static function write_log($modul,$aksi,$referensi){
+	public static function write_log($modul,$aksi,$referensi){
         $db = new Database();
         $pesan = "modul ".strtoupper($modul)." aksi ".strtoupper($aksi)." referensi ".$referensi;
         $ip = '';
@@ -29,7 +29,7 @@ class ClassLog{
         
         $now = date('Y-m-d h:i:s');
         $data = array(
-                'KD_USER'=>  Session::get('user'),
+                'USER'=>  Session::get('user'),
                 'AKTIFITAS_EL'=>$pesan,
                 'TIME_STAMP_EL'=>$now,
                 'IP_ADDRESS_EL'=>$ip

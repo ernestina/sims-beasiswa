@@ -10,12 +10,12 @@
     <!--    <input type="text" size="50" name="kontrak" id="kontrak" value="<? echo $this->kontrak->no_kontrak; ?>" readonly disabled>-->
     <label class="isian">Nama Biaya</label><input type="text" size="50" name="nama_biaya" id="nama_biaya" value="<?php echo $this->biaya->nama_biaya; ?>">
     <div id="wnama_biaya"></div>
-    <label class="isian">Biaya per Pegawai</label><input type="text" size="12" name="biaya_per_peg" id="biaya_per_peg" value="<?php echo $this->biaya->biaya_per_pegawai; ?>" maxlength="14">
-    <div id="wbiaya_per_peg"></div>
+	<label class="isian">Jumlah Biaya</label><input type="text" size="14" name="jml_biaya" id="jml_biaya" maxlength="14"  value="<?php echo $this->biaya->jml_biaya; ?>">
+    <div id="wjml_biaya"></div>
     <label class="isian">Jumlah Pegawai</label><input type="text" size="4" name="jml_peg" id="jml_peg" value="<?php echo $this->biaya->jml_pegawai_bayar; ?>">
     <div id="wjml_peg"></div>
-    <label class="isian">Jumlah Biaya</label><input type="text" size="14" name="jml_biaya" id="jml_biaya" maxlength="14" readonly value="<?php echo $this->biaya->jml_biaya; ?>">
-    <div id="wjml_biaya"></div>
+	<label class="isian">Biaya per Pegawai</label><input type="text" size="12" name="biaya_per_peg" id="biaya_per_peg" readonly value="<?php echo $this->biaya->biaya_per_pegawai; ?>" maxlength="14">
+    <div id="wbiaya_per_peg"></div>
     <label class="isian">Jadwal dibayarkan</label><input type="text" size="20" name="jadwal_bayar" id="jadwal_bayar" readonly value="<?php echo $this->biaya->jadwal_bayar; ?>">
     <div id="wjadwal_bayar"></div>
     <input type="hidden" id="kd_biaya" name="kd_biaya" value="<?php echo $this->biaya->kd_biaya; ?>">
@@ -39,11 +39,16 @@
                      
         //validasi inputan jumlah pegawai harus angka ketika diinput
         $('#jml_peg').keyup(function() {   
-            if(cekAngka($('#jml_peg').val())== false){
-                viewError('wjml_peg','Jumlah pegawai harus diinput angka.');
-            } else {
+            
                 removeError('wjml_peg');  
-            }         
+                if($('#biaya_per_peg').val!=""){
+                    removeError('wbiaya_per_peg');
+                }
+            
+
+			if($('#jml_peg').val()>$('#max_peg').val()){
+				$('#jml_peg').val($('#max_peg').val());
+			}
         });
         
         //menghilangkan class error ketika field diketik atau dipilih
@@ -56,7 +61,10 @@
         });
         
         $('#jml_biaya').keyup(function() {   
-            removeError('wjml_biaya');         
+            removeError('wjml_biaya');  
+            if($('#jml_peg').val!=""){
+                removeError('wbiaya_per_peg');
+            }
         });
         
         $('#jadwal_bayar').click(function() {   
@@ -64,12 +72,12 @@
         });
         
         //menampilkan nilai jumlah biaya secara otomatis     
-        if($('#biaya_per_peg').val!="" && $('#jml_peg').val!=""){
-            $('#biaya_per_peg').keyup(function() {   
-                $('#jml_biaya').val($('#biaya_per_peg').val() * $('#jml_peg').val());        
+        if($('#jml_biaya').val!="" && $('#jml_peg').val!=""){
+            $('#jml_biaya').keyup(function() {   
+                $('#biaya_per_peg').val($('#jml_biaya').val() / $('#jml_peg').val());        
             });
             $('#jml_peg').keyup(function() {   
-                $('#jml_biaya').val($('#biaya_per_peg').val() * $('#jml_peg').val());        
+                $('#biaya_per_peg').val($('#jml_biaya').val() / $('#jml_peg').val());       
             });
         }
         

@@ -10,7 +10,9 @@
         <label class="isian">Lama Semester</label><input type="text" size="4" readonly value="<?php echo $this->kontrak->lama_semester_kontrak; ?>" disabled>
     <!--    <label class="isian">Nilai Kontrak</label><input type="text" size="14" readonly value="<?php echo number_format($this->kontrak->nilai_kontrak); ?>" disabled>
         <label class="isian">Kontrak Lama</label><input type="text" size="40" readonly value="<?php echo $this->kon_lama; ?>" disabled>-->
-    </div>
+		<input type="hidden" name="max_peg" id="max_peg" value="<?php echo $this->kontrak->jml_pegawai_kontrak; ?>">
+		<input type="hidden" name="min_tgl" id="min_tgl" value="<?php echo $this->kontrak->tgl_kontrak; ?>">
+	</div>
     <br>
     <div id="tabs">
         <ul>
@@ -20,21 +22,21 @@
         </ul>
         <div id="tabs-1">
             <!--            <fieldset>-->
-            <form id="form_rekam_biaya" method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/rekamBiaya'; ?>" onSubmit="return cekField();;">
+            <form autocomplete="off" id="form_rekam_biaya" method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/rekamBiaya'; ?>" onSubmit="return cekField();;">
                 <input type="hidden" name="rekam_biaya" size="50">
 <!--                    <label class="isian">Nomor Kontrak*</label><input type="text" size="50" name="kontrak" id="kontrak" value="<? echo $this->kontrak->no_kontrak; ?>" readonly>-->
       <div class="kolom1">
 				<!--label class="isian">Kode Kontrak</label--><input type="hidden" size="50" name="kd_kontrak" id="kd_kontrak" value="<?php echo $this->kontrak->kd_kontrak; ?>" readonly >
                 <label class="isian">Nama Biaya*</label><input type="text" size="50" name="nama_biaya" id="nama_biaya">
                 <div id="wnama_biaya"></div>
-                <label class="isian">Biaya per Pegawai*</label><input type="text" size="12" name="biaya_per_peg" id="biaya_per_peg" maxlength="14">
-                <div id="wbiaya_per_peg"></div>
-                <label class="isian">Jumlah Pegawai*</label><input type="text" size="4" name="jml_peg" id="jml_peg" >
-                <div id="wjml_peg"></div>
-                <label class="isian">Jadwal dibayarkan*</label><input type="text" size="20" name="jadwal_bayar" id="jadwal_bayar" readonly>
-                <div id="wjadwal_bayar"></div>
-                <label class="isian">Total Biaya*</label><input type="text" size="14" name="jml_biaya" id="jml_biaya" maxlength="14" readonly>
+				<label class="isian">Jumlah Biaya*</label><input type="text" size="14" name="jml_biaya" id="jml_biaya" maxlength="14" >
                 <div id="wjml_biaya"></div>
+                <label class="isian">Jumlah Pegawai*</label><input type="text" size="4" name="jml_peg" id="jml_peg" max="3">
+                <div id="wjml_peg"></div>
+				<label class="isian">Biaya per Pegawai*</label><input type="text" size="12" name="biaya_per_peg" id="biaya_per_peg" maxlength="14" readonly>
+                <div id="wbiaya_per_peg"></div>
+                <label class="isian">Jadwal dibayarkan*</label><input type="text" size="20" name="jadwal_bayar" id="jadwal_bayar" readonly>
+                <div id="wjadwal_bayar"></div>   
                 <ul class="inline" style="float: right; margin-right: 20px">
                     <li><button type="submit" name="simpan" class="sukses" onClick="formSubmit();"><i class="icon-ok icon-white"></i>Simpan</button></li>
                     <li><button type="reset" name="batal" id="batal" class="normal" onClick="location.href='<?php echo URL . 'kontrak/biaya/'.$this->kontrak->kd_kontrak; ?>'"><i class="icon-remove icon-white"></i>Batal</li>
@@ -106,51 +108,54 @@
         
         //validasi inputan jumlah pegawai harus angka ketika diinput
         $('#jml_peg').keyup(function() {   
-            if(cekAngka($('#jml_peg').val())== false){
-                viewError('wjml_peg','Jumlah pegawai harus diinput angka.');
-            } else {
+            
                 removeError('wjml_peg');  
                 if($('#biaya_per_peg').val!=""){
-                    removeError('wjml_biaya');
+                    removeError('wbiaya_per_peg');
                 }
-            }         
+            
+
+			if($('#jml_peg').val()>$('#max_peg').val()){
+				$('#jml_peg').val($('#max_peg').val());
+			}
         });
         
         $('#nama_biaya').keyup(function() {   
             removeError('wnama_biaya');         
         });
         
-        $('#biaya_per_peg').keyup(function() {   
-            removeError('wbiaya_per_peg');  
+        $('#jml_biaya').keyup(function() {   
+            removeError('wjml_biaya');  
             if($('#jml_peg').val!=""){
-                removeError('wjml_biaya');
+                removeError('wbiaya_per_peg');
             }
         });
         
-        $('#jml_biaya').keyup(function() {   
-            removeError('wjml_biaya');         
+        $('#biaya_per_peg').keyup(function() {   
+            removeError('wbiaya_per_peg');         
         });
         
         $('#jadwal_bayar').click(function() {   
             removeError('wjadwal_bayar');         
         });
         
-        //menampilkan nilai jumlah biaya secara otomatis     
-        if($('#biaya_per_peg').val!="" && $('#jml_peg').val!=""){
-            $('#biaya_per_peg').keyup(function() {   
-                $('#jml_biaya').val($('#biaya_per_peg').val() * $('#jml_peg').val());        
+        //menampilkan nilai jumlah biaya per pegawai secara otomatis     
+        if($('#jml_biaya').val!="" && $('#jml_peg').val!=""){
+            $('#jml_biaya').keyup(function() {   
+                $('#biaya_per_peg').val($('#jml_biaya').val() / $('#jml_peg').val());        
             });
             $('#jml_peg').keyup(function() {   
-                $('#jml_biaya').val($('#biaya_per_peg').val() * $('#jml_peg').val());        
+                $('#biaya_per_peg').val($('#jml_biaya').val() / $('#jml_peg').val());       
             });
         }
         
         //menampilkan datepicker   
-        $(function() { 
+        $(function() { 	
             $("#jadwal_bayar").datepicker({
 				dateFormat: "dd-mm-yy",
                 changeMonth: true,
 				changeYear: true
+				
             }); 
         });
     })
