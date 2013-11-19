@@ -10,6 +10,7 @@ class elemenBeasiswaController extends BaseController {
     public function __construct($registry) {
         parent::__construct($registry);
     }
+	
 
     public function index() {
         $univ = new Universitas($this->registry);
@@ -351,6 +352,7 @@ class elemenBeasiswaController extends BaseController {
                         } //end if 4
                     } //end for
                 } //end if 3
+				ClassLog::write_log("elemen beasiswa","rekam jadup","kd_el.".$kd_elemen_beasiswa);
                 //display success message and redirect 
                 $url = URL . 'elemenBeasiswa/viewJadup';
                 echo '<script> alert("Data berhasil disimpan") </script>';
@@ -386,8 +388,12 @@ class elemenBeasiswaController extends BaseController {
             if (file_exists($file)) {
                 unlink($file);
             }
+			ClassLog::write_log("elemen beasiswa","hapus jadup","kd_el.".$id);
+			$url = URL . 'elemenBeasiswa/viewJadup';
+			echo '<script> alert("Data berhasil dihapus") </script>';
+			echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
         }
-        header('location:' . URL . 'elemenBeasiswa/viewJadup');
+
     }
 
     public function editJadup($id = null) {
@@ -515,7 +521,7 @@ class elemenBeasiswaController extends BaseController {
                     }
                     //}
                 }
-
+				ClassLog::write_log("elemen beasiswa","ubah jadup","kd_el.".$elem->get_kd_d()); 
                 //$url = URL . 'elemenBeasiswa/editJadup/' . $elem->get_kd_d();
 				$url = URL . 'elemenBeasiswa/viewJadup';
                 echo '<script> alert("Data berhasil disimpan") </script>';
@@ -654,8 +660,7 @@ class elemenBeasiswaController extends BaseController {
                         $penerima_elemen->add($penerima_elemen);
                     }
                 }
-
-//        
+        		ClassLog::write_log("elemen beasiswa","rekam uang buku","kd_el.".$kd_elemen_beasiswa);
                 //header('location:' . URL . 'elemenBeasiswa/viewUangBuku');
                 $url = URL . 'elemenBeasiswa/viewUangBuku';
                 echo '<script> alert("Data berhasil disimpan") </script>';
@@ -688,10 +693,13 @@ class elemenBeasiswaController extends BaseController {
             if (file_exists($file)) {
                 unlink($file);
             }
+			
+			ClassLog::write_log("elemen beasiswa","hapus uang buku","kd_el.".$id);
+			$url = URL . 'elemenBeasiswa/viewUangBuku';
+			echo '<script> alert("Data berhasil dihapus") </script>';
+			echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
         }
-        $url = URL . 'elemenBeasiswa/viewUangBuku';
-        echo '<script> alert("Data berhasil dihapus") </script>';
-        echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
+        
     }
 
     public function editUangBuku($id = null) {
@@ -793,10 +801,9 @@ class elemenBeasiswaController extends BaseController {
                     $penerima_elemen->kd_pb = $val;
                     $penerima_elemen->add($penerima_elemen);
                 }
-
+				ClassLog::write_log("elemen beasiswa","ubah uang buku","kd_el.".$elem->get_kd_d());
                 //header('location:' . URL . 'elemenBeasiswa/viewUangBuku');
                 $url = URL . 'elemenBeasiswa/viewUangBuku';
-				//$url = URL . 'elemenBeasiswa/editUangBuku/' . $elem->get_kd_d();
                 echo '<script> alert("Data berhasil disimpan") </script>';
                 echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
             } else {
@@ -1007,8 +1014,7 @@ class elemenBeasiswaController extends BaseController {
                         $penerima_elemen->add($penerima_elemen);
                     }
                 }
-
-//        
+				ClassLog::write_log("elemen beasiswa","ubah uang penelitian","kd_el.".$kd_elemen_beasiswa);
                 //header('location:' . URL . 'elemenBeasiswa/viewUangBuku');
                 $url = URL . 'elemenBeasiswa/viewSkripsi';
                 echo '<script> alert("Data berhasil disimpan") </script>';
@@ -1033,10 +1039,14 @@ class elemenBeasiswaController extends BaseController {
 
             $penerima_elemen = new PenerimaElemenBeasiswa();
             $penerima_elemen->delete($id);
+			
+			ClassLog::write_log("elemen beasiswa","hapus uang penelitian","kd_el.".$id);
+			$url = URL . 'elemenBeasiswa/viewSkripsi';
+			echo '<script> alert("Data berhasil dihapus") </script>';
+			echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
+			
         }
-        $url = URL . 'elemenBeasiswa/viewSkripsi';
-        echo '<script> alert("Data berhasil dihapus") </script>';
-        echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
+        
     }
 
     public function editSkripsi($id = null) {
@@ -1164,8 +1174,7 @@ class elemenBeasiswaController extends BaseController {
                     $penerima_elemen->kd_pb = $val;
                     $penerima_elemen->add($penerima_elemen);
                 }
-
-               
+				ClassLog::write_log("elemen beasiswa","ubah uang penelitian","kd_el.".$elem->get_kd_d());				
                 //$url = URL . 'elemenBeasiswa/editSkripsi/' . $elem->get_kd_d();
 				$url = URL . 'elemenBeasiswa/viewSkripsi';
                 echo '<script> alert("Data berhasil disimpan") </script>';

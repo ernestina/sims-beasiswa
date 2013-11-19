@@ -51,7 +51,8 @@ if($this->cur_page !="" && $this->page_num!="") echo "HALAMAN ".$this->cur_page.
         echo "<td>" . $val->get_thn() . "</td>";
         echo "<td style=\"text-align: right\">" . number_format($val->get_total_bayar()) . "</td>";
 		if(Session::get('role')==2){ 
-        echo "<td><a href=" . URL . "elemenBeasiswa/delUangBuku/" . $val->get_kd_d() . " onClick=\"return del();\" title=\"hapus\"><i class=\"icon-trash\"></i></a> &nbsp
+		$ket = $semester." ".$val->get_thn()." Jurusan ".$val->get_kd_jur()." ".$val->get_univ()." ".$val->get_thn_masuk();
+        echo "<td><a href=" . URL . "elemenBeasiswa/delUangBuku/" . $val->get_kd_d() . " onClick=\"return del('".$ket."');\" title=\"hapus\"><i class=\"icon-trash\"></i></a> &nbsp
                         <a href=" . URL . "elemenBeasiswa/editUangBuku/" . $val->get_kd_d() . "><i class=\"icon-pencil\" title=\"ubah\"></i></a> &nbsp
                             <a href='#' onClick='cetak_ubuku(" . $val->get_kd_d() . "); return false;' title='cetak'><i class=\"icon-print\"></i></a>
                             
@@ -71,8 +72,9 @@ if($this->cur_page !="" && $this->page_num!="") echo "HALAMAN ".$this->cur_page.
 </table>
 
 <script>
-    function del(){
-        if(confirm('Yakin akan menghapus data ini?'))
+    function del(ket){
+        var txt = "Yakin data uang buku semester "+ket+" akan dihapus?";
+        if(confirm(txt))
             return true;
         else return false
     }

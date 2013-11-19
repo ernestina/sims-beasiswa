@@ -17,10 +17,10 @@ if($this->cur_page !="" && $this->page_num!="") echo "HALAMAN ".$this->cur_page.
     <th width="10%">Jurusan/Prodi</th>
     <th width="4%">Th. Masuk</th>
     <th width="4%">Jumlah Pegawai Dibayar</th>
-    <th width="10%">Bulan</th>
-    <th width="5%">Tahun</th>
-    <th width="10%">Total Bayar</th>
-	<th width="5%">Aksi</th>
+    <th width="6%">Bulan</th>
+    <th width="4%">Tahun</th>
+    <th width="9%">Total Bayar</th>
+	<th width="7%">Aksi</th>
 	
 </thead>
 <tbody style="text-align: center">
@@ -48,7 +48,8 @@ if($this->cur_page !="" && $this->page_num!="") echo "HALAMAN ".$this->cur_page.
         echo "<td>" . $val->get_thn() . "</td>";
         echo "<td style='text-align: right'>" . number_format($val->get_total_bayar()) . "</td>";
 		if(Session::get('role')==2){ 
-        echo "<td><a href=" . URL . "elemenBeasiswa/delJadup/" . $val->get_kd_d() . " onClick=\"return del();\" title='hapus'><i class=\"icon-trash\" ></i></a> &nbsp 
+		$ket = Tanggal::bulan_indo($bulan)." ".$val->get_thn()." Jurusan ".$val->get_kd_jur()." ".$val->get_univ()." ".$val->get_thn_masuk();
+        echo "<td><a href=" . URL . "elemenBeasiswa/delJadup/" . $val->get_kd_d() . " onClick=\"return del('".$ket."');\" title='hapus'><i class=\"icon-trash\" ></i></a> &nbsp 
                         <a href=" . URL . "elemenBeasiswa/editJadup/" . $val->get_kd_d() . " title='ubah'><i class=\"icon-pencil\"></i></a> &nbsp
                             <a href='#' onClick='cetak_jadup(" . $val->get_kd_d() . "); return false;' title='cetak'><i class=\"icon-print\"></i></a>
                   </td>";
@@ -66,8 +67,9 @@ if($this->cur_page !="" && $this->page_num!="") echo "HALAMAN ".$this->cur_page.
 </table>
 
 <script>
-    function del(){
-        if(confirm('yakin akan menghapus data ini?'))
+    function del(ket){
+		var txt = "Yakin data jadup bulan "+ket+" akan dihapus?";
+        if(confirm(txt))
             return true;
         else return false
     }
