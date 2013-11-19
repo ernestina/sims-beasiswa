@@ -18,12 +18,20 @@
                         <label>AKSES</label>
                         <select type="text" name="akses">
                             <?php if($this->data->get_akses()=="2"){ ?>
-                              <option value="2">User</option>
-                              <option value="1">Admin</option>
-                           <?php  } else { ?>
+                                <option value="2">User</option>
+                                <option value="1">Admin</option>
+                                <option value="3">Umum</option>
+                           <?php  } if ($this->data->get_akses()=="1"){ ?>
                                 <option value="1">Admin</option>
                                 <option value="2">User</option>
-                           <?php } ?>
+                                <option value="3">Umum</option>
+                           <?php } if ($this->data->get_akses()=="3") { ?>
+                               <option value="3">Umum</option>
+                               <option value="1">Admin</option>
+                               <option value="2">User</option>                            
+                           <?php 
+                           }
+                           ?>
                                                      
                         </select>
                         <label>Upload Foto</label><input type="file" name="upload" id="upload" value="" size="30"/>
