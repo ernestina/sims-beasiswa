@@ -211,7 +211,7 @@ class CutiController extends BaseController{
             }
             $this->registry->upload->uploadFile();
         }else{
-            echo $kd_ct."</br>";
+//            echo $kd_ct."</br>";
             $file = $d_ct->get_file();
             if($kd_pb!=$kd_pb_ct){
                 $tmp = explode("_",$file);
@@ -221,7 +221,7 @@ class CutiController extends BaseController{
             }else{
                 $file = $d_ct->get_file();
             }
-            echo $file;
+//            echo $file;
         }
         /*
          * set cuti
