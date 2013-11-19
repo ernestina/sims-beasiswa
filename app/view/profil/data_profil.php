@@ -3,7 +3,11 @@
  
   <div id="top">
   <!--level1: Profil Penerima Beasiswa-->
+  <?php if(Session::get('role')==2){?>
+    <input style="float:right"class="sukses" id="bt_edit" type="button" value="UBAH"  style="margin-top:20px"/>
+<?php } ?>
 	<h1>PROFIL PENERIMA BEASISWA</h1>
+
 	<fieldset><legend>Profil Penerima Beasiswa</legend>
 		<div class="foto">
 			<img class="frame" src="<?php 
@@ -220,9 +224,6 @@
 		
 	</fieldset>
 </div> <!--div level 4-->
-<?php if(Session::get('role')==2){?>
-    <input class="sukses" id="bt_edit" type="button" value="UBAH"  style="margin-top:20px"/>
-<?php } ?>
 
 </div> <!--top-->
 </body>

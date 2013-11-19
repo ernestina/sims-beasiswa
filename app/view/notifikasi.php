@@ -107,8 +107,11 @@
                 var h4 = document.createElement('h4');
                 var a = document.createElement('a');
                 var img = document.createElement('img');
-                
-                pic.style.backgroundImage='url(\'files/foto/'+data_notif[i].foto_pic+'\')';
+                var foto = data_notif[i].foto_pic;
+                var split_foto = foto.split(".");
+                var foto_pic = split_foto[0]+"_small"+split_foto[1];
+//                pic.style.backgroundImage='url(\'files/foto/'+data_notif[i].foto_pic+'\')';
+                pic.style.backgroundImage='url(\'files/foto/'+foto_pic+'\')';
                 
                 a.style.color = '#49afcd'
                 a.appendChild(document.createTextNode(judul_notif));
