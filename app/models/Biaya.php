@@ -490,6 +490,7 @@ class Biaya extends BaseModel {
         foreach ($result as $val) {
             $total_biaya = $val['TOTAL_BIAYA'];
         }
+		if($total_biaya==""){$total_biaya=0;}
         return $total_biaya;
     }
 

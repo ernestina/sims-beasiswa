@@ -10,8 +10,8 @@
         <label class="isian">Lama Semester</label><input type="text" size="4" readonly value="<?php echo $this->kontrak->lama_semester_kontrak; ?>" disabled>
     <!--    <label class="isian">Nilai Kontrak</label><input type="text" size="14" readonly value="<?php echo number_format($this->kontrak->nilai_kontrak); ?>" disabled>
         <label class="isian">Kontrak Lama</label><input type="text" size="40" readonly value="<?php echo $this->kon_lama; ?>" disabled>-->
-		<input type="hidden" name="max_peg" id="max_peg" value="<?php echo $this->kontrak->jml_pegawai_kontrak; ?>">
 		<input type="hidden" name="min_tgl" id="min_tgl" value="<?php echo $this->kontrak->tgl_kontrak; ?>">
+		<input type="hidden" name="tes" id="tes">
 	</div>
     <br>
     <div id="tabs">
@@ -24,6 +24,9 @@
             <!--            <fieldset>-->
             <form autocomplete="off" id="form_rekam_biaya" method="POST" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/rekamBiaya'; ?>" onSubmit="return cekField();;">
                 <input type="hidden" name="rekam_biaya" size="50">
+				<input type="hidden" name="max_peg" id="max_peg" value="<?php echo $this->kontrak->jml_pegawai_kontrak; ?>">
+				<input type="hidden" name="max_kontrak" id="max_kontrak" value="<?php echo $this->kontrak->nilai_kontrak; ?>">
+				<input type="hidden" id="total_biaya_kontrak" name="total_biaya_kontrak" size="50" value="<?php echo $this->total_biaya_kontrak;?>">
 <!--                    <label class="isian">Nomor Kontrak*</label><input type="text" size="50" name="kontrak" id="kontrak" value="<? echo $this->kontrak->no_kontrak; ?>" readonly>-->
       <div class="kolom1">
 				<!--label class="isian">Kode Kontrak</label--><input type="hidden" size="50" name="kd_kontrak" id="kd_kontrak" value="<?php echo $this->kontrak->kd_kontrak; ?>" readonly >
@@ -31,7 +34,8 @@
                 <div id="wnama_biaya"></div>
 				<label class="isian">Jumlah Biaya*</label><input type="text" size="14" name="jml_biaya" id="jml_biaya" maxlength="14" >
                 <div id="wjml_biaya"></div>
-                <label class="isian">Jumlah Pegawai*</label><input type="text" size="4" name="jml_peg" id="jml_peg" max="3">
+				<div id="wjml_max_biaya"></div>
+                <label class="isian">Jumlah Pegawai*</label><input type="text" size="4" name="jml_peg" id="jml_peg" title="maksimal jumlah pegawai <?php echo $this->kontrak->jml_pegawai_kontrak; ?> orang">
                 <div id="wjml_peg"></div>
 				<label class="isian">Biaya per Pegawai*</label><input type="text" size="12" name="biaya_per_peg" id="biaya_per_peg" maxlength="14" readonly>
                 <div id="wbiaya_per_peg"></div>
@@ -108,13 +112,11 @@
         
         //validasi inputan jumlah pegawai harus angka ketika diinput
         $('#jml_peg').keyup(function() {   
-            
                 removeError('wjml_peg');  
                 if($('#biaya_per_peg').val!=""){
                     removeError('wbiaya_per_peg');
                 }
             
-
 			if($('#jml_peg').val()>$('#max_peg').val()){
 				$('#jml_peg').val($('#max_peg').val());
 			}
@@ -124,11 +126,28 @@
             removeError('wnama_biaya');         
         });
         
-        $('#jml_biaya').keyup(function() {   
+        $('#jml_biaya').keyup(function() { 
+			
             removeError('wjml_biaya');  
             if($('#jml_peg').val!=""){
                 removeError('wbiaya_per_peg');
             }
+			
+			if($('#jml_biaya').val() != ""){
+				var tot_biaya = parseInt($('#jml_biaya').val()) + parseInt($('#total_biaya_kontrak').val());
+				if(tot_biaya > $('#max_kontrak').val()){
+					viewError('wjml_max_biaya','Jumlah biaya melebihi nilai kontrak.');
+				}
+
+				if(tot_biaya <= $('#max_kontrak').val()){
+					removeError('wjml_max_biaya');
+				}
+			} 
+			
+			if($('#jml_biaya').val() == "" || $('#jml_biaya').val() == 0){
+				removeError('wjml_max_biaya');
+			}
+			
         });
         
         $('#biaya_per_peg').keyup(function() {   
@@ -168,17 +187,17 @@
             jml++;
         }
             
-        if($('#biaya_per_peg').val()==''){
+        if($('#biaya_per_peg').val()=='' || $('#biaya_per_peg').val()==0){
             viewError('wbiaya_per_peg','Biaya per pegawai harus diisi.');
             jml++;
         }
             
-        if($('#jml_peg').val()==''){
+        if($('#jml_peg').val()=='' || $('#jml_peg').val()==0){
             viewError('wjml_peg','Jumlah pegawai harus diisi.');
             jml++;
         }
         
-        if($('#jml_biaya').val()==''){
+        if($('#jml_biaya').val()=='' || $('#jml_biaya').val()==0){
             viewError('wjml_biaya','Jumlah biaya harus diisi.');
             jml++;
         }
@@ -187,6 +206,14 @@
             viewError('wjadwal_bayar','Jadwal bayar harus diisi.');
             jml++;
         }
+		
+		if($('#jml_biaya').val() != ""){
+				var tot_biaya = parseInt($('#jml_biaya').val()) + parseInt($('#total_biaya_kontrak').val());
+				if(tot_biaya > $('#max_kontrak').val()){
+					viewError('wjml_max_biaya','Jumlah biaya melebihi nilai kontrak.');
+					jml++;
+				} 
+			}
             
         if(jml>0){
             return false;

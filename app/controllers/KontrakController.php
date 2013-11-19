@@ -482,6 +482,8 @@ class KontrakController extends BaseController {
             //var_dump($jur->get_nama());
             $nama_jur = $jur->get_nama(); //mendapatkan nama jurusan
             //menampilkan daftar biaya berdasarkan kontrak
+			$biaya = new Biaya();
+			$this->view->total_biaya_kontrak = $biaya->get_biaya_by_kontrak($id);
             $this->view->nama_univ = $nama_univ;
             $this->view->nama_jur = $nama_jur;
             $this->view->kon_lama = $kon_lama;
@@ -508,6 +510,20 @@ class KontrakController extends BaseController {
             $biaya->status_bayar = "belum";
             //var_dump($biaya);
             if ($biaya->isEmptyBiaya($biaya) == false) {
+				$total_biaya = $biaya->get_biaya_by_kontrak($biaya->kd_kontrak);
+				if($total_biaya + $biaya->jml_biaya > $_POST['max_kontrak']){
+					$url = URL . 'kontrak/rekamBiaya/' . $biaya->kd_kontrak;
+					echo '<script> alert("Jumlah biaya melebihi nilai kontrak.") </script>';
+                    echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
+					exit();
+				}
+				if($biaya->jadwal_bayar > $_POST['max_peg']){
+					$url = URL . 'kontrak/rekamBiaya/' . $biaya->kd_kontrak;
+					echo '<script> alert("Jumlah pegawai melebihi jumlah pegawai dalam kontrak.") </script>';
+                    echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
+					exit();
+				}
+				
                 if (Validasi::validate_number($biaya->biaya_per_pegawai) == TRUE &&
                         Validasi::validate_number($biaya->jmlh_pegawai_bayar) == TRUE &&
                         Validasi::validate_number($biaya->jumlah_biaya) == TRUE) {
@@ -563,7 +579,7 @@ class KontrakController extends BaseController {
             $data_biaya = $biaya->get_by_id($id); //mendapatkan data biaya berdasarkan id=kd_biaya
             //var_dump($data_biaya);
             $kontrak = new Kontrak();
-            $id = $_POST['kd_kontrak'];
+            //$kd_kontrak = $_POST['kd_kontrak'];
             $data_kontrak = $kontrak->get_by_id($data_biaya->kd_kontrak);
             //var_dump($kontrak);
             $universitas = new Universitas($this->registry);
@@ -588,6 +604,8 @@ class KontrakController extends BaseController {
             if($tab=="" || $tab>2){
                 $tab=0;
             }
+			
+			$this->view->total_biaya_kontrak = $biaya->get_biaya_by_kontrak($data_biaya->kd_kontrak);
             $this->view->nama_univ = $nama_univ;
             $this->view->nama_jur = $nama_jur;
             $this->view->biaya = $data_biaya;
@@ -614,6 +632,19 @@ class KontrakController extends BaseController {
             $biaya_current = $biaya->get_by_id($biaya->kd_biaya);
             $biaya->status_bayar = $biaya_current->status_bayar; //untuk mendapatkan status bayar terkini
             if ($biaya->isEmptyBiaya($biaya) == false) {
+				$total_biaya = $biaya->get_biaya_by_kontrak($biaya->kd_kontrak);
+				if($total_biaya + $biaya->jml_biaya - $_POST['def_jml_biaya']> $_POST['max_kontrak']){
+					$url = URL . 'kontrak/editBiaya/' . $biaya->kd_kontrak;
+					echo '<script> alert("Jumlah biaya melebihi nilai kontrak.") </script>';
+                    echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
+					exit();
+				}
+				if($biaya->jadwal_bayar > $_POST['max_peg']){
+					$url = URL . 'kontrak/editBiaya/' . $biaya->kd_kontrak;
+					echo '<script> alert("Jumlah pegawai melebihi jumlah pegawai dalam kontrak.") </script>';
+                    echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
+					exit();
+				}
                 if (Validasi::validate_number($biaya->biaya_per_pegawai) == TRUE &&
                         Validasi::validate_number($biaya->jmlh_pegawai_bayar) == TRUE &&
                         Validasi::validate_number($biaya->jumlah_biaya) == TRUE) {

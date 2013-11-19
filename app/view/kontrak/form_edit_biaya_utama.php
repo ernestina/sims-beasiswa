@@ -3,6 +3,7 @@
 <div id="proses_biaya" title="Informasi" style="display:none">
     <p> Sistem sedang melakukan proses update data biaya.....</p>
 </div>
+<div class="kolom1">
 <form method="POST" id="form_biaya" action="<?php /* $_SERVER['PHP_SELF']; */ echo URL . 'kontrak/updateBiaya' ?>" onSubmit="return konfirmasi_biaya();">
     <input type="hidden" name="update_biaya" size="50">
     <input type="hidden" name="tab" value="0">
@@ -12,7 +13,8 @@
     <div id="wnama_biaya"></div>
 	<label class="isian">Jumlah Biaya</label><input type="text" size="14" name="jml_biaya" id="jml_biaya" maxlength="14"  value="<?php echo $this->biaya->jml_biaya; ?>">
     <div id="wjml_biaya"></div>
-    <label class="isian">Jumlah Pegawai</label><input type="text" size="4" name="jml_peg" id="jml_peg" value="<?php echo $this->biaya->jml_pegawai_bayar; ?>">
+	<div id="wjml_max_biaya"></div>
+    <label class="isian">Jumlah Pegawai</label><input type="text" size="4" name="jml_peg" id="jml_peg" title="maksimal jumlah pegawai <?php echo $this->kontrak->jml_pegawai_kontrak; ?> orang" value="<?php echo $this->biaya->jml_pegawai_bayar; ?>">
     <div id="wjml_peg"></div>
 	<label class="isian">Biaya per Pegawai</label><input type="text" size="12" name="biaya_per_peg" id="biaya_per_peg" readonly value="<?php echo $this->biaya->biaya_per_pegawai; ?>" maxlength="14">
     <div id="wbiaya_per_peg"></div>
@@ -26,8 +28,12 @@
     </ul>
 	<input type="hidden" name="max_peg" id="max_peg" value="<?php echo $this->kontrak->jml_pegawai_kontrak; ?>">
 	<input type="hidden" name="min_tgl" id="min_tgl" value="<?php echo $this->kontrak->tgl_kontrak; ?>">
+	<input type="hidden" name="def_jml_biaya" id="def_jml_biaya" value="<?php echo $this->biaya->jml_biaya; ?>">
+	<input type="hidden" name="max_kontrak" id="max_kontrak" value="<?php echo $this->kontrak->nilai_kontrak; ?>">
+	<input type="hidden" id="total_biaya_kontrak" name="total_biaya_kontrak" size="50" value="<?php echo $this->total_biaya_kontrak;?>">
 
 </form>
+</div>
 
 <script>
     //****
@@ -62,11 +68,27 @@
             removeError('wbiaya_per_peg');         
         });
         
-        $('#jml_biaya').keyup(function() {   
+        $('#jml_biaya').keyup(function() { 
+			
             removeError('wjml_biaya');  
             if($('#jml_peg').val!=""){
                 removeError('wbiaya_per_peg');
             }
+			
+			if($('#jml_biaya').val() != ""){
+				var tot_biaya = parseInt($('#jml_biaya').val()) + parseInt($('#total_biaya_kontrak').val()) - parseInt($('#def_jml_biaya').val());
+				if(tot_biaya > $('#max_kontrak').val()){
+					viewError('wjml_max_biaya','Jumlah biaya melebihi nilai kontrak.');
+				}
+				if(tot_biaya <= $('#max_kontrak').val()){
+					removeError('wjml_max_biaya');
+				}
+			} 
+			
+			if($('#jml_biaya').val() == "" || $('#jml_biaya').val() == 0){
+				removeError('wjml_max_biaya');
+			}
+			
         });
         
         $('#jadwal_bayar').click(function() {   
@@ -132,6 +154,14 @@
             viewError('wjadwal_bayar','Jadwal bayar harus diisi.');
             jml++;
         }
+		
+		if($('#jml_biaya').val() != ""){
+				var tot_biaya = parseInt($('#jml_biaya').val()) + parseInt($('#total_biaya_kontrak').val()) - parseInt($('#def_jml_biaya').val());
+				if(tot_biaya > $('#max_kontrak').val()){
+					viewError('wjml_max_biaya','Jumlah biaya melebihi nilai kontrak.');
+					jml++;
+				} 
+			}
             
         if(jml>0){
             return false;

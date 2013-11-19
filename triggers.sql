@@ -155,7 +155,7 @@ CREATE TRIGGER `delUser` BEFORE DELETE ON `d_user`
  FOR EACH ROW BEGIN
   DECLARE jml_user INTEGER;
     
-  select count(*) into jml_user from d_entry_log where KD_USER = old.KD_USER;
+  select count(*) into jml_user from d_entry_log where USER = old.USER;
       
   IF (jml_user > 0) THEN
     CALL cannot_delete_error; 
