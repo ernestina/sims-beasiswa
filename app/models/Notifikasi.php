@@ -778,7 +778,7 @@ class Notifikasi{
             $time_i = $this->jatuh_tempo_to_time($return[$i]);
             for($j=0;$j<$count_data;$j++){
                 $time_j = $this->jatuh_tempo_to_time($return[$j]);
-                $less_than = $time_j<$time_i;
+                $less_than = $time_j>$time_i;
                 if($less_than){
                     $tmp = $return[$i];
                     $return[$i] = $return[$j];
