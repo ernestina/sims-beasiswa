@@ -504,6 +504,9 @@ class PenerimaController extends BaseController{
      * hapus penerima tb
      */
     public function delpb($id){
+        if(Session::get('role')!=2){
+            $this->datapb();
+        }
         $pb = new Penerima($this->registry);
         $pb->set_kd_pb($id);
         $pb->get_penerima_by_id($pb,$this->kd_user);
@@ -595,6 +598,9 @@ class PenerimaController extends BaseController{
     }
     
     private function for_edit_pb($kode_pb){
+        if(Session::get('role')!=2){
+            $this->profil($kode_pb);
+        }
         $pb = new Penerima($this->registry); //mendapatkan informasi pb
         $st = new SuratTugas($this->registry); //mendapatkan informasi surat tugas
         $bank = new Bank($this->registry); //mendapatkan nama bank

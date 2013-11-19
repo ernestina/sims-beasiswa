@@ -20,8 +20,8 @@
 <script type="text/javascript">
     $(function(){
         var data_notif = <?php echo $this->d_notif; ?>;
-        var max_data = 6; //max data per page
-        var time_per_item = 10; //on second
+        var max_data = 7; //max data per page
+        var time_per_item = 20; //on second
         var div_container = 'beranda';
         var timer = 1000*60*60*1; //milisecond*second*minute*hour
         setInterval(function(){
