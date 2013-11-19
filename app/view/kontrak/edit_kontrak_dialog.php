@@ -83,10 +83,10 @@
                     } else {
                         $select = "";
                     }
-                    
+                if($this->data->kd_kontrak != $kon->kd_kontrak){ 
                 ?>
                 <option value="<?php echo $kon->kd_kontrak; ?>" <?php echo $select; ?>><?php echo $kon->no_kontrak; ?></option>
-                <?php } ?>
+                <?php }}  ?>
             </select>
             <div id="wkontrak_lama" name="wkontrak_lama"></div>
                 
