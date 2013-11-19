@@ -109,7 +109,7 @@
                 var img = document.createElement('img');
                 var foto = data_notif[i].foto_pic;
                 var split_foto = foto.split(".");
-                var foto_pic = split_foto[0]+"_small"+split_foto[1];
+                var foto_pic = split_foto[0]+"_small."+split_foto[1];console.log(foto_pic);
 //                pic.style.backgroundImage='url(\'files/foto/'+data_notif[i].foto_pic+'\')';
                 pic.style.backgroundImage='url(\'files/foto/'+foto_pic+'\')';
                 
