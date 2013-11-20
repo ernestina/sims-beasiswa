@@ -4,8 +4,8 @@
   <div id="top">
   <!--level1: Profil Penerima Beasiswa-->
   <div>
-  <?php if(Session::get('role')==2){?>
-    <input style="float:right"class="sukses" id="bt_edit" type="button" value="UBAH"  style="margin-top:20px"/>
+  <?php if(Session::get('role')==2 || Session::get('role')==3){?>
+    <?php if(Session::get('role')==2) { ?><input style="float:right"class="sukses" id="bt_edit" type="button" value="UBAH"  style="margin-top:20px"/><?php }?>
     <button onClick="cetak_profil('<?php echo $this->d_pb->get_kd_pb();?>')" style="margin-right:20px"><i class="icon-print icon-white"></i>  CETAK</button>
 <?php } ?>
 	<h1>PROFIL PENERIMA BEASISWA</h1>
