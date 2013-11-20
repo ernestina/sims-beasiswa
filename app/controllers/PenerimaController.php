@@ -978,7 +978,7 @@ class PenerimaController extends BaseController{
         $this->view->d_cuti = $cuti->get_cuti($this->kd_user,$pb);
         if($role==3) $this->view->d_cuti = $cuti->get_cuti(0,$pb);
         $this->view->d_rwt_beas = $pb->get_penerima_by_column($pb,$this->kd_user,'nip',true);
-        if($role==0) $this->view->d_rwt_beas = $pb->get_penerima_by_column($pb,0,'nip',true);
+        if($role==3) $this->view->d_rwt_beas = $pb->get_penerima_by_column($pb,0,'nip',true);
         $elem = $el->get_elem_per_pb($pb, false);
         $bea = $beaya->get_cost_per_pb($pb,false);
         $this->view->d_mas = $mas->get_masalah($pb);
