@@ -23,17 +23,14 @@
     <body style="font-family:arial;color:black;font-size:10px;">
         <p align="center" style="font-weight: bold; font-size:12px;">
             <?php 
-            if ($this->elemen != "") {
-                $el = $this->elemen;
+            if ($this->sts != "") {
+                $el = $this->sts;
                 switch ($el) {
                     case 1:
-                        $r_el = " Tunjangan Hidup";
+                        $r_el = " Belum dibayar";
                         break;
                     case 2:
-                        $r_el = " Tunjangan Buku";
-                        break;
-                    case 3:
-                        $r_el = " Tunjangan Skripsi/TA/Tesis";
+                        $r_el = " Selesai dibayar";
                         break;
                 }
             }

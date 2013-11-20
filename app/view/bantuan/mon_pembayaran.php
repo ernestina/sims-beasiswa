@@ -32,14 +32,11 @@
 
                     </td>
                     <td>
-                        <label>Elemen</label>
-                        <select name="elemen" id="elemen" type="text">
+                        <label>Status Bayar</label>
+                        <select name="sts" id="sts" type="text">
                             <option value="">- semua -</option>
-                            <option value="1">Tunjangan Hidup</option>
-                            <option value="2">Buku</option>
-                            <option value="3">TA/Skripsi/Tesis</option>
-
-
+                            <option value="1">Belum</option>
+                            <option value="2">Selesai</option>
                         </select>
 
                     </td>
@@ -73,7 +70,7 @@
     
     displayMonElemen();
     function displayMonElemen(){   
-        $.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),elemen:$('#elemen').val()}, 
+        $.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),sts:$('#sts').val()}, 
         function (data){
             //$('#tabel_index_mon').fadeIn(100);
             $('#tabel_index_mon').html(data);
@@ -108,14 +105,14 @@
         })
         
         //agar ketika universitas berubah karena dipilih, pilihan jurusan menyesuaikan dengan universitas yang telah dipilih
-        $("#tahun_masuk, #elemen").change(function(){           
+        $("#tahun_masuk, #sts").change(function(){           
             displayMonElemen();
         });
 		
 		$("#next").click(function(){
             $("#loading").show();
 			var page = parseInt($("#cur_page").val())+ 1;
-			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),elemen:$('#elemen').val(),cur_page:page}, 
+			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),sts:$('#sts').val(),cur_page:page}, 
 			function(data){                
 				$('#tabel_index_mon').html(data);
 			});
@@ -126,7 +123,7 @@
 		$("#prev").click(function(){
             $("#loading").show();
 			var page = parseInt($("#cur_page").val())- 1;
-			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),elemen:$('#elemen').val(),cur_page:page}, 
+			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),sts:$('#sts').val(),cur_page:page}, 
 			function(data){                
 				$('#tabel_index_mon').html(data);
 			});
@@ -137,7 +134,7 @@
 		$("#first").click(function(){
             $("#loading").show();
 			var page = 1;
-			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),elemen:$('#elemen').val(),cur_page:page}, 
+			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),sts:$('#sts').val(),cur_page:page}, 
 			function(data){                
 				$('#tabel_index_mon').html(data);
 			});
@@ -147,7 +144,7 @@
 		$("#last").click(function(){
             $("#loading").show();
 			var page = parseInt($("#last_page").val())
-			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),elemen:$('#elemen').val(),cur_page:page}, 
+			$.post("<?php echo URL; ?>elemenBeasiswa/data_index_mon", {univ:$('#universitas').val(),jurusan:$('#jurusan').val(),tahun:$('#tahun_masuk').val(),sts:$('#sts').val(),cur_page:page}, 
 			function(data){                
 				$('#tabel_index_mon').html(data);
 			});

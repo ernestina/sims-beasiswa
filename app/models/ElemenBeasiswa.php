@@ -206,7 +206,7 @@ class ElemenBeasiswa {
         return $data;
     }
     
-    public function get_list_elem($univ = NULL, $jurusan = NULL, $tahun = NULL, $elemen=NULL, $user=NULL) {
+    public function get_list_elem($univ = NULL, $jurusan = NULL, $tahun = NULL, $sts=NULL, $user=NULL) {
 
         $sql = "SELECT 
             a.KD_D_ELEM_BEASISWA AS KD_D_ELEM_BEASISWA,
@@ -259,13 +259,22 @@ class ElemenBeasiswa {
         }
         
                
-        if ($elemen != "") {
+        if ($sts != "") {
             if ($user != "" || $univ != "" || $jurusan != "" || $tahun != "") {
-               $sql .=" AND a.KD_R_ELEM_BEASISWA ='" . $elemen . "'"; 
+               if($sts=="1"){
+					$sql .=" AND NO_SP2D_D_ELEM_BEASISWA IS NULL OR NO_SP2D_D_ELEM_BEASISWA =''"; 
+			   }
+				if($sts=="2"){
+					$sql .=" AND NO_SP2D_D_ELEM_BEASISWA !=''"; 
+			   }	
             } else {
-                $sql .=" WHERE a.KD_R_ELEM_BEASISWA ='" . $elemen . "'";
-            }
-            
+				if($sts=="1"){
+					$sql .=" WHERE NO_SP2D_D_ELEM_BEASISWA IS NULL OR NO_SP2D_D_ELEM_BEASISWA =''"; 
+			   }
+				if($sts=="2"){
+					$sql .=" WHERE NO_SP2D_D_ELEM_BEASISWA !=''"; 
+			   }
+			}            
         }
         
         $sql .=" order by a.KD_D_ELEM_BEASISWA desc";

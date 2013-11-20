@@ -27,24 +27,25 @@ class elemenBeasiswaController extends BaseController {
     }
 
     public function data_index_mon() {
-        if (isset($_POST['univ']) && isset($_POST['jurusan']) && isset($_POST['tahun']) && isset($_POST['elemen'])) {
+		//var_dump($_POST);
+        if (isset($_POST['univ']) && isset($_POST['jurusan']) && isset($_POST['tahun']) && isset($_POST['sts'])) {
             //print_r($_POST['univ']);
             $univ = $_POST['univ'];
             $jurusan = $_POST['jurusan'];
             $tahun = $_POST['tahun'];
-            $elemen = $_POST['elemen'];
+            $sts = $_POST['sts'];
             $user = Session::get('kd_user');
 
             $elem = new ElemenBeasiswa($this->registry);
-            //$this->view->data = $elem->get_list_elem($univ, $jurusan, $tahun, $elemen, $user);
+            
 			if(Session::get('role')==2){
-				$data = $elem->get_list_elem($univ, $jurusan, $tahun, $elemen, $user);
+				$data = $elem->get_list_elem($univ, $jurusan, $tahun, $sts, $user);
 			}
 			if(Session::get('role')==3){
-				$data = $elem->get_list_elem($univ, $jurusan, $tahun, $elemen);
+				$data = $elem->get_list_elem($univ, $jurusan, $tahun, $sts);
 			}
 			if(isset($_POST['cur_page'])){
-			$cur_page = $_POST['cur_page'];
+				$cur_page = $_POST['cur_page'];
 			} else {
 				$cur_page = 1;
 			}
@@ -184,13 +185,13 @@ class elemenBeasiswaController extends BaseController {
     }
 
     public function cetak_mon_pembayaran() {
-        if (isset($_POST['universitas']) && isset($_POST['jurusan']) && isset($_POST['tahun_masuk']) && isset($_POST['elemen'])) {
+        if (isset($_POST['universitas']) && isset($_POST['jurusan']) && isset($_POST['tahun_masuk']) && isset($_POST['sts'])) {
             //print_r($_POST['univ']);
             $elem = new ElemenBeasiswa($this->registry);
             $univ = $_POST['universitas'];
             $jur = $_POST['jurusan'];
             $tahun = $_POST['tahun_masuk'];
-            $elemen = $_POST['elemen'];
+            $sts = $_POST['sts'];
             $universitas = new Universitas($this->registry);
             $universitas->set_kode_in($univ);
             $data_univ = $universitas->get_univ_by_id($universitas);
@@ -206,16 +207,16 @@ class elemenBeasiswaController extends BaseController {
             $user = Session::get('kd_user');
             
 			if(Session::get('role')==2){
-				$data = $elem->get_list_elem($univ, $jur, $tahun, $elemen, $user);
+				$data = $elem->get_list_elem($univ, $jur, $tahun, $sts, $user);
 			}
 			if(Session::get('role')==3){
-				$data = $elem->get_list_elem($univ, $jur, $tahun, $elemen);
+				$data = $elem->get_list_elem($univ, $jur, $tahun, $sts);
 			}
 			$this->view->data = $data;
             $this->view->univ = $univ;
             $this->view->jur = $jur;
             $this->view->tahun = $tahun;
-            $this->view->elemen = $elemen;
+            $this->view->sts = $sts;
             $this->view->load('bantuan/cetak_mon_pembayaran');
         }
     }
