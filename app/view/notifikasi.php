@@ -20,6 +20,7 @@
 <script type="text/javascript">
     $(function(){
         var data_notif = <?php echo $this->d_notif; ?>;
+		console.log(data_notif);
         var max_data = 7; //max data per page
         var time_per_item = 20; //on second
         var div_container = 'beranda';
@@ -110,8 +111,14 @@
                 var a = document.createElement('a');
                 var img = document.createElement('img');
                 var foto = data_notif[i].foto_pic;
-                var split_foto = foto.split(".");
-                var foto_pic = split_foto[0]+"_small."+split_foto[1];console.log(foto_pic);
+				var foto_pic;
+				if(foto!='' && foto != null){
+					var split_foto = foto.split(".");
+					foto_pic = split_foto[0]+"_small."+split_foto[1];console.log(foto_pic);
+				}else{
+					foto_pic = foto;
+				}
+                
 //                pic.style.backgroundImage='url(\'files/foto/'+data_notif[i].foto_pic+'\')';
                 pic.style.backgroundImage='url(\'files/foto/'+foto_pic+'\')';
                 

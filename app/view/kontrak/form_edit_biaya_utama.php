@@ -21,7 +21,7 @@
     <label class="isian">Jadwal dibayarkan</label><input type="text" size="20" name="jadwal_bayar" id="jadwal_bayar" readonly value="<?php echo $this->biaya->jadwal_bayar; ?>">
     <div id="wjadwal_bayar"></div>
     <input type="hidden" id="kd_biaya" name="kd_biaya" value="<?php echo $this->biaya->kd_biaya; ?>">
-    <input type="hidden" name="kd_kontrak" id="kd_kontrak" value="<? echo $this->kontrak->kd_kontrak; ?>" readonly>
+    <input type="hidden" name="kd_kontrak" id="kd_kontrak" value="<?php echo $this->kontrak->kd_kontrak; ?>" readonly>
     <ul class="inline" style="float: right; margin-right: 20px">
         <li><button type="submit" name="simpan" class="sukses" onClick="formSubmit();"/><i class="icon-ok icon-white"></i>Simpan</button></li>
         <li><button type="reset" name="batal" id="batal" class="normal" onClick="location.href='<?php echo URL . 'kontrak/biaya/'.$this->kontrak->kd_kontrak; ?>'"><i class="icon-remove icon-white"></i>Batal</li>
