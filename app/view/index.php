@@ -116,8 +116,6 @@ function count_notif(){
     function(data){
         var old_count = parseInt(document.getElementById('jml_notif').value);
         if(parseInt(data)!=old_count){
-            console.log(data);
-            console.log(old_count);
             $('#jml_notif').val(data);
             $('<audio id="chatAudio"><source src="public/sound/sounds-847-office-2.mp3" type="audio/mpeg"></audio>').appendTo('body');
             $('#chatAudio')[0].play();

@@ -39,12 +39,13 @@ class SuratTugas {
         $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
-        if (!is_null($id)) {
+        if (!is_null($id) && !is_null($kd_user)) {
             $sql .= ' WHERE a.KD_ST<>' . $id;
             $sql .= ' AND d.KD_USER='.$kd_user;
-        }else{
+        }elseif(!is_null($kd_user) && is_null($id)){
             $sql .= ' WHERE d.KD_USER='.$kd_user;
         }
+//        echo $sql;
         $result = $this->db->select($sql);
         $data = array();
         foreach ($result as $val) {

@@ -64,7 +64,7 @@ class SurattugasController extends BaseController{
         $jur = new Jurusan($this->registry);
         $pemb = new PemberiBeasiswa();
         $this->view->d_pemb = $pemb->get_All();
-        $this->view->d_st_lama = $st->get_surat_tugas();
+        $this->view->d_st_lama = $st->get_surat_tugas($this->kd_user);
         $this->view->d_jst = $st->get_st_class();
         $this->view->d_univ = $univ->get_univ($this->kd_user);
         $this->view->d_jur = $jur->get_jurusan();

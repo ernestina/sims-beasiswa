@@ -20,7 +20,6 @@
 <script type="text/javascript">
     $(function(){
         var data_notif = <?php echo $this->d_notif; ?>;
-		console.log(data_notif);
         var max_data = 7; //max data per page
         var time_per_item = 20; //on second
         var div_container = 'beranda';
