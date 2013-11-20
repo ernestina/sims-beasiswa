@@ -228,12 +228,12 @@ class ElemenBeasiswa {
                 LEFT JOIN r_univ d ON c.KD_UNIV = d.KD_UNIV
                 ";
 		
-		if ($user!= "" ) {
+		if ($user != "" ) {
             $sql .=" WHERE d.KD_USER = '".$user."'";
         }
 		
         if ($univ != "" ) {
-			if ($user!= "" ) {
+			if ($user != "" ) {
 				$sql .=" AND d.KD_UNIV ='" . $univ . "'";
 			} else{
 				$sql .=" WHERE d.KD_UNIV ='" . $univ . "'";
@@ -242,7 +242,7 @@ class ElemenBeasiswa {
         }
 
         if ($jurusan != "") {
-            if ($univ != "" || $univ != "") {
+            if ($user != "" || $univ != "") {
                 $sql .=" AND b.KD_JUR ='" . $jurusan . "'";
             } else {
                 $sql .=" WHERE b.KD_JUR ='" . $jurusan . "'";
@@ -250,7 +250,7 @@ class ElemenBeasiswa {
         }
 
         if ($tahun != "") {
-           if ($univ != "" || $univ != "" || $jurusan != "") {
+           if ($user != "" || $univ != "" || $jurusan != "") {
                $sql .=" AND a.TAHUN_MASUK ='" . $tahun . "'"; 
             } else {
                 $sql .=" WHERE a.TAHUN_MASUK ='" . $tahun . "'";
@@ -260,7 +260,7 @@ class ElemenBeasiswa {
         
                
         if ($elemen != "") {
-            if ($univ != "" || $univ != "" || $jurusan != "" || $tahun != "") {
+            if ($user != "" || $univ != "" || $jurusan != "" || $tahun != "") {
                $sql .=" AND a.KD_R_ELEM_BEASISWA ='" . $elemen . "'"; 
             } else {
                 $sql .=" WHERE a.KD_R_ELEM_BEASISWA ='" . $elemen . "'";

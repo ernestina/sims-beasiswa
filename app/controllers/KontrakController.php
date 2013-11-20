@@ -517,7 +517,7 @@ class KontrakController extends BaseController {
                     echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
 					exit();
 				}
-				if($biaya->jadwal_bayar > $_POST['max_peg']){
+				if($biaya->jml_pegawai_bayar > $_POST['max_peg']){
 					$url = URL . 'kontrak/rekamBiaya/' . $biaya->kd_kontrak;
 					echo '<script> alert("Jumlah pegawai melebihi jumlah pegawai dalam kontrak.") </script>';
                     echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
@@ -639,7 +639,7 @@ class KontrakController extends BaseController {
                     echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';
 					exit();
 				}
-				if($biaya->jadwal_bayar > $_POST['max_peg']){
+				if($biaya->jml_pegawai_bayar > $_POST['max_peg']){
 					$url = URL . 'kontrak/editBiaya/' . $biaya->kd_kontrak;
 					echo '<script> alert("Jumlah pegawai melebihi jumlah pegawai dalam kontrak.") </script>';
                     echo '<script language="JavaScript"> window.location.href ="' . $url . '" </script>';

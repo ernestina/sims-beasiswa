@@ -206,10 +206,10 @@ class elemenBeasiswaController extends BaseController {
             $user = Session::get('kd_user');
             
 			if(Session::get('role')==2){
-				$data = $elem->get_list_elem($univ, $jurusan, $tahun, $elemen, $user);
+				$data = $elem->get_list_elem($univ, $jur, $tahun, $elemen, $user);
 			}
 			if(Session::get('role')==3){
-				$data = $elem->get_list_elem($univ, $jurusan, $tahun, $elemen);
+				$data = $elem->get_list_elem($univ, $jur, $tahun, $elemen);
 			}
 			$this->view->data = $data;
             $this->view->univ = $univ;
