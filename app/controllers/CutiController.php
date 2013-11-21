@@ -119,7 +119,9 @@ class CutiController extends BaseController{
         $kd_pb_ct = $ct->get_pb();
         $pb->set_kd_pb($kd_pb_ct);
         $pb->get_penerima_by_id($pb);
-        $kd_st = $pb->get_st();
+        $status = $pb->cek_pb_konek_st_ct($pb, 'st', false, true);
+        $pb->set_status($status);
+        /*$kd_st = $pb->get_st();
         $st = new SuratTugas($this->registry);
         $is_child = $st->is_child($kd_st);
         if($is_child){
@@ -131,7 +133,7 @@ class CutiController extends BaseController{
             } 
         }else{
             $pb->set_status(1);
-        }
+        }*/
         $pb->update_penerima();
         unset($pb);
         /*
@@ -176,20 +178,23 @@ class CutiController extends BaseController{
         $kd_pb_ct = $ct->get_pb();
         $pb->set_kd_pb($kd_pb_ct);
         $pb->get_penerima_by_id($pb);
-        $kd_st = $pb->get_st();
-        $st = new SuratTugas($this->registry);
-        $is_child = $st->is_child($kd_st);
-        if($is_child){
-            $kd_parent = $st->get_st_lama();
-            if($kd_parent!=''){
-                $pb->set_status(3);
-            }else{
-                $pb->set_status(2);
-            } 
-        }else{
-            $pb->set_status(1);
-        }
+        $status = $pb->cek_pb_konek_st_ct($pb, 'st', false, true);
+        $pb->set_status($status);
+//        $kd_st = $pb->get_st();
+//        $st = new SuratTugas($this->registry);
+//        $is_child = $st->is_child($kd_st);
+//        if($is_child){
+//            $kd_parent = $st->get_st_lama();
+//            if($kd_parent!=''){
+//                $pb->set_status(3);
+//            }else{
+//                $pb->set_status(2);
+//            } 
+//        }else{
+//            $pb->set_status(1);
+//        }
         $pb->update_penerima();
+        unset($pb);
 //        unlink($pb);
         /*
          * end update status

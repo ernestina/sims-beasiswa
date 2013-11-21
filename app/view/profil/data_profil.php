@@ -28,7 +28,7 @@
 			<input class="utama" type="text" id="nama" name="nama" disabled  value="<?php echo $this->d_pb->get_nama();?>"/>
 
 			<label class="isian">Jenis Kelamin :</label>
-			<input class="utama" type="text" id="jenis_kelamin" name="jenis_kelamin" disabled  value="<?php echo ($this->d_pb->get_jkel()==1)?'Laki-laki':'Perempuan';?>"/>
+			<input class="utama" type="text" id="jenis_kelamin" name="jenis_kelamin" disabled  value="<?php echo ($this->d_pb->get_jkel()=='L')?'Laki-laki':'Perempuan';?>"/>
 			
 			<label class="isian">Pangkat/Gol :</label>
                         <input class="utama" type="text" id="pangkat" name="pangkat" disabled  value="<?php echo Golongan::golongan_int_string($this->d_pb->get_gol());?>"/>

@@ -364,7 +364,7 @@
 
     $( "#dialog-form" ).dialog({
             autoOpen: false,
-            height: 550,
+            height: 600,
             width: 350,
             modal: true,
             buttons: {

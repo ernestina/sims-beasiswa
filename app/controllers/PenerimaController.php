@@ -376,7 +376,8 @@ class PenerimaController extends BaseController{
                 $status = $pb->get_status_change_pb($d_st,$lap_selesai_tb,$tgl_sel_st);
 //            }
         }else{
-            $st = new SuratTugas($this->registry);
+            $status = $pb->cek_pb_konek_st_ct($pb, 'all', false, true);
+            /*$st = new SuratTugas($this->registry);
             $is_child = $st->is_child($kd_st);
             if($is_child){
                 $kd_parent = $st->get_st_lama();
@@ -392,7 +393,7 @@ class PenerimaController extends BaseController{
             $d_cuti = $ct->get_cuti($this->kd_user, $pb);
             if(count($d_cuti)>0){
                 $status = 4;
-            }
+            }*/
         }
 //        var_dump($upload_skl);
         
@@ -461,15 +462,18 @@ class PenerimaController extends BaseController{
         $status = $pb->get_status();
         $blm_lulus = $status!=9;
         $tdk_lulus = $status==9;
-        $data;
+        $data = 1;
         if($blm_lulus){
             $pb->set_status(9);
             $data = array('str_status'=>StatusPB::status_int_string(9),'kd_status'=>9);
         }elseif($tdk_lulus){
+            $status = $pb->cek_pb_konek_st_ct($pb, 'all', false, true);
+            $data = array('str_status'=>StatusPB::status_int_string($status),'kd_status'=>$status);
+            $pb->set_status($status);
             /*
             * sementara dulu
             * untuk update status tb, sambil nunggu fungsi yg benar :(
-            */
+            *
             $curr_month = (int) date('m');
             $curr_year = (int) date('Y');
             $name = $pb->get_nama();
@@ -485,10 +489,10 @@ class PenerimaController extends BaseController{
             if($is_cuti){
                 $pb->set_status(4);
                 $data = array('str_status'=>StatusPB::status_int_string(4),'kd_status'=>4);
-            }else{
+            }else{ */
                 /*
                 * st
-                */
+                *
                 $kd_st = $pb->get_st();
                 $st = new SuratTugas($this->registry);
                 $is_child = $st->is_child($kd_st);
@@ -506,11 +510,12 @@ class PenerimaController extends BaseController{
                     $data = array('str_status'=>StatusPB::status_int_string(1),'kd_status'=>1);
                 }
             }
-            
+            */
             /*
             * end update status
             */
         }
+//        echo $status;
         $pb->update_penerima();
         
         echo json_encode($data);

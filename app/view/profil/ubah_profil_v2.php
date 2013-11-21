@@ -26,7 +26,7 @@
 			<input type="text" id="nama" name="nama" disabled value="<?php echo $this->d_pb->get_nama();?>"/>
 
 			<label class="isian">Jenis Kelamin :</label>
-			<input type="text" id="jenis_kelamin" name="jenis_kelamin" disabled value="<?php echo ($this->d_pb->get_jkel()==1)?'Laki-laki':'Perempuan';?>"/>
+			<input type="text" id="jenis_kelamin" name="jenis_kelamin" disabled value="<?php echo ($this->d_pb->get_jkel()=="L")?'Laki-laki':'Perempuan';?>"/>
 			
 			<label class="isian">Pangkat/Gol :</label>
                         <input type="text" id="pangkat" name="pangkat" disabled value="<?php echo Golongan::golongan_int_string($this->d_pb->get_gol());?>"/>
@@ -62,10 +62,10 @@
 			<label class="isian">Unggah Foto :</label>
 <!--                        <input type="file" id="foto" name="fotoinput">-->
 			<ul class="inline">
-				<li><input type="file" id="foto" name="fotoinput" style="display: none" onChange="FotoChange();"/>
-				<input class="unggah" type="text" id="filefoto" disabled /></li>
+				<li><input type="file" id="foto" name="fotoinput"  onChange="FotoChange();"/>
+<!--				<input class="unggah" type="text" id="filefoto" disabled /></li>
 				<li><input type="button" class="lihat" value="Pilih..." id="fakeBrowse" onclick="BrowseFoto();"/>
-				</li> &nbsp
+				</li> -->
 <!--				<li><input type="button" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_foto();?>','foto');" value="Lihat Foto"></li>-->
                                 <li><a href="#" onclick="view_file('<?php echo $this->d_pb->get_foto();?>','foto');">lihat foto</a></li>
 			</ul>
@@ -104,36 +104,13 @@
 			<input type="text" id="th_masuk" name="th_masuk" disabled value="<?php echo $this->d_st->get_th_masuk();?>"/>
 			
 			<label class="isian">Status Tugas Belajar (TB) :</label>
-<!--			<select type="text">
-				<option>belum lulus</option>
-				<option>lulus</option>
-				<option>lulus awal waktu</option>
-				<option>lulus dengan perpanjangan 1</option>
-				<option>lulus dengan perpanjangan 2</option>
-				<option>tidak lulus</option>-->
                         <input type="hidden" id="kd_sts_pb" value="<?php echo $this->d_pb->get_status()?>">
                         <ul class="inline">
                             <li><input type="text" id="sts_tb" disabled value="<?php echo StatusPB::status_int_string($this->d_pb->get_status());?>"></li>
-                            <?php if($this->d_pb->get_status()<5) {?>
+                            <?php //if($this->d_pb->get_status()<5) {?>
                             <li><input class="lihat" type="button" value="Tidak lulus" id="off" title="ubah status tidak lulus"/></li>
-                            <?php } ?>
+                            <?php //} ?>
                         </ul>
-                        
-                                <?php 
-//                                    foreach ($this->t_jst as $v){
-//                                        if($v->get_kode()==$this->d_jst->get_kode()){
-//                                            echo $this->d_jst->get_nama();
-//                                        }
-//                                        else{
-//                                            echo "<option value=".$v->get_kode().">".$v->get_nama()."</option>";
-//                                        }
-//                                    }
-                                ?>
-<!--			</select>-->
-			<!--row berikut hanya muncul jika status TB: lulus dan/atau tidak lulus -->
-			
-<!--			<label class="isian">Tanggal Akhir TB :</label>
-			<input type="text" id="tgl_akhir_TB" name="tgl_akhir_TB" disabled     />-->
 			
                         <label class="isian">Tanggal Lapor Selesai TB :</label>
 
@@ -143,25 +120,25 @@
 			<label class="isian">Unggah SKL :</label>
 			<!--input type="file" id="skl" name="skl" /-->
 			<ul class="inline">
-				<li><input type="file" id="SKL" name="sklinput" style="display: none" onChange="Handlechange();"/>
-				<input class="unggah" type="text" id="filename" disabled /></li>
+				<li><input type="file" id="SKL" name="sklinput"  onChange="Handlechange();"/>
+<!--				<input class="unggah" type="text" id="filename" disabled /></li>
 				<li><input class="lihat" type="button" value="Pilih..." id="fakeBrowse" onclick="HandleBrowseClick();"/>
-				</li>
+				</li>-->
 <!--				<li><input type="button" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');" value="Lihat SKL"></li>-->
-                                <li><a href="#" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');">lihat skl</a></li>
+                                <li><a href="#" onclick="view_file('<?php echo $this->d_pb->get_skl();?>','skl');"> lihat skl</a></li>
                         </ul>
                         
 			<div class="error" id="wspmt"></div>
 			<label class="isian">Unggah SPMT :</label>
 <!--                        <input type="file" id="SPMT" name="spmtinput">-->
 			<ul class="inline">
-				<li><input type="file" id="SPMT" name="spmtinput" style="display: none" onChange="Change();"/>
-				<input class="unggah" type="text" id="namafile" disabled /></li>
+				<li><input type="file" id="SPMT" name="spmtinput"  onChange="Change();"/>
+<!--				<input class="unggah" type="text" id="namafile" disabled /></li>
 				<li><input class="lihat" type="button" value="Pilih..." id="fakeBrowse" onclick="BrowseClick();"/>
-				</li>
+				</li>-->
 				<!--li><input class="lihat" type="button" value="Lihat SPMT" id="" onclick="view_file('<?php //echo $this->d_pb->get_spmt();?>','skl');"/></li-->
 <!--				<li><input type="button" class="lihat" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','spmt');" value="Lihat SPMT"></li>-->
-                                <li><a href="#" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','spmt');" value="Lihat SPMT">lihat spmt</a></li>
+                                <li><a href="#" onclick="view_file('<?php echo $this->d_pb->get_spmt();?>','spmt');" value="Lihat SPMT"> lihat spmt</a></li>
 			</ul>
                         
 	</fieldset>
@@ -207,35 +184,6 @@
                             $this->load("profil/tabel_nilai");
                         ?>
                             </div>
-<!--			<ul class="inline">
-				<li><input type="file" id="IPK" name="fileipk" style="display: none" onChange="IPKchange();"/>
-				<input class="unggah" type="text" id="namafileipk" disabled /></li>
-				<li><input type="button" value="Pilih..." id="fakeBrowse" onclick="Pilih();"/>
-				</li>
-			</ul>
-			<input type="button" value=" Tambah" style="margin-right: 40px"/>
-			<table class="table-bordered zebra">
-				<thead>
-					<th>No</th>
-					<th>Keterangan</th>
-					<th>IP</th>
-					<th>File</th>
-				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td><input class="keterangan" type="text" id="ket" name="ket" /></td>
-						<td><input class="mini" type="text" id="IP" name="IP" /></td>
-						<td><input type="button" value="Pilih..." id="uplod_ip" name="uplod_ip" /></td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td><input class="keterangan" type="text" id="ket" name="ket" /></td>
-						<td><input class="mini" type="text" id="IP" name="IP" /></td>
-						<td><input type="button" value="Pilih..." id="uplod_ip" name="uplod_ip" /></td>
-					</tr>
-				</tbody>
-			</table>-->
 		
 		</fieldset>
 	</div>
@@ -289,9 +237,6 @@
     </form>
 </div>
 </div>
-<!--div top-->
-
-<!--</body>-->
 
 <script language="JavaScript" type="text/javascript">
 $(function(){
@@ -322,6 +267,8 @@ $(function(){
                 success:function(data){
                     document.getElementById('sts_tb').value = data.str_status;
                     document.getElementById('kd_sts_pb').value = data.kd_status;
+                    console.log(data.str_status);
+                    console.log(data.kd_status);
                     if(data.kd_status==9){
                        document.getElementById('off').value = "Kembali"; 
                     }else{
@@ -447,6 +394,7 @@ function open_dialog(id_pb,kategori){
     
     var w = 370;
     var h = 500;
+    if(kategori=='problem') h = 600;
     var left = (screen.width/2)-(w/2);
     var top = (screen.height/2)-(h/2);
     var title = "rekam penerima beasiswa";
@@ -575,7 +523,7 @@ function view_file(file,dokumen){
 var kd_pb = document.getElementById('kd_pb').value;
 $( "#dialog_add_problem" ).dialog({
         autoOpen: false,
-        height: 450,
+        height: 500,
         width: 400,
         modal: true,
         buttons: {

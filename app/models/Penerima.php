@@ -716,35 +716,55 @@ class Penerima {
     /*
      * cek hubungan pb dengan cuti dan surat tugas perpanjangan
      * param Penerima pb, jenis cek [cuti, st, all], luaran [false=boolean, true=status]
+     * cek = all, semua di cek
+     * is_lulus = cek apakah sudah lulus
+     * luaran => false jika luaran boolean
      * 
      */
     public function cek_pb_konek_st_ct(Penerima $pb,$jenis_cek='all',$is_lulus=false,$luaran=false){
+        if($pb->get_kd_pb()=='' || is_null($pb->get_kd_pb())) return false;
+        
         if($pb->get_st()=='' || is_null($pb->get_st())){
             $pb = $pb->get_penerima_by_id($pb);
         }
         $kd_st = $pb->get_st();
-        $status = 1;
+        $status = $pb->get_status();
         switch($jenis_cek){
             case 'all':
-                if(!$is_lulus){
-                    $sts_cuti = $this->cek_pb_konek_st_ct($pb, 'cuti',false);
-                    if($sts_cuti){
+                if(!$is_lulus){ //status belum lulus
+                    $sts_cuti = $this->cek_pb_konek_st_ct($pb, 'cuti',false); //cek masih cuti?
+//                    var_dump($sts_cuti);
+                    if($sts_cuti){ 
                         $status = $this->cek_pb_konek_st_ct($pb, 'cuti',false,true);
                         if($luaran){
                             return $status;
                         } 
                         return true;
-                    }else{
-                        $status = $this->cek_pb_konek_st_ct($pb, 'st', true, true);
+                    }else{ //jika tidak dalam keadaan cuti
+                        $status = $this->cek_pb_konek_st_ct($pb, 'st', false, true);
+                        return $status;
                     }
                 }else{
-                    $sts_cuti = $this->cek_pb_konek_st_ct($pb, 'cuti');
-                    $sts_st = $this->cek_pb_konek_st_ct($pb, 'st', false, true);
+                    //TO DO cek lebih ke st, tp cek dulu dia dalam keadaancuti apa tidak
+                    //klo dalam keadaan cuti ya tidak bisa dong, harus dikembalikan ke cuti
+                    $sts_cuti = $this->cek_pb_konek_st_ct($pb, 'cuti',true);
+                    if($sts_cuti){
+                        $status = $this->cek_pb_konek_st_ct($pb,'cuti',true,true);
+                        if($luaran){
+                            return $status;
+                        }
+                        return true;
+                    }else{
+                        $status = $this->cek_pb_konek_st_ct($pb, 'st', true, true);
+                        return $status;
+                    }
+                    
                 }
                 break;
             case 'cuti':
                 $ct = new Cuti($this->registry);
                 $d_ct = $ct->get_cuti(Session::get('kd_user'), $pb);
+                //TO DO cek apakah masa cuti masih ada
                 $exist_data = count($d_ct)>0;
                 if($exist_data){
                     if($luaran){
@@ -753,15 +773,21 @@ class Penerima {
                         return true;
                     }
                 }else{
-                    if($is_lulus){
+                    if($is_lulus){ //untuk kode lulus
                         if($luaran){
                             $status = $this->cek_pb_konek_st_ct($pb, 'st', true, true); //kode untuk lulus
                             return $status;
+                        }else{
+                            //TO DO kembalian boolean
+                            return true;
                         }
-                    }else{
+                    }else{ //untuk kode belum lulus
                         if($luaran){
                             $status = $this->cek_pb_konek_st_ct($pb, 'st', false, true); //kode sebelum lulus
                             return $status;
+                        }else{
+                            //TO DO kembalian boolean
+                            return false;
                         }
                     }
                     
@@ -773,11 +799,14 @@ class Penerima {
                 $st->set_kd_st($kd_st);
                 $st = $st->get_surat_tugas_by_id($st);
                 $tgl_sel_st = $st->get_tgl_selesai();
-                $child = $st->is_child($kd_st);
+                $child = $st->is_child($kd_st); //child pertama
                 if($child){
-                    $second_child = $st->is_child($kd_st);
-                    if($second_child){
-                        if($is_lulus) {
+                    $st_child = new SuratTugas($this->registry);
+                    $st_child->set_kd_st($st->get_st_lama()); //st parent
+                    $st_child = $st_child->get_surat_tugas_by_id($st_child);
+                    $second_child = $st_child->is_child($st_child->get_kd_st());
+                    if($second_child){ //jika child kedua
+                        if($is_lulus) { //untuk status lulus
                             if($pb->get_tgl_lapor()=='' || is_null($pb->get_tgl_lapor())){
                                 $tgl_lapor = date('Y-m-d');
                             }else{
@@ -787,7 +816,7 @@ class Penerima {
                         }else{
                             $status = 3;
                         }
-                        
+                        return $status;
                     }else{
                         if($is_lulus){
                             if($pb->get_tgl_lapor()=='' || is_null($pb->get_tgl_lapor())){
@@ -799,6 +828,7 @@ class Penerima {
                         }else{
                             $status = 2;
                         }
+                        return $status;
                     }
                 }
                 break;

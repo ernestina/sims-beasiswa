@@ -65,7 +65,7 @@
                     <tr><td colspan="3"><h4>INFORMASI PEGAWAI :</h4></td></tr>
                     <tr><td>Nama</td><td> : </td><td><?php echo $this->d_pb->get_nama();?></td></tr>
                     <tr><td>NIP</td><td> : </td><td><?php echo $this->d_pb->get_nip();?></td></tr>
-                    <tr><td>Jenis Kelamin</td><td> : </td><td><?php echo ($this->d_pb->get_jkel()==1)?'Laki-laki':'Perempuan';?></td></tr>
+                    <tr><td>Jenis Kelamin</td><td> : </td><td><?php echo ($this->d_pb->get_jkel()=="L")?'Laki-laki':'Perempuan';?></td></tr>
                     <tr><td>Pangkat/Gol</td><td> : </td><td><?php echo Golongan::golongan_int_string($this->d_pb->get_gol());?></td></tr>
                     <tr><td>Unit Asal</td><td> : </td><td><?php echo $this->d_pb->get_unit_asal();?></td></tr>
                     <tr><td>Alamat</td><td> : </td><td><?php echo $this->d_pb->get_alamat();?></td></tr>
