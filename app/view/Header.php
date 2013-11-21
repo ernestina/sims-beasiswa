@@ -49,7 +49,11 @@
 				$role="";
 				if(Session::get('role')==1){$role="admin";}
 				if(Session::get('role')==2){$role="pic";}
-				if(Session::get('role')==3){$role="umum";}
+				if(Session::get('role')==3){$role="pic bagian umum";}
+				if(Session::get('role')==4){$role="pic bagian keuangan";}
+				if(Session::get('role')==5){$role="pic bagian kepegawaian";}
+				if(Session::get('role')==6){$role="pic bagian pengembangan";}
+				
 				?>
                 <div style="float: top; margin-top: 20px"><?php echo Session::get('user').'</br>anda login sebagai '.  strtoupper($role);?></div>
             </div>
@@ -86,7 +90,7 @@
                     </li>
                     <?php } 
                     
-                    if(Auth::is_role('2') || Auth::is_role('3')){ ?>
+                    if(Auth::is_role('2') || Auth::is_role('3') || Auth::is_role('4') || Auth::is_role('6')){ ?>
                     <li class="subnav">
                         <a href="<?php echo URL . 'kontrak/display'; ?>">KONTRAK</a>
                         <ul>
@@ -97,19 +101,19 @@
 					<?php } ?>
 					
 					<?php
-					if(Auth::is_role('2') || Auth::is_role('3')){ ?>
+					if(Auth::is_role('2') || Auth::is_role('5') || Auth::is_role('6')){ ?>
                     <li class="subnav">
                         <a href="<?php echo URL . 'penerima/datapb'; ?>">PROFIL BEASISWA</a>
                         <ul>
-                            <?php if(Auth::is_role('2')){ ?><li><a href="<?php echo URL . 'surattugas/datast' ?>"><i class="icon-file icon-white"></i>  Surat Tugas</a></li><?php } ?>
-                            <?php if(Auth::is_role('2') || Auth::is_role('3')){ ?><li><a href="<?php echo URL . 'penerima/datapb'; ?>"><i class="icon-user icon-white"></i>  Penerima Beasiswa</a></li><?php } ?>
-                            <?php if(Auth::is_role('2')){ ?><li><a href="<?php echo URL . 'cuti/datasc' ?>"><i class="icon-road icon-white"></i>  Surat Cuti</a></li><?php } ?>
+                            <?php if(Auth::is_role('2') || Auth::is_role('6')){ ?><li><a href="<?php echo URL . 'surattugas/datast' ?>"><i class="icon-file icon-white"></i>  Surat Tugas</a></li><?php } ?>
+                            <?php if(Auth::is_role('2') || Auth::is_role('5') || Auth::is_role('6')){ ?><li><a href="<?php echo URL . 'penerima/datapb'; ?>"><i class="icon-user icon-white"></i>  Penerima Beasiswa</a></li><?php } ?>
+                            <?php if(Auth::is_role('2') || Auth::is_role('6')){ ?><li><a href="<?php echo URL . 'cuti/datasc' ?>"><i class="icon-road icon-white"></i>  Surat Cuti</a></li><?php } ?>
                         </ul>
                     </li>
 					<?php } ?>
 					
 					<?php
-					if(Auth::is_role('2') || Auth::is_role('3')){ ?>
+					if(Auth::is_role('2') || Auth::is_role('4') || Auth::is_role('6')){ ?>
                     <li class="subnav">
                         <a href="<?php echo URL . 'elemenBeasiswa/mon_pembayaran' ?>">ELEMEN BEASISWA</a>
                         <ul>

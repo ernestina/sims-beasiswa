@@ -22,7 +22,7 @@ class KontrakController extends BaseController {
         if(Session::get('role')==2){
 			$univ = $universitas->get_univ_by_pic($kd_user);
 		}
-		if(Session::get('role')==3){
+		else{
 			$univ = $universitas->get_univ();
 		}
         $this->view->kd_univ = $univ;
@@ -43,10 +43,10 @@ class KontrakController extends BaseController {
         if ($univ == "") {
 			if(Session::get('role')==2){
 				$data = $kontrak->get_All($user);
-			}
-			if(Session::get('role')==3){
+		}
+		else {
 				$data = $kontrak->get_All();
-			}
+		}
             
         } else {
             $data = $kontrak->get_by_univ($univ);
@@ -83,9 +83,9 @@ class KontrakController extends BaseController {
 			if(Session::get('role')==2){
 				$data = $kontrak->get_by_nomor($key, $user);
 			}
-			if(Session::get('role')==3){
+		else{
 				$data = $kontrak->get_by_nomor($key);
-			}
+		}
             
             $this->view->data = $data;
             //var_dump($data);
@@ -1038,7 +1038,7 @@ class KontrakController extends BaseController {
         if(Session::get('role')==2){
 			$univ = $universitas->get_univ_by_pic($kd_user);
 		}
-		if(Session::get('role')==3){
+		else{
 			$univ = $universitas->get_univ();
 		}
         $this->view->univ = $univ;
@@ -1058,7 +1058,7 @@ class KontrakController extends BaseController {
 			if(Session::get('role')==2){
 				$data_biaya = $biaya->get_by_filter($univ, $status, $tahun, $user);
 			}
-			if(Session::get('role')==3){
+			else{
 				$data_biaya = $biaya->get_by_filter($univ, $status, $tahun);
 			}
             
@@ -1100,7 +1100,7 @@ class KontrakController extends BaseController {
             if(Session::get('role')==2){
 				$data_biaya = $biaya->get_by_filter($univ, $status, $tahun, $user);
 			}
-			if(Session::get('role')==3){
+			else{
 				$data_biaya = $biaya->get_by_filter($univ, $status, $tahun);
 			}
 
