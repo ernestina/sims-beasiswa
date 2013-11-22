@@ -11,7 +11,7 @@
                         <div id="warningnip" ></div>
                         <label>NIP</label><input type="text" name="nip" id="nip" value="<?php echo $this->data->get_nip(); ?>" size="30"/>
                         <div id="warningnama" ></div>
-                        <label>Nama</label><input type="text" name="nama" id="nama" value="<?php // echo $this->data->get_nmUser(); ?>" size="30"/>
+                        <label>Nama</label><input type="text" name="nama" id="nama" value="<?php echo $this->data->get_nmUser(); ?>" size="30"/>
                         <div id="warningpass" ></div>
                         <label>Password</label><input type="password" name="pass" id="pass" value="no_change" size="30"/>
                         <label>Confirm Password</label><input type="password" name="cpass" id="cpass" value="no_change" size="30"/>
