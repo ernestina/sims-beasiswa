@@ -102,7 +102,7 @@
             //alert('ok')
             if ($('#setuju'+j).is(':checked')){
                 cek++;         
-                total_biaya = total_biaya + ($('#jml_hadir'+j).val()*0.01*$('#biaya_peg').val());
+                total_biaya = parseInt(total_biaya) + parseInt($('#biaya_peg').val());
             }      
         }
         $("#total_bayar").val(total_biaya);

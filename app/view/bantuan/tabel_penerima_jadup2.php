@@ -6,7 +6,7 @@
             <th width= '25%'>Nama</th>
             <th width= '10%'>Gol</th>
             <th width= '10%'>Status</th>
-            <th width= '10%' style="display:none">Jumlah Kehadiran (persentase)</th>
+            <th width= '10%' style="display:none;">Jumlah Kehadiran (persentase)</th>
 <!--            <th width= '10%'>Jumlah Kotor</th>-->
             <th width= '10%' style="font-size: 80%">Pajak (persentase)</th>
 <!--            <th width= '10%'>Jumlah Bersih</th>-->
@@ -29,12 +29,12 @@
             <td style="text-align: left"><?php echo $value->get_nama() . "<br/>NIP." . $value->get_nip(); ?></td>
             <td style="text-align: left"><?php echo Golongan::golongan_int_string($value->get_gol()); ?></td>
             <td><?php echo StatusPB::status_int_string($value->get_status()); ?></td>
-            <td style="display:none"><ul class="inline" style="margin-left: -40px"><li><input class="mini" type="hidden"  id="<?php echo 'jml_hadir' . $i; ?>" name="<?php echo 'jml_hadir' . $i; ?>" value="<?php if ($pb_el != false) {
+            <td style="display:none;"><ul class="inline" style="margin-left: -40px"><li><input class="mini" type="hidden"  id="<?php echo 'jml_hadir' . $i; ?>" name="<?php echo 'jml_hadir' . $i; ?>" value="<?php if ($pb_el != false) {
         echo $pb_el->kehadiran;
     } else {
         echo "0";
     } ?>" style="text-align: right"></li>
-			<li style="padding: 5px; vertical-align: top;">%</li>
+			<li style="display:none; padding: 5px; vertical-align: top;">%</li>
 		</ul>
 		</td>
     <!--            <td><input class="mini" type="text" id="<?php echo 'jml_kotor' . $i; ?>" name="jml_kotor" value="0"></td>-->
@@ -116,7 +116,7 @@
             //alert('ok')
             if ($('#setuju'+j).is(':checked')){
                 cek++;         
-                total_biaya = total_biaya + ($('#jml_hadir'+j).val()*0.01*$('#biaya_peg').val());
+                total_biaya = parseInt(total_biaya) + parseInt($('#biaya_peg').val());
             }      
         }
         $("#total_bayar").val(total_biaya);
