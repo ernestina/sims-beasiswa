@@ -17,9 +17,12 @@
                         <label>CONFIRM PASS</label><input type="password" name="cpass" id="cpass" value="" size="30"/>
                         <label>AKSES</label>
                         <select type="text" name="akses">
-                            <option value="1">Admin</option>
-                            <option value="2">User</option>
-                            <option value="3">Umum</option>
+                           <?php
+                           foreach ($this->data2 as $value) { ?>
+                            <option value="<?php echo $value->get_id_ruser() ?>"><?php echo $value->get_nama_ruser(); ?></option>                                          
+                           <?php
+                           }
+                           ?>
                         </select>
                         <label>Upload Foto</label><input type="file" name="upload" id="upload" value="" size="30"/>
 

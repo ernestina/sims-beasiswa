@@ -17,6 +17,8 @@ class User {
     private $_akses;
     private $_foto;
     private $_table2 = "r_user";
+    private $_idruser;
+    private $_namaruser;
 
     public function __construct($registry) {
         $this->registry = $registry;
@@ -217,6 +219,21 @@ class User {
         }
     }
 
+    public function get_ruser() {
+        $sql = "SELECT * FROM " . $this->_table2 . "";
+
+        $result = $this->_db->select($sql);
+
+        $data = array();
+        foreach ($result as $value) {
+            $ruser = new User($this->registry);
+            $ruser->set_id_ruser($value['id']);
+            $ruser->set_nama_ruser($value['nama']);
+            $data[] = $ruser;
+        }
+        return $data;
+    }
+
     public function get_id() {
         return $this->_id;
     }
@@ -263,6 +280,23 @@ class User {
 
     public function set_foto($foto) {
         $this->_foto = $foto;
+    }
+
+    // tabel ruser
+    public function get_id_ruser() {
+        return $this->_idruser;
+    }
+
+    public function set_id_ruser($kd_ruser) {
+        $this->_idruser = $kd_ruser;
+    }
+
+    public function get_nama_ruser() {
+        return $this->_namaruser;
+    }
+
+    public function set_nama_ruser($nama_ruser) {
+        $this->_namaruser = $nama_ruser;
     }
 
 }

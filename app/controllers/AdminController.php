@@ -776,6 +776,9 @@ class AdminController extends BaseController {
     public function listUser() {
         $user = new User($registry);
         $this->view->data = $user->get_user();
+        
+        $user2 = new User($registry);
+        $this->view->data2 = $user2->get_ruser();
 //        var_dump($user->get_user());
         $this->view->render('admin/list_user');
     }
@@ -834,6 +837,9 @@ class AdminController extends BaseController {
         $this->view->data = $user->getUser_id($id);
         $user2 = new User($registry);
         $this->view->data2 = $user2->get_user();
+        
+        $user3 = new User($registry);
+        $this->view->data3 = $user3->get_ruser();
         $this->view->render('admin/edit_user');
     }
 

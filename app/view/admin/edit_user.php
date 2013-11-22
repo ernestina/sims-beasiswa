@@ -11,28 +11,25 @@
                         <div id="warningnip" ></div>
                         <label>NIP</label><input type="text" name="nip" id="nip" value="<?php echo $this->data->get_nip(); ?>" size="30"/>
                         <div id="warningnama" ></div>
-                        <label>Nama</label><input type="text" name="nama" id="nama" value="<?php echo $this->data->get_nmUser(); ?>" size="30"/>
+                        <label>Nama</label><input type="text" name="nama" id="nama" value="<?php // echo $this->data->get_nmUser(); ?>" size="30"/>
                         <div id="warningpass" ></div>
                         <label>Password</label><input type="password" name="pass" id="pass" value="no_change" size="30"/>
                         <label>Confirm Password</label><input type="password" name="cpass" id="cpass" value="no_change" size="30"/>
                         <label>AKSES</label>
                         <select type="text" name="akses">
-                            <?php if($this->data->get_akses()=="2"){ ?>
-                                <option value="2">User</option>
-                                <option value="1">Admin</option>
-                                <option value="3">Umum</option>
-                           <?php  } if ($this->data->get_akses()=="1"){ ?>
-                                <option value="1">Admin</option>
-                                <option value="2">User</option>
-                                <option value="3">Umum</option>
-                           <?php } if ($this->data->get_akses()=="3") { ?>
-                               <option value="3">Umum</option>
-                               <option value="1">Admin</option>
-                               <option value="2">User</option>                            
-                           <?php 
+                           <?php
+                           foreach ($this->data3 as $value) { ?>
+                            <option value="<?php echo $value->get_id_ruser() ?>"
+                                    <?php
+                                        if ($value->get_id_ruser() == $this->data->get_akses()){
+                                            echo 'selected';
+                                        }
+                                    ?>
+                                    >
+                                        <?php echo $value->get_nama_ruser(); ?></option>                                          
+                           <?php
                            }
-                           ?>
-                                                     
+                           ?>                                        
                         </select>
                         <label>Upload Foto</label><input type="file" name="upload" id="upload" value="" size="30"/>
                         <ul class="inline tengah">
