@@ -205,17 +205,29 @@ class User {
 
         $sql = "SELECT * FROM " . $this->_table . " WHERE " . $where . "";
         $result = $this->_db->select($sql);
-
+        
+//        var_dump($result);
         $pic = new User($registry);
         foreach ($result as $value) {
             $pic->set_id($value['KD_USER']);
             $pic->set_akses($value['AKSES_USER']);
+            $pic->set_foto($value['FOTO_USER']);
         }
-
+        $foto = "files/foto/".$pic->get_foto();
+        
+        $foto2 = explode('.', $pic->get_foto());
+        
+        $foto_small = $foto2[0].'_small.'.$foto2[1];
+//        var_dump($foto);
+        $foto_small_path = "files/foto/".$foto_small;
+        
+//        var_dump($foto_small_path);
         if ($pic->get_akses() == '1') {
             
         } else {
             $this->_db->delete($this->_table, $where);
+            if(file_exists($foto))unlink($foto);
+            if(file_exists($foto_small_path))unlink($foto_small_path);
         }
     }
 
