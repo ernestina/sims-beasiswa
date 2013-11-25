@@ -35,8 +35,8 @@
 		<div id="menu">
 		<ul>
 		<li class="nav"><a> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp </a></li>
-		<li class="nav"><a href="<?php echo URL; ?>notifikasi"> NOTIFIKASI</a></li>
-		<li class="nav"><a href="<?php echo URL; ?>index"> PEGAWAI</a></li>
+		<li class="nav"><a href="<?php echo URL; ?>notifikasi/index/1" title="tampilan semua notifikasi"> NOTIFIKASI I</a></li>
+		<li class="nav"><a href="<?php echo URL; ?>notifikasi/index/2" title="jumlah notifikasi per PIC"> NOTIFIKASI II</a></li>
 		</ul>
 		</div>
             

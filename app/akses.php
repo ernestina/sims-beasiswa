@@ -251,6 +251,8 @@ $akses['Penerima'] = array(
  */
 $akses['Notifikasi'] = array('__construct',
                 'index',
+                'notif_all',
+                'notif_pic',
                 'display_notif',
                 '__destruct'
                 );

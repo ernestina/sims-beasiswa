@@ -11,14 +11,66 @@ class NotifikasiController extends BaseController{
         parent::__construct($registry);
     }
     
-    public function index(){
-        $this->view->d_notif = $this->get_notifikasi();
+    public function index($notif=1){
+        if($notif==1) $this->notif_all();
+        if($notif==2) $this->notif_pic();
+    }
+    
+    public function notif_all(){
+        $d_notif = $this->get_notifikasi();
+        
+        $this->view->d_notif = $d_notif;
         $this->view->load('notifikasi');
     }
     
+    public function notif_pic(){
+        $pic = new User($this->registry);
+        $data_pic = $pic->get_user(true);
+        $d_notif = $this->get_notifikasi_pic_all();
+        $data_arr = array();
+        $i=0;
+        foreach ($data_pic as $val){
+            $temp = array();
+            $temp['pic'] = array('kode'=>$val->get_id(),"nama"=>$val->get_nmUser(),"foto"=>$val->get_foto());
+            foreach($d_notif as $v){
+                $kode = $v['pic']['kode'];
+                if($kode == $val->get_id()){
+                    if(isset($v['jadup'])){
+                        $temp['jadup'] = $v['jadup'];
+                    }
+                    
+                    if(isset($v['buku'])){
+                        $temp['buku'] = $v['buku'];
+                    }
+                    
+                    if(isset($v['kontrak'])){
+                        $temp['kontrak'] = $v['kontrak'];
+                    }
+                    
+                    if(isset($v['skripsi'])){
+                        $temp['skripsi'] = $v['skripsi'];
+                    }
+                    
+                    if(isset($v['skripsi'])){
+                        $temp['skripsi'] = $v['skripsi'];
+                    }
+                }
+            }
+            $data_arr[] = $temp;
+            $i++;
+        }
+        
+//        echo json_encode($data_arr);
+        $this->view->d_notif = json_encode($data_arr);
+        $this->view->load('informasi/notifikasi_pic');
+//        $this->view->d_notif = $this->get_notifikasi();
+//        $this->view->load('notifikasi');
+    }
+
+
     public function display_notif(){
-        $this->view->d_notif = $this->get_notifikasi();
-        $this->view->load('informasi/notifikasi');
+        $this->view->d_notif = $this->get_notifikasi_pic_all();
+        $this->view->load('informasi/notifikasi_pic');
     }
     
     private function get_notifikasi(){
@@ -68,6 +120,39 @@ class NotifikasiController extends BaseController{
 //        }
         
         return json_encode($d_notif);
+    }
+    
+    private function get_notifikasi_pic_all(){
+        $notif = new Notifikasi($this->registry);
+        $data_notif = $notif->get_notifikasi();
+        $d_notif = array();
+        foreach ($data_notif as $data){
+            $pic = $data->get_pic();
+            $temp = array();
+            $kode_pic = $pic['kode'];
+            $jenis = $data->get_jenis_notif();
+            $status = $data->get_status_notif();
+            if(array_key_exists($kode_pic, $d_notif)){
+                $temp = $d_notif[$kode_pic];
+                if(array_key_exists($jenis, $temp)){
+                    if(array_key_exists($status, $temp[$jenis])){
+                        $temp[$jenis][$status]++;
+                    }else{
+                        $temp[$jenis][$status] = 1;
+                    }
+                    
+                }else{
+                    $temp[$jenis][$status] = 1;
+                }
+                $d_notif[$kode_pic]=$temp;
+            }else{
+                $d_notif[$kode_pic]['pic'] = $pic;
+                $d_notif[$kode_pic][$jenis][$status] = 1;
+            }
+            
+        }
+        
+        return $d_notif;
     }
     
     private function get_notifikasi_pic($kd_user){
