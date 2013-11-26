@@ -140,9 +140,9 @@
                 var status_proses = data_notif[i].status==='proses'
 //                console.log(status_proses); 
                 if(status_proses){
-                    img.src = 'public/icon/purges.png'
+                    img.src = '<?php echo URL; ?>public/icon/purges.png'
                 }else{
-                    img.src = 'public/icon/notices.png'
+                    img.src = '<?php echo URL; ?>public/icon/notices.png'
                 }
                 
                 flag.appendChild(img);

@@ -235,7 +235,7 @@ var create_element = function(data_notif,max_data, time_per_item, div_container)
             /*
              * cek file exist
              */
-            var imgsrc = '<?php echo URL;?>files/foto/'+data_notif[i].pic.foto;
+            var imgsrc = '<?php echo URL; ?>files/foto/'+data_notif[i].pic.foto;
             var img1 = new Image();
             img1.src = imgsrc;
             if (img1.width!= 0) {
