@@ -4,6 +4,10 @@
     <title>.:Treascho:. Notifikasi</title>
     <script src="<?php echo URL; ?>public/js/jquery-2.0.3.min.js"></script>
     <style>
+        body{
+            background-image:url('../../public/img/bg.png');
+        }
+        
         .notif{
             padding: 5px 5% 5px 5%;
             border-radius:5px;
@@ -43,7 +47,7 @@
             background-color: #c73b1b;
 /*            background: rgba(215, 215, 215, 0.5); */
 /*            border: 1px solid grey;*/
-            width: 550px;
+            width: 45%;
             height: 340px;
             margin: 5px 5px 5px 2px;
         }
@@ -55,11 +59,13 @@
             height: 340px;
 /*            border: 1px solid #fff;*/
             float: left;
+            text-align: center;
         }
         
         .foto img{
             height: 200px;
             margin: 5px;
+            text-align: center;
             border: 2px solid #fff;
             display: block;
         }
@@ -96,10 +102,13 @@
             width: 40px;
             height: 40px;
             margin-left: 2px;
-            padding-left: 15px;
+            padding-left: 7px;
+            padding-right: 7px;
             padding-top: 10px;
             display:inline-block;
-            float:right
+            float:right;
+            font: 22px 'AvantGarde LT Medium','hooge 05_53',Georgia, Serif;
+            text-align: center;
         }
         
         .info.warning {
@@ -107,7 +116,7 @@
         }
         
         .info.proses {
-            background-color: greenyellow;
+            background-color: #3399FF; /*greenyellow*/
         }
         
         .jenis{
@@ -226,17 +235,16 @@ var create_element = function(data_notif,max_data, time_per_item, div_container)
             /*
              * cek file exist
              */
-            var imgsrc = 'files/foto/'+data_notif[i].pic.foto;
+            var imgsrc = '<?php echo URL;?>files/foto/'+data_notif[i].pic.foto;
             var img1 = new Image();
-            img1.onload = function () {}
             img1.src = imgsrc;
-//            if (img1.height != 0) {
+            if (img1.width!= 0) {
 //                console.log('ya')
-//                img.src = '<?php echo URL;?>files/foto/'+data_notif[i].pic.foto;
-//            }else{
+                img.src = '<?php echo URL;?>files/foto/'+data_notif[i].pic.foto;
+            }else{
 //                console.log('no')
-//                img.src = '<?php echo URL;?>files/foto/android.png';
-//            }
+                img.src = '<?php echo URL;?>files/foto/android.png';
+            }
 
             foto.appendChild(img);
             var nama = document.createElement('div');
@@ -325,7 +333,7 @@ var create_element = function(data_notif,max_data, time_per_item, div_container)
                 pesan.className = 'pesan';
                 var lulus = document.createElement('div');
                 lulus.className = 'jenis';
-                lulus.appendChild(document.createTextNode('Selesai Tugas Belajar'));
+                lulus.appendChild(document.createTextNode('Selesai TB'));
                 pesan.appendChild(lulus);
                 if(data_notif[i].lulus.hasOwnProperty('proses')){
                     var proses = document.createElement('div');
