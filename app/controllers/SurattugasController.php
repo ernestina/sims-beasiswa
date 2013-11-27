@@ -64,13 +64,17 @@ class SurattugasController extends BaseController{
         $jur = new Jurusan($this->registry);
         $pemb = new PemberiBeasiswa();
         $this->view->d_pemb = $pemb->get_All();
-        $this->view->d_st_lama = $st->get_surat_tugas($this->kd_user);
+        if(Session::get('role')==2) $this->view->d_st_lama = $st->get_surat_tugas($this->kd_user);
         $this->view->d_jst = $st->get_st_class();
-        $this->view->d_univ = $univ->get_univ($this->kd_user);
+        if(Session::get('role')==2) $this->view->d_univ = $univ->get_univ($this->kd_user);
         $this->view->d_jur = $jur->get_jurusan();
         $this->view->d_th_masuk = $st->get_list_th_masuk(true);
         $this->view->d_th_masuk_input = $st->get_list_th_masuk(false);
-        $this->view->d_st_all = $st->get_surat_tugas($this->kd_user);
+        if(Session::get('role')==2) {
+            $this->view->d_st_all = $st->get_surat_tugas($this->kd_user);
+        }else{
+            $this->view->d_st_all = $st->get_surat_tugas();
+        }
         $this->view->aksi = json_encode($aksi);
         $this->view->d_file_exist = json_encode($file);
         if($id!=0){
@@ -89,12 +93,19 @@ class SurattugasController extends BaseController{
         $this->view->paging = new Paging($url, $batas, $halaman);
         $this->view->jmlData = count($this->view->d_st_all);
         $posisi = $this->view->paging->cari_posisi();
-        $this->view->d_st = $st->get_surat_tugas_limit($posisi, $batas, $this->kd_user);
+        if(Session::get('role')==2){
+            $this->view->d_st = $st->get_surat_tugas_limit($posisi, $batas, $this->kd_user);
+        }  else {
+            $this->view->d_st = $st->get_surat_tugas_limit($posisi, $batas);
+        }
         /**end paging**/
         $this->view->render('riwayat_tb/data_st');
     }
     
     public function updst(){
+        if(Session::get('role')!=2){
+            $this->datast();
+        }
         $st = new SuratTugas($this->registry);
         
         $kd_st = $_POST['kd_st'];
@@ -145,6 +156,9 @@ class SurattugasController extends BaseController{
      * hapus surat tugas
      */
     public function del_st($kd_st){
+        if(Session::get('role')!=2){
+            $this->datast();
+        }
         $st = new SuratTugas($this->registry);
         $st->set_kd_st($kd_st);
         $st->get_surat_tugas_by_id($st);
@@ -210,8 +224,14 @@ class SurattugasController extends BaseController{
         $this->view->kd_st=$id;
         $this->view->d_bank = $bank->get_bank();
         $this->view->d_univ = $univ->get_univ();
-        $this->view->d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
-        $this->view->d_pb = $pb->get_penerima_by_st($pb,$this->kd_user);
+        if(Session::get('role')==2){
+            $this->view->d_st = $st->get_surat_tugas_by_id($st,$this->kd_user);
+            $this->view->d_pb = $pb->get_penerima_by_st($pb,$this->kd_user);
+        }else{
+            $this->view->d_st = $st->get_surat_tugas_by_id($st);
+            $this->view->d_pb = $pb->get_penerima_by_st($pb);
+        }
+        
         $this->view->d_th_masuk = $st->get_list_th_masuk();
 //        var_dump($this->view->d_st);
         $this->view->render('riwayat_tb/pb_to_st');
@@ -221,6 +241,9 @@ class SurattugasController extends BaseController{
      * delete pb dari st
      */
     public function del_pb_from_st(){
+        if(Session::get('role')!=2){
+            $this->datast();
+        }
         $d = $_POST['param'];
         $d = explode(",",$d);
         $pb = new Penerima($this->registry);

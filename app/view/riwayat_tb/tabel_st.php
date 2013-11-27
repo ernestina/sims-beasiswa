@@ -24,9 +24,13 @@
                         echo "<td>".Tanggal::tgl_indo($val->get_tgl_selesai())."</td>";
                         echo "<td>".$val->get_jenis_st()."</td>";
                         echo "<td style='text-align: left'>".$val->get_jur()."</td>";
+                        if(Session::get('role')==2){
                         echo "<td><center><a href=".URL."surattugas/addpb/".$val->get_kd_st()." title='tambah penerima ST'><i class=\"icon-user\"></i></a>  &nbsp 
                             <a href=".URL."surattugas/del_st/".$val->get_kd_st()." onClick='return del(\"".$val->get_nomor()."\")' title='hapus'><i class=\"icon-trash\"></i></a> &nbsp 
                             <a href=".URL."surattugas/datast/".$val->get_kd_st()." title='ubah'><i class=\"icon-pencil\"></i></a></td></center>";
+                        }else{
+                            echo "<td><center><a href=".URL."surattugas/addpb/".$val->get_kd_st()." title='tambah penerima ST'><i class=\"icon-user\"></i></a></td></center>";
+                        }
                         echo "</tr>";
                         $no++;
                     }

@@ -27,7 +27,7 @@ class Index extends BaseController{
             $temp[] = $pb->get_jumlah_pegawai('universitas', $univ);
             $d_univ[] = $temp;
         }
-        $this->view->is_pic = Session::get('role')==2;
+        $this->view->is_pic = Session::get('role')==2 || Session::get('role')==3 || Session::get('role')==4 || Session::get('role')==5 || Session::get('role')==6;
         $this->view->d_univ = $d_univ;
         $this->view->d_user = $d_user;
         $this->view->d_notif = $this->get_notifikasi();
@@ -73,6 +73,24 @@ class Index extends BaseController{
             $is_notif_for_user = $kode_pic==$this->kd_user;
             if($is_notif_for_user) {
                 $d_notif[] = $temp;
+            }else{
+                $id = Session::get('role');
+                $jenis = $temp['jenis'];
+                if($id==3){
+                    if($jenis=='kontrak') $d_notif[] = $temp;
+                }
+                if($id==4){
+                    if($jenis=='kontrak') $d_notif[] = $temp;
+                    if($jenis=='jadup') $d_notif[] = $temp;
+                    if($jenis=='buku') $d_notif[] = $temp;
+                    if($jenis=='skripsi') $d_notif[] = $temp;
+                }
+                if($id==5){
+                    if($jenis=='lulus') $d_notif[] = $temp;
+                }
+                if($id==6){
+                    $d_notif[] = $temp;
+                }
             }
         }
         

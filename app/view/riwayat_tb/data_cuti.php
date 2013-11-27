@@ -1,5 +1,6 @@
 <div id="top"> <!-- FORM -->
     <h2>DATA SURAT CUTI</h2>
+    <?php if(Session::get('role')==2){ ?>
     <div class="kolom3">
         <fieldset><legend><?php 
                             if(isset($this->d_ubah)){
@@ -151,6 +152,7 @@
 		</div>
             </fieldset>
     </div>
+    <?php } ?>
 <div class="kolom4"> <!-- TABEL DATA -->
     
         <fieldset><legend>Daftar Surat Cuti</legend>

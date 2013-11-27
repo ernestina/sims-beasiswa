@@ -1,5 +1,6 @@
 <div id="top"> <!-- FORM -->
     <h2>DATA SURAT TUGAS</h2>
+    <?php if(Session::get('role')==2){?>
     <div class="kolom3">
         <fieldset><legend>
                 <?php 
@@ -174,6 +175,7 @@
 		</div>
             </fieldset>
     </div>
+    <?php } ?>
 <div class="kolom4"> <!-- TABEL DATA -->
     
         <fieldset><legend>Daftar Surat Tugas</legend>

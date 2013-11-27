@@ -84,9 +84,15 @@ class CutiController extends BaseController{
         $univ = new Universitas($this->registry);
         $st = new SuratTugas($this->registry);
         $pb = new Penerima($this->registry);
-        $this->view->d_pb = $pb->get_penerima($this->kd_user);
-        $this->view->d_ct_all = $ct->get_cuti($this->kd_user);
-        $this->view->d_univ = $univ->get_univ($this->kd_user);
+        if(Session::get('role')==2){
+            $this->view->d_pb = $pb->get_penerima($this->kd_user);
+            $this->view->d_ct_all = $ct->get_cuti($this->kd_user);
+            $this->view->d_univ = $univ->get_univ($this->kd_user);
+        }else{
+            $this->view->d_pb = $pb->get_penerima(0);
+            $this->view->d_ct_all = $ct->get_cuti(0);
+            $this->view->d_univ = $univ->get_univ();
+        }
         $this->view->d_jsc = $jsc->get_jsc();
         $this->view->d_th_masuk = $st->get_list_th_masuk();
         $this->view->curr_year = date('Y');
@@ -102,12 +108,20 @@ class CutiController extends BaseController{
         $this->view->paging = new Paging($url, $batas, $halaman);
         $this->view->jmlData = count($this->view->d_ct_all);
         $posisi = $this->view->paging->cari_posisi();
-        $this->view->d_ct = $ct->get_cuti_limit($posisi, $batas, $this->kd_user);
+        if(Session::get('role')==2){
+            $this->view->d_ct = $ct->get_cuti_limit($posisi, $batas, $this->kd_user);
+        }else{
+            $this->view->d_ct = $ct->get_cuti_limit($posisi, $batas, 0);
+        }
+        
         /**end paging**/
         $this->view->render('riwayat_tb/data_cuti');
     }
     
     public function del_sc($kd_cuti){
+        if(Session::get('role')!=2){
+            $this->datasc();
+        }
         $ct = new Cuti($this->registry);
         $ct->set_kode_cuti($kd_cuti);
         $ct->get_cuti_by_id($ct, $this->kd_user);
@@ -151,6 +165,9 @@ class CutiController extends BaseController{
     }
     
     public function updct(){
+        if(Session::get('role')!=2){
+            $this->datasc();
+        }
         $kd_ct = $_POST['kd_sc'];
         $jsc = $_POST['jsc'];
         $kd_pb = $_POST['kd_pb'];
