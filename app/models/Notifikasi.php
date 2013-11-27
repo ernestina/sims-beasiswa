@@ -697,7 +697,7 @@ class Notifikasi{
             $notif->set_jatuh_tempo($st['TGL_SEL_ST']);
             
             if($is_notif){
-//                echo $kontrak['KD_ST']."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+                echo $kontrak['KD_ST']."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
                 $complete = $this->is_complete_gradute_st($st['KD_ST']);
 //                var_dump($complete);
                 if(!$complete){
@@ -931,7 +931,7 @@ class Notifikasi{
         foreach($d_pb as $pb){
             $tgl_lapor = $pb['TGL_LAPOR_PB'];
             $cek_st_child = $this->cek_st_child($pb['KD_PB'], $kd_st);
-            $is_lapor = ($tgl_lapor!='')&&($tgl_lapor!=null);
+            $is_lapor = ($tgl_lapor!='') && ($tgl_lapor!=null) && ($tgl_lapor!='0000-00-00');
             if(!$is_lapor){
                 if(!$cek_st_child){
                     $count++;
