@@ -3,6 +3,7 @@
 <head>
     <title>.:Treascho:. Notifikasi</title>
     <script src="<?php echo URL; ?>public/js/jquery-2.0.3.min.js"></script>
+	<link rel="icon" type="image/png" href="<?php echo URL; ?>public/img/treascho-ico.png">
     <style>
         body{
             background-image:url('../../public/img/bg.png');
