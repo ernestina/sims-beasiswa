@@ -697,7 +697,7 @@ class Notifikasi{
             $notif->set_jatuh_tempo($st['TGL_SEL_ST']);
             
             if($is_notif){
-                echo $kontrak['KD_ST']."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+//                echo $kontrak['KD_ST']."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
                 $complete = $this->is_complete_gradute_st($st['KD_ST']);
 //                var_dump($complete);
                 if(!$complete){
@@ -928,6 +928,7 @@ class Notifikasi{
         $sql = "SELECT KD_PB,TGL_LAPOR_PB FROM d_pb WHERE KD_ST=".$kd_st;
         $count=0;
         $d_pb = $this->_db->select($sql);
+        $jml_pb = count($d_pb);
         foreach($d_pb as $pb){
             $tgl_lapor = $pb['TGL_LAPOR_PB'];
             $cek_st_child = $this->cek_st_child($pb['KD_PB'], $kd_st);
@@ -938,7 +939,7 @@ class Notifikasi{
                 }
             }
         }
-        return $count>0?false:true;
+        return $count!=$jml_pb?false:true;
     }
     
     /*
