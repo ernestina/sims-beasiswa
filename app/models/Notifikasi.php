@@ -676,8 +676,8 @@ class Notifikasi{
             LEFT JOIN r_jur c ON a.KD_JUR=c.KD_JUR
             LEFT JOIN r_fakul d ON c.KD_FAKUL=d.KD_FAKUL
             LEFT JOIN r_univ e ON d.KD_UNIV=e.KD_UNIV
-            LEFT JOIN d_user f ON e.KD_USER=f.KD_USER
-            WHERE a.TGL_SEL_ST > NOW()";
+            LEFT JOIN d_user f ON e.KD_USER=f.KD_USER";
+//            WHERE a.TGL_SEL_ST > NOW()";
 //        echo $sql;
         $d_st = $this->_db->select($sql);
         foreach ($d_st as $st){
@@ -695,12 +695,12 @@ class Notifikasi{
             $notif->set_tahun_masuk($st['THN_MASUK']);
             $notif->set_univ($st['SINGKAT_UNIV']);
             $notif->set_jatuh_tempo($st['TGL_SEL_ST']);
-            
+//            var_dump($is_notif);
             if($is_notif){
 //                echo $kontrak['KD_ST']."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
                 $complete = $this->is_complete_gradute_st($st['KD_ST']);
 //                var_dump($complete);
-                if(!$complete){
+                if($complete==false){
                     $this->_notif_data[] = $notif;
                 }
             }else{
@@ -709,7 +709,7 @@ class Notifikasi{
                 $selesai = strtotime($st['TGL_SEL_ST']);//echo "-".$selesai.':'.$st['TGL_SEL_ST'];
                 $is_lewat = $now>$selesai;                //var_dump($is_lewat);
                 if($is_lewat){
-                    if(!$complete){
+                    if($complete==false){
 //                        echo $kontrak['KD_ST']."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
                         $this->_notif_data[] = $notif;
                     } 
@@ -928,18 +928,19 @@ class Notifikasi{
         $sql = "SELECT KD_PB,TGL_LAPOR_PB FROM d_pb WHERE KD_ST=".$kd_st;
         $count=0;
         $d_pb = $this->_db->select($sql);
-        $jml_pb = count($d_pb);
+        $jml_pb = count($d_pb); 
         foreach($d_pb as $pb){
             $tgl_lapor = $pb['TGL_LAPOR_PB'];
             $cek_st_child = $this->cek_st_child($pb['KD_PB'], $kd_st);
             $is_lapor = ($tgl_lapor!='') && ($tgl_lapor!=null) && ($tgl_lapor!='0000-00-00');
-            if(!$is_lapor){
-                if(!$cek_st_child){
+            if($is_lapor==false){
+                if($cek_st_child==false){
                     $count++;
                 }
             }
         }
-        return $count!=$jml_pb?false:true;
+//        echo $count."-".$jml_pb;
+        return ($count==$jml_pb);
     }
     
     /*
