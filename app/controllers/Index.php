@@ -40,6 +40,7 @@ class Index extends BaseController{
         $notif = new Notifikasi($this->registry);
         $data = $notif->get_notifikasi();
 //        print_r($data);
+//        print_r($data);
         $d_notif = array();
         foreach ($data as $data){
             $pic = $data->get_pic();
@@ -68,7 +69,8 @@ class Index extends BaseController{
                 'jurusan'=>$data->get_jurusan(),
                 'univ'=>$data->get_univ(),
                 'jenis'=>$data->get_jenis_notif(),
-                'status'=>$data->get_status_notif()
+                'status'=>$data->get_status_notif(),
+                'link'=>$data->get_kode_link()
             );
             $is_notif_for_user = $kode_pic==$this->kd_user;
             if($is_notif_for_user) {

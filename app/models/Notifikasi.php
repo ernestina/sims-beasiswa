@@ -701,6 +701,8 @@ class Notifikasi{
                 $complete = $this->is_complete_gradute_st($st['KD_ST']);
 //                var_dump($complete);
                 if($complete==false){
+                    $d_lapor = $this->is_complete_gradute_st($st['KD_ST'],true);
+                    $notif->set_kode_link($d_lapor);
                     $this->_notif_data[] = $notif;
                 }
             }else{
@@ -711,6 +713,8 @@ class Notifikasi{
                 if($is_lewat){
                     if($complete==false){
 //                        echo $kontrak['KD_ST']."-".$bulan."-".$notif->get_jenis_notif()."-".$notif->get_jurusan()."-".$notif->get_tahun_masuk()."-".$notif->get_univ()."-".$notif->get_status_notif()."</br>";
+                        $d_lapor = $this->is_complete_gradute_st($st['KD_ST'],true);
+                    $notif->set_kode_link($d_lapor);
                         $this->_notif_data[] = $notif;
                     } 
                 }
@@ -924,7 +928,7 @@ class Notifikasi{
      * cek pb sudah lulus semua di st
      * dari kolom tanggal lapor
      */
-    public function is_complete_gradute_st($kd_st){
+    public function is_complete_gradute_st($kd_st, $return=false){
         $sql = "SELECT KD_PB,TGL_LAPOR_PB FROM d_pb WHERE KD_ST=".$kd_st;
         $count=0;
         $d_pb = $this->_db->select($sql);
@@ -939,7 +943,10 @@ class Notifikasi{
                 }
             }
         }
-        //echo $count."-".$jml_pb;
+//        echo $count."-".$jml_pb;
+        if($return){
+            return array("lapor"=>$count,"jmlpb"=>$jml_pb);
+        }
         return ($count==$jml_pb);
     }
     

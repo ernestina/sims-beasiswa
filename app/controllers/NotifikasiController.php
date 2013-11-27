@@ -108,7 +108,8 @@ class NotifikasiController extends BaseController{
                 'jurusan'=>$data->get_jurusan(),
                 'univ'=>$data->get_univ(),
                 'jenis'=>$data->get_jenis_notif(),
-                'status'=>$data->get_status_notif()
+                'status'=>$data->get_status_notif(),
+                'link'=>$data->get_kode_link()
             );
             $d_notif[] = $temp;
             $i++;
@@ -187,7 +188,8 @@ class NotifikasiController extends BaseController{
                 'jurusan'=>$data->get_jurusan(),
                 'univ'=>$data->get_univ(),
                 'jenis'=>$data->get_jenis_notif(),
-                'status'=>$data->get_status_notif()
+                'status'=>$data->get_status_notif(),
+                'link'=>$data->get_kode_link()
             );
             $is_notif_for_user = $kode_pic==$kd_user;
             if($is_notif_for_user) {

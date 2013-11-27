@@ -32,7 +32,7 @@
                 $jenis = 'Pegawai TB dari ';
                 $url = URL.'penerima/datapb';
                 $judul_notif = 'MASA TUGAS BELAJAR';
-                $pesan = $jenis." ".$v['univ']." - ".$v['jurusan']." ".$v['tahun_masuk']." selesai bulan ".$v['bulan']." ".$v['tahun'];
+                $pesan = $jenis." ".$v['univ']." - ".$v['jurusan']." ".$v['tahun_masuk']." telah lapor ".$v['link']['lapor']." dari ".$v['link']['jmlpb']." pegawai";
                 break;
             case 'kontrak':
                 $jenis = 'Tagihan Kontrak ';

@@ -93,7 +93,8 @@
                         li.className = 'inline noti lulus';
                         jenis = 'Pegawai TB dari '
                         judul_notif = 'MASA TUGAS BELAJAR'
-                        pesan = jenis+" "+data_notif[i].univ+" - "+data_notif[i].jurusan+" "+data_notif[i].tahun_masuk+" selesai bulan "+data_notif[i].bulan+" "+data_notif[i].tahun;
+//                        pesan = jenis+" "+data_notif[i].univ+" - "+data_notif[i].jurusan+" "+data_notif[i].tahun_masuk+" selesai bulan "+data_notif[i].bulan+" "+data_notif[i].tahun;
+                        pesan = jenis+" "+data_notif[i].univ+" - "+data_notif[i].jurusan+" "+data_notif[i].tahun_masuk+" telah lapor "+data_notif[i].link.lapor+" dari "+data_notif[i].link.jmlpb+" pegawai";
                         break;
                     case 'kontrak':
                         li.className = 'inline noti kontrak';
