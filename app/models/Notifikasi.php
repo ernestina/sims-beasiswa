@@ -939,7 +939,7 @@ class Notifikasi{
                 }
             }
         }
-        echo $count."-".$jml_pb;
+        //echo $count."-".$jml_pb;
         return ($count==$jml_pb);
     }
     
