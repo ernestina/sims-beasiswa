@@ -66,7 +66,11 @@ class SurattugasController extends BaseController{
         $this->view->d_pemb = $pemb->get_All();
         if(Session::get('role')==2) $this->view->d_st_lama = $st->get_surat_tugas($this->kd_user);
         $this->view->d_jst = $st->get_st_class();
-        if(Session::get('role')==2) $this->view->d_univ = $univ->get_univ($this->kd_user);
+        if(Session::get('role')==2) {
+            $this->view->d_univ = $univ->get_univ($this->kd_user);
+        }else{
+            $this->view->d_univ = $univ->get_univ();
+        }
         $this->view->d_jur = $jur->get_jurusan();
         $this->view->d_th_masuk = $st->get_list_th_masuk(true);
         $this->view->d_th_masuk_input = $st->get_list_th_masuk(false);
@@ -184,8 +188,10 @@ class SurattugasController extends BaseController{
         $this->view->d_st=array();
         if($univ==0 AND $thn==0){
             $this->view->d_st = $st->get_surat_tugas($this->kd_user);
+            if(Session::get('role')!=2) $this->view->d_st = $st->get_surat_tugas();
         }else{
             $this->view->d_st = $st->get_surat_tugas_by_univ_thn_masuk($univ, $thn, $kd_user);
+            if(Session::get('role')!=2) $this->view->d_st = $st->get_surat_tugas_by_univ_thn_masuk($univ, $thn);
         }
         $this->view->load('riwayat_tb/tabel_st');
     }
@@ -197,6 +203,7 @@ class SurattugasController extends BaseController{
         $nomor = $_POST['param'];
         $st = new SuratTugas($this->registry);
         $d_st = $st->get_surat_tugas_by_nomor($nomor, $this->kd_user);
+        if(Session::get('role')!=2) $d_st = $st->get_surat_tugas_by_nomor($nomor);
         $this->view->d_st = $d_st;
         $this->view->load('riwayat_tb/tabel_st');
     }

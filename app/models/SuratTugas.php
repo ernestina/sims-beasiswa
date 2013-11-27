@@ -149,13 +149,13 @@ class SuratTugas {
      * method untuk mndapatkan surat tugas berdasarkan id
      * @param id_sutat_tugas
      */
-    public function get_surat_tugas_by_nomor($nomor,$kd_user=1) {
+    public function get_surat_tugas_by_nomor($nomor,$kd_user=null) {
         $sql = "SELECT * FROM " . $this->_tb_st; 
         $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
         $sql .= " WHERE a.NO_ST LIKE '%" . $nomor."%'";
-        $sql .= ' AND d.KD_USER='.$kd_user;
+        if(!is_null($kd_user)) $sql .= ' AND d.KD_USER='.$kd_user;
 //        echo $sql;
         $result = $this->db->select($sql);
         $return = array();
@@ -299,7 +299,9 @@ class SuratTugas {
             $sql = "SELECT DISTINCT(THN_MASUK) as THN FROM ".$this->_tb_st." 
                 a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
-                LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV WHERE d.KD_USER=".Session::get('kd_user')." ORDER BY THN DESC";
+                LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV";
+            if(Session::get('role')==2) $sql .= " WHERE d.KD_USER=".Session::get('kd_user');
+            $sql .= " ORDER BY THN DESC"; 
             $d_thn = $this->db->select($sql);
             foreach ($d_thn as $v){
                 $data[$v['THN']] = $v['THN'];

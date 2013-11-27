@@ -90,7 +90,7 @@ class PenerimaController extends BaseController{
         $sts = new Status();
         $role = Session::get('role');
         $this->view->th_masuk = $st->get_list_th_masuk();
-        if($role==3) $this->view->th_masuk = $st->get_list_th_masuk(false);
+        if($role!=2) $this->view->th_masuk = $st->get_list_th_masuk(); 
         if($role==2){
             $this->view->univ = $univ->get_univ($this->kd_user);
             $this->view->d_pb_all = $pb->get_penerima($this->kd_user);
@@ -185,6 +185,7 @@ class PenerimaController extends BaseController{
         $pb->set_nama($nama);
         $pb->set_st($st);
         $this->view->d_pb = $pb->get_penerima_by_name($pb,$this->kd_user,true);
+        if(Session::get('role')!=2) $this->view->d_pb = $pb->get_penerima_by_name($pb,0,true);
         $this->view->load('riwayat_tb/tabel_pb');
         
     }
@@ -890,7 +891,7 @@ class PenerimaController extends BaseController{
 //        echo $_POST['univ']." ".$_POST['thn_masuk']." ".$_POST['status'];
         $pb = new Penerima($this->registry);
         $this->view->d_pb_all = $pb->get_penerima_filter($univ, $thn_masuk, $status,$this->kd_user);
-        if($role==3) $this->view->d_pb_all = $pb->get_penerima_filter($univ, $thn_masuk, $status,0);
+        if($role!=2) $this->view->d_pb_all = $pb->get_penerima_filter($univ, $thn_masuk, $status,0);
         /**start paging**/
         $url = 'penerima/filter_pb';
         $this->view->url = $url;
@@ -898,7 +899,7 @@ class PenerimaController extends BaseController{
         $this->view->jmlData = count($this->view->d_pb_all);
         $posisi = $this->view->paging->cari_posisi();
         $this->view->d_pb = $pb->get_penerima_filter($this->view->univ, $this->view->thn_masuk, $this->view->status,$this->kd_user);
-        if($role==3) $this->view->d_pb = $pb->get_penerima_filter($this->view->univ, $this->view->thn_masuk, $this->view->status,0);
+        if($role!=2) $this->view->d_pb = $pb->get_penerima_filter($this->view->univ, $this->view->thn_masuk, $this->view->status,0);
         /**end paging**/
         $this->view->load('riwayat_tb/tabel_d_pb');
     }
@@ -910,7 +911,12 @@ class PenerimaController extends BaseController{
         $name = $_POST['name'];
         $pb = new Penerima($this->registry);
         $pb->set_nama($name);
-        $this->view->d_pb = $pb->get_penerima_by_name($pb,$this->kd_user);
+        if(Session::get('role')==2) {
+            $this->view->d_pb = $pb->get_penerima_by_name($pb,$this->kd_user);
+        }else{
+            $this->view->d_pb = $pb->get_penerima_by_name($pb,0);
+        }
+        
         $this->view->load('riwayat_tb/tabel_d_pb');
     }
     

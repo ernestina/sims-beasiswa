@@ -54,7 +54,7 @@ class JenisSuratCuti {
      * return objek jenis surat tugas
      */
 
-    public function get_jsc_by_id($jsc = JenisSuratTugas) {
+    public function get_jsc_by_id($jsc = JenisSuratCuti) {
         if (is_null($jsc->get_kode())) {
             return false;
         }

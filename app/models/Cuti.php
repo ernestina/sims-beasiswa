@@ -172,7 +172,7 @@ class Cuti{
         return $this;
     }
     
-    public function get_cuti_by_univ_thn_masuk($univ,$thn,$kd_user=1){
+    public function get_cuti_by_univ_thn_masuk($univ,$thn,$kd_user=null){
         $sql = "SELECT a.KD_CUTI as KD_CUTI,
                 a.KD_JNS_SRT_CUTI as KD_JNS_SRT_CUTI,
                 a.KD_PB as KD_PB,
@@ -197,7 +197,7 @@ class Cuti{
                             LEFT JOIN r_fakul e ON d.KD_FAKUL=e.KD_FAKUL
                             LEFT JOIN r_univ f ON e.KD_UNIV=f.KD_UNIV
                             WHERE f.KD_UNIV=".$univ;
-               }else{
+               }elseif($univ!=0 && $thn!=0){
                     $sql .= " LEFT JOIN d_pb b ON a.KD_PB=b.KD_PB
                             LEFT JOIN d_srt_tugas c ON b.KD_ST=c.KD_ST
                             LEFT JOIN r_jur d ON b.KD_JUR=d.KD_JUR
@@ -205,14 +205,17 @@ class Cuti{
                             LEFT JOIN r_univ f ON e.KD_UNIV=f.KD_UNIV
                             WHERE f.KD_UNIV=".$univ." AND c.THN_MASUK=".$thn;
                }
-               $sql .= " AND f.KD_USER=".$kd_user;
+               if(!is_null($kd_user)) $sql .= " AND f.KD_USER=".$kd_user;
 //               echo $sql;
         $result = $this->_db->select($sql);
         $data = array();
         foreach ($result as $v){
             $cuti = new $this($this->registry);
             $cuti->set_kode_cuti($v['KD_CUTI']);
-            $cuti->set_jenis_cuti($v['KD_JNS_SRT_CUTI']);
+            $jsc = new JenisSuratCuti();
+            $jsc->set_kode($v['KD_JNS_SRT_CUTI']);
+            $jsc = $jsc->get_jsc_by_id($jsc);
+            $cuti->set_jenis_cuti($jsc->get_nama());
             $pb = new Penerima($this->registry);
             $pb->set_kd_pb($v['KD_PB']);
             $d_pb = $pb->get_penerima_by_id($pb);
@@ -233,7 +236,7 @@ class Cuti{
         return $data;
     }
     
-    public function get_cuti_by_pb_name($name,$kd_user){
+    public function get_cuti_by_pb_name($name,$kd_user=null){
         $sql = "SELECT a.KD_CUTI as KD_CUTI,
                 a.KD_JNS_SRT_CUTI as KD_JNS_SRT_CUTI,
                 a.KD_PB as KD_PB,
@@ -249,7 +252,8 @@ class Cuti{
                 LEFT JOIN r_jur c ON b.KD_JUR=c.KD_JUR
                 LEFT JOIN r_fakul d ON c.KD_FAKUL=d.KD_FAKUL
                 LEFT JOIN r_univ e ON d.KD_UNIV=e.KD_UNIV
-                WHERE b.NM_PB LIKE '%".$name."%' AND e.KD_USER=".$kd_user;
+                WHERE b.NM_PB LIKE '%".$name."%'";
+        if(!is_null($kd_user)) $sql .= " AND e.KD_USER=".$kd_user; echo $sql;
         $result = $this->_db->select($sql);
         $data = array();
         foreach ($result as $v){

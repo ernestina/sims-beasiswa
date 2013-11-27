@@ -298,8 +298,10 @@ class CutiController extends BaseController{
         $this->view->d_ct=array();
         if($univ==0 AND $thn_masuk==0){
             $this->view->d_ct = $sc->get_cuti($this->kd_user);
+            if(Session::get('role')!=2) $this->view->d_ct = $sc->get_cuti(0);
         }else{
             $this->view->d_ct = $sc->get_cuti_by_univ_thn_masuk($univ, $thn_masuk,$this->kd_user);
+            if(Session::get('role')!=2) $this->view->d_ct = $sc->get_cuti_by_univ_thn_masuk($univ, $thn_masuk);
         }
         $this->view->load('riwayat_tb/tabel_sc');
     }
@@ -308,6 +310,7 @@ class CutiController extends BaseController{
         $sc = new Cuti($this->registry);
         $pb_name = $_POST['param'];
         $this->view->d_ct=$sc->get_cuti_by_pb_name($pb_name,$this->kd_user);
+        if(Session::get('role')!=2) $this->view->d_ct=$sc->get_cuti_by_pb_name($pb_name);
         
         $this->view->load('riwayat_tb/tabel_sc');
     }

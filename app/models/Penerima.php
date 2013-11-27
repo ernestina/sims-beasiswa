@@ -220,13 +220,13 @@ class Penerima {
         return $penerima;
     }
     
-    public function get_penerima_by_name($pb = Penerima, $kd_user=1, $filter_st=false){
+    public function get_penerima_by_name($pb = Penerima, $kd_user=0, $filter_st=false){
         $sql = "SELECT * FROM ".$this->_tb_penerima;
         $sql .= " a LEFT JOIN r_jur b ON a.KD_JUR=b.KD_JUR
                 LEFT JOIN r_fakul c ON b.KD_FAKUL=c.KD_FAKUL
                 LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
         $sql .= " WHERE NM_PB LIKE '%".$pb->get_nama()."%'";
-        $sql .= " AND d.KD_USER=".$kd_user;
+        if($kd_user!=0) $sql .= " AND d.KD_USER=".$kd_user;
         if($filter_st){
             $sql .= " AND a.KD_ST=".$pb->get_st();
         }
@@ -237,6 +237,7 @@ class Penerima {
             $st = new SuratTugas($this->registry);
             $st->set_kd_st($val['KD_ST']);
             $d_st = $st->get_surat_tugas_by_id($st,$kd_user);
+            if($kd_user==0) $d_st = $st->get_surat_tugas_by_id($st);
             $tglmulsel = $d_st->get_tgl_mulai().";".$d_st->get_tgl_selesai();
             $penerima->set_kd_pb($val['KD_PB']);
             $penerima->set_st($tglmulsel);
