@@ -83,7 +83,7 @@
     </div>
 </div>
 <?php } } ?>
-
+<!--
 <?php if(Session::get('role')==3) {?>
 <div id="beranda" style="margin: 20px 20px 5px 20px; border: solid 1px;width:70%;display:inline; float:left">
 </div>
@@ -97,7 +97,7 @@
 ?>" style="width:80%;margin: 5px 8% 5px 8%;"></div>
         
 </div>
-<?php } ?>
+<?php } ?> -->
 <input type="hidden" id="jml_notif" value="<?php echo $this->count_notif;?>">
 <script type="text/javascript">
 
