@@ -246,6 +246,12 @@ a:active {color:#A4D7E6}
     margin: 2px 0px 0px 0px;
 }
 
+.kolom4.full {
+    width: 100%;
+    float: left;
+    margin: 2px 0px 0px 0px;
+}
+
 .kolom5 {
     float:right;
     width: 50%;
