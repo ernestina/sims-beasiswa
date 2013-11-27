@@ -51,8 +51,8 @@ class NotifikasiController extends BaseController{
                         $temp['skripsi'] = $v['skripsi'];
                     }
                     
-                    if(isset($v['skripsi'])){
-                        $temp['skripsi'] = $v['skripsi'];
+                    if(isset($v['lulus'])){
+                        $temp['lulus'] = $v['lulus'];
                     }
                 }
             }
