@@ -85,7 +85,7 @@ class SuratTugas {
                 LEFT JOIN r_univ d ON c.KD_UNIV=d.KD_UNIV ";
 //        if (!is_null($id)) {
 //            $sql .= ' WHERE a.KD_ST<>' . $id;
-            $sql .= ' WHERE d.KD_USER='.$kd_user;
+        if(!is_null($kd_user))    $sql .= ' WHERE d.KD_USER='.$kd_user;
 //        }
         $sql .= " LIMIT ".$posisi.",".$batas;
 //        echo $sql;

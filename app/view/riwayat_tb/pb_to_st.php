@@ -24,7 +24,9 @@
             </tr>
         </table>
     </div>
+    <?php if(Session::get('role')==2){ ?>
     <button id="bt_dialog" onClick="choose(document.getElementById('kd_st').value);" style="margin-right: 20px"><i class="icon-plus icon-white"></i>Penerima</button>
+    <?php } ?>
     <div id="tb_pb">
         <?php 
             $this->load('riwayat_tb/tabel_pb');

@@ -10,7 +10,9 @@
             <th width="8%" style="font-size: 80%">Perk.Stop Elemen Beasiswa</th>
             <th width="8%" style="font-size: 80%">Perk. Pembayaran Kembali</th>
             <th width="15%" style="font-size: 80%">Jurusan/ Prodi</th>
+            <?php if(Session::get('role')==2){ ?>
             <th width="20%">Aksi</th>
+            <?php } ?>
             </thead>
 			<tbody style="text-align: center">
             <?php 
@@ -28,8 +30,10 @@
                     echo "<td>".Tanggal::bulan_indo($perk_stop[0])." ".$perk_stop[1]."</td>";
                     echo "<td>".Tanggal::bulan_indo($perk_go[0])." ".$perk_go[1]."</td>";
                     echo "<td style='text-align: left'>".$d_pb[2]."</td>";
+                    if(Session::get('role')==2){ 
                     echo "<td><a href=".URL."cuti/del_sc/".$val->get_kode_cuti()." onClick='return del(\"$d_pb[0]\",\"".$val->get_no_surat_cuti()."\")' title='hapus'><i class=\"icon-trash\"></i></a> &nbsp
                         <a href=".URL."cuti/datasc/".$val->get_kode_cuti()." title='ubah'><i class=\"icon-pencil\"></i></a></td>";
+                    }
                     echo "</tr>";
                     $no++;
                 }
