@@ -240,10 +240,10 @@ var create_element = function(data_notif,max_data, time_per_item, div_container)
             img1.src = imgsrc;
             if (img1.width!= 0) {
 //                console.log('ya')
-                img.src = '<?php echo URL;?>files/foto/'+data_notif[i].pic.foto;
+//                img.src = '<?php echo URL;?>files/foto/'+data_notif[i].pic.foto;
             }else{
 //                console.log('no')
-                img.src = '<?php echo URL;?>files/foto/android.png';
+//                img.src = '<?php echo URL;?>files/foto/android.png';
             }
 
             foto.appendChild(img);

@@ -119,7 +119,7 @@
 				}
                 
 //                pic.style.backgroundImage='url(\'files/foto/'+data_notif[i].foto_pic+'\')';
-                pic.style.backgroundImage='url(\'files/foto/'+foto_pic+'\')';
+                pic.style.backgroundImage='url(\'<?php echo URL; ?>files/foto/'+foto_pic+'\')';
                 
                 a.style.color = '#49afcd'
                 a.appendChild(document.createTextNode(judul_notif));

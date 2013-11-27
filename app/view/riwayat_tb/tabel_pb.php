@@ -1,4 +1,4 @@
-<table width="77%">
+<table width="<?php echo Session::get('role')==2?'77%':'90%' ?>">
             <thead>
             <th width="5%">No</th>
             <th width="20%">NIP</th>

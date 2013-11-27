@@ -153,7 +153,7 @@
             </fieldset>
     </div>
     <?php } ?>
-<div class="kolom4"> <!-- TABEL DATA -->
+<div class="<?php echo Session::get('role')==2?'kolom4':'kolom4 full' ?>"> <!-- TABEL DATA -->
     
         <fieldset><legend>Daftar Surat Cuti</legend>
     
