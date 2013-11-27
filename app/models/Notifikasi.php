@@ -932,14 +932,14 @@ class Notifikasi{
         foreach($d_pb as $pb){
             $tgl_lapor = $pb['TGL_LAPOR_PB'];
             $cek_st_child = $this->cek_st_child($pb['KD_PB'], $kd_st);
-            $is_lapor = ($tgl_lapor!='') && ($tgl_lapor!=null) && ($tgl_lapor!='0000-00-00');
+            $is_lapor = ($tgl_lapor!='') || ($tgl_lapor!=null) || ($tgl_lapor!='0000-00-00');
             if($is_lapor==false){
                 if($cek_st_child==false){
                     $count++;
                 }
             }
         }
-//        echo $count."-".$jml_pb;
+        echo $count."-".$jml_pb;
         return ($count==$jml_pb);
     }
     
