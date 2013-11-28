@@ -226,16 +226,19 @@
 //                $('#wnosc').fadeOut(200);
 //            }
         })
+        if(document.getElementById('jk') != undefined){
+            var jk = document.getElementById('jk').value;
+        }
         
-        var jk = document.getElementById('jk').value;
-        var jsc = document.getElementById('jsc').value;
+        if(document.getElementById('jsc')!=undefined){
+            var jsc = document.getElementById('jsc').value;
+        }
+        
         
         $('#reset').click(function(){
             $('#nip_pb').fadeOut(200);
             $('#nama_pb').fadeOut(200);
         });
-        console.log(jk);
-        console.log(jsc);
     });
     
     function hideErrorId(){
@@ -329,7 +332,8 @@
     }
     
     function get_data_cuti(univ,th_masuk){
-        $.post("<?php echo URL; ?>cuti/get_data_sc", {param:""+univ+","+th_masuk+""},
+        var univ_th = univ+"-"+th_masuk;
+        $.post("<?php echo URL; ?>cuti/get_data_sc/"+univ_th, {},
         function(data){                
             $('#tb_sc').fadeIn(100);
             $('#tb_sc').html(data);

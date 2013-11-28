@@ -130,10 +130,10 @@ class CutiController extends BaseController{
          * update penerima
          */
         $pb = new Penerima($this->registry);
-        $kd_pb_ct = $ct->get_pb();
+        $kd_pb_ct = $ct->get_pb(); echo $kd_pb_ct;
         $pb->set_kd_pb($kd_pb_ct);
         $pb->get_penerima_by_id($pb);
-        $status = $pb->cek_pb_konek_st_ct($pb, 'st', false, true);
+        $status = $pb->cek_pb_konek_st_ct($pb, 'st', false, true); 
         $pb->set_status($status);
         /*$kd_st = $pb->get_st();
         $st = new SuratTugas($this->registry);
@@ -289,10 +289,10 @@ class CutiController extends BaseController{
         }
     }
     
-    public function get_data_sc(){
+    public function get_data_sc($univ_th){
         $sc = new Cuti($this->registry);
-        $param = $_POST['param'];
-        $param = explode(",", $param);
+//        $post = $_POST['param'];
+        $param = explode("-", $univ_th);
         $univ = $param[0];
         $thn_masuk = $param[1];
         $this->view->d_ct=array();

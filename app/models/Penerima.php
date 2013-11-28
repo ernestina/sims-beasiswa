@@ -831,6 +831,8 @@ class Penerima {
                         }
                         return $status;
                     }
+                }else{
+                    return 1;
                 }
                 break;
             default:
