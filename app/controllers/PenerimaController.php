@@ -893,6 +893,7 @@ class PenerimaController extends BaseController{
         $pb = new Penerima($this->registry);
         $this->view->d_pb_all = $pb->get_penerima_filter($univ, $thn_masuk, $status,$this->kd_user);
         if($role!=2) $this->view->d_pb_all = $pb->get_penerima_filter($univ, $thn_masuk, $status,0);
+        $this->view->nilai = new Nilai($this->registry);
         /**start paging**/
         $url = 'penerima/filter_pb';
         $this->view->url = $url;
@@ -917,7 +918,7 @@ class PenerimaController extends BaseController{
         }else{
             $this->view->d_pb = $pb->get_penerima_by_name($pb,0);
         }
-        
+        $this->view->nilai = new Nilai($this->registry);
         $this->view->load('riwayat_tb/tabel_d_pb');
     }
     
