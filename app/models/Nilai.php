@@ -41,15 +41,17 @@ class Nilai{
     public function get_current_ipk($pb){
         $sql = "SELECT SEM_NIL_PB as SEM_NIL_PB, IPK_NIL_PB as IPK_NIL_PB FROM ".$this->_tb_nilai." WHERE KD_PB=".$pb->get_kd_pb();
         $sql .= " AND SEM_NIL_PB=(SELECT MAX(SEM_NIL_PB) FROM ".$this->_tb_nilai." WHERE KD_PB=".$pb->get_kd_pb().")";
+//        echo $sql."</br>";
         $result = $this->_db->select($sql);
+        $nilai = new Nilai($this->registry);
         foreach ($result as $v){
-            $this->set_kode($v['KD_NIL_PB']);
-            $this->set_pb($v['KD_PB']);
-            $this->set_ips($v['IPS_NIL_PB']);
-            $this->set_ipk($v['IPK_NIL_PB']);
-            $this->set_semester($v['SEM_NIL_PB']);
+            $nilai->set_kode($v['KD_NIL_PB']);
+            $nilai->set_pb($v['KD_PB']);
+            $nilai->set_ips($v['IPS_NIL_PB']);
+            $nilai->set_ipk($v['IPK_NIL_PB']);
+            $nilai->set_semester($v['SEM_NIL_PB']);
         }
-        return $this;
+        return $nilai;
     }
     
     public function add_nilai(){

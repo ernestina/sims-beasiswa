@@ -21,9 +21,10 @@
         <?php 
             $no=($this->paging->page-1)*$this->paging->batas+1;
             foreach($this->d_pb as $v){
-                $cur_ipk = $this->nilai->get_current_ipk($v);
                 $tmp = explode(";",$v->get_st());
-                $ipk = ($cur_ipk->get_ipk()=='')?'-':$cur_ipk->get_ipk();
+                $nilai = $this->nilai;
+                $nilai = $nilai->get_current_ipk($v);
+                $ipk = $nilai->get_ipk()==''?'-':$nilai->get_ipk();unset($nilai);
                 echo "<tr>";
                 echo "<td style=\"text-align: center\">".$no."</td>";
                 //echo "<td><a href=".URL."penerima/profil/".$v->get_kd_pb().">".$v->get_nip()."</a></td>";
