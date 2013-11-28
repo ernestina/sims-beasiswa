@@ -99,6 +99,7 @@ class PenerimaController extends BaseController{
             $this->view->d_pb_all = $pb->get_penerima();
         }
         $this->view->d_sts = $sts->get_status();
+        $this->view->nilai = new Nilai($this->registry);
         /**start paging**/
         $url = 'penerima/datapb';
         $this->view->url = $url;

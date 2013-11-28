@@ -11,7 +11,8 @@
         <th>No</th>
         <th width="20%">NIP/Nama</th>
         <th width="20%">Golongan/Unit Asal</th>
-        <th width="23%">Jurusan</th>
+        <th width="17%">Jurusan</th>
+        <th width="5%">IPK</th>
         <th width="17%">Masa TB</th>
         <th width="10%">Status</th>
         <th width="7%">Aksi</th>
@@ -20,13 +21,16 @@
         <?php 
             $no=($this->paging->page-1)*$this->paging->batas+1;
             foreach($this->d_pb as $v){
+                $cur_ipk = $this->nilai->get_current_ipk($v);
                 $tmp = explode(";",$v->get_st());
+                $ipk = ($cur_ipk->get_ipk()=='')?'-':$cur_ipk->get_ipk();
                 echo "<tr>";
                 echo "<td style=\"text-align: center\">".$no."</td>";
                 //echo "<td><a href=".URL."penerima/profil/".$v->get_kd_pb().">".$v->get_nip()."</a></td>";
                 echo "<td>".$v->get_nip()."</br>".$v->get_nama()."</td>";
                 echo "<td>".Golongan::golongan_int_string($v->get_gol())."</br>".$v->get_unit_asal()."</td>";
                 echo "<td>".$v->get_jur()."</td>";
+                echo "<td align=center>".$ipk."</td>";
                 echo "<td>dari : ".Tanggal::tgl_indo($tmp[0])."</br>sampai : ".Tanggal::tgl_indo($tmp[1])."</td>";
                 echo "<td>".$v->get_status()."</td>";
                 echo "<td><center>";
