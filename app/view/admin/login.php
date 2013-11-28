@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>.:Treascho beta.1.0:.</title>
+        <title>.: Scholarship Management and Early Warning System beta.1.0 :.</title>
         <script src="<?php echo URL; ?>public/js/jquery-2.0.3.min.js"></script>
 		<link rel="icon" type="image/png" href="<?php echo URL; ?>public/img/treascho-ico.png">
         <link rel="stylesheet" href="<?php echo URL; ?>public/js/jquery-ui-1.10.3/themes/base/jquery.ui.all.css">
@@ -62,11 +62,10 @@
             <div class="clearfix"></div>
             <div class="copyright">
 			<BR><BR><BR>
-                                            Copyright &copy; 2013
-											Treasury Scholarship beta.1.0. <br>Pengembangan Pegawai - 
+                                            
+											Scholarship Management and Early Warning System beta.1.0 <br>Copyright &copy; 2013 Bagian Pengembangan Pegawai - 
                                             <a class="djpbn" title="Direktorat Jenderal Perbendaharaan" href="http://www.perbendaharaan.go.id/">Ditjen Perbendaharaan</a>
 <?php 
-                echo Hash::create('sha1', 'admin',HASH_SALT_KEY);
             ?>
                                     </div>
             
