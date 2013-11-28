@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>.:Treascho:.</title>   
+        <title>.:Treascho beta.1.0:.</title>   
         <script src="<?php echo URL; ?>public/js/jquery-2.0.3.min.js"></script>
 		<link rel="icon" type="image/png" href="<?php echo URL; ?>public/img/treascho-ico.png">
         <link rel="stylesheet" href="<?php echo URL; ?>public/js/jquery-ui-1.10.3/themes/base/jquery.ui.all.css">
