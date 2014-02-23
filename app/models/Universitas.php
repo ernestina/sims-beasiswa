@@ -8,7 +8,7 @@
 class Universitas {
 
     private $db;
-    private $_no;
+    /*private $_no;
     private $_kd_univ;
     private $_kode_univ;
     private $_kode_pic;
@@ -16,7 +16,7 @@ class Universitas {
     private $_alamat;
     private $_telepon;
     private $_status;
-    private $_lokasi;
+    private $_lokasi;*/
     private $_error;
     private $_valid = TRUE;
     private $_table = 'r_univ';
@@ -49,7 +49,8 @@ class Universitas {
         $result = $this->db->select($sql);
         $data = array();
         foreach ($result as $val) {
-            $univ = new $this($this->registry);
+            //$univ = new $this($this->registry);
+            $univ = new UniversitasDao();
             $univ->set_no($urut++);
             $univ->set_kode_in($val['KD_UNIV']);
             $univ->set_kode($val['SINGKAT_UNIV']);
@@ -74,24 +75,25 @@ class Universitas {
      * return objek Universitas
      */
 
-    public function get_univ_by_id($univ = Universitas) {
+    public function get_univ_by_id($univ = UniversitasDao) {
         if (is_null($univ->get_kode_in())) {
             return false;
         }
-        $sql = "SELECT * FROM " . $univ->_table . " WHERE KD_UNIV=" . $univ->get_kode_in();
-//        echo $sql;
+        $sql = "SELECT * FROM " . $this->_table . " WHERE KD_UNIV=" . $univ->get_kode_in();
+        //echo $sql;
         $result = $this->db->select($sql);
+        $univ = new UniversitasDao();
         foreach ($result as $val) {
-            $this->set_kode_in($val['KD_UNIV']);
-            $this->set_kode($val['SINGKAT_UNIV']);
-            $this->set_pic($val['KD_USER']);
-            $this->set_nama($val['NM_UNIV']);
-            $this->set_alamat($val['ALMT_UNIV']);
-            $this->set_telepon($val['TELP_UNIV']);
-            $this->set_status($val['STATUS_UNIV']);
-            $this->set_lokasi($val['LOK_UNIV']);
+            $univ->set_kode_in($val['KD_UNIV']);
+            $univ->set_kode($val['SINGKAT_UNIV']);
+            $univ->set_pic($val['KD_USER']);
+            $univ->set_nama($val['NM_UNIV']);
+            $univ->set_alamat($val['ALMT_UNIV']);
+            $univ->set_telepon($val['TELP_UNIV']);
+            $univ->set_status($val['STATUS_UNIV']);
+            $univ->set_lokasi($val['LOK_UNIV']);
         }
-        return $this;
+        return $univ;
     }
 
     /*
@@ -99,16 +101,17 @@ class Universitas {
      * param array data array key=>value, nama kolom=>data
      */
 
-    public function add_univ() {
+    public function add_univ(UniversitasDao $univ) {
+
         $data = array(
-            'KD_USER' => $this->get_pic(),
-            'SINGKAT_UNIV' => $this->get_kode(),
-            'NM_UNIV' => $this->get_nama(),
-            'ALMT_UNIV' => $this->get_alamat(),
-            'TELP_UNIV' => $this->get_telepon(),
-            'LOK_UNIV' => $this->get_lokasi()
+            'KD_USER' => $univ->get_pic(),
+            'SINGKAT_UNIV' => $univ->get_kode(),
+            'NM_UNIV' => $univ->get_nama(),
+            'ALMT_UNIV' => $univ->get_alamat(),
+            'TELP_UNIV' => $univ->get_telepon(),
+            'LOK_UNIV' => $univ->get_lokasi()
         );
-        $this->validate();
+        $this->validate($univ);
         if (!$this->get_valid())
             return false;
         if (!is_array($data))
@@ -121,21 +124,21 @@ class Universitas {
      * param data array
      */
 
-    public function update_univ() {
+    public function update_univ(UniversitasDao $univ) {
         $data = array(
-            'KD_USER' => $this->get_pic(),
-            'SINGKAT_UNIV' => $this->get_kode(),
-            'NM_UNIV' => $this->get_nama(),
-            'ALMT_UNIV' => $this->get_alamat(),
-            'TELP_UNIV' => $this->get_telepon(),
-            'LOK_UNIV' => $this->get_lokasi()
+            'KD_USER' => $univ->get_pic(),
+            'SINGKAT_UNIV' => $univ->get_kode(),
+            'NM_UNIV' => $univ->get_nama(),
+            'ALMT_UNIV' => $univ->get_alamat(),
+            'TELP_UNIV' => $univ->get_telepon(),
+            'LOK_UNIV' => $univ->get_lokasi()
         );
-        $this->validate();
+        $this->validate($univ);
         if (!$this->get_valid())
             return false;
         if (!is_array($data))
             return false;
-        $where = ' KD_UNIV=' . $this->get_kode_in();
+        $where = ' KD_UNIV=' . $univ->get_kode_in();
         return $this->db->update($this->_table, $data, $where);
     }
 
@@ -143,33 +146,33 @@ class Universitas {
      * hapus universitas, id harus di set terlebih dahulu
      */
 
-    public function delete_univ() {
-        $where = ' KD_UNIV=' . $this->get_kode_in();
+    public function delete_univ(UniversitasDao $univ) {
+        $where = ' KD_UNIV=' . $univ->get_kode_in();
         $this->db->delete($this->_table, $where);
     }
 
-    public function validate() {
-        if ($this->get_pic() == 0) {
+    public function validate(UniversitasDao $univ) {
+        if ($univ->get_pic() == 0) {
             $this->_error .= "User belum dipilih!</br>";
             $this->_valid = FALSE;
         }
-        if ($this->get_kode() == "") {
+        if ($univ->get_kode() == "") {
             $this->_error .= "Nama singkat Perguruan Tinggi belum diinput!<?br>";
             $this->_valid = FALSE;
         }
-        if ($this->get_nama() == "" OR !Validasi::validate_string($this->get_nama())) {
+        if ($univ->get_nama() == "" OR !Validasi::validate_string($univ->get_nama())) {
             $this->_error .= "Nama Perguruan Tinggi belum diinput!</br>";
             $this->_valid = FALSE;
         }
-        if ($this->get_alamat() == "") {
+        if ($univ->get_alamat() == "") {
             $this->_error .= "Alamat belum diinput!</br>";
             $this->_valid = FALSE;
         }
-        if ($this->get_telepon() == "" OR !Validasi::validate_number($this->get_telepon())) {
+        if ($univ->get_telepon() == "" OR !Validasi::validate_number($univ->get_telepon())) {
             $this->_error .= "Telepon belum diinput!</br>";
             $this->_valid = FALSE;
         }
-        if ($this->get_lokasi() == "" OR !Validasi::validate_string($this->get_lokasi())) {
+        if ($univ->get_lokasi() == "" OR !Validasi::validate_string($univ->get_lokasi())) {
             $this->_error .= "Lokasi belum diinput!</br>";
             $this->_valid = FALSE;
         }
@@ -177,7 +180,7 @@ class Universitas {
 
     /*
      * setter
-     */
+     *
 
     public function set_no($no) {
         $this->_no = $no;
@@ -214,14 +217,15 @@ class Universitas {
     public function set_lokasi($lokasi) {
         $this->_lokasi = $lokasi;
     }
-
+    
+    */
     public function set_table($table) {
         $this->_table = $table;
     }
 
     /*
      * getter
-     */
+     *
     
     public function get_no() {
         return $this->_no;
@@ -266,6 +270,8 @@ class Universitas {
         return $this->_telepon;
     }
 
+    */
+
     public function get_error() {
         return $this->_error;
     }
@@ -285,17 +291,18 @@ class Universitas {
         $result = $this->db->select($sql);
         //var_dump($result);
         // $data = array();
+        $univ = new UniversitasDao();
         foreach ($result as $val) {
-            $this->set_kode_in($val['KD_UNIV']);
-            $this->set_kode($val['SINGKAT_UNIV']);
-            $this->set_pic($val['KD_USER']);
-            $this->set_nama($val['NM_UNIV']);
-            $this->set_alamat($val['ALMT_UNIV']);
-            $this->set_telepon($val['TELP_UNIV']);
-            $this->set_status($val['STATUS_UNIV']);
-            $this->set_lokasi($val['LOK_UNIV']);
+            $univ->set_kode_in($val['KD_UNIV']);
+            $univ->set_kode($val['SINGKAT_UNIV']);
+            $univ->set_pic($val['KD_USER']);
+            $univ->set_nama($val['NM_UNIV']);
+            $univ->set_alamat($val['ALMT_UNIV']);
+            $univ->set_telepon($val['TELP_UNIV']);
+            $univ->set_status($val['STATUS_UNIV']);
+            $univ->set_lokasi($val['LOK_UNIV']);
         }
-        return $this;
+        return $univ;
     }
 	
 	public function get_univ_by_pic($pic) {
@@ -306,7 +313,8 @@ class Universitas {
         //var_dump($result);
         $data = array();
         foreach ($result as $val) {
-            $univ = new $this($this->registry);
+            //$univ = new $this($this->registry);
+            $univ = new UniversitasDao();
             $univ->set_kode_in($val['KD_UNIV']);
             $univ->set_kode($val['SINGKAT_UNIV']);
             $univ->set_pic($val['KD_USER']);

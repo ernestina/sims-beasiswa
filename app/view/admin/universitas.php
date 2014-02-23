@@ -53,7 +53,7 @@ if (isset($this->d_ubah)) {
                                         echo "<option value=" . $val->get_id() . " >" . $val->get_nmUser() . "</option>";
                                     }
                                 } elseif (isset($this->d_rekam)) {
-                                    if ($val->get_kode_fakul() == $this->d_rekam->get_kode_fakul()) {
+                                    if ($val->get_id() == $this->d_rekam->get_pic()) {
                                         echo "<option value=" . $val->get_id() . " selected>" . $val->get_nmUser() . "</option>";
                                     } else {
                                         echo "<option value=" . $val->get_id() . " >" . $val->get_nmUser() . "</option>";

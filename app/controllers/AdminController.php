@@ -21,6 +21,7 @@ class AdminController extends BaseController {
 
     public function addUniversitas($id = null) {
         $univ = new Universitas($this->registry);
+        $univDao = new UniversitasDao();
         if (isset($_POST['add_univ'])) {
             $kode = $_POST['kode'];
             $nama = $_POST['nama'];
@@ -28,22 +29,22 @@ class AdminController extends BaseController {
             $telepon = $_POST['telepon'];
             $lokasi = $_POST['lokasi'];
             $pic = $_POST['pic'];
-            $univ->set_pic($pic);
-            $univ->set_kode($kode);
-            $univ->set_nama($nama);
-            $univ->set_telepon($telepon);
-            $univ->set_alamat($alamat);
-            $univ->set_lokasi($lokasi);
-            if (!$univ->add_univ()) {
-                $this->view->d_rekam = $univ;
+            $univDao->set_pic($pic);
+            $univDao->set_kode($kode);
+            $univDao->set_nama($nama);
+            $univDao->set_telepon($telepon);
+            $univDao->set_alamat($alamat);
+            $univDao->set_lokasi($lokasi);
+            if (!$univ->add_univ($univDao)) {
+                $this->view->d_rekam = $univDao; var_dump($this->view->d_rekam);
                 $this->view->error = $univ->get_error();
             }else{
                 ClassLog::write_log('universitas','rekam',$nama);
             }
         }
         if (!is_null($id)) {
-            $univ->set_kode_in($id);
-            $this->view->d_ubah = $univ->get_univ_by_id($univ);
+            $univDao->set_kode_in($id);
+            $this->view->d_ubah = $univ->get_univ_by_id($univDao); 
         }
         $pic = new User($this->registry);
         $this->view->data = $univ->get_univ();
@@ -59,6 +60,7 @@ class AdminController extends BaseController {
 
     public function updUniversitas() {
         $univ = new Universitas($this->registry);
+        $univDao = new UniversitasDao();
         if (isset($_POST['upd_univ'])) {
             $kd_univ = $_POST['kd_univ'];
             $kode = $_POST['kode'];
@@ -67,16 +69,16 @@ class AdminController extends BaseController {
             $telepon = $_POST['telepon'];
             $lokasi = $_POST['lokasi'];
             $pic = $_POST['pic'];
-            $univ->set_pic($pic);
-            $univ->set_kode($kode);
-            $univ->set_nama($nama);
-            $univ->set_telepon($telepon);
-            $univ->set_alamat($alamat);
-            $univ->set_lokasi($lokasi);
-            $univ->set_kode_in($kd_univ);
-            if (!$univ->update_univ()) {
+            $univDao->set_pic($pic);
+            $univDao->set_kode($kode);
+            $univDao->set_nama($nama);
+            $univDao->set_telepon($telepon);
+            $univDao->set_alamat($alamat);
+            $univDao->set_lokasi($lokasi);
+            $univDao->set_kode_in($kd_univ);
+            if (!$univ->update_univ($univDao)) {
                 $pic = new User($this->registry);
-                $this->view->d_ubah = $univ;
+                $this->view->d_ubah = $univDao;
                 $this->view->error = $univ->get_error();
                 $this->view->data = $univ->get_univ();
                 //        var_dump($this->view->d_ubah);
@@ -96,15 +98,16 @@ class AdminController extends BaseController {
 
     public function delUniversitas($id) {
         $univ = new Universitas($this->registry);
+        $univDao = new UniversitasDao();
         if (is_null($id)) {
             throw new Exception;
             echo "id belum dimasukkan!";
             return;
         }
-        $univ->set_kode_in($id);
-        $d_univ = $univ->get_univ_by_id($univ);
+        $univDao->set_kode_in($id);
+        $d_univ = $univ->get_univ_by_id($univDao);
         $nama = $d_univ->get_nama();
-        $univ->delete_univ();
+        $univ->delete_univ($univDao);
         ClassLog::write_log('universitas','hapus',$nama);
         header('location:' . URL . 'admin/addUniversitas/'.$halaman."/".$batas);
     }

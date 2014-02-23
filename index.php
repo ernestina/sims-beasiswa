@@ -26,7 +26,8 @@ define('URL',$base_url);
 $path = array(
     ROOT.'/libs/',
     ROOT.'/app/controllers/',
-    ROOT.'/app/models/'
+    ROOT.'/app/models/',
+    ROOT.'/app/dao/'
 );
 
 //include ROOT.'/config/config.php';
@@ -40,7 +41,7 @@ Autoloader::register();
 $registry = new Registry();
 $registry->upload = new Upload();
 $registry->view = new View();
-$registry->db = new Database();
+$registry->db = Database::get_instance();
 $registry->auth = new Auth();
 $registry->auth->add_roles('admin');
 $registry->auth->add_access('admin','admin',$akses['Admin']);
