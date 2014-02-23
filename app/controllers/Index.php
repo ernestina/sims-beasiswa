@@ -21,8 +21,9 @@ class Index extends BaseController{
             $temp = array();
             $pb = new Penerima($this->registry);
             $cuniv = new Universitas($this->registry);
-            $cuniv->set_kode_in($univ);
-            $cuniv = $cuniv->get_univ_by_id($cuniv);
+            $univDao = new UniversitasDao();
+            $univDao->set_kode_in($univ);
+            $cuniv = $cuniv->get_univ_by_id($univDao);
             $temp[] = $cuniv->get_nama();
             $temp[] = $pb->get_jumlah_pegawai('universitas', $univ);
             $d_univ[] = $temp;
